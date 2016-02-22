@@ -28,7 +28,7 @@ class Functions
                                 </div>
                                 <div class="form-group">
                                     <label for="passwordVerify">Verify Password</label>
-                                    <input name="password_verify" id="password_verify" type="password" required="true" id="password_verify">
+                                    <input name="passwordVerify" id="passwordVerify" type="password" required="true" id="passwordVerify">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
@@ -36,7 +36,7 @@ class Functions
                                 </div>
                                 <div class="form-group">
                                     <label for="studentNumber">Student Number</label>
-                                    <input name="student_number" id="student_number" type="text" required="true" title="Student Number">
+                                    <input name="studentNumber" id="studentNumber" type="text" required="true" title="Student Number">
                                 </div>
                                 <div class="form-group">
                                     <label for="address">Address</label>

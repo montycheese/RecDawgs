@@ -38,7 +38,7 @@ class User {
             return false;
         }
         $sql = "INSERT INTO user (first_name, last_name, password_hash, email, student_number, address, major)
-VALUES ('{$this->$firstName}', '{$this->$lastName}', '{$this->$passwordHash}', '{$this->$email}', '{$this->$studentNumber}', '{$this->$address}', '{$this->$major}');";
+VALUES ('{$this->firstName}', '{$this->lastName}', '{$this->passwordHash}', '{$this->email}', '{$this->studentNumber}', '{$this->address}', '{$this->major}');";
 
         if ($conn->query($sql) === TRUE) {
             //echo "New record created successfully";

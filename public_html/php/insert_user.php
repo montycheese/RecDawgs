@@ -11,9 +11,9 @@ if(!$_POST){
 
 /*
  * This is how to visualize the $_POST array that is sent from the html form on register.php
- * $_POST = ['first_name'=> 'John', 'last_name'=> 'Doe', 'password'=>'password', 'email'=>'joe@example.com' ....]
+ * $_POST = ['firstName'=> 'John', 'lastName'=> 'Doe', 'password'=>'password', 'email'=>'joe@example.com' ....]
  * You can access individual members like so:
- * $firstName = $_POST['first_name']
+ * $firstName = $_POST['firstName']
  * echo($firstName)  // John is printed out
  *
  */
