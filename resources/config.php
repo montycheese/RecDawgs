@@ -6,16 +6,16 @@
  * Time: 16:40
  */
 
-
-//RecDawgs is not a commercial website. this file will be committed to GitHub
-
 //DATABASE
-define('DB_NAME', 'RecDawgs');
-define('DB_USER', 'root');
-define('DB_PASSWORD', 'REDACTED');
+define('DB_NAME', 'team10');
+define('DB_USER', 'team10');
+define('DB_PASSWORD', 'exception');
 define('DB_TYPE', 'mysql');
-define('DB_HOST', 'localhost');
-
+define('DB_HOST', 'uml.cs.uga.edu');
+define('SSH_USER', 'myid');
+define('SSH_PASSWORD', 'password');
+define('SSH_PORT', 22);
+define('MYSQL_PORT', 3306);
 
 
 ?>
