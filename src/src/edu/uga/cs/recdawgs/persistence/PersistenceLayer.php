@@ -1,5 +1,5 @@
 <?php
-
+namespace edu\uga\cs\recdawgs\persistence;
 /**
  * This is the interface to the Persistence Layer subsystem of the RecDawgs system.  This layer
  * provides operations for storing, restoring, and deleting of entity class objects and links
@@ -405,7 +405,7 @@ public function deleteTeamParticipatesInLeague(  $team,  $league );
      * @param league the League to be linked
      * @throws RDException in case an error occurred during the store operation
      */
-public function storeTeamWinnerOfLeague(  $team,  $league )
+public function storeTeamWinnerOfLeague(  $team,  $league );
 
     /**
      * Returns a league or team depending on which parameter is not null

@@ -1,13 +1,13 @@
 <?php
+namespace edu\uga\cs\recdawgs\entity;
 
-//namespace
 
 /** This class represents information about a registered student of in the RecDawgs system.
  * A student is a user who, additionally, has a student id, major, and an address.
  *
  */
 
-  public interface Student extends User
+   interface Student extends User
   {
     /** Return the student id for this student.
      * @return the String representing the id of the student

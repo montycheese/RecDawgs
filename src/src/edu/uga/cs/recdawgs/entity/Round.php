@@ -1,14 +1,14 @@
 <?php
-/*package edu.uga.cs.recdawgs.entity;
+namespace edu\uga\cs\recdawgs\entity;
 
-import edu.uga.cs.recdawgs.RDException;
-import edu.uga.cs.recdawgs.persistence.Persistable;
-*/
+use edu\uga\cs\recdawgs\persistence\Persistable as Persistable;
+use edu\uga\cs\recdawgs\RDException as RDException;
+
 /** This class represents a round of matches played in some sports league.  Each round of
  * matches is numbered (the round number must be positive).
  *
  */
-public interface Round 
+interface Round
     extends Persistable
 {
     /** Return this round's number.

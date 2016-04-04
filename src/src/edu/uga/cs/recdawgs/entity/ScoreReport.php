@@ -1,17 +1,15 @@
 <?php
-/*package edu.uga.cs.recdawgs.entity;
+namespace edu\uga\cs\recdawgs\entity;
 
-import java.util.Date;
+use edu\uga\cs\recdawgs\persistence\Persistable as Persistable;
+use edu\uga\cs\recdawgs\RDException as RDException;
 
-import edu.uga.cs.recdawgs.RDException;
-import edu.uga.cs.recdawgs.persistence.Persistable;
-*/
 /** This class represents a score report for a match between two teams in a sports league.
  * One score report is submitted by each of the two team captains.  If both score reports are
  * the same, the score report becomes official and is recorded in the corresponding Match.
  *
  */
-public interface ScoreReport 
+ interface ScoreReport
     extends Persistable
 {
     /** Return the points scored by the home team.

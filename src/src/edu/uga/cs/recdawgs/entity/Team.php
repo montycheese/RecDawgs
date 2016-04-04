@@ -1,9 +1,8 @@
 <?php
+namespace edu\uga\cs\recdawgs\entity;
 
-//package edu.uga.cs.recdawgs.entity;
-
-//import edu.uga.cs.recdawgs.RDException;
-//import edu.uga.cs.recdawgs.persistence.Persistable;
+use edu\uga\cs\recdawgs\persistence\Persistable as Persistable;
+use edu\uga\cs\recdawgs\RDException as RDException;
 
 /** This class represents a recreational sports team, participating in one of the
  * sports leagues.  A team must have a name (which must be unique across all teams) and one student 
@@ -11,8 +10,7 @@
  * may become the league winner.
  *
  */
-public interface Team 
-    extends Persistable
+interface Team extends Persistable
 {
     /** Return the name of this team.
      * @return a string which is the name of this team

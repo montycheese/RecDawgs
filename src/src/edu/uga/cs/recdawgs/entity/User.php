@@ -1,8 +1,8 @@
 <?php
+namespace edu\uga\cs\recdawgs\entity;
 
-//package edu.uga.cs.recdawgs.entity;
-
-//import edu.uga.cs.recdawgs.persistence.Persistable;
+use edu\uga\cs\recdawgs\persistence\Persistable as Persistable;
+//use edu\uga\cs\recdawgs\RDException as RDException;
 
 
 /** This is the base class of all registered users of the RecDawgs system.
@@ -10,7 +10,7 @@
  * The login name must be unique.
  *
  */
-public interface User
+interface User
     extends Persistable
 {
     /** Return the user's first name.

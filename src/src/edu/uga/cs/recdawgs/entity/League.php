@@ -1,9 +1,8 @@
 <?php
+namespace edu\uga\cs\recdawgs\entity;
+use edu\uga\cs\recdawgs\persistence\Persistable;
+use edu\uga\cs\recdawgs\RDException as RDException;
 
-//package edu.uga.cs.recdawgs.entity;
-
-//import edu.uga.cs.recdawgs.RDException;
-//import edu.uga.cs.recdawgs.persistence.Persistable;
 
 /** This class represents a sports league in the RecDawgs system.  A league has a name (which must be unique), league rules
  * match rules, as well as the minimum and maximum number of participating teams (the maximum number must not be less than the minimum).  Furthermore,
@@ -11,7 +10,7 @@
  * teams and team members must be positive.
  *
  */
-public interface League extends Persistable
+interface League extends Persistable
 {
     /** Return the name of this league.
      * @return the name of this league
@@ -106,7 +105,7 @@ public interface League extends Persistable
      * @param team which is this league's winner
      * @throws RDException in case the team is null or the team is not participating in this league
      */
-    public function setWinnerOfLeague( Team team ); // throws RDException;
+    public function setWinnerOfLeague($team ); // throws RDException;
     
     
 }

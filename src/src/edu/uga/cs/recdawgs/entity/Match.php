@@ -1,12 +1,9 @@
 <?php
+namespace edu\uga\cs\recdawgs\entity;
 
-/*package edu.uga.cs.recdawgs.entity;
+use edu\uga\cs\recdawgs\persistence\Persistable as Persistable;
+use edu\uga\cs\recdawgs\RDException as RDException;
 
-import java.util.Date;
-
-import edu.uga.cs.recdawgs.RDException;
-import edu.uga.cs.recdawgs.persistence.Persistable;
-*/
 
 /** This class represents a match between two teams participating in the same sports league.
  * The match is played at a sports venue.
@@ -14,7 +11,7 @@ import edu.uga.cs.recdawgs.persistence.Persistable;
  * the home team and the away team (the points must not be negative).
  *
  */
-public interface Match extends Persistable
+ interface Match extends Persistable
 {
     /** Return the points scored by the home team.
      * @return the points scored by the home team

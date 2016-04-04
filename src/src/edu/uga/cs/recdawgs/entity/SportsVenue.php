@@ -1,7 +1,7 @@
 <?php
+namespace edu\uga\cs\recdawgs\entity;
+use edu\uga\cs\recdawgs\persistence\Persistable as Persistable;
 
-//namespace ???
-//include 'edu/uga/cs/recdawgs/persistence/Persistable';
 
 /** This class represents a sports venue for playing matches.
  * A sports venue has a name, address, and is classified as an indoor venue or not.
