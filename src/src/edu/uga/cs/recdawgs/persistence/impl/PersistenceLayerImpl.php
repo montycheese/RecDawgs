@@ -12,7 +12,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
     /**
      * Restore all Administrator objects that match attributes of the model Administrator.
      * @param modelAdministrator the model Administrator; if null is provided, all Administrator objects will be returned
-     * @return an  of the located Administrator objects
+     * @return an Administrator Iterator of the located Administrator objects
      * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreAdministrator($modelAdministrator)

@@ -1,10 +1,10 @@
 <?php
-// Declare the interface 'iTemplate'
+namespace edu\uga\cs\recdawgs\object;
 
-public interface ObjectLayer
+interface ObjectLayer
 {
     /**
-     * Create a new Administrator object, given the set of initial attribute values.
+     * Create a new Administrator object, given the set of initial attribute values. Or With undefined attributes if non are passed.
      * @param firstName the first name
      * @param lastName the last name
      * @param userName the user name (login name)
@@ -13,13 +13,9 @@ public interface ObjectLayer
      * @return a new Administrator object instance with the given attribute values
      * @throws RDException in case either firstName, lastName, or userName is null
      */
-    public function createAdministrator($firstName, $lastName, $userName, $password, $emailAddress); // add exception
+    public function createAdministrator($firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null); // add exception
 
-    /**
-     * Create a new Administrator object with undefined attribute values.
-     * @return a new Administrator object instance
-     */
-    public function createAdministrator(); 
+
 
     /**
      * Return an iterator of Administrator objects satisfying the search criteria given in the modelAdministrator object.
@@ -631,8 +627,8 @@ public interface ObjectLayer
     
     /**
      * Delete a link between a Round and a Match (sever the link includes from Match to Round).
-     * @param round the Round
-     * @param match the Match
+     * @param round Round Round
+     * @param match Match Match
      * @throws RDException in case either the round or match is null or another error occurs
      */
     public function deleteRoundMatch($round, $match); // add exception

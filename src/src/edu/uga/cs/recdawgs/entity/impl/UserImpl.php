@@ -6,7 +6,7 @@ use edu\uga\cs\recdawgs\entity\User as User;
 use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
 
 class UserImpl extends Persistent implements User {
-    private $name = null;
+    private $firstName = null;
     private $email = null;
     //TODO add rest
 
@@ -16,9 +16,12 @@ class UserImpl extends Persistent implements User {
      * @param $email
      * @param etc....
      */
-    public function __construct($name, $email) {
+    public function __construct($firstName=null, $email=null) {
         //TODO
+        //NOTE, for all constructors, make every parameter in the method signature = null
+        // e.g. what I wrote above
     }
+
 
     /** Return the user's first name.
      * @return the user's first name
