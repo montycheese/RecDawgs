@@ -5,11 +5,11 @@ interface ObjectLayer
 {
     /**
      * Create a new Administrator object, given the set of initial attribute values. Or With undefined attributes if non are passed.
-     * @param firstName the first name
-     * @param lastName the last name
-     * @param userName the user name (login name)
-     * @param password the password
-     * @param emailAddress the email address
+     * @param firstName String the first name
+     * @param lastName String the last name
+     * @param userName String the user name (login name)
+     * @param password String the password
+     * @param emailAddress String the email address
      * @return a new Administrator object instance with the given attribute values
      * @throws RDException in case either firstName, lastName, or userName is null
      */

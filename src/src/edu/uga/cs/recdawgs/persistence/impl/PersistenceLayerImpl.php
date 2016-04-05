@@ -7,7 +7,10 @@ use edu\uga\cs\recdawgs\persistence\PersistenceLayer as PersistenceLayer;
 
 class PersistenceLayerImpl implements PersistenceLayer{
 
-
+    function __construct()
+    {
+        // TODO: Implement __construct() method.
+    }
 
     /**
      * Restore all Administrator objects that match attributes of the model Administrator.
@@ -658,8 +661,5 @@ class PersistenceLayerImpl implements PersistenceLayer{
         // TODO: Implement deleteMatchSportsVenue() method.
     }
 
-    function __construct()
-    {
-        // TODO: Implement __construct() method.
-    }
+
 }

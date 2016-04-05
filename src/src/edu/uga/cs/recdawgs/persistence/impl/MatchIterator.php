@@ -20,8 +20,6 @@ class MatchIterator extends PersistenceIterator{
 
         /**
          * Populate the iterator with Match objects
-         * int homePoints, int awayPoints, Date date, boolean isCompleted,
-        Team homeTeam, Team awayTeam
          */
         for($i=0; $i < count($resultSet); $i++){
             $match = null;

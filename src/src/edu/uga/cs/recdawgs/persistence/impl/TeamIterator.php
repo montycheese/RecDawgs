@@ -41,6 +41,7 @@ class TeamIterator extends PersistenceIterator{
                 //create league obj that the team belongs to
                 $league = new LeagueImpl();
                 $league->setId($resultSet['league_id']);
+                $league = $objLayer->findLeague($league);
 
                 $team = $objLayer->createTeam(
                     $resultSet['name'],

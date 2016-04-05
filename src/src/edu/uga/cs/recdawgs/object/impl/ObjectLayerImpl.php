@@ -107,18 +107,18 @@ class ObjectLayerImpl implements ObjectLayer{
 
     /**
      * Create a new League object, given the set of initial attribute values.
-     * @param name the name of the league
-     * @param leagueRules the rules of participating in the league
-     * @param matchRules the match rules for matches played in the league
-     * @param isIndoor is the league an indoor league?
-     * @param minTeams the minimum number of teams in the league
-     * @param maxTeams the maximum number of teams in the league
-     * @param minPlayers the minimum number of players in teams in the league
-     * @param maxPlayers the maximum number of players in teams in the league
-     * @return a new League instance with the given attribute values
+     * @param name String the name of the league
+     * @param leagueRules String the rules of participating in the league
+     * @param matchRules String the match rules for matches played in the league
+     * @param isIndoor boolean is the league an indoor league?
+     * @param minTeams int the minimum number of teams in the league
+     * @param maxTeams int the maximum number of teams in the league
+     * @param minPlayers int the minimum number of players in teams in the league
+     * @param maxPlayers int the maximum number of players in teams in the league
+     * @return League a new League instance with the given attribute values
      * @throws RDException in case either the name is null or any of the team/player numbers is not positive or the given maximum is less than the corresponding minimum
      */
-    public function createLeague($name = null, $leagueRules = null, $matchRules,
+    public function createLeague($name = null, $leagueRules = null, $matchRules = null,
                                  $isIndoor = null, $minTeams = null, $maxTeams = null, $minPlayers = null, $maxPlayers = null)
     {
         // TODO: Implement createLeague() method.
