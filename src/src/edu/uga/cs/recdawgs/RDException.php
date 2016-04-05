@@ -13,7 +13,7 @@ class RDException extends \Exception {
                 super($cause);
             }
             else{
-                super($string);
+                super($message=$string);
             }
         }
 
