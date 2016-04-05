@@ -52,13 +52,8 @@ interface ObjectLayer
      * @return a new Student object instance with the given attribute values
      * @throws RDException in case either firstName, lastName, userName, or studentId is null
      */
-    public function createStudent($firstName, $lastName, $userName, $password, $emailAddress, $studentId, $major, $address); // add exception
-
-    /**
-     * Create a new Student object with undefined attribute values.
-     * @return a new Student object instance
-     */
-    public function createStudent(); 
+    public function createStudent($firstName = null, $lastName = null, $userName = null, 
+        $password = null, $emailAddress = null, $studentId = null, $major = null, $address = null); // add exception
     
     /**
      * Return an iterator of Student objects satisfying the search criteria given in the modelStudent object.
@@ -95,14 +90,8 @@ interface ObjectLayer
      * @return a new League instance with the given attribute values
      * @throws RDException in case either the name is null or any of the team/player numbers is not positive or the given maximum is less than the corresponding minimum
      */
-    public function createLeague($name, $leagueRules, $matchRules,
-            $isIndoor, $minTeams, $maxTeams, $minPlayers, $maxPlayers); // add exception
-
-    /**
-     * Create a new League object with undefined attribute values.
-     * @return a new League object instance
-     */
-    public function createLeague();
+    public function createLeague($name = null, $leagueRules = null, $matchRules,
+            $isIndoor = null, $minTeams = null, $maxTeams = null, $minPlayers = null, $maxPlayers = null); // add exception
 
     /**
      * Return an iterator of League objects satisfying the search criteria given in the modelLeague object.
@@ -134,13 +123,7 @@ interface ObjectLayer
      * @return a new Team object instance with the given attribute values
      * @throws RDException in case name is null
      */
-    public function createTeam($name, $student, $league); // add exception
-
-    /**
-     * Create a new Team object with undefined attribute values.
-     * @return a new Team object instance with the given attribute value
-     */
-    public function createTeam();
+    public function createTeam($name = null, $student = null, $league = null); // add exception
 
     /**
      * Return an iterator of Team objects satisfying the search criteria given in the modelTeam object.
@@ -172,13 +155,7 @@ interface ObjectLayer
      * @return a new SportsVenue object instance with the given attribute values
      * @throws RDException in case name is null
      */
-    public function createSportsVenue($name, $address, $isIndoor); // add exception
-
-    /**
-     * Create a new SportsVenue object with undefined attribute values.
-     * @return a new SportsVenue object instance
-     */
-    public function createSportsVenue();
+    public function createSportsVenue($name = null, $address = null, $isIndoor = null); // add exception
 
     /**
      * Return an iterator of SportsVenue objects satisfying the search criteria given in the modelSportsVenue object.
@@ -213,13 +190,8 @@ interface ObjectLayer
      * @return a new Match object instance with the given attribute values
      * @throws RDException in case any of the po$arguments is negative or either of the teams is null or if the given teams are not in the same league
      */
-    public function createMatch($homePoints, $awayPoints, $date, $isCompleted, $homeTeam, $awayTeam); // add exception
-
-    /**
-     * Create a new Match object with undefined attribute values.
-     * @return a new Match object instance
-     */
-    public function createMatch();
+    public function createMatch($homePoints = null, $awayPoints = null, $date = null, 
+            $isCompleted = null, $homeTeam = null, $awayTeam = null); // add exception
 
     /**
      * Return an iterator of Match objects satisfying the search criteria given in the modelMatch object.
@@ -249,13 +221,7 @@ interface ObjectLayer
      * @return a new Round object instance
      * @throws RDException in case the number is not positive
      */
-    public function createRound($number); // add exception
-
-    /**
-     * Create a new Round object with undefined attribute values.
-     * @return a new Round object instance
-     */
-    public function createRound();
+    public function createRound($number = null); // add exception
     
     /**
      * Return an iterator of Round objects satisfying the search criteria given in the modelRound object.
@@ -289,13 +255,7 @@ interface ObjectLayer
      * @return a new ScoreReport object instance with the given attribute values 
      * @throws RDException in case any of the po$arguments is negative, either student or match is null, or if the student is not the captain of one of the teams in the match
      */
-    public function createScoreReport($homePoints, $awayPoints, $date, $student, $match); // add exception
-
-    /**
-     * Create a new ScoreReport object with undefined attribute values.
-     * @return a new ScoreReport object instance
-     */
-    public function createScoreReport();
+    public function createScoreReport($homePoints = null, $awayPoints = null, $date = null, $student = null, $match = null); // add exception
 
     /**
      * Return an iterator of ScoreReport objects satisfying the search criteria given in the modelScoreReport object.
