@@ -298,15 +298,7 @@ interface ObjectLayer
      * @return the student who is the team's captain
      * @throws RDException in case either the team is null or another error occurs
      */
-    public function restoreStudentCaptainOfTeam($team); // add exception
-    
-    /**
-     * Return the Teams captained by a given student (traverse the link isCaptainOf from Student to Team).
-     * @param student the student
-     * @return the iterator of Teams captained by the student
-     * @throws RDException in case either the student is null or another error occurs
-     */
-    public function restoreStudentCaptainOfTeam($student); // add exception
+    public function restoreStudentCaptainOfTeam($team = null, $student = null); // add exception
     
     /**
      * Delete a link between a student and a team (sever the link isCaptainOf from Team to Student).
@@ -332,15 +324,7 @@ interface ObjectLayer
      * @return the iterator of Students who are members of the team
      * @throws RDException in case either the team is null or another error occurs
      */
-    public function restoreStudentMemberOfTeam($team); // add exception
-    
-    /**
-     * Return the Teams of which a given student is a member (traverse the link isMemberOf from Student to Team).
-     * @param student the student
-     * @return the iterator of Teams of which the student is a member
-     * @throws RDException in case either the student is null or another error occurs
-     */
-    public function restoreStudentMemberOfTeam($student); // add exception
+    public function restoreStudentMemberOfTeam($team = null, $student = null); // add exception
     
     /**
      * Delete a link between a student and a team (sever the link isMemberOf from Team to Student).
@@ -366,15 +350,7 @@ interface ObjectLayer
      * @return the Team which is the home team in the match
      * @throws RDException in case either the match is null or another error occurs
      */
-    public function restoreTeamHomeTeamMatch($match); // add exception
-    
-    /**
-     * Return the Matches in which a given team is a home team (traverse the link isHomeTeam from Team to Match).
-     * @param team the team
-     * @return the iterator of Matches in which the team is the home team
-     * @throws RDException in case either the team is null or another error occurs
-     */
-    public function restoreTeamHomeTeamMatch($team); // add exception
+    public function restoreTeamHomeTeamMatch($match = null, $team = null); // add exception
     
     /**
      * Delete a link between a home team and a match (sever the link isHomeTeam from Match to Team).
@@ -400,15 +376,7 @@ interface ObjectLayer
      * @return the Team which is the away team in the match
      * @throws RDException in case either the match is null or another error occurs
      */
-    public function restoreTeamAwayTeamMatch($match); // add exception
-    
-    /**
-     * Return the Matches in which a given team is a away team (traverse the link isAwayTeam from Team to Match).
-     * @param team the team
-     * @return the iterator of Matches in which the team is the away team
-     * @throws RDException in case either the team is null or another error occurs
-     */
-    public function restoreTeamAwayTeamMatch($team); // add exception
+    public function restoreTeamAwayTeamMatch($match = null, $team = null); // add exception
     
     /**
      * Delete a link between a away team and a match (sever the link isAwayTeam from Match to Team).
@@ -434,15 +402,7 @@ interface ObjectLayer
      * @return the League in which the team competes
      * @throws RDException in case either the team is null or another error occurs
      */
-    public function restoreTeamParticipatesInLeague($team); // add exception
-    
-    /**
-     * Return the Teams competing in the league (traverse the link participatesIn from League to Team).
-     * @param league the league
-     * @return an Iterator of Teams competing in the league
-     * @throws RDException in case either the league is null or another error occurs
-     */
-    public function restoreTeamParticipatesInLeague($league); // add exception
+    public function restoreTeamParticipatesInLeague($team = null, $league = null); // add exception
     
     /**
      * Delete a link between a Team and a League (sever the link isParticipatesIn from League to Team).
@@ -468,15 +428,8 @@ interface ObjectLayer
      * @return the League in which the team is the winner
      * @throws RDException in case either the team is null or another error occurs
      */
-    public function restoreTeamWinnerOfLeague($team); // add exception
+    public function restoreTeamWinnerOfLeague($team = null, $league = null); // add exception
     
-    /**
-     * Return the Team which won the league (traverse the link isWinnerOf from League to Team).
-     * @param league the league
-     * @return the winning Team of the league
-     * @throws RDException in case either the league is null or another error occurs
-     */
-    public function restoreTeamWinnerOfLeague($league); // add exception
     
     /**
      * Delete a link between a Team and a League (sever the link isWinnerOf from League to Team).
@@ -503,15 +456,7 @@ interface ObjectLayer
      * @return an Iterator of SportsVenues used by the league
      * @throws RDException in case either the league is null or another error occurs
      */
-    public function restoreLeagueSportsVenue($league); // add exception
-    
-    /**
-     * Return the Leagues using the sportsVenue (traverse the link has from SportsVenue to League).
-     * @param sportsVenue the SportsVenue
-     * @return an Iterator of Leagues using the sportsVenue
-     * @throws RDException in case either the sportsVenue is null or another error occurs
-     */
-    public function restoreLeagueSportsVenue($sportsVenue); // add exception
+    public function restoreLeagueSportsVenue($league = null, $sportsVenue = null); // add exception
     
     /**
      * Delete a link between a League and a SportsVenue (sever the link has from SportsVenue to League).
@@ -610,15 +555,7 @@ interface ObjectLayer
      * @return the SportsVenue where the given match is played
      * @throws RDException in case either the match is null or another error occurs
      */
-    public function restoreMatchSportsVenue($match); // add exception
-    
-    /**
-     * Return the Matches played at a SportsVenue (traverse the link isPlayedAt from SportsVenue to Match).
-     * @param sportsVenue the SportsVenue
-     * @return an Iterator of Matches played at the sportsVenue
-     * @throws RDException in case either the sportsVenue is null or another error occurs
-     */
-    public function restoreMatchSportsVenue($sportsVenue); // add exception
+    public function restoreMatchSportsVenue($match = null, $sportsVenue = null); // add exception
     
     /**
      * Delete a link between a Match and a SportsVenue (sever the link isPlayedAt from SportsVenue to Match).
