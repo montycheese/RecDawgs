@@ -5,15 +5,16 @@ class RDException extends \Exception {
     private static $serialVersionUID = 1;
     /**
      * Create a new RDException object.
-     * @param cause the cause of the exception (cause extends throwable)
+     * @param prev Exception the cause of the exception (cause extends Exception)
+     * @param string String A string containing the message pertaining to the exception
      */
-    public function __construct($cause=null, $string=null )
+    public function __construct($prev=null, $string=null )
         {
-            if($cause != null) {
-                super($cause);
+            if($prev != null) {
+                parent::__construct($previous=$prev);
             }
             else{
-                super($message=$string);
+                parent::__construct($message=$string);
             }
         }
 

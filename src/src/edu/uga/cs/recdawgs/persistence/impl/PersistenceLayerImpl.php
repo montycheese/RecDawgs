@@ -2,14 +2,22 @@
 namespace edu\uga\cs\recdawgs\persistence\impl;
 
 use edu\uga\cs\recdawgs\RDException as RDException;
-use edu\uga\cs\recdawgs\entity\SportsVenue as SportsVenue;
+use edu\uga\cs\recdawgs\entity\impl as Entity;
+use edu\uga\cs\recdawgs\object\impl as Object;
 use edu\uga\cs\recdawgs\persistence\PersistenceLayer as PersistenceLayer;
 
 class PersistenceLayerImpl implements PersistenceLayer{
+    private $dbConnection = null;
+    private $objLayer = null;
 
-    function __construct()
+    /**
+     * @param $dbConnection \PDO
+     * @param $objLayer Object\ObjectLayerImpl
+     */
+    function __construct($dbConnection, $objLayer)
     {
-        // TODO: Implement __construct() method.
+        $this->dbConnection = $dbConnection;
+        $this->objLayer = $objLayer;
     }
 
     /**
@@ -27,12 +35,37 @@ class PersistenceLayerImpl implements PersistenceLayer{
      * Store a given Administrator object in the persistent data store.
      * If the Administrator object to be stored is already persistent, the persistent
      * object in the data store is updated.
-     * @param administrator the Administrator to be stored
+     * @param administrator Entity\UserImpl the Administrator to be stored
      * @throws RDException in case an error occurred during the store operation
      */
-    public function  storeAdministrator($administrator)
+    public function storeAdministrator($administrator)
     {
-        // TODO: Implement storeAdministrator() method.
+        //create Query
+        $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, user_type)
+              VALUES(?, ?, ?, ?, ?, 1)
+              ON DUPLICATE KEY UPDATE
+              first_name = VALUES(first_name),
+              last_name = VALUES(last_name),
+              user_name = VALUES(user_name),
+              password = VALUES(password),
+              email_address = VALUES(email_address),
+              student_id=VALUES(student_id),
+              address = VALUES(address),
+              major= VALUES(major);";
+        //create prepared statement from query
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameters to prepared statement
+        $stmt->bindParam(1, $administrator->getFirstName(), \PDO::PARAM_STR);
+        $stmt->bindParam(2, $administrator->getLastName(), \PDO::PARAM_STR);
+        $stmt->bindParam(3, $administrator->getUserName(), \PDO::PARAM_STR);
+        $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
+        $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
+        if($stmt->execute()){
+            echo 'Administrator created successfully';
+        }
+        else{
+            throw new RDException('Error creating or updating Administrator');
+        }
     }
 
     /**
