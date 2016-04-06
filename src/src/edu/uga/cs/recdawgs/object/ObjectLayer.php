@@ -305,7 +305,7 @@ interface ObjectLayer
      * @return an Iterator with all Teams captained by the Student
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreStudentCaptainOfTeam($team = null, $student = null); // add exception
+    public function restoreStudentCaptainOfTeam($student = null, $team = null); // add exception
     
     /**
      * Delete a link between a student and a team (sever the link isCaptainOf from Team to Student).
@@ -339,7 +339,7 @@ interface ObjectLayer
      * @return an Iterator with all Students who are members of the team
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreStudentMemberOfTeam($team = null, $student = null); // add exception
+    public function restoreStudentMemberOfTeam($student = null, $team = null); // add exception
     
     /**
      * Delete a link between a student and a team (sever the link isMemberOf from Team to Student).
@@ -371,7 +371,7 @@ interface ObjectLayer
      * @return the Team which is the home team in the Match
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreTeamHomeTeamMatch($match = null, $team = null); // add exception
+    public function restoreTeamHomeTeamMatch($team = null, $match = null); // add exception
     
     /**
      * Delete a link between a home team and a match (sever the link isHomeTeam from Match to Team).
@@ -402,7 +402,7 @@ interface ObjectLayer
      * @return the Team which is the away team in the Match
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreTeamAwayTeamMatch($match = null, $team = null); // add exception
+    public function restoreTeamAwayTeamMatch($team = null, $match = null); // add exception
     
     /**
      * Delete a link between a away team and a match (sever the link isAwayTeam from Match to Team).
