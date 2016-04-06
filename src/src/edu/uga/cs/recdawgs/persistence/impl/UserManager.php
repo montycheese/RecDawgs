@@ -26,14 +26,15 @@ class UserManager {
     }
 
     /**
-     * Saves an admin obj to database
+     * Saves an admin obj to database or updates if it already exists
      *
      * @param Entity\UserImpl $administrator
      * @throws RDException
      */
     public function saveAdministrator($administrator){
-        //create Query
-        $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, user_type)
+        if($administrator->isPersistent()){
+            //update
+            $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, user_type)
               VALUES(?, ?, ?, ?, ?, 1)
               ON DUPLICATE KEY UPDATE
               first_name = VALUES(first_name),
@@ -41,19 +42,44 @@ class UserManager {
               user_name = VALUES(user_name),
               password = VALUES(password),
               email_address = VALUES(email_address);";
-        //create prepared statement from query
-        $stmt = $this->dbConnection->prepare($q);
-        //bind parameters to prepared statement
-        $stmt->bindParam(1, $administrator->getFirstName(), \PDO::PARAM_STR);
-        $stmt->bindParam(2, $administrator->getLastName(), \PDO::PARAM_STR);
-        $stmt->bindParam(3, $administrator->getUserName(), \PDO::PARAM_STR);
-        $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
-        $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
-        if($stmt->execute()){
-            echo 'Administrator created successfully';
+            //create prepared statement from query
+            $stmt = $this->dbConnection->prepare($q);
+            //bind parameters to prepared statement
+            $stmt->bindParam(1, $administrator->getFirstName(), \PDO::PARAM_STR);
+            $stmt->bindParam(2, $administrator->getLastName(), \PDO::PARAM_STR);
+            $stmt->bindParam(3, $administrator->getUserName(), \PDO::PARAM_STR);
+            $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
+            $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
+            if ($stmt->execute()) {
+                echo 'Administrator created successfully';
+            } else {
+                throw new RDException('Error creating or updating Administrator');
+            }
         }
-        else{
-            throw new RDException('Error creating or updating Administrator');
+        else {
+            //already exists in DB. Just update
+            //create Query
+            $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, user_type)
+              VALUES(?, ?, ?, ?, ?, 1)
+              ON DUPLICATE KEY UPDATE
+              first_name = VALUES(first_name),
+              last_name = VALUES(last_name),
+              user_name = VALUES(user_name),
+              password = VALUES(password),
+              email_address = VALUES(email_address);";
+            //create prepared statement from query
+            $stmt = $this->dbConnection->prepare($q);
+            //bind parameters to prepared statement
+            $stmt->bindParam(1, $administrator->getFirstName(), \PDO::PARAM_STR);
+            $stmt->bindParam(2, $administrator->getLastName(), \PDO::PARAM_STR);
+            $stmt->bindParam(3, $administrator->getUserName(), \PDO::PARAM_STR);
+            $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
+            $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
+            if ($stmt->execute()) {
+                echo 'Administrator created successfully';
+            } else {
+                throw new RDException('Error creating or updating Administrator');
+            }
         }
     }
 
