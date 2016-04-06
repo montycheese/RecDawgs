@@ -29,36 +29,317 @@ class MatchManager {
      * @throws RDException
      */
     public function save($match){
-        //create Query
-        $q = "INSERT INTO" . DB_NAME . ".match (home_points, away_points, date, is_completed,
-         home_team_id, away_team_id, sports_venue_id, score_report_id, round_id)
-              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
-              ON DUPLICATE KEY UPDATE
-              first_name = VALUES(first_name),
-              last_name = VALUES(last_name),
-              user_name = VALUES(user_name),
-              password = VALUES(password),
-              email_address = VALUES(email_address);";
+        if($match->isPersistent()){
+            //update
+            $q = "UPDATE " . DB_NAME . ".match" .
+                "set home_points = ?,
+              away_points = ?,
+              match.date = ?,
+              is_completed = ?,
+              home_team_id = ?,
+              away_team_id = ?,
+              sports_venue_id = ?,
+              WHERE match_id = ?;";
+
+            //create prepared statement from query
+            $stmt = $this->dbConnection->prepare($q);
+            //bind parameters to prepared statement
+            $stmt->bindParam(1, $match->getHomePoints(), \PDO::PARAM_INT);
+            $stmt->bindParam(2, $match->getAwayPoints(), \PDO::PARAM_INT);
+            $stmt->bindParam(3, $match->getDate());
+            $completed = ($match->getIsCompleted() ? 1 : 0);
+            $stmt->bindParam(4, $completed, \PDO::PARAM_INT);
+            $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(6, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(7, $match->getSportsVenue()->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(8, $match->getId(), \PDO::PARAM_INT);
+            // ROUND? $stmt->bindParam(8, $match->get round id), \PDO::PARAM_INT);
+            if($stmt->execute()){
+                echo 'Match created successfully';
+            }
+            else{
+                throw new RDException('Error creating match');
+            }
+        }
+        else{
+            //insert
+            //create Query
+            $q = "INSERT INTO" . DB_NAME . ".match (home_points, away_points, date, is_completed,
+              home_team_id, away_team_id, sports_venue_id)
+              VALUES(?, ?, ?, ?, ?, ?, ?);";
+            //create prepared statement from query
+            $stmt = $this->dbConnection->prepare($q);
+            //bind parameters to prepared statement
+            $stmt->bindParam(1, $match->getHomePoints(), \PDO::PARAM_INT);
+            $stmt->bindParam(2, $match->getAwayPoints(), \PDO::PARAM_INT);
+            $stmt->bindParam(3, $match->getDate());
+            $completed = ($match->getIsCompleted() ? 1 : 0);
+            $stmt->bindParam(4, $completed, \PDO::PARAM_INT);
+            $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(6, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(7, $match->getSportsVenue()->getId(), \PDO::PARAM_INT);
+            // ROUND? $stmt->bindParam(8, $match->get round id), \PDO::PARAM_INT);
+            if($stmt->execute()){
+                $match->setId($this->dbConnection->lastInsertId());
+                echo 'Match created successfully';
+            }
+            else{
+                throw new RDException('Error creating match');
+            }
+        }
+
+
+    }
+
+    public function storeHomeTeam($team, $match){
+        $q = "UPDATE " . DB_NAME . ".match" .
+            "set
+              home_team_id = ?,
+              WHERE match_id = ?;";
+
         //create prepared statement from query
         $stmt = $this->dbConnection->prepare($q);
         //bind parameters to prepared statement
-        $stmt->bindParam(1, $administrator->getFirstName(), \PDO::PARAM_STR);
-        $stmt->bindParam(2, $administrator->getLastName(), \PDO::PARAM_STR);
-        $stmt->bindParam(3, $administrator->getUserName(), \PDO::PARAM_STR);
-        $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
-        $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
+        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
         if($stmt->execute()){
-            echo 'Administrator created successfully';
+            echo 'Home team link created successfully';
         }
         else{
-            throw new RDException('Error creating or updating Administrator');
+            throw new RDException('Error create link');
         }
     }
 
-    public function restore(){}
+    public function storeAwayTeam($team, $match){
+        $q = "UPDATE " . DB_NAME . ".match" .
+            "set
+              away_team_id = ?,
+              WHERE match_id = ?;";
 
-
-    public function delete(){
-
+        //create prepared statement from query
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameters to prepared statement
+        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        if($stmt->execute()){
+            echo 'away team link created successfully';
+        }
+        else{
+            throw new RDException('Error creating link');
+        }
     }
+    public function storeSportsVenue($match, $sportsVenue){
+        $q = "UPDATE " . DB_NAME . ".match" .
+            "set
+              sports_venue_id = ?,
+              WHERE match_id = ?;";
+
+        //create prepared statement from query
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameters to prepared statement
+        $stmt->bindParam(1, $sportsVenue->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        if($stmt->execute()){
+            echo 'away venue link created successfully';
+        }
+        else{
+            throw new RDException('Error creating link');
+        }
+    }
+
+    public function restoreSportsVenue($match){
+        if($match == NULL || !$match->isPersistent()) {
+            throw new RDException('Match is not persistent');
+        }
+
+        $q = 'SELECT * from sports_venue where sports_venue_id = (SELECT sports_venue_id FROM '. DB_NAME  .'.match WHERE match_id = ?);';
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $match->getId(), \PDO::PARAM_INT);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return one result since there is only 1
+            $sportsVenueIter =  new SportsVenueIterator($resultSet, $this->objLayer);
+            return $sportsVenueIter->current();
+        }
+        else{
+            throw new RDException('Error restoring spports venue');
+        }
+    }
+
+
+    public function restore($modelMatch){
+        $q = 'SELECT * from ' . DB_NAME. '.match WHERE 1=1 ;';
+        if($modelMatch != NULL) {
+            if ($attr = $modelMatch->getHomePoints() != NULL) {
+                $q .= ' AND home_points = ' . $attr;
+            }
+            if ($attr = $modelMatch->getAwayPoints() != NULL) {
+                $q .= ' AND away_points = ' . $attr;
+            }
+            if ($attr = $modelMatch->getDate() != NULL) {
+                $q .= ' AND date = ' . $attr;
+            }
+            if ($attr = $modelMatch->getIsCompleted() != NULL) {
+                $q .= ' AND is_completed = ' . ($attr) ? 1 : 0;
+            }
+            if ($attr = $modelMatch->getHomeTeam()->getId() != NULL) {
+                $q .= ' AND home_team_id = ' . $attr;
+            }
+            if ($attr = $modelMatch->getAwayTeam()->getId() != NULL) {
+                $q .= ' AND away_team_id = ' . $attr;
+            }
+            if ($attr = $modelMatch->getSportsTeam->getId() != NULL) {
+                $q .= ' AND sports_team_id = ' . $attr;
+            }
+            if ($attr = $modelMatch->getId() != NULL){
+                $q .= ' AND match_id = ' . $attr;
+            }
+        }
+        $stmt = $this->dbConnection->prepare($q);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return iterator
+            return new StudentIterator($resultSet, $this->objLayer);
+        }
+        else{
+            throw new RDException('Error restoring student model');
+        }
+    }
+
+    /**
+     * Return the home team that participated in this match
+     *
+     * @param $match
+     * @throws RDException
+     * @return Entity\TeamImpl The home team of the match
+     */
+    public function restoreHomeTeam($match){
+        if($match == NULL || !$match->isPersistent()) {
+            throw new RDException('Match is not persistent');
+        }
+
+        $q = 'SELECT * FROM team WHERE team_id = ?;';
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return one result since there is only 1
+            $teamIter =  new TeamIterator($resultSet, $this->objLayer);
+            return $teamIter->current();
+        }
+        else{
+            throw new RDException('Error restoring home team');
+        }
+    }
+
+    /**
+     * Return the away team that participated in this match
+     *
+     * @param $match
+     * @throws RDException
+     * @return Entity\TeamImpl The away team of the match
+     */
+    public function restoreAwayTeam($match){
+        if($match == NULL || !$match->isPersistent()) {
+            throw new RDException('Match is not persistent');
+        }
+
+        $q = 'SELECT * FROM team WHERE team_id = ?;';
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return one result since there is only 1
+            $teamIter =  new TeamIterator($resultSet, $this->objLayer);
+            return $teamIter->current();
+        }
+        else{
+            throw new RDException('Error restoring away team');
+        }
+    }
+
+    public function delete($match){
+        if($match->getId() == -1){
+            //if match isn't persistent, we are done
+            return;
+        }
+
+        //Prepare mySQL query
+        $q = 'DELETE FROM ' . DB_NAME . '.match WHERE match_id = ?;';
+        //create Prepared statement
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameter to query
+        $stmt->bindParam(1, $match->getId(), \PDO::PARAM_INT);
+        //execute query
+        if ($stmt->execute()) {
+            echo 'match deleted successfully';
+        }
+        else{
+            throw new RDException('Deletion of match successful');
+        }
+    }
+
+    public function deleteHomeTeam($match){
+        $q = "UPDATE " . DB_NAME . ".match" .
+            "set
+              home_team_id = ?,
+              WHERE match_id = ?;";
+
+        //create prepared statement from query
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameters to prepared statement
+        $null = NULL;
+        $stmt->bindParam(1, $null);
+        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        if($stmt->execute()){
+            echo 'Home team link deleted successfully';
+        }
+        else{
+            throw new RDException('Error deleting link');
+        }
+    }
+
+    public function deleteAwayTeam($match){
+        $q = "UPDATE " . DB_NAME . ".match" .
+            "set
+              away_team_id = ?,
+              WHERE match_id = ?;";
+
+        //create prepared statement from query
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameters to prepared statement
+        $null = NULL;
+        $stmt->bindParam(1, $null);
+        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        if($stmt->execute()){
+            echo 'away team link deleted successfully';
+        }
+        else{
+            throw new RDException('Error deleting link');
+        }
+    }
+    public function deleteSportsVenue($match){
+        $q = "UPDATE " . DB_NAME . ".match" .
+            "set
+              sports_venue_id = ?,
+              WHERE match_id = ?;";
+
+        //create prepared statement from query
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameters to prepared statement
+        $null = NULL;
+        $stmt->bindParam(1, $null);
+        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        if($stmt->execute()){
+            echo 'venue link deleted successfully';
+        }
+        else{
+            throw new RDException('Error deleting link');
+        }
+    }
+
 }

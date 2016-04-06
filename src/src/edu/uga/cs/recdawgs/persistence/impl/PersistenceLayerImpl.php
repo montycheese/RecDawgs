@@ -94,13 +94,14 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Restore all Match objects that match attributes of the model Match.
-     * @param modelMatch the model Match; if null is provided, all Match objects will be returned
-     * @return an Iterator of the located Match objects
+     * @param  Entity\MatchImpl $modelMatch the model Match; if null is provided, all Match objects will be returned
+     * @return MatchIterator an Iterator of the located Match objects
      * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreMatch($modelMatch)
     {
-        // TODO: Implement restoreMatch() method.
+        $mgmt = new MatchManager($this->db, $this->objLayer);
+        return $mgmt->restore($modelMatch);
     }
 
     /**
@@ -112,7 +113,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeMatch($match)
     {
-        // TODO: Implement storeMatch() method.
+        $mgmt = new MatchManager($this->db, $this->objLayer);
+        $mgmt->save($match);
     }
 
     /**
@@ -122,30 +124,33 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteMatch($match)
     {
-        // TODO: Implement deleteMatch() method.
+        $mgmt = new MatchManager($this->db, $this->objLayer);
+        $mgmt->delete($match);
     }
 
     /**
      * Restore all SportsVenue objects that match sportsVenue attributes of the model SportsVenue.
-     * @param modelSportsVenue the model SportsVenue; if null is provided, all SportsVenue objects will be returned
-     * @return an Iterator of the located SportsVenue objects
+     * @param Entity\SportsVenueImpl $modelSportsVenue the model SportsVenue; if null is provided, all SportsVenue objects will be returned
+     * @return SportsVenueIterator an Iterator of the located SportsVenue objects
      * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreSportsVenue($modelSportsVenue)
     {
-        // TODO: Implement restoreSportsVenue() method.
+        $mgmt = new SportsVenueManager($this->db, $this->objLayer);
+        return $mgmt->restore($modelSportsVenue);
     }
 
     /**
      * Store a given SportsVenue object in the persistent data store.
      * If the SportsVenue object to be stored is already persistent, the persistent
      * object in the data store is updated.
-     * @param sportsVenue the SportsVenue to be stored
+     * @param Entity\SportsVenueImpl $sportsVenue the SportsVenue to be stored
      * @throws RDException in case an error occurred during the store operation
      */
     public function storeSportsVenue($sportsVenue)
     {
-        // TODO: Implement storeSportsVenue() method.
+        $mgmt = new SportsVenueManager($this->db, $this->objLayer);
+        $mgmt->save($sportsVenue);
     }
 
     /**
@@ -155,7 +160,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteSportsVenue($sportsVenue)
     {
-        // TODO: Implement deleteSportsVenue() method.
+        $mgmt = new SportsVenueManager($this->db, $this->objLayer);
+        $mgmt->delete($sportsVenue);
     }
 
     /**
@@ -380,7 +386,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function  storeTeamHomeTeamMatch($team, $match)
     {
-        // TODO: Implement storeTeamHomeTeamMatch() method.
+        $mgmt = new MatchManager($this->db, $this->objLayer);
+        $mgmt->storeHomeTeam($team, $match);
     }
 
     /**
@@ -416,19 +423,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
         }
         // else match is set, return the team
         else{
-            //TODO
-            $q .= 'team WHERE team_id = ?';
-            $stmt = $this->dbConnection->prepare($q);
-            $stmt->bindParam(1, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
-
-            if($stmt->execute()){
-                $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                if(count($resultSet) >= 1){
-                    $teamIter = new TeamIterator($resultSet, $this->objLayer);
-                    return $teamIter->current();
-                }
-            }
-
+            $mgmt = new MatchManager($this->db, $this->objLayer);
+            return $mgmt->restoreHomeTeam($match);
         }
         throw new RDException('Error restoring: ' . (isset($match)) ? 'Team from match' : 'Matches from team');
     }
@@ -441,7 +437,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteTeamHomeTeamMatch($team, $match)
     {
-        // TODO: Implement deleteTeamHomeTeamMatch() method.
+        $mgmt = new MatchManager($this->db, $this->objLayer);
+        $mgmt->deleteHomeTeam($match);
     }
 
     /**
@@ -452,7 +449,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeTeamAwayTeamMatch($team, $match)
     {
-        // TODO: Implement storeTeamAwayTeamMatch() method.
+        $mgmt = new MatchManager($this->db, $this->objLayer);
+        $mgmt->storeAwayTeam($team, $match);
     }
 
     /**
@@ -468,7 +466,16 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreTeamAwayTeamMatch($team = null,$match = null)
     {
-        // TODO: Implement restoreTeamAwayTeamMatch() method.
+        $mgmt = null;
+        //return iterator of matches
+        if( $team != null){
+            //TODO
+        }
+        //match is not null return single team
+        else{
+            $mgmt = new MatchManager($this->db, $this->objLayer);
+            return $mgmt->restoreAwayTeam($match);
+        }
     }
 
     /**
@@ -479,7 +486,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteTeamAwayTeamMatch($team, $match)
     {
-        // TODO: Implement deleteTeamAwayTeamMatch() method.
+        $mgmt = new MatchManager($this->db, $this->objLayer);
+        $mgmt->deleteAwayTeam($match);
     }
 
     /**
@@ -571,7 +579,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeLeagueSportsVenue($league, $sportsVenue)
     {
-        // TODO: Implement storeLeagueSportsVenue() method.
+        $mgmt = new SportsVenueManager($this->db, $this->objLayer);
+        $mgmt->storeLeagueUsedIn($league, $sportsVenue);
     }
 
     /**
@@ -589,7 +598,14 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreLeagueSportsVenue($league = null,$sportsVenue = null)
     {
-        // TODO: Implement restoreLeagueSportsVenue() method.
+        $mgmt = null;
+       if($league != null){
+           //TODO
+       }
+        else{
+            $mgmt = new SportsVenueManager($this->db, $this->objLayer);
+            return $mgmt->restoreLeaguesUsedIn($sportsVenue);
+        }
     }
 
     /**
@@ -600,7 +616,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteLeagueSportsVenue($league, $sportsVenue)
     {
-        // TODO: Implement deleteLeagueSportsVenue() method.
+        $mgmt = new SportsVenueManager($this->db, $this->objLayer);
+        $mgmt->deleteLeagueUsedIn($league, $sportsVenue);
     }
 
     /**
@@ -677,7 +694,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeMatchSportsVenue($match, $sportsVenue)
     {
-        // TODO: Implement storeMatchSportsVenue() method.
+        $mgmt = new MatchManager($this->db, $this->objLayer);
+        $mgmt->storeSportsVenue($match, $sportsVenue);
     }
 
     /**
@@ -695,7 +713,16 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreMatchSportsVenue($match = null, $sportsVenue = null)
     {
-        // TODO: Implement restoreMatchSportsVenue() method.
+        $mgmt = null;
+        //return a sports venue where match is played
+        if($match != null){
+            $mgmt = new MatchManager($this->db, $this->objLayer);
+            $mgmt->restoreSportsVenue($match);
+        }
+        //return iterature of matches played at this sprots venue
+        else{
+            //TODO
+        }
     }
 
     /**
@@ -706,7 +733,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteMatchSportsVenue($match, $sportsVenue)
     {
-        // TODO: Implement deleteMatchSportsVenue() method.
+        $mgmt = new MatchManager($this->db, $this->objLayer);
+        $mgmt->deleteSportsVenue($match);
     }
 
 

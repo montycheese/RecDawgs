@@ -34,14 +34,13 @@ class UserManager {
     public function saveAdministrator($administrator){
         if($administrator->isPersistent()){
             //update
-            $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, user_type)
-              VALUES(?, ?, ?, ?, ?, 1)
-              ON DUPLICATE KEY UPDATE
-              first_name = VALUES(first_name),
-              last_name = VALUES(last_name),
-              user_name = VALUES(user_name),
-              password = VALUES(password),
-              email_address = VALUES(email_address);";
+            $q = "UPDATE " . DB_NAME . ".user" .
+              "set first_name = ?,
+              last_name = ?,
+              user_name = ?,
+              password = ?,
+              email_address = ?
+              WHERE user_id = ?;";
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
@@ -50,14 +49,15 @@ class UserManager {
             $stmt->bindParam(3, $administrator->getUserName(), \PDO::PARAM_STR);
             $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
             $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
+            $stmt->bindParam(5, $administrator->getId(), \PDO::PARAM_STR);
             if ($stmt->execute()) {
-                echo 'Administrator created successfully';
+                echo 'Administrator updated successfully';
             } else {
-                throw new RDException('Error creating or updating Administrator');
+                throw new RDException('Error updating Administrator');
             }
         }
         else {
-            //already exists in DB. Just update
+            //doesn't exist in DB
             //create Query
             $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, user_type)
               VALUES(?, ?, ?, ?, ?, 1)
@@ -76,16 +76,53 @@ class UserManager {
             $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
             $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
             if ($stmt->execute()) {
+                //set the persistence id of this obj
+                $administrator->setId($this->dbConnection->lastInsertId());
                 echo 'Administrator created successfully';
             } else {
-                throw new RDException('Error creating or updating Administrator');
+                throw new RDException('Error creating Administrator');
             }
         }
     }
 
+    /**
+     * @param Entity\StudentImpl $student
+     * @throws RDException
+     */
     public function saveStudent($student){
-        //create Query
-        $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, student_id, address, major, user_type)
+        if($student->isPersistent()){
+            //update
+            $q = "UPDATE " . DB_NAME . ".user" .
+                "set first_name = ?,
+              last_name = ?,
+              user_name = ?,
+              password = ?,
+              email_address = ?,
+              student_id = ?,
+              address = ?,
+              major = ?
+              WHERE user_id = ?;";
+            //create prepared statement from query
+            $stmt = $this->dbConnection->prepare($q);
+            //bind parameters to prepared statement
+            $stmt->bindParam(1, $student->getFirstName(), \PDO::PARAM_STR);
+            $stmt->bindParam(2, $student->getLastName(), \PDO::PARAM_STR);
+            $stmt->bindParam(3, $student->getUserName(), \PDO::PARAM_STR);
+            $stmt->bindParam(4, $student->getPassword(), \PDO::PARAM_STR);
+            $stmt->bindParam(5, $student->getEmailAddress(), \PDO::PARAM_STR);
+            $stmt->bindParam(6, $student->getStudentId(), \PDO::PARAM_STR);
+            $stmt->bindParam(7, $student->getAddress(), \PDO::PARAM_STR);
+            $stmt->bindParam(8, $student->getMajor(), \PDO::PARAM_STR);
+            $stmt->bindParam(9, $student->getId(), \PDO::PARAM_STR);
+            if ($stmt->execute()) {
+                echo 'student updated successfully';
+            } else {
+                throw new RDException('Error updating student');
+            }
+        }
+        else {
+            //create Query
+            $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, student_id, address, major, user_type)
               VALUES(?, ?, ?, ?, ?, ?, ?, ?, 0)
               ON DUPLICATE KEY UPDATE
               first_name = VALUES(first_name),
@@ -96,22 +133,23 @@ class UserManager {
               student_id=VALUES(student_id),
               address = VALUES(address),
               major= VALUES(major);";
-        //create prepared statement from query
-        $stmt = $this->dbConnection->prepare($q);
-        //bind parameters to prepared statement
-        $stmt->bindParam(1, $student->getFirstName(), \PDO::PARAM_STR);
-        $stmt->bindParam(2, $student->getLastName(), \PDO::PARAM_STR);
-        $stmt->bindParam(3, $student->getUserName(), \PDO::PARAM_STR);
-        $stmt->bindParam(4, $student->getPassword(), \PDO::PARAM_STR);
-        $stmt->bindParam(5, $student->getEmailAddress(), \PDO::PARAM_STR);
-        $stmt->bindParam(6, $student->getStudentId(), \PDO::PARAM_STR);
-        $stmt->bindParam(7, $student->getAddress(), \PDO::PARAM_STR);
-        $stmt->bindParam(8, $student->getMajor(), \PDO::PARAM_STR);
-        if($stmt->execute()){
-            echo 'Administrator created successfully';
-        }
-        else{
-            throw new RDException('Error creating or updating Administrator');
+            //create prepared statement from query
+            $stmt = $this->dbConnection->prepare($q);
+            //bind parameters to prepared statement
+            $stmt->bindParam(1, $student->getFirstName(), \PDO::PARAM_STR);
+            $stmt->bindParam(2, $student->getLastName(), \PDO::PARAM_STR);
+            $stmt->bindParam(3, $student->getUserName(), \PDO::PARAM_STR);
+            $stmt->bindParam(4, $student->getPassword(), \PDO::PARAM_STR);
+            $stmt->bindParam(5, $student->getEmailAddress(), \PDO::PARAM_STR);
+            $stmt->bindParam(6, $student->getStudentId(), \PDO::PARAM_STR);
+            $stmt->bindParam(7, $student->getAddress(), \PDO::PARAM_STR);
+            $stmt->bindParam(8, $student->getMajor(), \PDO::PARAM_STR);
+            if ($stmt->execute()) {
+                $student->setId($this->dbConnection->lastInsertId());
+                echo 'Administrator created successfully';
+            } else {
+                throw new RDException('Error creating or updating Administrator');
+            }
         }
     }
 
@@ -138,9 +176,9 @@ class UserManager {
             if ($attr = $modelAdministrator->getEmailAddress() != NULL) {
                 $q .= ' AND email_address = ' . $attr;
             }
-            //if ($attr = $modelAdministrator->getId() != NULL){
-            //    $q .= 'AND user_id = ' . $attr;
-            //}
+            if ($attr = $modelAdministrator->getId() != NULL){
+                $q .= 'AND user_id = ' . $attr;
+            }
         }
         $stmt = $this->dbConnection->prepare($q);
         if ($stmt->execute()){
@@ -154,6 +192,11 @@ class UserManager {
         }
     }
 
+    /**
+     * @param Entity\StudentImpl $modelStudent
+     * @return StudentIterator
+     * @throws RDException
+     */
     public function restoreStudent($modelStudent){
         $q = 'SELECT * from ' . DB_NAME. '.user WHERE 1=1 ;';
         if($modelStudent != NULL) {
@@ -181,9 +224,9 @@ class UserManager {
             if ($attr = $modelStudent->getStudentId() != NULL) {
                 $q .= ' AND student_id = ' . $attr;
             }
-            //if ($attr = $modelStudent->getId() != NULL){
-            //    $q .= 'AND user_id = ' . $attr;
-            //}
+            if ($attr = $modelStudent->getId() != NULL){
+                $q .= 'AND user_id = ' . $attr;
+            }
         }
         $stmt = $this->dbConnection->prepare($q);
         if ($stmt->execute()){

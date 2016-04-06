@@ -16,13 +16,13 @@ use edu\uga\cs\recdawgs\RDException as RDException;
     /** Return the points scored by the home team.
      * @return the points scored by the home team
      */
-    public function getHomePoint();
+    public function getHomePoints();
 
     /** Set the points scored by the home team
      * @param homePoints the points scored by the home team
      * @throws RDException in case homePoints is negative
      */
-    public function setHomePoint( $homePoints ); //throws RDException;
+    public function setHomePoints( $homePoints ); //throws RDException;
 
     /** Return the points scored by the away team.
      * @return the points scored by the away team

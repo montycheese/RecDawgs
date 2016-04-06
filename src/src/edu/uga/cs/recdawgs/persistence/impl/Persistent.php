@@ -10,25 +10,29 @@ use edu\uga\cs\recdawgs\persistence\Persistable as Persistable;
  */
 
 abstract class Persistent implements Persistable{
+    private $id = -1;
+    private $persistent = false;
+
 
     /**
      * Return the persistent identifier of this entity object instance. The value of -1 indicates that
      * the object has not been stored in the persistent data store, yet.
      *
-     * @return edu\uga\cs\recdawgs\persistence\persistent identifier of an entity object instance
+     * @return int identifier of an entity object instance
      */
     public function getId() {
-        // TODO: Implement getId() method.
+        return $this->id;
     }
 
     /**
      * Set the persistent identifier for this entity object.  This method is typically used by the persistence
      * subsystem when creating a proxy object for an entity object already residing in the persistent data store.
      *
-     * @param id edu\uga\cs\recdawgs\persistence\the persistent object key
+     * @param id int persistent object key
      */
     public function setId($id) {
-        // TODO: Implement setId() method.
+        $this->id = $id;
+        $this->persistent = ($id > -1) ? true : false;
     }
 
     /**
@@ -39,6 +43,6 @@ abstract class Persistent implements Persistable{
      * @return true if this entity object has already been stored in the persistent data store, false otherwise.
      */
     public function isPersistent() {
-        // TODO: Implement isPersistent() method.
+        return $this->persistent;
     }
 }
