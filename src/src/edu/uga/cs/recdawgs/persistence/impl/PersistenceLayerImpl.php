@@ -7,16 +7,16 @@ use edu\uga\cs\recdawgs\object\impl as Object;
 use edu\uga\cs\recdawgs\persistence\PersistenceLayer as PersistenceLayer;
 
 class PersistenceLayerImpl implements PersistenceLayer{
-    private $dbConnection = null;
+    private $db = null;
     private $objLayer = null;
 
     /**
-     * @param $dbConnection \PDO
-     * @param $objLayer Object\ObjectLayerImpl
+     * @param DbConnection $dbConnection
+     * @param Object\ObjectLayerImpl $objLayer
      */
     function __construct($dbConnection, $objLayer)
     {
-        $this->dbConnection = $dbConnection;
+        $this->dbConnection = $dbConnection->db;
         $this->objLayer = $objLayer;
     }
 
@@ -28,39 +28,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreAdministrator($modelAdministrator)
     {
-
-        $q = 'SELECT * from ' . DB_NAME. '.user WHERE 1=1 ;';
-        if($modelAdministrator != NULL) {
-            if ($attr = $modelAdministrator->getFirstName() != NULL) {
-                $q .= ' AND first_name = ' . $attr;
-            }
-            if ($attr = $modelAdministrator->getLastName() != NULL) {
-                $q .= ' AND last_name = ' . $attr;
-            }
-            if ($attr = $modelAdministrator->getUserName() != NULL) {
-                $q .= ' AND user_name = ' . $attr;
-            }
-            if ($attr = $modelAdministrator->getPassword() != NULL) {
-                $q .= ' AND password = ' . $attr;
-            }
-            if ($attr = $modelAdministrator->getEmailAddress() != NULL) {
-                $q .= ' AND email_address = ' . $attr;
-            }
-            //if ($attr = $modelAdministrator->getId() != NULL){
-            //    $q .= 'AND user_id = ' . $attr;
-            //}
-        }
-        $stmt = $this->dbConnection->prepare($q);
-        if ($stmt->execute()){
-            //get results from Query
-            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            // return iterator
-            return new AdministratorIterator($resultSet, $this->objLayer);
-        }
-        else{
-            throw new RDException('Error restoring administrator model');
-        }
-
+        $mgmt = new UserManager($this->db, $this->objLayer);
+        return $mgmt->restoreAdministrator($modelAdministrator);
     }
 
     /**
@@ -72,32 +41,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeAdministrator($administrator)
     {
-        //create Query
-        $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, user_type)
-              VALUES(?, ?, ?, ?, ?, 1)
-              ON DUPLICATE KEY UPDATE
-              first_name = VALUES(first_name),
-              last_name = VALUES(last_name),
-              user_name = VALUES(user_name),
-              password = VALUES(password),
-              email_address = VALUES(email_address),
-              student_id=VALUES(student_id),
-              address = VALUES(address),
-              major= VALUES(major);";
-        //create prepared statement from query
-        $stmt = $this->dbConnection->prepare($q);
-        //bind parameters to prepared statement
-        $stmt->bindParam(1, $administrator->getFirstName(), \PDO::PARAM_STR);
-        $stmt->bindParam(2, $administrator->getLastName(), \PDO::PARAM_STR);
-        $stmt->bindParam(3, $administrator->getUserName(), \PDO::PARAM_STR);
-        $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
-        $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
-        if($stmt->execute()){
-            echo 'Administrator created successfully';
-        }
-        else{
-            throw new RDException('Error creating or updating Administrator');
-        }
+        $mgmt = new UserManager($this->db, $this->objLayer);
+        $mgmt->saveAdministrator($administrator);
     }
 
     /**
@@ -107,19 +52,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function  deleteAdministrator($administrator)
     {
-        //Prepare mySQL query
-        $q = 'DELETE FROM ' . DB_NAME . '.user WHERE user_id = ?;';
-        //create Prepared statement
-        $stmt = $this->dbConnection->prepare($q);
-        //bind parameter to query
-        $stmt->bindParam(1, $administrator->getId(), \PDO::PARAM_INT);
-        //execute query
-        if ($stmt->execute()) {
-            echo 'Administrator deleted successfully';
-        }
-        else{
-            throw new RDException('Deletion of Admin successful');
-        }
+        $mgmt = new UserManager($this->db, $this->objLayer);
+        $mgmt->delete($administrator);
     }
 
     /**
@@ -130,7 +64,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function  restoreStudent($modelStudent)
     {
-        // TODO: Implement restoreStudent() method.
+        $mgmt = new UserManager($this->db, $this->objLayer);
+        return $mgmt->restoreStudent($modelStudent);
     }
 
     /**
@@ -142,7 +77,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeStudent($student)
     {
-        // TODO: Implement storeStudent() method.
+        $mgmt = new UserManager($this->db, $this->objLayer);
+        $mgmt->saveStudent($student);
     }
 
     /**
@@ -152,7 +88,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteStudent($student)
     {
-        // TODO: Implement deleteStudent() method.
+        $mgmt = new UserManager($this->db, $this->objLayer);
+        $mgmt->delete($student);
     }
 
     /**
@@ -361,16 +298,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeStudentCaptainOfTeam($student, $team)
     {
-        $q = 'UPDATE team SET captain_id = ? WHERE team_id = ?;';
-        $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $team->getId(), \PDO::PARAM_INT);
-        if($stmt->execute()){
-            echo $student->getUserName() . ' successfully added as team captain of: ' . $team->getName();
-        }
-        else{
-            throw new RDException($student->getUserName() . ' unsuccessfully added as team captain of: ' . $team->getName());
-        }
+        $mgmt = new TeamManager($this->dbConnection, $this->objLayer);
+        $mgmt->storeStudentCaptainOf($student, $team);
     }
 
     /**
@@ -469,15 +398,39 @@ class PersistenceLayerImpl implements PersistenceLayer{
     public function restoreTeamHomeTeamMatch($match = null, $team = null)
     {
         $q = 'SELECT * FROM ';
-        //$team is set, return the match
+        //$team is set, return the match iterator
         if($team != null){
             $q .= 'match WHERE home_team_id = ?;';
+            $stmt = $this->dbConnection->prepare($q);
+            $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+
+            if($stmt->execute()){
+                $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                if(count($resultSet) >= 1){
+                    $matchIter = new MatchIterator($resultSet, $this->objLayer);
+                    return $matchIter;
+                }
+
+            }
+
         }
         // else match is set, return the team
         else{
             //TODO
-            $q .= 'team WHERE match_id = ?';
+            $q .= 'team WHERE team_id = ?';
+            $stmt = $this->dbConnection->prepare($q);
+            $stmt->bindParam(1, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
+
+            if($stmt->execute()){
+                $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                if(count($resultSet) >= 1){
+                    $teamIter = new TeamIterator($resultSet, $this->objLayer);
+                    return $teamIter->current();
+                }
+            }
+
         }
+        throw new RDException('Error restoring: ' . (isset($match)) ? 'Team from match' : 'Matches from team');
     }
 
     /**
