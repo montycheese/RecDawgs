@@ -19,7 +19,7 @@ class ObjectLayerImpl implements ObjectLayer{
 
     /**
      * Create a new Administrator object, given the set of initial attribute values.
-     * @param firstName String the first name
+     * @param String $firstName  the first name
      * @param lastName String the last name
      * @param userName String the user name (login name)
      * @param password String the password
@@ -66,14 +66,8 @@ class ObjectLayerImpl implements ObjectLayer{
      * @throws RDException in case there was an error while persisting the object
      */
     public function storeAdministrator($administrator){
-        // add exception
-        try {
-            $aPersistence = new Persistence\PersistenceLayerImpl();
-            $aPersistence->storeAdministrator($administrator);
-        } catch (\Exception $e) {
-            $excp = new RDException($message = "Storing admin failed");
-            echo 'Caught exception: ',  $excp->getMessage(), "\n";
-        }
+        $this->persistenceLayer->storeAdministrator($administrator);
+
     }
     
     /**

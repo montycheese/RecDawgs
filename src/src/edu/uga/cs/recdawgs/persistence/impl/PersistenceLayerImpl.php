@@ -22,13 +22,45 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Restore all Administrator objects that match attributes of the model Administrator.
-     * @param modelAdministrator the model Administrator; if null is provided, all Administrator objects will be returned
-     * @return an Administrator Iterator of the located Administrator objects
+     * @param Entity\UserImpl $modelAdministrator the model Administrator; if null is provided, all Administrator objects will be returned
+     * @return AdministratorIterator Administrator Iterator of the located Administrator objects
      * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreAdministrator($modelAdministrator)
     {
-        // TODO: Implement restoreAdministrator() method.
+
+        $q = 'SELECT * from ' . DB_NAME. '.user WHERE 1=1 ;';
+        if($modelAdministrator != NULL) {
+            if ($attr = $modelAdministrator->getFirstName() != NULL) {
+                $q .= ' AND first_name = ' . $attr;
+            }
+            if ($attr = $modelAdministrator->getLastName() != NULL) {
+                $q .= ' AND last_name = ' . $attr;
+            }
+            if ($attr = $modelAdministrator->getUserName() != NULL) {
+                $q .= ' AND user_name = ' . $attr;
+            }
+            if ($attr = $modelAdministrator->getPassword() != NULL) {
+                $q .= ' AND password = ' . $attr;
+            }
+            if ($attr = $modelAdministrator->getEmailAddress() != NULL) {
+                $q .= ' AND email_address = ' . $attr;
+            }
+            //if ($attr = $modelAdministrator->getId() != NULL){
+            //    $q .= 'AND user_id = ' . $attr;
+            //}
+        }
+        $stmt = $this->dbConnection->prepare($q);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return iterator
+            return new AdministratorIterator($resultSet, $this->objLayer);
+        }
+        else{
+            throw new RDException('Error restoring administrator model');
+        }
+
     }
 
     /**
@@ -70,12 +102,24 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Delete a given Administrator object from the persistent data store.
-     * @param administrator the Administrator to be deleted
+     * @param Entity\UserImpl $administrator the Administrator to be deleted
      * @throws RDException in case an error occurred during the delete operation
      */
     public function  deleteAdministrator($administrator)
     {
-        // TODO: Implement deleteAdministrator() method.
+        //Prepare mySQL query
+        $q = 'DELETE FROM ' . DB_NAME . '.user WHERE user_id = ?;';
+        //create Prepared statement
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameter to query
+        $stmt->bindParam(1, $administrator->getId(), \PDO::PARAM_INT);
+        //execute query
+        if ($stmt->execute()) {
+            echo 'Administrator deleted successfully';
+        }
+        else{
+            throw new RDException('Deletion of Admin successful');
+        }
     }
 
     /**
@@ -311,13 +355,22 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Store a link between a Student and a Team captained by the Student.
-     * @param student the Student to be linked
-     * @param team the Team to be linked
+     * @param Entity\UserImpl $student the Student to be linked
+     * @param Entity\TeamImpl $team the Team to be linked
      * @throws RDException in case an error occurred during the store operation
      */
     public function storeStudentCaptainOfTeam($student, $team)
     {
-        // TODO: Implement storeStudentCaptainOfTeam() method.
+        $q = 'UPDATE team SET captain_id = ? WHERE team_id = ?;';
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(2, $team->getId(), \PDO::PARAM_INT);
+        if($stmt->execute()){
+            echo $student->getUserName() . ' successfully added as team captain of: ' . $team->getName();
+        }
+        else{
+            throw new RDException($student->getUserName() . ' unsuccessfully added as team captain of: ' . $team->getName());
+        }
     }
 
     /**
@@ -415,7 +468,16 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreTeamHomeTeamMatch($match = null, $team = null)
     {
-        // TODO: Implement restoreTeamHomeTeamMatch() method.
+        $q = 'SELECT * FROM ';
+        //$team is set, return the match
+        if($team != null){
+            $q .= 'match WHERE home_team_id = ?;';
+        }
+        // else match is set, return the team
+        else{
+            //TODO
+            $q .= 'team WHERE match_id = ?';
+        }
     }
 
     /**
@@ -451,7 +513,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      * @return the Team which is the away team in the Match
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreTeamAwayTeamMatch($match = null, $team = null)
+    public function restoreTeamAwayTeamMatch($team = null,$match = null)
     {
         // TODO: Implement restoreTeamAwayTeamMatch() method.
     }
@@ -492,7 +554,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      * @return an Iterator with all Teams which participate in the League
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreTeamParticipatesInLeague($league = null, $team = null)
+    public function restoreTeamParticipatesInLeague($team = null,$league=null)
     {
         // TODO: Implement restoreTeamParticipatesInLeague() method.
     }
@@ -532,7 +594,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      * @return a Team which is the winner of the League
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreTeamWinnerOfLeague($league = null, $team = null)
+    public function restoreTeamWinnerOfLeague($team = null, $league = null)
     {
         // TODO: Implement restoreTeamWinnerOfLeague() method.
     }
@@ -572,7 +634,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      * @return an Iterator of all Leagues using the SportsVenue
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreLeagueSportsVenue($sportsVenue = null, $league = null)
+    public function restoreLeagueSportsVenue($league = null,$sportsVenue = null)
     {
         // TODO: Implement restoreLeagueSportsVenue() method.
     }
@@ -678,7 +740,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      * @return an Iterator of all Matches played at the SportsVenue
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreMatchSportsVenue($sportsVenue = null, $match = null)
+    public function restoreMatchSportsVenue($match = null, $sportsVenue = null)
     {
         // TODO: Implement restoreMatchSportsVenue() method.
     }
