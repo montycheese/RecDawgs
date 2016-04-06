@@ -1,60 +1,63 @@
 <?php
 namespace edu\uga\cs\recdawgs\object\impl;
 
-use edu\uga\cs\recdawgs\entity\Match as Match;
-use edu\uga\cs\recdawgs\entity\Round as Round;
+use edu\uga\cs\recdawgs\entity\impl as Entity;
+use edu\uga\cs\recdawgs\persistence\impl as Persistence;
 use edu\uga\cs\recdawgs\object\ObjectLayer as ObjectLayer;
 use edu\uga\cs\recdawgs\RDException as RDException;
 
 
 class ObjectLayerImpl implements ObjectLayer{
+    private $persistenceLayer = null;
+
+    /**
+     * @param Persistence\PersistenceLayerImpl $persistenceLayerImpl
+     */
+    public function __construct($persistenceLayerImpl=null){
+        $this->persistenceLayer = $persistenceLayerImpl;
+    }
+
     /**
      * Create a new Administrator object, given the set of initial attribute values.
-     * @param firstName the first name
-     * @param lastName the last name
-     * @param userName the user name (login name)
-     * @param password the password
-     * @param emailAddress the email address
-     * @return a new Administrator object instance with the given attribute values
+     * @param firstName String the first name
+     * @param lastName String the last name
+     * @param userName String the user name (login name)
+     * @param password String the password
+     * @param emailAddress String the email address
+     * @return Entity\AdministratorImpl a new Administrator object instance with the given attribute values
      * @throws RDException in case either firstName, lastName, or userName is null
      */
     public function createAdministrator($firstName = null, $lastName = null, $userName = null, 
         $password = null, $emailAddress = null) {
-        try {
-            $anAdmin = new AdministratorImpl();
 
-            if ($firstName != null && $lastName != null && $userName != null &&
-                $password != null && $emailAddress != null) {
-                $anAdmin->setFirstName($firstName);
-                $anAdmin->setLastName($lastName);
-                $anAdmin->setUserName($userName);
-                $anAdmin->setPassword($password);
-                $anAdmin->setEmailAddress($emailAddress);
-            }
+        $anAdmin = new Entity\AdministratorImpl();
 
-            return $anAdmin;
-        } catch (Exception $e) {
-            $excp = new RDException($message = "Admin creation failed");
-            echo 'Caught exception: ',  $excp->getMessage(), "\n";
+        if ($firstName != null && $lastName != null && $userName != null &&
+            $password != null && $emailAddress != null) {
+            $anAdmin->setFirstName($firstName);
+            $anAdmin->setLastName($lastName);
+            $anAdmin->setUserName($userName);
+            $anAdmin->setPassword($password);
+            $anAdmin->setEmailAddress($emailAddress);
+
+
         }
+
+        return $anAdmin;
     }
 
     /**
      * Return an iterator of Administrator objects satisfying the search criteria given in the modelAdministrator object.
-     * @param modelAdministrator a model Administrator object specifying the search criteria
-     * @return an Iterator of the located Administrator objects
+     * @param modelAdministrator Entity\AdministratorImpl a model Administrator object specifying the search criteria
+     * @return Persistence\AdministratorIterator Iterator of the located Administrator objects
      * @throws RDException in case there is a problem with the retrieval of the requested objects
      */
     public function findAdministrator($modelAdministrator) {
-        // add exception
-        try {
-            $aPersistence = new PersistenceLayerImpl();
-            $anAdmin = $aPersistence->restoreAdministrator($modelAdministrator);
-            return $anAdmin;
-        } catch (Exception $e) {
-            $excp = new RDException($message = "Admin info retrieval failed");
-            echo 'Caught exception: ',  $excp->getMessage(), "\n";
-        }
+        //$aPersistence = new Persistence\PersistenceLayerImpl();
+        //Use the class's persistence layer obj.
+        $anAdmin = $this->persistenceLayer->restoreAdministrator($modelAdministrator);
+        return $anAdmin;
+
     }
     
     /**
@@ -65,9 +68,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function storeAdministrator($administrator){
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeAdministrator($administrator);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Storing admin failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -81,9 +84,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function deleteAdministrator($administrator) {
         // add exception 
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteAdministrator($administrator);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting admin failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -106,7 +109,7 @@ class ObjectLayerImpl implements ObjectLayer{
         $password = null, $emailAddress = null, $studentId = null, $major = null, $address = null) {
         // add exception
         try {
-            $aStudent = new StudentImpl();
+            $aStudent = new Entity\UserImpl();
 
             if ($firstName != null && $lastName != null && $userName != null && $password != null && 
                 $emailAddress != null && $studentId != null && $major != null && $address != null) {
@@ -121,7 +124,7 @@ class ObjectLayerImpl implements ObjectLayer{
             }
 
             return $aStudent;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Creating student failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -136,10 +139,10 @@ class ObjectLayerImpl implements ObjectLayer{
     public function findStudent($modelStudent) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aStudent = $aPersistence->restoreStudent($modelStudent);
             return $aStudent;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Student info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -153,9 +156,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function storeStudent($student) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeStudent($student);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Storing student failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -169,9 +172,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function deleteStudent($student) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteStudent($student);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting student failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -194,7 +197,7 @@ class ObjectLayerImpl implements ObjectLayer{
             $isIndoor = null, $minTeams = null, $maxTeams = null, $minPlayers = null, $maxPlayers = null) {
         // add exception
         try {
-            $aLeague = new LeagueImpl();
+            $aLeague = new Entity\LeagueImpl();
 
             if ($name != null && $leagueRules != null && $matchRules && $isIndoor != null && 
                 $minTeams != null && $maxTeams != null && $minPlayers != null && $maxPlayers != null) {
@@ -209,7 +212,7 @@ class ObjectLayerImpl implements ObjectLayer{
             }
 
             return $aLeague;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Creating league failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -224,10 +227,10 @@ class ObjectLayerImpl implements ObjectLayer{
     public function findLeague($modelLeague) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aLeague = $aPersistence->restoreLeague($modelLeague);
             return $aLeague;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "League info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -241,9 +244,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function storeLeague($league) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeLeague($league);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Storing league failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -257,9 +260,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function deleteLeague($league) {
         // add exception 
         try {
-            $aPersistence = new PersistenceLayerImpl();
-            $aPersistence->deleteLeague($league)
-        } catch (Exception $e) {
+            $aPersistence = new Persistence\PersistenceLayerImpl();
+            $aPersistence->deleteLeague($league);
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting league failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -276,16 +279,16 @@ class ObjectLayerImpl implements ObjectLayer{
     public function createTeam($name = null, $student = null, $league = null) {
         // add exception
         try {
-            $aTeam = new TeamImpl();
+            $aTeam = new Entity\TeamImpl();
 
-            if ($name = null && $student = null && $league = null) {
+            if ($name != null && $student != null && $league != null) {
                 $aTeam->setName($name);
                 $aTeam->setCaptain($student);
                 $aTeam->setParticipatesInLeague($league);
             }
 
             return $aTeam;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Creating team failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -299,10 +302,10 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function findTeam($modelTeam) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aTeam = $aPersistence->restoreTeam($modelTeam);
             return $aTeam;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Team info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -316,9 +319,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function storeTeam($team) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeTeam($team);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Storing team failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -332,9 +335,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function deleteTeam($team) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteTeam($team);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting team failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -351,7 +354,7 @@ class ObjectLayerImpl implements ObjectLayer{
     public function createSportsVenue($name = null, $address = null, $isIndoor = null) {
         // add exception
         try {
-            $aSportsVenue = new SportsVenueImpl();
+            $aSportsVenue = new Entity\SportsVenueImpl();
 
             if ($name != null && $address != null && $isIndoor != null) {
                 $aSportsVenue->setName();
@@ -360,7 +363,7 @@ class ObjectLayerImpl implements ObjectLayer{
             }
 
             return $aSportsVenue;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Creating Sprots Venue failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -374,10 +377,10 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function findSportsVenue($modelSportsVenue) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aSportsVenue = $aPersistence->restoreSportsVenue($modelSportsVenue);
             return $aSportsVenue;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Sport venue info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -392,9 +395,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function storeSportsVenue($sportsVenue) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeSportsVenue($sportsVenue);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Storing sports venue failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -408,9 +411,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function deleteSportsVenue($sportsVenue) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteSportsVenue($sportsVenue);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting sports venue failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -431,7 +434,7 @@ class ObjectLayerImpl implements ObjectLayer{
         $isCompleted = null, $homeTeam = null, $awayTeam = null) {
         // add exception
         try {
-            $aMatch = new MatchImpl();
+            $aMatch = new Entity\MatchImpl();
 
             if ($homePoints != null && $awayPoints != null && $date != null && 
                 $isCompleted != null && $homeTeam != null && $awayTeam != null) {
@@ -444,7 +447,7 @@ class ObjectLayerImpl implements ObjectLayer{
             }
 
             return $aMatch;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Creating match failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -458,10 +461,10 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function findMatch($modelMatch) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aMatch = $aPersistence->restoreMatch($modelMatch);
             return $aMatch;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Match info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -475,9 +478,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function storeMatch($match) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImplImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeMatch($match);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Storing match failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -491,9 +494,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function deleteMatch($match) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteMatch($match);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting match failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -508,14 +511,14 @@ class ObjectLayerImpl implements ObjectLayer{
     public function createRound($number = null) {
         // add exception
         try {
-            $aRound = new RoundImpl();
+            $aRound = new Entity\RoundImpl();
 
             if ($number != null) {
                 $aRound->setNumber($number);
             }
 
             return $aRound;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Creating round failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -529,10 +532,10 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function findRound($modelRound) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aRound = $aPersistence->restoreRound($modelRound);
             return $aRound;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Round info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -546,9 +549,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function storeRound($round) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeRound($round);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Storing round failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -562,9 +565,9 @@ class ObjectLayerImpl implements ObjectLayer{
     public function deleteRound($round) {
         // add exception
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteRound($round);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting round failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -582,7 +585,7 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createScoreReport($homePoints = null, $awayPoints = null, $date = null, $student = null, $match = null) {
         try {
-            $aScoreReport = new ScoreReportImpl();
+            $aScoreReport = new Entity\ScoreReportImpl();
 
             if ($homePoints != null && $awayPoints != null && $date != null && $student != null && $match != null) {
                 $aScoreReport->setHomePoint($homePoints);
@@ -593,7 +596,7 @@ class ObjectLayerImpl implements ObjectLayer{
             }
 
             return $aScoreReport;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Creating score report failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -607,10 +610,10 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function findScoreReport($modelScoreReport) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aScoreReport = $aPersistence->restoreScoreReport($modelScoreReport);
             return $aScoreReport;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Score report retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -623,9 +626,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function storeScoreReport($scoreReport) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeScoreReport($scoreReport);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Storing score report failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -638,9 +641,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteScoreReport($scoreReport) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteScoreReport($scoreReport);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting score report failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -659,11 +662,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createStudentCaptainOfTeam($student, $team) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aStudentCap = $aPersistence->storeStudentCaptainOfTeam($student, $team);
 
             return $aStudentCap;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Setting team captain failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -684,11 +687,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreStudentCaptainOfTeam($student = null, $team = null) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $result = $aPersistence->restoreStudentCaptainOfTeam($student, $team);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Team/captain info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -702,9 +705,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteStudentCaptainOfTeam($student, $team) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteStudentCaptainOfTeam($student, $team);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting team captain failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -720,9 +723,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createStudentMemberOfTeam($student, $team) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeStudentMemberOfTeam($student, $team);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Setting team member failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -744,11 +747,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreStudentMemberOfTeam($student = null, $team = null) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $result = $aPersistence->restoreStudentMemberOfTeam($student, $team);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Team/students info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -762,9 +765,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteStudentMemberOfTeam($student, $team) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteStudentMemberOfTeam($student, $team);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting team member failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -780,9 +783,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createTeamHomeTeamMatch($team, $match) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeTeamHomeTeamMatch($team, $match);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Setting home team failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -802,11 +805,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreTeamHomeTeamMatch($team = null, $match = null) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $result = $aPersistence->restoreTeamHomeTeamMatch($team, $match);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Home team info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -820,9 +823,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteTeamHomeTeamMatch($team, $match) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteTeamHomeTeamMatch($team, $match);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting home team failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -838,9 +841,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createTeamAwayTeamMatch($team, $match) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeTeamAwayTeamMatch($team, $match);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Setting away team failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -859,11 +862,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreTeamAwayTeamMatch($team = null, $match = null) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $result = $aPersistence->restoreTeamAwayTeamMatch($team, $match);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Away team info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -877,9 +880,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteTeamAwayTeamMatch($team, $match) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteTeamAwayTeamMatch($team, $match);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting away team failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -895,9 +898,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createTeamParticipatesInLeague($team, $league) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeTeamParticipatesInLeague($team, $league);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Setting team's league failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -919,11 +922,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreTeamParticipatesInLeague($team = null, $league = null) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
-            $result = $aPersistence->restoreTeamParticipatesInLeague($team, $league)
+            $aPersistence = new Persistence\PersistenceLayerImpl();
+            $result = $aPersistence->restoreTeamParticipatesInLeague($team, $league);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Team/league info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -938,9 +941,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteTeamParticipatesInLeague($team, $league) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteTeamParticipatesInLeague($team, $league);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting team/league relationship failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -956,9 +959,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createTeamWinnerOfLeague($team, $league) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeTeamWinnerOfLeague($team, $league);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Setting league winner failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -979,11 +982,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreTeamWinnerOfLeague($team = null, $league = null) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
-            $result = $aPersistence->restoreTeamWinnerOfLeague($team, $league)
+            $aPersistence = new Persistence\PersistenceLayerImpl();
+            $result = $aPersistence->restoreTeamWinnerOfLeague($team, $league);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "League winner info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -997,9 +1000,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteTeamWinnerOfLeague($team, $league) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteTeamWinnerOfLeague($team, $league);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting league winner failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1016,9 +1019,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createLeagueSportsVenue($league, $sportsVenue) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeLeagueSportsVenue($league, $sportsVenue);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Setting the sports venue for a league failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1039,11 +1042,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreLeagueSportsVenue($league = null, $sportsVenue = null) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $result = $aPersistence->restoreLeagueSportsVenue($league, $sportsVenue);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Info of the sports venue for a league retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1057,9 +1060,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteLeagueSportsVenue($league, $sportsVenue) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteLeagueSportsVenue($league, $sportsVenue);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting the sports venue of a league failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1075,9 +1078,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createLeagueRound($league, $round) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeLeagueRound($league, $round);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Setting league/round relationship failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1091,11 +1094,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreLeagueRound($league) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $result = $aPersistence->restoreLeagueRound($league);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "The league/round info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1118,9 +1121,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteLeagueRound($league, $round) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteLeagueRound($league, $round);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting league/round relationship failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1138,9 +1141,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createRoundMatch($round, $match) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeRoundMatch($round, $match);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Setting round/match relationship failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1154,11 +1157,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreRoundMatch($round) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $result = $aPersistence->restoreRoundMatch($round);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Round/match info retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1181,9 +1184,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteRoundMatch($round, $match) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteRoundMatch($round, $match);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting round/match relationship failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1200,9 +1203,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createMatchSportsVenue($match, $sportsVenue) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->storeMatchSportsVenue($match, $sportsVenue);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Setting the sportsVenue of a match failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1216,11 +1219,11 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreMatchSportsVenue($match = null, $sportsVenue = null) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $result = $aPersistence->restoreMatchSportsVenue($match, $sportsVenue);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Info of the sports venue for a match retrieval failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
@@ -1234,9 +1237,9 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function deleteMatchSportsVenue($match, $sportsVenue) {
         try {
-            $aPersistence = new PersistenceLayerImpl();
+            $aPersistence = new Persistence\PersistenceLayerImpl();
             $aPersistence->deleteMatchSportsVenue($match, $sportsVenue);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $excp = new RDException($message = "Deleting the sports venue for a match failed");
             echo 'Caught exception: ',  $excp->getMessage(), "\n";
         }
