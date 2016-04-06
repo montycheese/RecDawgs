@@ -5,11 +5,11 @@ interface ObjectLayer
 {
     /**
      * Create a new Administrator object, given the set of initial attribute values. Or With undefined attributes if non are passed.
-     * @param firstName String the first name
-     * @param lastName String the last name
-     * @param userName String the user name (login name)
-     * @param password String the password
-     * @param emailAddress String the email address
+     * @param firstName the first name
+     * @param lastName the last name
+     * @param userName the user name (login name)
+     * @param password the password
+     * @param emailAddress the email address
      * @return a new Administrator object instance with the given attribute values
      * @throws RDException in case either firstName, lastName, or userName is null
      */
@@ -293,10 +293,17 @@ interface ObjectLayer
     public function createStudentCaptainOfTeam($student, $team); // add exception
     
     /**
-     * Return the student who is the captain of the team (traverse the link isCaptainOf from Team to Student).
-     * @param team the team
-     * @return the student who is the team's captain
-     * @throws RDException in case either the team is null or another error occurs
+     * The operation of this function depends on which of the default parameters is not null
+     *
+     * Return the Student who is the captain a given Team.
+     * @param team the Team
+     * @return the Student who is the captain of the Team
+     * @throws RDException in case an error occurred during the restore operation
+     * OR
+     * Return Teams captained by a given Student.
+     * @param student the Student
+     * @return an Iterator with all Teams captained by the Student
+     * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreStudentCaptainOfTeam($team = null, $student = null); // add exception
     
@@ -319,10 +326,18 @@ interface ObjectLayer
     public function createStudentMemberOfTeam($student, $team); // add exception
     
     /**
-     * Return the students who are members of the team (traverse the link isMemberOf from Team to Student).
-     * @param team the team
-     * @return the iterator of Students who are members of the team
-     * @throws RDException in case either the team is null or another error occurs
+     * Returns either array of teams or array of students depending on which parameter is not null
+     *
+     *  * Return Teams of which a given Student is a member.
+     * @param student the Student
+     * @return an Iterator with all Teams in which the Student is a member
+     * @throws RDException in case an error occurred during the restore operation
+     *
+     *
+     * Return Students who are members of a given Team.
+     * @param team the Team
+     * @return an Iterator with all Students who are members of the team
+     * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreStudentMemberOfTeam($team = null, $student = null); // add exception
     
@@ -345,10 +360,16 @@ interface ObjectLayer
     public function createTeamHomeTeamMatch($team, $match); // add exception
     
     /**
-     * Return the home team of the match (traverse the link isHomeTeam from Match to Team).
-     * @param match the match
-     * @return the Team which is the home team in the match
-     * @throws RDException in case either the match is null or another error occurs
+     *  /**
+     * Return Matches in which a given Team is the home team.
+     * @param team the Team
+     * @return an Iterator with all Matches in which the Team is the home team
+     * @throws RDException in case an error occurred during the restore operation
+     *
+     * Return the Team which is the home team in a given Match.
+     * @param match the Match
+     * @return the Team which is the home team in the Match
+     * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreTeamHomeTeamMatch($match = null, $team = null); // add exception
     
@@ -371,10 +392,15 @@ interface ObjectLayer
     public function createTeamAwayTeamMatch($team, $match); // add exception
     
     /**
-     * Return the away team of the match (traverse the link isAwayTeam from Match to Team).
-     * @param match the match
-     * @return the Team which is the away team in the match
-     * @throws RDException in case either the match is null or another error occurs
+     * * Return Matches in which a given Team is the away team.
+     * @param team the Team
+     * @return an Iterator with all Matches in which the Team is the away team
+     * @throws RDException in case an error occurred during the restore operation
+     *
+     * Return the Team which is the away team in a given Match.
+     * @param match the Match
+     * @return the Team which is the away team in the Match
+     * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreTeamAwayTeamMatch($match = null, $team = null); // add exception
     
@@ -397,10 +423,18 @@ interface ObjectLayer
     public function createTeamParticipatesInLeague($team, $league); // add exception
     
     /**
-     * Return the League in which a given team competes (traverse the link participatesIn from Team to League).
-     * @param team the team
-     * @return the League in which the team competes
-     * @throws RDException in case either the team is null or another error occurs
+     * Returns either a league or an array of teams based on which param is not null
+     *
+     * Return the League in which a given Team participates.
+     * @param team the Team
+     * @return the League in which the Team participates
+     * @throws RDException in case an error occurred during the restore operation
+     *
+     *
+     * Return the Teams which participate in a given League.
+     * @param league the League
+     * @return an Iterator with all Teams which participate in the League
+     * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreTeamParticipatesInLeague($team = null, $league = null); // add exception
     
@@ -423,10 +457,17 @@ interface ObjectLayer
     public function createTeamWinnerOfLeague($team, $league); // add exception
     
     /**
-     * Return the League in which a given team is the winner (traverse the link isWinnerOf from Team to League).
-     * @param team the team
-     * @return the League in which the team is the winner
-     * @throws RDException in case either the team is null or another error occurs
+     * Returns a league or team depending on which parameter is not null
+     *
+     *  * Return the League won by a given Team.
+     * @param team the Team
+     * @return the League in won by the Team
+     * @throws RDException in case an error occurred during the restore operation
+     *
+     * Return the Team which is the winner of a given League.
+     * @param league the League
+     * @return a Team which is the winner of the League
+     * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreTeamWinnerOfLeague($team = null, $league = null); // add exception
     
@@ -451,10 +492,17 @@ interface ObjectLayer
     public function createLeagueSportsVenue($league, $sportsVenue); // add exception
     
     /**
-     * Return the SportsVenues used by a given League is the winner (traverse the link has from League to SportsVenue).
+     * Returns a sports venue or an array of leagues depending on which parameter is not null
+     *
+     * Return SportsVenues used by a given League.
      * @param league the League
-     * @return an Iterator of SportsVenues used by the league
-     * @throws RDException in case either the league is null or another error occurs
+     * @return an Iterator with all SportsVenues used by the League
+     * @throws RDException in case an error occurred during the restore operation
+     *
+     * Return the Leagues using a given SportsVenue.
+     * @param sportsVenue the SportsVenue
+     * @return an Iterator of all Leagues using the SportsVenue
+     * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreLeagueSportsVenue($league = null, $sportsVenue = null); // add exception
     
@@ -550,10 +598,17 @@ interface ObjectLayer
     public function createMatchSportsVenue($match, $sportsVenue); // add exception
     
     /**
-     * Return the SportsVenue where a given Match is played (traverse the link isPlayedAt from Match to SportsVenue).
+     * Returns a sportsvenue or an array of matches depending on which parameter is not null
+     *
+     * Return SportsVenue where a given Match was played.
      * @param match the Match
-     * @return the SportsVenue where the given match is played
-     * @throws RDException in case either the match is null or another error occurs
+     * @return SportsVenue where the Match was played
+     * @throws RDException in case an error occurred during the restore operation
+     *
+     * Return the Matches played at a given SportsVenue.
+     * @param sportsVenue the SportsVenue
+     * @return an Iterator of all Matches played at the SportsVenue
+     * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreMatchSportsVenue($match = null, $sportsVenue = null); // add exception
     
