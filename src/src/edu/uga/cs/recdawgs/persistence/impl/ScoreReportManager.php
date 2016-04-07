@@ -40,44 +40,98 @@ class ScoreReportManager {
             //bind parameters to prepared statement
             $stmt->bindParam(1, $report->getHomePoints(), \PDO::PARAM_INT);
             $stmt->bindParam(2, $report->getAwayPoints(), \PDO::PARAM_INT);
-            $stmt->bindParam(3, $isIndoor, \PDO::PARAM_INT);
-            $stmt->bindParam(4, $report->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(5, $isIndoor, \PDO::PARAM_INT);
+            $stmt->bindParam(3, $report->getDate());
+            $stmt->bindParam(4, $report->getMatch()->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(5, $report->getStudent()->getId(), \PDO::PARAM_INT);
             $stmt->bindParam(6, $report->getId(), \PDO::PARAM_INT);
 
             if($stmt->execute()){
-                echo 'venue created successfully';
+                echo 'report created successfully';
             }
             else{
-                throw new RDException('Error creating venue');
+                throw new RDException('Error creating report');
             }
         }
         else{
             //insert
             //create Query
-            $q = "INSERT INTO sports_venue (sports_venue.name, address, is_indoor) VALUES(?, ?, ?);";
+            $q = "INSERT INTO score_report (home_points, away_points, score_report.date, match_id, student_id)
+                  VALUES(?, ?, ?, ?, ?);";
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $report->getName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $report->getAddress(), \PDO::PARAM_STR);
-            $isIndoor = ($report->getIsIndoor() ? 1 : 0);
-            $stmt->bindParam(3, $isIndoor, \PDO::PARAM_INT);
+            $stmt->bindParam(1, $report->getHomePoints(), \PDO::PARAM_INT);
+            $stmt->bindParam(2, $report->getAwayPoints(), \PDO::PARAM_INT);
+            $stmt->bindParam(3, $report->getDate());
+            $stmt->bindParam(4, $report->getMatch()->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(5, $report->getStudent()->getId(), \PDO::PARAM_INT);
 
             if($stmt->execute()){
                 $report->setId($this->dbConnection->lastInsertId());
-                echo 'venue created successfully';
+                echo 'report created successfully';
             }
             else{
-                throw new RDException('venue creating match');
+                throw new RDException('error creating report');
             }
         }
     }
 
+    /**
+     * @param Entity\ScoreReportImpl $modelReport
+     * @return ScoreReportIterator
+     * @throws RDException
+     */
     public function restore($modelReport){
+        $q = 'SELECT * from score_report WHERE 1=1 ';
+        if($modelReport != NULL) {
+            if ($attr = $modelReport->getHomePoints() != NULL) {
+                $q .= ' AND home_points = ' . $attr;
+            }
+            if ($attr = $modelReport->getAwayPoints() != NULL) {
+                $q .= ' AND away_points = ' . $attr;
+            }
+            if ($attr = $modelReport->getDate() != NULL) {
+                $q .= ' AND score_report.date = ' . $attr;
+            }
 
+            if ($attr = $modelReport->getId() != NULL){
+                $q .= ' AND score_report_id = ' . $attr;
+            }
+        }
+        $stmt = $this->dbConnection->prepare($q . ';');
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return iterator
+            return new ScoreReportIterator($resultSet, $this->objLayer);
+        }
+        else{
+            throw new RDException('Error restoring report model');
+        }
     }
-    public function delete($report){
 
+    /**
+     * @param Entity\ScoreReportImpl $report
+     * @throws RDException
+     */
+    public function delete($report){
+        if($report->getId() == -1){
+            //if report isn't persistent, we are done
+            return;
+        }
+
+        //Prepare mySQL query
+        $q = 'DELETE FROM score_report WHERE score_report_id = ?;';
+        //create Prepared statement
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameter to query
+        $stmt->bindParam(1, $report->getId(), \PDO::PARAM_INT);
+        //execute query
+        if ($stmt->execute()) {
+            echo 'report deleted successfully';
+        }
+        else{
+            throw new RDException('Deletion of report unsuccessful');
+        }
     }
 }

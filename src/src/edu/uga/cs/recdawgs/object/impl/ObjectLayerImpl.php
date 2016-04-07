@@ -306,11 +306,12 @@ class ObjectLayerImpl implements ObjectLayer{
      * @param isCompleted has the match been completed?
      * @param homeTeam the team which is the home team in this match
      * @param awayTeam the team which is the away team in this match
+     * @param Entity\RoundImpl the round in which this match is played
      * @return a new Match object instance with the given attribute values
      * @throws RDException in case any of the po$arguments is negative or either of the teams is null or if the given teams are not in the same league
      */
     public function createMatch($homePoints = null, $awayPoints = null, $date = null, 
-        $isCompleted = null, $homeTeam = null, $awayTeam = null) {
+        $isCompleted = null, $homeTeam = null, $awayTeam = null, $round=null) {
         $aMatch = new Entity\MatchImpl();
 
         if ($homePoints != null && $awayPoints != null && $date != null && 
@@ -321,6 +322,7 @@ class ObjectLayerImpl implements ObjectLayer{
             $aMatch->setIsCompleted($isCompleted);
             $aMatch->setHomeTeam($homeTeam);
             $aMatch->setAwayTeam($awayTeam);
+            $aMatch->setRound($awayTeam);
         }
 
         return $aMatch;
@@ -361,14 +363,16 @@ class ObjectLayerImpl implements ObjectLayer{
     /**
      * Create a new Round object.
      * @param number the number of this round of matches
+     * @param Entity\LeagueImpl the league that the round belongs to
      * @return a new Round object instance
      * @throws RDException in case the number is not positive
      */
-    public function createRound($number = null) {
+    public function createRound($number = null, $league=null) {
         $aRound = new Entity\RoundImpl();
 
-        if ($number != null) {
+        if ($number != null && $league != null) {
             $aRound->setNumber($number);
+            $aRound->setLeague($league);
         }
 
         return $aRound;

@@ -262,6 +262,8 @@ class MatchManager {
         }
     }
 
+
+
     public function delete($match){
         if($match->getId() == -1){
             //if match isn't persistent, we are done

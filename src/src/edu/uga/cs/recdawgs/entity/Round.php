@@ -21,5 +21,14 @@ interface Round
      * @throws RDException in case number is not positive
     */
     public function setNumber( $number ); // throws RDException;
+
+    /**
+     * Set the league in which this round of matches is played
+     *
+     * @param League $league
+     * @return void
+     */
+    public function setLeague($league);
+
 }
 ?>

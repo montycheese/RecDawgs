@@ -235,13 +235,14 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Restore all ScoreReport objects that match modelScoreReport attributes of the model ScoreReport.
-     * @param modelScoreReport the model ScoreReport; if null is provided, all ScoreReport objects will be returned
-     * @return an Iterator of the located ScoreReport objects
+     * @param Entity\ScoreReportImpl $modelScoreReport the model ScoreReport; if null is provided, all ScoreReport objects will be returned
+     * @return ScoreReportIterator an Iterator of the located ScoreReport objects
      * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreScoreReport($modelScoreReport)
     {
-        // TODO: Implement restoreScoreReport() method.
+        $mgmt = new ScoreReportManager($this->db, $this->objLayer);
+        return $mgmt->restore($modelScoreReport);
     }
 
     /**
@@ -253,17 +254,19 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeScoreReport($scoreReport)
     {
-        // TODO: Implement storeScoreReport() method.
+        $mgmt = new ScoreReportManager($this->db, $this->objLayer);
+        $mgmt->save($scoreReport);
     }
 
     /**
      * Delete a given ScoreReport object from the persistent data store.
-     * @param scoreReport the ScoreReport to be deleted
+     * @param Entity\ScoreReportImpl $scoreReport the ScoreReport to be deleted
      * @throws RDException in case an error occurred during the delete operation
      */
     public function deleteScoreReport($scoreReport)
     {
-        // TODO: Implement deleteScoreReport() method.
+        $mgmt = new ScoreReportManager($this->db, $this->objLayer);
+        $mgmt->delete($scoreReport);
     }
 
     /**
@@ -296,7 +299,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteRound($round)
     {
-        // TODO: Implement deleteRound() method.
+        $mgmt = new RoundManager($this->db, $this->objLayer);
+        $mgmt->delete($round);
     }
 
     /**
@@ -307,7 +311,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeStudentCaptainOfTeam($student, $team)
     {
-        $mgmt = new TeamManager($this->dbConnection, $this->objLayer);
+        $mgmt = new TeamManager($this->db, $this->objLayer);
         $mgmt->storeStudentCaptainOf($student, $team);
     }
 
@@ -326,7 +330,20 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreStudentCaptainOfTeam($team = null, $student = null)
     {
-        // TODO: Implement restoreStudentCaptainOfTeam() method.
+        $mgmt = null;
+        //return student who is captain
+       if ($team != null){
+           $mgmt = new TeamManager($this->db, $this->objLayer);
+           $mgmt->restoreStudentCaptainOf($team);
+       }
+       //return team iterator
+       else if($student != null){
+           $mgmt = new UserManager($this->db, $this->objLayer);
+           $mgmt->restoreTeamsCaptainedBy($student);
+       }
+       else{
+            throw new RDException('Both parameters can not be null');
+        }
     }
 
     /**
@@ -337,7 +354,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function  deleteStudentCaptainOfTeam($student, $team)
     {
-        // TODO: Implement deleteStudentCaptainOfTeam() method.
+        (new TeamManager($this->db, $this->objLayer))->deleteStudentCaptainOf($student, $team);
     }
 
     /**
@@ -348,7 +365,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeStudentMemberOfTeam($student, $team)
     {
-        // TODO: Implement storeStudentMemberOfTeam() method.
+        (new TeamManager($this->db, $this->objLayer))->storeStudentMemberOf($student, $team);
     }
 
     /**
@@ -367,7 +384,17 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreStudentMemberOfTeam($team = null, $student = null)
     {
-        // TODO: Implement restoreStudentMemberOfTeam() method.
+        //return iterator of students
+        if ($team != null){
+            return (new TeamManager($this->db, $this->objLayer))->restoreStudentMemberOf($team);
+        }
+        //return iterator of teams
+        else if ($student != null){
+            return (new UserManager($this->db, $this->objLayer))->restoreTeamsMemberOf($student);
+        }
+        else{
+            throw new RDException('Both params can not be null');
+        }
     }
 
     /**
@@ -378,7 +405,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteStudentMemberOfTeam($student, $team)
     {
-        // TODO: Implement deleteStudentMemberOfTeam() method.
+        (new TeamManager($this->db, $this->objLayer))->deleteStudentMemberOf($student, $team);
     }
 
     /**
@@ -410,19 +437,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
         $q = 'SELECT * FROM ';
         //$team is set, return the match iterator
         if($team != null){
-            $q .= 'match WHERE home_team_id = ?;';
-            $stmt = $this->dbConnection->prepare($q);
-            $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
-
-            if($stmt->execute()){
-                $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                if(count($resultSet) >= 1){
-                    $matchIter = new MatchIterator($resultSet, $this->objLayer);
-                    return $matchIter;
-                }
-
-            }
-
+            return (new TeamManager($this->db, $this->objLayer))->restoreMatchesHome($team);
         }
         // else match is set, return the team
         else{
@@ -472,12 +487,15 @@ class PersistenceLayerImpl implements PersistenceLayer{
         $mgmt = null;
         //return iterator of matches
         if( $team != null){
-            //TODO
+            return (new TeamManager($this->db, $this->objLayer))->restoreMatchesAway($team);
         }
         //match is not null return single team
-        else{
+        else if ($match != null){
             $mgmt = new MatchManager($this->db, $this->objLayer);
             return $mgmt->restoreAwayTeam($match);
+        }
+        else{
+            throw new RDException('both params can not be null');
         }
     }
 
@@ -675,7 +693,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreRoundMatch($round)
     {
-        // TODO: Implement restoreRoundMatch() method.
+        return (new RoundManager($this->db, $this->objLayer))->restoreMatches($round);
     }
 
     /**

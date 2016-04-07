@@ -240,6 +240,38 @@ class UserManager {
         }
     }
 
+    public function restoreTeamsCaptainedBy($student){
+        $q = 'SELECT * FROM team WHERE captain_id = ?;';
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return iterator
+            return new TeamIterator($resultSet, $this->objLayer);
+        }
+        else{
+            throw new RDException('Error restoring teams captained by this student');
+        }
+    }
+    public function restoreTeamsMemberOf($student){
+        $q = 'SELECT team.team_id, team.name, team.captain_id FROM team
+                INNER JOIN is_member_of
+                ON team.team_id = is_member_of.team_id
+                WHERE is_member_of.user_id = ?;';
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return iterator
+            return new TeamIterator($resultSet, $this->objLayer);
+        }
+        else{
+            throw new RDException('Error restoring teams joined by this student');
+        }
+    }
+
     /**
      * Deletes an Admin or Student from db.
      *
@@ -266,5 +298,6 @@ class UserManager {
             throw new RDException('Deletion of User successful');
         }
     }
+
 
 }

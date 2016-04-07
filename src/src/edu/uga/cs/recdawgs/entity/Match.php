@@ -88,6 +88,13 @@ use edu\uga\cs\recdawgs\RDException as RDException;
      */
     public function setSportsVenue( $sportsVenue);
 
+     /**
+      * Set the round in which this match is played
+      *
+      * @param Round $round
+      * @return void
+      */
+     public function setRound($round);
     
 }
 
