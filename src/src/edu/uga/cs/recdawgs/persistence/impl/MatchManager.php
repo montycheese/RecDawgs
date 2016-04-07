@@ -42,7 +42,7 @@ class MatchManager {
               WHERE match_id = ?;";
 
             //create prepared statement from query
-            $stmt = $this->dbConnection->prepare($q);
+            $stmt = $this->dbConnection->prepare($q . ';');
             //bind parameters to prepared statement
             $stmt->bindParam(1, $match->getHomePoints(), \PDO::PARAM_INT);
             $stmt->bindParam(2, $match->getAwayPoints(), \PDO::PARAM_INT);
@@ -68,7 +68,7 @@ class MatchManager {
               home_team_id, away_team_id, sports_venue_id)
               VALUES(?, ?, ?, ?, ?, ?, ?);";
             //create prepared statement from query
-            $stmt = $this->dbConnection->prepare($q);
+            $stmt = $this->dbConnection->prepare($q . ';');
             //bind parameters to prepared statement
             $stmt->bindParam(1, $match->getHomePoints(), \PDO::PARAM_INT);
             $stmt->bindParam(2, $match->getAwayPoints(), \PDO::PARAM_INT);
@@ -98,7 +98,7 @@ class MatchManager {
               WHERE match_id = ?;";
 
         //create prepared statement from query
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         //bind parameters to prepared statement
         $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
         $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
@@ -117,7 +117,7 @@ class MatchManager {
               WHERE match_id = ?;";
 
         //create prepared statement from query
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         //bind parameters to prepared statement
         $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
         $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
@@ -135,7 +135,7 @@ class MatchManager {
               WHERE match_id = ?;";
 
         //create prepared statement from query
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         //bind parameters to prepared statement
         $stmt->bindParam(1, $sportsVenue->getId(), \PDO::PARAM_INT);
         $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
@@ -153,7 +153,7 @@ class MatchManager {
         }
 
         $q = 'SELECT * from sports_venue where sports_venue_id = (SELECT sports_venue_id FROM '. DB_NAME  .'.match WHERE match_id = ?);';
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         $stmt->bindParam(1, $match->getId(), \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
@@ -169,7 +169,7 @@ class MatchManager {
 
 
     public function restore($modelMatch){
-        $q = 'SELECT * from ' . DB_NAME. '.match WHERE 1=1 ;';
+        $q = 'SELECT * from ' . _NAME. '.match WHERE 1=1 ';
         if($modelMatch != NULL) {
             if ($attr = $modelMatch->getHomePoints() != NULL) {
                 $q .= ' AND home_points = ' . $attr;
@@ -196,7 +196,7 @@ class MatchManager {
                 $q .= ' AND match_id = ' . $attr;
             }
         }
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->Connection->prepare($q);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -221,7 +221,7 @@ class MatchManager {
         }
 
         $q = 'SELECT * FROM team WHERE team_id = ?;';
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         $stmt->bindParam(1, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
@@ -248,7 +248,7 @@ class MatchManager {
         }
 
         $q = 'SELECT * FROM team WHERE team_id = ?;';
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         $stmt->bindParam(1, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
@@ -271,7 +271,7 @@ class MatchManager {
         //Prepare mySQL query
         $q = 'DELETE FROM ' . DB_NAME . '.match WHERE match_id = ?;';
         //create Prepared statement
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         //bind parameter to query
         $stmt->bindParam(1, $match->getId(), \PDO::PARAM_INT);
         //execute query
@@ -290,7 +290,7 @@ class MatchManager {
               WHERE match_id = ?;";
 
         //create prepared statement from query
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         //bind parameters to prepared statement
         $null = NULL;
         $stmt->bindParam(1, $null);
@@ -310,7 +310,7 @@ class MatchManager {
               WHERE match_id = ?;";
 
         //create prepared statement from query
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         //bind parameters to prepared statement
         $null = NULL;
         $stmt->bindParam(1, $null);
@@ -329,7 +329,7 @@ class MatchManager {
               WHERE match_id = ?;";
 
         //create prepared statement from query
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         //bind parameters to prepared statement
         $null = NULL;
         $stmt->bindParam(1, $null);

@@ -172,7 +172,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreTeam($modelTeam)
     {
-        // TODO: Implement restoreTeam() method.
+        $mgmt = new TeamManager($this->db, $this->objLayer);
+        return $mgmt->restore($modelTeam);
     }
 
     /**
@@ -184,7 +185,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeTeam($team)
     {
-        // TODO: Implement storeTeam() method.
+        $mgmt = new TeamManager($this->db, $this->objLayer);
+        $mgmt->save($team);
     }
 
     /**
@@ -194,7 +196,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteTeam($team)
     {
-        // TODO: Implement deleteTeam() method.
+        $mgmt = new TeamManager($this->db, $this->objLayer);
+        $mgmt->delete($team);
     }
 
     /**
@@ -655,8 +658,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Store a link between a Round and a Match to be played in the Round.
-     * @param round the Round to be linked
-     * @param match the Match to be linked
+     * @param Entity\RoundImpl $round the Round to be linked
+     * @param Entity\MatchImpl $match the Match to be linked
      * @throws RDException in case an error occurred during the store operation
      */
     public function storeRoundMatch($round, $match)

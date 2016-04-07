@@ -92,7 +92,7 @@ class SportsVenueManager {
     }
 
     public function restore($modelSportsVenue){
-        $q = 'SELECT * from sports_venue WHERE 1=1 ;';
+        $q = 'SELECT * from sports_venue WHERE 1=1 ';
         if($modelSportsVenue != NULL) {
             if ($attr = $modelSportsVenue->getName() != NULL) {
                 $q .= ' AND sports_venue.name = ' . $attr;
@@ -108,7 +108,7 @@ class SportsVenueManager {
                 $q .= ' AND sports_venue_id = ' . $attr;
             }
         }
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);

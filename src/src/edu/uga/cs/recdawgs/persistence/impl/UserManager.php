@@ -159,7 +159,7 @@ class UserManager {
      * @throws RDException
      */
     public function restoreAdministrator($modelAdministrator){
-        $q = 'SELECT * from ' . DB_NAME. '.user WHERE 1=1 ;';
+        $q = 'SELECT * from ' . DB_NAME. '.user WHERE 1=1 ';
         if($modelAdministrator != NULL) {
             if ($attr = $modelAdministrator->getFirstName() != NULL) {
                 $q .= ' AND first_name = ' . $attr;
@@ -180,7 +180,7 @@ class UserManager {
                 $q .= 'AND user_id = ' . $attr;
             }
         }
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -198,7 +198,7 @@ class UserManager {
      * @throws RDException
      */
     public function restoreStudent($modelStudent){
-        $q = 'SELECT * from ' . DB_NAME. '.user WHERE 1=1 ;';
+        $q = 'SELECT * from ' . DB_NAME. '.user WHERE 1=1 ';
         if($modelStudent != NULL) {
             if ($attr = $modelStudent->getFirstName() != NULL) {
                 $q .= ' AND first_name = ' . $attr;
@@ -228,7 +228,7 @@ class UserManager {
                 $q .= 'AND user_id = ' . $attr;
             }
         }
-        $stmt = $this->dbConnection->prepare($q);
+        $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
