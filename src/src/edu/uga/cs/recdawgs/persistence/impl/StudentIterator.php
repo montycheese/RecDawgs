@@ -16,6 +16,7 @@ class StudentIterator extends PersistenceIterator{
      * @param $objLayer ObjectLayerImpl instance of the object layer object
      */
     public function __construct($resultSet, $objLayer){
+        parent::__construct();
         $this->resultSet = $resultSet;
         $this->objLayer = $objLayer;
 
