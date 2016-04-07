@@ -11,8 +11,8 @@ use edu\uga\cs\recdawgs\RDException as RDException;
  * teams and team members must be positive.
  *
  */
-interface League extends Persistable
-{
+
+class LeagueImpl extends Persistent implements League {
     private $name = null;
     private $leagueRules = null;
     private $matchRules = null;
@@ -24,6 +24,15 @@ interface League extends Persistable
     private $winnerOfLeague = null;
     
     public function __constructor($name=null, $leagueRules=null, $matchRules=null, $isIndoor=null, $minTeams=null, $maxTeams=null, $minMembers=null, $maxMembers=null, $winnerOfLeague=null) {
+        $this->name = $name;
+        $this->leagueRules = $leagueRules;
+        $this->matchRules = $matchRules;
+        $this->isIndoor = $isIndoor;
+        $this->minTeams = $minTeams;
+        $this->maxTeams = $maxTeams;
+        $this->minMembers = $minMembers;
+        $this->maxMembers = $maxMembers;
+        $this->winnerOfLeague = $winnerOfLeague;
         
     }
     
