@@ -434,17 +434,19 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreTeamHomeTeamMatch($match = null, $team = null)
     {
-        $q = 'SELECT * FROM ';
         //$team is set, return the match iterator
         if($team != null){
             return (new TeamManager($this->db, $this->objLayer))->restoreMatchesHome($team);
         }
         // else match is set, return the team
-        else{
+        else if ($match != null) {
             $mgmt = new MatchManager($this->db, $this->objLayer);
             return $mgmt->restoreHomeTeam($match);
         }
-        throw new RDException('Error restoring: ' . (isset($match)) ? 'Team from match' : 'Matches from team');
+        else{
+            throw new RDException('Error restoring: ' . (isset($match)) ? 'Team from match' : 'Matches from team');
+        }
+
     }
 
     /**
@@ -513,17 +515,17 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Store a link between a Team and a League in which the team participates.
-     * @param team the Team to be linked
-     * @param league the League to be linked
+     * @param Entity\TeamImpl $team the Team to be linked
+     * @param Entity\LeagueImpl $league the League to be linked
      * @throws RDException in case an error occurred during the store operation
      */
     public function storeTeamParticipatesInLeague($team, $league)
     {
-        // TODO: Implement storeTeamParticipatesInLeague() method.
+        (new TeamManager($this->db, $this->objLayer))->storeParticipatesIn($team, $league);
     }
 
     /**
-     * Returns either a league or an array of teams based on which param is not null
+     * Returns either a league or an iterator of teams based on which param is not null
      *
      * Return the League in which a given Team participates.
      * @param team the Team
@@ -538,7 +540,17 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreTeamParticipatesInLeague($team = null,$league=null)
     {
-        // TODO: Implement restoreTeamParticipatesInLeague() method.
+        //return the league
+        if($team != null){
+            return (new TeamManager($this->db, $this->objLayer))->restoreParticipatesIn($team);
+        }
+        //return the teams in the league
+        else if ($league != null){
+
+        }
+        else{
+            throw new RDException('Both params can not be null');
+        }
     }
 
     /**
@@ -549,7 +561,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteTeamParticipatesInLeague($team, $league)
     {
-        // TODO: Implement deleteTeamParticipatesInLeague() method.
+        (new TeamManager($this->db, $this->objLayer))->deleteParticipatesIn($league, $team);
     }
 
     /**
@@ -560,7 +572,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeTeamWinnerOfLeague($team, $league)
     {
-        // TODO: Implement storeTeamWinnerOfLeague() method.
+        (new LeagueManager($this->db, $this->objLayer))->storeWinner($team, $league);
     }
 
     /**
@@ -578,7 +590,15 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreTeamWinnerOfLeague($team = null, $league = null)
     {
-        // TODO: Implement restoreTeamWinnerOfLeague() method.
+        if($team != null) {
+         //todo
+        }
+        else if($league != null) {
+            return (new LeagueManager($this->db, $this->objLayer))->restoreWinner($league);
+        }
+        else{
+            throw new RDException("both params can not be null");
+        }
     }
 
     /**

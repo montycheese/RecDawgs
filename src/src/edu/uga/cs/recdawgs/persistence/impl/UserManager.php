@@ -123,16 +123,7 @@ class UserManager {
         else {
             //create Query
             $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, student_id, address, major, user_type)
-              VALUES(?, ?, ?, ?, ?, ?, ?, ?, 0)
-              ON DUPLICATE KEY UPDATE
-              first_name = VALUES(first_name),
-              last_name = VALUES(last_name),
-              user_name = VALUES(user_name),
-              password = VALUES(password),
-              email_address = VALUES(email_address),
-              student_id=VALUES(student_id),
-              address = VALUES(address),
-              major= VALUES(major);";
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?, 0);";
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
@@ -146,7 +137,7 @@ class UserManager {
             $stmt->bindParam(8, $student->getMajor(), \PDO::PARAM_STR);
             if ($stmt->execute()) {
                 $student->setId($this->dbConnection->lastInsertId());
-                echo 'Administrator created successfully';
+                echo 'student created successfully';
             } else {
                 throw new RDException('Error creating or updating Administrator');
             }

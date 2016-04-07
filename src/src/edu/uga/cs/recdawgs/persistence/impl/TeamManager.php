@@ -105,7 +105,16 @@ class TeamManager {
     }
 
     public function storeParticipatesIn($team, $league){
-
+        $q = 'INSERT INTO league_team (team_id, league_id) VALUES(?, ?);';
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(2, $league->getId(), \PDO::PARAM_INT);
+        if($stmt->execute()){
+            echo 'Link successfully created';
+        }
+        else{
+            throw new RDException('Link unsuccessfully created');
+        }
     }
 
     public function restore($modelTeam){
@@ -216,7 +225,21 @@ class TeamManager {
     }
 
     public function restoreParticipatesIn($team){
+        if($team == null) throw new RDException('Team parameter is null');
 
+        $q = 'SELECT * from league WHERE league_id = (SELECT league_id FROM league_team WHERE team_id = ?);';
+
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return first obj
+            return new LeagueIterator($resultSet, $this->objLayer);
+        }
+        else{
+            throw new RDException('Error restoring laegue');
+        }
     }
     public function restoreTeamWinnerOf($team){
 
@@ -253,8 +276,25 @@ class TeamManager {
 
     }
 
-    public function deleteParticipatesIn($team){
-
+    public function deleteParticipatesIn($league, $team){
+        if($team->getId() == -1){
+            //if team isn't persistent, we are done
+            return;
+        }
+        //Prepare mySQL query
+        $q = 'DELETE FROM league_team WHERE team_id = ? AND league_id = ?;';
+        //create Prepared statement
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameter to query
+        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(2, $league->getId(), \PDO::PARAM_INT);
+        //execute query
+        if ($stmt->execute()) {
+            echo 'Link deleted successfully';
+        }
+        else{
+            throw new RDException('Deletion of link unsuccessful');
+        }
     }
     public function deleteStudentMemberOf($student, $team){
         //Prepare mySQL query
