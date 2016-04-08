@@ -60,13 +60,7 @@ class UserManager {
             //doesn't exist in DB
             //create Query
             $q = "INSERT INTO team10.user (first_name, last_name, user_name, password, email_address, user_type)
-              VALUES(?, ?, ?, ?, ?, 1)
-              ON DUPLICATE KEY UPDATE
-              first_name = VALUES(first_name),
-              last_name = VALUES(last_name),
-              user_name = VALUES(user_name),
-              password = VALUES(password),
-              email_address = VALUES(email_address);";
+              VALUES(?, ?, ?, ?, ?, 1);";
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
