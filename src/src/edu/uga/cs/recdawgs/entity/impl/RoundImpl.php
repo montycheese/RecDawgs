@@ -30,7 +30,11 @@ class RoundImpl extends Persistent implements Round {
      * @throws RDException in case number is not positive
     */
     public function setNumber( $number ){ // throws RDException;
-        $this->number = $number;
+        if($number < 0)  {
+            throw new RDException('Round number cannot be negative.');   
+        } else {
+            $this->number = $number;
+        }
     }   
     /**
      * Set the league in which this round of matches is played

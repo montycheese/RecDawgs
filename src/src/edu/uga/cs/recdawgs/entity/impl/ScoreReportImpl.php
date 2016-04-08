@@ -18,7 +18,8 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
     private $date;
     private $match;
     private $student;
-    
+    private $homeTeam;
+    private $awayTeam;
     /** Constructor
      * Initalizes all of the parameter values into local variables.
      */
@@ -28,6 +29,11 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
         $this->date = $date;
         $this->match = $match;
         $this->student = $student;
+        
+        if(isset($match)) {
+            $this->homeTeam = $match->getHomeTeam();
+            $this->awayTeam = $match->getAwayTeam();
+        }
     }
     
     /** Return the points scored by the home team.
@@ -66,11 +72,13 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
      * @throws RDException in case awayPoints is negative
      */
     public function setAwayPoints( $awayPoints ){ //throws RDException;
-        try {
-            $this->awayPoints = $awayPoints;
-        } catch (RDException $rde) {
-            echo $rde;   
+        if($awayPoints < 0) {
+            throw new RDException('Away Points can not be a negative value.');
         }
+        else{
+            $this->awayPoints = $awayPoints;
+        }
+        
     }
     /** Return the date of the match.
      * @return the date of the match
@@ -98,11 +106,13 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
      * @throws RDException in case the match is null
      */
     public function setMatch( $match ){ // throws RDException;
-        try {
-            $this->match = $match;
-        } catch (RDException $rde) {
-            echo $rde;   
+        if(!isset($match)) {
+            throw new RDException('Match can not be null'); 
         }
+        else{
+            $this->match = $match;
+        }
+       
     }
     /** Return the student involved in the report.
      * @return the student involved in the report
@@ -116,11 +126,15 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
      * @throws RDException in case the student is null or not the captain of the team involved in the match
      */
     public function setStudent( $student ) { // throws RDException;
-        try {
-            $this->student = $student;   
-        } catch (RDException $rde) {
-            echo $rde;   
+        if(!isset($student)) {
+            throw new RDException('Student can not be null');
+        } else if (($student !== $this->homeTeam->getTeamCaptain()) || ($student !== $this->awayTeam->getTeamCaptain())) {
+            throw new RDException('Student has to be a Team Captain');   
         }
+        else{
+            $this->student = $student;
+        }
+    
     }
 }
 

@@ -45,12 +45,12 @@ class MatchImpl extends Persistent implements Match {
      * @throws RDException in case homePoints is negative
      */
     public function setHomePoints( $homePoints ){ //throws RDException;
-         try {
-                $this->homePoints = $homePoints;
-            }
-            catch(RDException $rde){
-                echo $rde;
-            }
+        
+        if($homePoints < 0) {
+            throw new RDException('Home points can not be negative.');   
+        } else {
+            $this->homePoints = $homePoints;   
+        }
 
     }
     /** Return the points scored by the away team.
@@ -65,11 +65,10 @@ class MatchImpl extends Persistent implements Match {
      * @throws RDException in case awayPoints is negative
      */
     public function setAwayPoints( $awayPoints ){ // throws RDException;
-        try{
+        if($awayPoints < 0) {
+            throw new RDException('Away points cannot be negative.');   
+        } else {
             $this->awayPoints = $awayPoints;
-        }
-        catch (RDException $rde) {
-            echo $rde;   
         }
     }
     /** Return the date of the match.
@@ -115,11 +114,13 @@ class MatchImpl extends Persistent implements Match {
      * @throws RDException in case the homeTeam is null or not participating in the same league as the away team
      */
     public function setHomeTeam( $homeTeam ){ // throws RDException;
-        try {
-            $this->homeTeam = $homeTeam;
-        } catch (RDException $rde) {
-               echo $rde;
+        
+        if(!isset($homeTeam)) {
+            throw new RDException('Home team can not be null.');
+        } else if($homeTeam->getParticipatesInLeague() !== $this->awayTeam->getParticipatesInLeague()) {
+            throw new RDException('Home Team must be in the same league as the Away Team.');   
         }
+      
     }
     /** Return the away team of this match.
      * @return the away team of this match
@@ -133,11 +134,14 @@ class MatchImpl extends Persistent implements Match {
      * @throws RDException in case the awayTeam is null or not participating in the same league as the home team
      */
     public function setAwayTeam( $awayTeam ) { // throws RDException;
-        try {
-            $this->awayTeam = $awayTeam;
-        } catch (RDException $rde) {
-            echo $rde;   
+        if(!isset($awayTeam) {
+            throw new RDException('Away team can not be null)'; 
+        } else if($awayTeam->getParticipatesInLeague() !== $this->awayTeam->getParticipatesInLeague()) {
+            throw new RDException('Away Team must be in the same league as the Home Team.');   
+        } else {
+            $this->awayTeam = $awayTeam;   
         }
+   
     }
     /** Return the sports venue of this match.
      * @return the sports venue of this match

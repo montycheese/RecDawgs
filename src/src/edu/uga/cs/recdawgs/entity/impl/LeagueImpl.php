@@ -104,7 +104,11 @@ class LeagueImpl extends Persistent implements League {
      * @throws RDException in case minTeams is not positive
      */
     public function setMinTeams( $minTeams ) { //throws RDException; 
-        $this->minTeams = $minTeams; 
+        if($minTeam < 0) { 
+            throw new RDException('Min teams can not be null');
+        } else {
+            $this->minTeams = $minTeams; 
+        }
     }
     /** Return the maximum number of teams in this league.
      * @return the maximum number of teams in this league
@@ -118,7 +122,11 @@ class LeagueImpl extends Persistent implements League {
      * @throws RDException in case maxTeams is not positive or less than the current minimum number of teams for this league
      */
     public function setMaxTeams( $maxTeams ) { //throws RDException;
-        $this->maxTeams = $maxTeams;
+        if($maxTeams < 0 || $maxTeams < $this->minTeams) {
+            throw new RDException('Max teams cannot be smaller than the minimum number of teams or negative.');
+        } else {
+            $this->maxTeams = $maxTeams;
+        }
     }
     /** Return the minimum number of team players in this league.
      * @return the minimum number of team players in this league
@@ -132,7 +140,12 @@ class LeagueImpl extends Persistent implements League {
      * @throws RDException in case minMembers is not positive
      */
     public function setMinMembers( $minMembers ) {// throws RDException;
-        $this->minMembers = $minMembers;
+        if($minMembers < 0) {
+            throw new RDException('Min number of members of a team cannot be negative.');
+        } else {
+            $this->minMembers = $minMembers;
+
+        }
     }
     /** Return the maximum number of team players in this league.
      * @return the maximum number of team players in this league
@@ -146,7 +159,12 @@ class LeagueImpl extends Persistent implements League {
      * @throws RDException in case maxMembers is not positive or less than the current minimum number of team players for this league
      */
     public function setMaxMembers( $maxMembers ) { // throws RDException; 
-        $this->maxMembers = maxMembers; 
+     
+        if($maxMembers < 0 || $maxMembers < $this->minMembers) {
+            throw new RDException('Max number of members of a team cannot be smaller than the min number of teams or negative.');   
+        } else {
+            $this->maxMembers = maxMembers;   
+        }
     }
     /** Return the the winner of this league.
      * @return the team which is the winner of this league
@@ -159,7 +177,14 @@ class LeagueImpl extends Persistent implements League {
      * @throws RDException in case the team is null or the team is not participating in this league
      */
     public function setWinnerOfLeague($team ) { // throws RDException;
-        $this->winnerOfLeague = $team;
+        if(!isset($team)) {
+            throw new RDException('Winner of league cannot be null');
+        } else if ($team->getParticipatesInLeague()->getName() !== $this->name) {
+            throw new RDException('Team must be participating in the league.');
+        } else {
+            $this->winnerOfLeague = $team;   
+        }
+            
     }
     
 }
