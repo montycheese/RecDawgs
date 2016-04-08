@@ -12,7 +12,7 @@ use edu\uga\cs\recdawgs\RDException as RDException;
  *
  */
 
-class ScorereportImpl extends Persistent implements ScoreReport {
+class ScoreReportImpl extends Persistent implements ScoreReport {
     private $homePoint;
     private $awayPoint;
     private $date;
@@ -33,7 +33,7 @@ class ScorereportImpl extends Persistent implements ScoreReport {
     /** Return the points scored by the home team.
      * @return the points scored by the home team
      */
-    public function getHomePoint() {
+    public function getHomePoints() {
         return $this->homePoint;
     }
 
@@ -41,12 +41,18 @@ class ScorereportImpl extends Persistent implements ScoreReport {
      * @param homePoints the points scored by the home team
      * @throws RDException in case homePoints is negative
      */
-    public function setHomePoint( $homePoints ){// throws RDException;
-        try {
-            $this->homePoint = $homePoints;
-        } catch (RDException $rde) {
-            echo $rde;   
+    public function setHomePoints( $homePoints ){// throws RDException;
+       // try {
+        //Throw Exception if homePoints is negative.
+        if($homePoints < 0) {
+            throw new RDException('Home Points can not be a negative value.');
         }
+        else{
+            $this->homePoint = $homePoints;
+        }
+        //} catch (RDException $rde) {
+          //  echo $rde;   
+        //}
     }
     /** Return the points scored by the away team.
      * @return the points scored by the away team
