@@ -241,8 +241,28 @@ class TeamManager {
             throw new RDException('Error restoring laegue');
         }
     }
-    public function restoreTeamWinnerOf($team){
 
+    /**
+     * @param Entity\TeamImpl $team
+     * @return Entity\LeagueImpl
+     * @throws RDException
+     */
+    public function restoreLeagueWinnerOf($team){
+        if($team == null) throw new RDException('Team parameter is null');
+
+        $q = 'SELECT * from league WHERE league_id = (SELECT league_id FROM league_team WHERE team_id = ? LIMIT 1);';
+
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return first obj
+            return (new LeagueIterator($resultSet, $this->objLayer))->current();
+        }
+        else{
+            throw new RDException('Error restoring league');
+        }
     }
 
     /**

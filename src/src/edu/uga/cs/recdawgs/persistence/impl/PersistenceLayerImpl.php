@@ -334,12 +334,12 @@ class PersistenceLayerImpl implements PersistenceLayer{
         //return student who is captain
        if ($team != null){
            $mgmt = new TeamManager($this->db, $this->objLayer);
-           $mgmt->restoreStudentCaptainOf($team);
+           return $mgmt->restoreStudentCaptainOf($team);
        }
        //return team iterator
        else if($student != null){
            $mgmt = new UserManager($this->db, $this->objLayer);
-           $mgmt->restoreTeamsCaptainedBy($student);
+           return  $mgmt->restoreTeamsCaptainedBy($student);
        }
        else{
             throw new RDException('Both parameters can not be null');
@@ -590,9 +590,11 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreTeamWinnerOfLeague($team = null, $league = null)
     {
+        //return league
         if($team != null) {
-         //todo
+         return (new TeamManager($this->db, $this->objLayer))->restoreLeagueWinnerOf($team);
         }
+        //return team
         else if($league != null) {
             return (new LeagueManager($this->db, $this->objLayer))->restoreWinner($league);
         }
@@ -603,13 +605,13 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Delete a link between a Team and a League won by the Team.
-     * @param team the Team
-     * @param league the League
+     * @param Entity\TeamImpl $team the Team
+     * @param Entity\LeagueImpl $league the League
      * @throws RDException in case an error occurred during the delete operation
      */
     public function deleteTeamWinnerOfLeague($team, $league)
     {
-        // TODO: Implement deleteTeamWinnerOfLeague() method.
+        (new LeagueManager($this->db, $this->objLayer))->deleteWinner($team, $league);
     }
 
     /**
@@ -640,12 +642,17 @@ class PersistenceLayerImpl implements PersistenceLayer{
     public function restoreLeagueSportsVenue($league = null,$sportsVenue = null)
     {
         $mgmt = null;
+        //return all sports venues
        if($league != null){
-           //TODO
+           return (new LeagueManager($this->db, $this->objLayer))->restoreSportsVenues($league);
        }
-        else{
+       //return all leagues
+        else if ($sportsVenue != null){
             $mgmt = new SportsVenueManager($this->db, $this->objLayer);
             return $mgmt->restoreLeaguesUsedIn($sportsVenue);
+        }
+        else{
+            throw new RDException($string='Both params can not be null');
         }
     }
 
@@ -663,13 +670,13 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Store a link between a League and a Round of matches in the league.
-     * @param league the League to be linked
-     * @param round the Round to be linked
+     * @param Entity\LeagueImpl $league the League to be linked
+     * @param Entity\RoundImpl $round the Round to be linked
      * @throws RDException in case an error occurred during the store operation
      */
     public function storeLeagueRound($league, $round)
     {
-        // TODO: Implement storeLeagueRound() method.
+        (new LeagueManager($this->db, $this->objLayer))->storeRound($league, $round);
     }
 
     /**
@@ -680,7 +687,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreLeagueRound($league)
     {
-        // TODO: Implement restoreLeagueRound() method.
+        return (new LeagueManager($this->db, $this->objLayer))->restoreRounds($league);
     }
 
     /**
@@ -691,7 +698,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteLeagueRound($league, $round)
     {
-        // TODO: Implement deleteLeagueRound() method.
+        (new LeagueManager($this->db, $this->objLayer))->deleteRound($league, $round);
     }
 
     /**
@@ -702,7 +709,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeRoundMatch($round, $match)
     {
-        // TODO: Implement storeRoundMatch() method.
+        (new MatchManager($this->db, $this->objLayer))->storeRound($round, $match);
     }
 
     /**
@@ -724,7 +731,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function  deleteRoundMatch($round, $match)
     {
-        // TODO: Implement deleteRoundMatch() method.
+        (new MatchManager($this->db, $this->objLayer))->deleteRound($round, $match);
     }
 
     /**
@@ -758,11 +765,14 @@ class PersistenceLayerImpl implements PersistenceLayer{
         //return a sports venue where match is played
         if($match != null){
             $mgmt = new MatchManager($this->db, $this->objLayer);
-            $mgmt->restoreSportsVenue($match);
+            return $mgmt->restoreSportsVenue($match);
         }
         //return iterature of matches played at this sprots venue
+        elseif ($sportsVenue != null){
+            return (new SportsVenueManager($this->db, $this->objLayer))->restoreMatchesPlayedIn($sportsVenue);
+        }
         else{
-            //TODO
+            throw new RDException($string='both params can not be null');
         }
     }
 

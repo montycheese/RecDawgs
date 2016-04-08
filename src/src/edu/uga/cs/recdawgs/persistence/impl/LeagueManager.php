@@ -47,6 +47,30 @@ class LeagueManager {
         }
     }
 
+    public function storeRound($league, $round) {
+        if ($league->isPersistent() && $round->isPersistent()) {
+            //update
+            $q = "UPDATE score_report
+                set league_id = ?,
+              WHERE round_id = ?;";
+
+            //create prepared statement from query
+            $stmt = $this->dbConnection->prepare($q);
+            //bind parameters to prepared statement
+            $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(2, $round->getId(), \PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                echo 'link created successfully';
+            } else {
+                throw new RDException($string='Error creating link');
+            }
+        }
+        else{
+            throw new RDException($string='both objects need to be persistent');
+        }
+    }
+
     /**
      * Return winner of this league
      *
@@ -75,12 +99,91 @@ class LeagueManager {
         }
     }
 
+    public function restoreSportsVenues($league){
+        $q = 'SELECT sports_venue.sports_venue_id, sports_venue.name, sports_venue.address, sports_venue.is_indoor
+            from sports_venue
+            INNER JOIN league_venue
+            ON sports_venue.sports_venue_id = league_venue.venue_id
+            WHERE league_venue.league_id =  ?;';
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return iterator
+            return (new SportsVenueIterator($resultSet, $this->objLayer));
+        }
+        else{
+            throw new RDException('Error restoring venues');
+        }
+    }
+
+
+    public function restoreRounds($league){
+        $q = 'SELECT * from '. DB_NAME . '.round' .
+            'WHERE league_id =  ?;';
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return iterator
+            return (new RoundIterator($resultSet, $this->objLayer));
+        }
+        else{
+            throw new RDException('Error restoring rounds');
+        }
+    }
+
     public function restore($leagueModel){
 
     }
 
     public function delete($league){
 
+    }
+
+    /**
+     * @param Entity\TeamImpl $team
+     * @param Entity\LeagueImpl $league
+     * @throws RDException
+     */
+    public function deleteWinner($team, $league){
+        $q = 'DELETE FROM is_winner_of WHERE team_id = ? AND league_id = ?;';
+        //create Prepared statement
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameter to query
+        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(2, $league->getId(), \PDO::PARAM_INT);
+        //execute query
+        if ($stmt->execute()) {
+            echo 'link deleted successfully';
+        }
+        else{
+            throw new RDException('Deletion of link unsuccessful');
+        }
+    }
+
+    /**
+     * @param Entity\LeagueImpl $league
+     * @param Entity\RoundImpl $round
+     * @throws RDException
+     */
+    public function deleteRound($league, $round){
+        $q = 'UPDATE '. DB_NAME .  '.round SET league_id = ? WHERE round_id = ?;';
+        //create Prepared statement
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameter to query
+        $null = null;
+        $stmt->bindParam(1, $null);
+        $stmt->bindParam(2, $round->getId(), \PDO::PARAM_INT);
+        //execute query
+        if ($stmt->execute()) {
+            echo 'link deleted successfully';
+        }
+        else{
+            throw new RDException('Deletion of link unsuccessful');
+        }
     }
 
 

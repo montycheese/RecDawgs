@@ -141,6 +141,21 @@ class SportsVenueManager {
 
     }
 
+    public function restoreMatchesPlayedIn($sportsVenue){
+        $q = 'SELECT * FROM '. DB_NAME . '.match WHERE match.sports_venue_id = ?;';
+        $stmt = $this->dbConnection->prepare($q);
+        $stmt->bindParam(1, $sportsVenue->getId(), \PDO::PARAM_INT);
+        if ($stmt->execute()){
+            //get results from Query
+            $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return iterator
+            return new MatchIterator($resultSet, $this->objLayer);
+        }
+        else{
+            throw new RDException('Error restoring matches using this sports venue');
+        }
+    }
+
     public function deleteLeagueUsedIn($league, $sportsVenue){
         //Prepare mySQL query
         $q = 'DELETE FROM league_venue WHERE venue_id = ? AND league_id = ?;';

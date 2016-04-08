@@ -147,6 +147,25 @@ class MatchManager {
         }
     }
 
+    public function storeRound($round, $match){
+        $q = "UPDATE " . DB_NAME . ".match" .
+            "set
+              round_id = ?,
+              WHERE match_id = ?;";
+
+        //create prepared statement from query
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameters to prepared statement
+        $stmt->bindParam(1, $round->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        if($stmt->execute()){
+            echo 'Round match link created successfully';
+        }
+        else{
+            throw new RDException('Error creating link');
+        }
+    }
+
     public function restoreSportsVenue($match){
         if($match == NULL || !$match->isPersistent()) {
             throw new RDException('Match is not persistent');
@@ -286,6 +305,11 @@ class MatchManager {
     }
 
     public function deleteHomeTeam($match){
+        if($match->getId() == -1){
+            //if match isn't persistent, we are done
+            return;
+        }
+
         $q = "UPDATE " . DB_NAME . ".match" .
             "set
               home_team_id = ?,
@@ -306,6 +330,10 @@ class MatchManager {
     }
 
     public function deleteAwayTeam($match){
+        if($match->getId() == -1){
+            //if match isn't persistent, we are done
+            return;
+        }
         $q = "UPDATE " . DB_NAME . ".match" .
             "set
               away_team_id = ?,
@@ -325,6 +353,10 @@ class MatchManager {
         }
     }
     public function deleteSportsVenue($match){
+        if($match->getId() == -1){
+            //if match isn't persistent, we are done
+            return;
+        }
         $q = "UPDATE " . DB_NAME . ".match" .
             "set
               sports_venue_id = ?,
@@ -342,6 +374,30 @@ class MatchManager {
         else{
             throw new RDException('Error deleting link');
         }
+    }
+
+    public function deleteRound($round, $match){
+        if($match->getId() == -1 && $round->getId() == -1){
+            throw new RDException('neither objects are persistent');
+        }
+        $q = "UPDATE " . DB_NAME . ".match" .
+            "set
+              round_id = ?,
+              WHERE match_id = ?;";
+
+        //create prepared statement from query
+        $stmt = $this->dbConnection->prepare($q);
+        //bind parameters to prepared statement
+        $null = NULL;
+        $stmt->bindParam(1, $null);
+        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        if($stmt->execute()){
+            echo 'link deleted successfully';
+        }
+        else{
+            throw new RDException('Error deleting link');
+        }
+
     }
 
 }

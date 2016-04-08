@@ -28,8 +28,7 @@ class LeagueIterator extends PersistenceIterator{
         /**
          * Populate the iterator with leagueobjects
          *
-         * $name = null, $leagueRules = null, $matchRules,
-         $isIndoor = null, $minTeams = null, $maxTeams = null, $minPlayers = null, $maxPlayers = null
+         *
          */
         for($i=0; $i < count($resultSet); $i++){
             $league = null;
@@ -48,7 +47,7 @@ class LeagueIterator extends PersistenceIterator{
                 array_push($this->array, $league);
             }
             catch(RDException $rde){
-                echo $rde;
+                echo $rde->getMessage();
             }
 
         }
