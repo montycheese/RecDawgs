@@ -5,10 +5,10 @@ class RDException extends \Exception {
     private static $serialVersionUID = 1;
     /**
      * Create a new RDException object.
-     * @param prev Exception the cause of the exception (cause extends Exception)
-     * @param string String A string containing the message pertaining to the exception
+     * @param String $string A string containing the message pertaining to the exception
+     * @param RDException $prev the previous exception thrown from the stack frame
      */
-    public function __construct($prev=null, $string=null )
+    public function __construct($string=null,$prev=null)
         {
             if($prev != null) {
                 parent::__construct($previous=$prev);
