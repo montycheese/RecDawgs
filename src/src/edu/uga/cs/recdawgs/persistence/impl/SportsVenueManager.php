@@ -116,7 +116,7 @@ class SportsVenueManager {
             return new SportsVenueIterator($resultSet, $this->objLayer);
         }
         else{
-            throw new RDException('Error restoring student model');
+            throw new RDException('Error restoring sports venue model');
         }
     }
 
