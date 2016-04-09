@@ -208,7 +208,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreLeague($modelLeague)
     {
-        // TODO: Implement restoreLeague() method.
+        $mgmt = new LeagueManager($this->db, $this->objLayer);
+        return $mgmt->restore($modelLeague);
     }
 
     /**
@@ -220,7 +221,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeLeague($league)
     {
-        // TODO: Implement storeLeague() method.
+        $mgmt = new LeagueManager($this->db, $this->objLayer);
+        $mgmt->save($league);
     }
 
     /**
@@ -230,7 +232,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function deleteLeague($league)
     {
-        // TODO: Implement deleteLeague() method.
+        $mgmt = new LeagueManager($this->db, $this->objLayer);
+        $mgmt->delete($league);
     }
 
     /**
@@ -277,7 +280,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function restoreRound($modelRound)
     {
-        // TODO: Implement restoreRound() method.
+        $mgmt = new RoundManager($this->db, $this->objLayer);
+        return $mgmt->restore($modelRound);
     }
 
     /**
@@ -289,7 +293,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     public function storeRound($round)
     {
-        // TODO: Implement storeRound() method.
+        $mgmt = new RoundManager($this->db, $this->objLayer);
+        $mgmt->save($round);
     }
 
     /**
