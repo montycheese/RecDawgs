@@ -1,8 +1,10 @@
 <?php
+namespace edu\uga\cs\recdawgs\entity\impl;
 
-require('../SportsVenue.php');
+use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
+use edu\uga\cs\recdawgs\RDException as RDException;
 
-class SportsVenueImpl implements SportsVenue {
+class SportsVenueImpl extends Persistent implements SportsVenue {
 
     /** This class represents a sports venue for playing matches.
      * A sports venue has a name, address, and is classified as an indoor venue or not.

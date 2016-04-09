@@ -1,14 +1,17 @@
 <?php
 
-require('../Student.php');
-require('../User.php');
-require('../UserImpl.php');
+namespace edu\uga\cs\recdawgs\entity\impl;
+
+use edu\uga\cs\recdawgs\entity\Student as Student;
+use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
+use edu\uga\cs\recdawgs\RDException as RDException;
+
 /** This class represents information about a registered student of in the RecDawgs system.
  * A student is a user who, additionally, has a student id, major, and an address.
  *
  */
 
-class StudentImpl implements Student {
+class StudentImpl extends Persistent implements Student {
 
     var $studentId;
     var $major;

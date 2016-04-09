@@ -7,7 +7,7 @@ namespace edu\uga\cs\recdawgs\entity;
  *
  */
 
-   interface Student extends User
+   interface Student
   {
     /** Return the student id for this student.
      * @return the String representing the id of the student

@@ -1,6 +1,8 @@
 <?php
 
-require('../Team.php');
+namespace edu\uga\cs\recdawgs\entity\impl;
+use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
+use edu\uga\cs\recdawgs\RDException as RDException;
 
 class TeamImpl implements Team {
 
@@ -33,10 +35,10 @@ class TeamImpl implements Team {
 
     /** Set the new name for this team.
      * @param name the new name for this team
-     * @throws RDException in case a team with the given name already exists
      */
-    public function setName($name){
+    public function setName($name) {
         $this->name = $name;
+
     }
 
     /** Return the team's captain.
@@ -51,7 +53,12 @@ class TeamImpl implements Team {
      * @throws RDException in case the student is null
      */
     public function setCaptain($student){
-        $this->captain = $student;
+        if ($student == null) {
+            throw new RDException('This student object is null.');
+        }
+        else {
+            $this->captain = $student;
+        }
     }
 
     /** Return the league in which this team participates.
@@ -66,8 +73,12 @@ class TeamImpl implements Team {
      * @throws RDException in case the league is null
      */
     public function setParticipatesInLeague($league){
-        //if null throw RDException
-        $this->participatesInLeague = $league;
+        if ($league == null){
+            throw new RDException('The league object is null.');
+        }
+        else {
+            $this->participatesInLeague = $league;
+        }
     }
 
     /** Return the league of which this team is the winner.
@@ -82,6 +93,14 @@ class TeamImpl implements Team {
      * @throws RDException in case the league is null or this team does not participate in the league
      */
     public function setWinnerOfLeague($league){
-        $this->winnerOfLeague = $league;
+        if ($league == null)  {
+            throw new RDException('The league object is null.');
+        }
+        else if ($this->participatesInLeague == false) {
+            throw new RDException('This team does not participate in this league.');
+        }
+        else {
+            $this->winnerOfLeague = $league;
+        }
     }
 }
