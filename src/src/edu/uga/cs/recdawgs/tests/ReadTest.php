@@ -77,6 +77,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         echo strval($i) . ' total objects';
     }
 
+    /**
+     * Reads and outputs to string every league objct in the data base and all of its additional constitutient data.
+     */
     public function testReadLeague(){
         echo 'League objects:\n ';
         $iter = $this->objLayer->findLeague(null);
@@ -85,9 +88,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         while($iter->hasNext()){
             //echo league info
             $league = $iter->current();
-            echo 'league id: ' . strval($league->getId()) .' name:'. $league->getName() . ' is indoor:'  . $league->getIsIndoor() .
-                ' min # teams: ' . $league->getMinTeams() . ' max # teams' . $league->getMaxTeams() .
-                ' min # members:'. $league->getMinMembers() . ' max # members'  . $league->getMaxMembers() .
+            echo 'league id: ' . strval($league->getId()) .' name:'. $league->getName() . ' is indoor: '  . $league->getIsIndoor() .
+                ' min # teams: ' . strval($league->getMinTeams()) . ' max # teams' . strval($league->getMaxTeams()) .
+                ' min # members:'. strval($league->getMinMembers()) . ' max # members'  . strval($league->getMaxMembers()) .
                 ' league rules: ' . $league->getLeagueRules() . ' match rules' . $league->getMatchRules() .
             'league winner: ' . $league->getWinnerOfLeague();
             echo 'Teams of this League: ';
@@ -139,7 +142,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
                 ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
             $played = $match->getIsCompleted();
             if($played){
-                echo 'game played, home team points: ' . $match->getHomePoints() . ' away team points: ' . $match->getAwayPoints();
+                echo 'game played, home team points: ' . strval($match->getHomePoints()) . ' away team points: ' . strval($match->getAwayPoints());
             }
             else{
                 echo 'game not yet played';
@@ -147,6 +150,36 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             $iter->next();
             ++$i;
         }
+        echo strval($i) . ' total objects';
+    }
+
+    /**
+     * Prints out every sports venue obj in the persistence db
+     */
+    public function testReadSportsVenue(){
+        //TODO
+        echo 'venue objects:\n ';
+        $i=0;
+        echo strval($i) . ' total objects';
+    }
+
+    /**
+     * Prints out every score report obj in the persistence db
+     */
+    public function testReadScoreReport(){
+        //TODO
+        echo 'score report objects:\n ';
+        $i=0;
+        echo strval($i) . ' total objects';
+    }
+
+    /**
+     * Prints out every round obj in the persistence db
+     */
+    public function testReadRound(){
+        //TODO
+        echo 'round objects:\n ';
+        $i=0;
         echo strval($i) . ' total objects';
     }
 
