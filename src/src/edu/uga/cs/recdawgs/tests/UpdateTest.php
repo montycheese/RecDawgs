@@ -1,27 +1,18 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: mwong
+ * User: montanawong
  * Date: 4/11/16
- * Time: 12:41 PM
+ * Time: 17:17
  */
 
 namespace edu\uga\cs\recdawgs\tests;
-
-
 use edu\uga\cs\recdawgs\object\impl as Object;
 use edu\uga\cs\recdawgs\persistence\impl as Persistence;
 
-class WriteTest extends \PHPUnit_Framework_TestCase {
+class UpdateTest extends \PHPUnit_Framework_TestCase {
     private $persistenceLayer = null;
     private $objLayer = null;
-    private $student1, $student2;
-    private $team1, $team2;
-    private $league1, $league2;
-    private $match1, $match2;
-    private $venue1, $venue2;
-    private $round1, $round2;
-    private $report1, $report2;
 
     public function __construct(){
         $this->objLayer = new Object\ObjectLayerImpl(null);
@@ -29,7 +20,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         $this->objLayer->setPersistence($this->persistenceLayer);
     }
 
-    public function testWriteAdmin(){
+    public function testUpdateAdmin(){
         //create
         $john = $this->objLayer->createAdministrator('John', 'Doe', 'jd123', 'password123', 'johndoe@rocketmail.io');
         $sanath = $this->objLayer->createAdministrator('Sanath', 'Bhat', 'sanathbhat6789', 'somepassword', 'sanath@breakingstuff.com');
@@ -43,35 +34,18 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         echo 'admins created and stored in persistence database successfully.';
     }
 
-    public function testWriteStudent(){
-        //create as class var to use later when making teams
-        $this->student1 = $this->objLayer->createStudent(
-            'Montana',
-            'Wong',
-            'mwong9',
-            'youwish',
-            'mwong9@uga.edu',
-            '12343223',
-            'Computer Science',
-            '45 Baxter Street Athens, GA 30605'
-        );
-        $this->student2 = $this->objLayer->createStudent(
-            'Bernie',
-            'Sanders',
-            'feelthebern2016',
-            'vermont',
-            'bernie@berniesanders.gov',
-            'password3232',
-            'Politics',
-            '123 White Hart Lane, Tottenham, London, England 10001'
-        );
+    public function testUpdateStudent(){
+        $montana = $this->objLayer->createStudent($firstName="Montana", $lastName="Wong", $userName='mwong9');
+        $montana = $this->objLayer->findStudent($montana)->current();
+        $montana->setUserName('montycheese');
+        $montana->setEmailAddress('montanawong@gmail.com');
+
         //store
-        $this->objLayer->storeStudent($this->student1);
-        $this->objLayer->storeStudent($this->student2);
-        echo 'students created and stored in persistence database successfully';
+        $this->objLayer->storeStudent($montana);
+        echo 'student queried, updated, and stored in persistence database successfully';
     }
 
-    public function testWriteLeague(){
+    public function testUpdateLeague(){
         //create
         $this->league1 = $this->objLayer->createLeague(
             'Indoor Soccer',
@@ -100,7 +74,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         echo 'leagues created and stored in persistent database successfully';
     }
 
-    public function testWriteTeam(){
+    public function testUpdateTeam(){
         //create
         $this->team1 = $this->objLayer->createTeam('Trustii', $this->student1,$this->league1);
         $this->team2 = $this->objLayer->createTeam('Rockets', $this->student2,$this->league2);
@@ -111,19 +85,17 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         echo 'teams created and stored in persistent database successfully';
     }
 
-    public function testWriteMatch(){
+    public function testUpdateMatch(){
 
     }
-    public function testWriteScoreReport(){
+    public function testUpdateScoreReport(){
 
     }
-    public function testWriteSportsVenue(){
-
-    }
-
-    public function testWriteRound(){
+    public function testUpdateSportsVenue(){
 
     }
 
+    public function testUpdateRound(){
 
+    }
 }
