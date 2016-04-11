@@ -95,6 +95,11 @@ use edu\uga\cs\recdawgs\RDException as RDException;
       * @return void
       */
      public function setRound($round);
+
+     /**
+      * @return Round
+      */
+     public function getRound();
     
 }
 

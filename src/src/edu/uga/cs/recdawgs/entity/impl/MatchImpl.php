@@ -20,9 +20,9 @@ class MatchImpl extends Persistent implements Match {
      private $homeTeam;
      private $awayTeam;
      private $sportsVenue;
-     private $setRound;
+     private $round;
     
-     public function __constructor($homePoints=null, $awayPoints=null, $date=null, $isCompleted=null, $homeTeam=null, $awayTeam=null, $sportsVenue=null, $setRound=null) {
+     public function __constructor($homePoints=null, $awayPoints=null, $date=null, $isCompleted=null, $homeTeam=null, $awayTeam=null, $sportsVenue=null, $round=null) {
          $this->homePoints = $homePoints;
          $this->awayPoints = $awayPoints;
          $this->date = $date;
@@ -30,6 +30,7 @@ class MatchImpl extends Persistent implements Match {
          $this->homeTeam = $homeTeam;
          $this->awayTeam = $awayTeam;
          $this->sportsVenue = $sportsVenue;
+         $this->round = $round;
         
     }
      
@@ -166,6 +167,10 @@ class MatchImpl extends Persistent implements Match {
      public function setRound($round) {
          $this->round = $round;
      }
+
+    public function getRound(){
+        return $this->round;
+    }
     
 }
 

@@ -30,5 +30,9 @@ interface Round
      */
     public function setLeague($league);
 
+    /**
+     * @return impl\LeagueImpl
+     */
+    public function getLeague();
 }
 ?>

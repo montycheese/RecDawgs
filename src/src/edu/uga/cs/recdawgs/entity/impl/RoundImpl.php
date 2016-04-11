@@ -45,6 +45,9 @@ class RoundImpl extends Persistent implements Round {
     public function setLeague($league) {
         $this->league = $league;
     }
+    public function getLeague(){
+        return $this->league;
+    }
 
 }
 ?>

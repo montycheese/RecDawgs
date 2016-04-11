@@ -104,7 +104,7 @@ class LeagueImpl extends Persistent implements League {
      * @throws RDException in case minTeams is not positive
      */
     public function setMinTeams( $minTeams ) { //throws RDException; 
-        if($minTeam < 0) { 
+        if($minTeams < 0) {
             throw new RDException('Min teams can not be null');
         } else {
             $this->minTeams = $minTeams; 
