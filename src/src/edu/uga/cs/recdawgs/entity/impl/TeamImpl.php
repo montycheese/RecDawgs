@@ -18,7 +18,7 @@ class TeamImpl implements Team {
      * @param $participatesInLeague
      * @param $winnerOfLeague
      */
-    public function __construct($name, $captain, $participatesInLeague, $winnerOfLeague)
+    public function __construct($name=null, $captain=null, $participatesInLeague=null, $winnerOfLeague=null)
     {
         $this->name = name;
         $this->captain = $captain;

@@ -21,7 +21,7 @@ class SportsVenueImpl extends Persistent implements SportsVenue {
      * @param $isIndoor
      * @param $address
      */
-    public function __construct($name, $isIndoor, $address) {
+    public function __construct($name=null, $isIndoor=null, $address=null) {
         $this->name = $name;
         $this->isIndoor = $isIndoor;
         $this->address = $address;
