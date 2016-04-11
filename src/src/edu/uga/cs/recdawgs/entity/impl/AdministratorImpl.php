@@ -8,7 +8,8 @@ use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
 *
 */
 
-class AdministratorImpl extends Persistent implements Administrator { //NOT SURE WHAT TO DO HERE
+class AdministratorImpl extends Persistent implements Administrator
+{
 
     /**
      * UserImpl constructor.
@@ -18,7 +19,7 @@ class AdministratorImpl extends Persistent implements Administrator { //NOT SURE
      * @param $password
      * @param $emailAddress
      */
-    public function __construct($firstName, $lastName, $userName, $password, $emailAddress)
+    public function __construct($firstName = null, $lastName = null, $userName = null, $password = null, $emailAddress = null)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
@@ -30,63 +31,72 @@ class AdministratorImpl extends Persistent implements Administrator { //NOT SURE
     /** Return the user's first name.
      * @return $this->firstName the user's first name
      */
-    public function getFirstName(){
+    public function getFirstName()
+    {
         return $this->firstName;
     }
 
     /** Set the user's first name.
      * @param $firstName the new first name of this user
      */
-    public function setFirstName($firstName){
+    public function setFirstName($firstName)
+    {
         $this->firstName = $firstName;
     }
 
     /** Return the user's last name.
      * @return $this->lastName the user's last name
      */
-    public function getLastName(){
+    public function getLastName()
+    {
         return $this->lastName;
     }
 
     /** Set the user's first name.
      * @param $lastName the new last name of this user
      */
-    public function setLastName($lastName){
+    public function setLastName($lastName)
+    {
         $this->lastName = $lastName;
     }
 
     /** Return the user's user name (login name).
      * @return $this->userName the user's user name
      */
-    public function getUserName(){
+    public function getUserName()
+    {
         return $this->userName;
     }
 
     /** Set the user's user name (login name).
      * @param $userName the user's new username
      */
-    public function setUserName($userName){
+    public function setUserName($userName)
+    {
         $this->userName = $userName;
     }
 
     /** Return the user's password.
      * @return $this->password the user's password
      */
-    public function getPassword(){
+    public function getPassword()
+    {
         return $this->password;
     }
 
     /** Set the user's password.
      * @param $password the user's new password
      */
-    public function setPassword($password){
+    public function setPassword($password)
+    {
         $this->password = $password;
     }
 
     /** Return the user's email address.
      * @return $this->emailAddress
      */
-    public function getEmailAddress(){
+    public function getEmailAddress()
+    {
         return $this->emailAddress;
     }
 
@@ -99,5 +109,3 @@ class AdministratorImpl extends Persistent implements Administrator { //NOT SURE
     }
 
 }
-
-?>

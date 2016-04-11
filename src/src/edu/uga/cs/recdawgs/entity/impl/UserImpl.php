@@ -20,7 +20,7 @@ class UserImpl extends Persistent implements User{
      * @param $password
      * @param $emailAddress
      */
-    public function __construct($firstName, $lastName, $userName, $password, $emailAddress)
+    public function __construct($firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;

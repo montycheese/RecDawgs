@@ -17,6 +17,10 @@ class ObjectLayerImpl implements ObjectLayer{
         $this->persistenceLayer = $persistenceLayerImpl;
     }
 
+    public function setPersistence($persistenceLayerImpl){
+        $this->persistenceLayer = $persistenceLayerImpl;
+    }
+
     /**
      * Create a new Administrator object, given the set of initial attribute values.
      * @param String $firstName  the first name
@@ -93,7 +97,7 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createStudent($firstName = null, $lastName = null, $userName = null, 
         $password = null, $emailAddress = null, $studentId = null, $major = null, $address = null) {
-        $aStudent = new Entity\UserImpl();
+        $aStudent = new Entity\StudentImpl();
 
         if ($firstName != null && $lastName != null && $userName != null && $password != null && 
             $emailAddress != null && $studentId != null && $major != null && $address != null) {
@@ -261,7 +265,7 @@ class ObjectLayerImpl implements ObjectLayer{
         $aSportsVenue = new Entity\SportsVenueImpl();
 
         if ($name != null && $address != null && $isIndoor != null) {
-            $aSportsVenue->setName();
+            $aSportsVenue->setName($name);
             $aSportsVenue->setAddress($address);
             $aSportsVenue->setIsIndoor($isIndoor);
         }
@@ -530,14 +534,14 @@ class ObjectLayerImpl implements ObjectLayer{
      * Returns either array of teams or array of students depending on which parameter is not null
      *
      *  * Return Teams of which a given Student is a member.
-     * @param student the Student
-     * @return an Iterator with all Teams in which the Student is a member
+     * @param Entity\StudentImpl $student the Student
+     * @return Persistence\TeamIterator an Iterator with all Teams in which the Student is a member
      * @throws RDException in case an error occurred during the restore operation
      *
      *
      * Return Students who are members of a given Team.
-     * @param team the Team
-     * @return an Iterator with all Students who are members of the team
+     * @param Entity\TeamImpl $team the Team
+     * @return Persistence\StudentIterator an Iterator with all Students who are members of the team
      * @throws RDException in case an error occurred during the restore operation
      */
     public function restoreStudentMemberOfTeam($student = null, $team = null) {
