@@ -102,6 +102,15 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
 
     public function testWriteTeam(){
         //create
+        if ($this->student1 == null || $this->student2 == null) {
+            testWriteStudent();
+        }
+
+        if ($this->league1 == null || $this->league2 == null) {
+            testWriteLeague();
+        }
+
+
         $this->team1 = $this->objLayer->createTeam('Trustii', $this->student1,$this->league1);
         $this->team2 = $this->objLayer->createTeam('Rockets', $this->student2,$this->league2);
 
@@ -111,19 +120,91 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         echo 'teams created and stored in persistent database successfully';
     }
 
-    public function testWriteMatch(){
-
-    }
     public function testWriteScoreReport(){
+        // create
+        if ($this->student1 == null || $this->student2 == null) {
+            testWriteStudent();
+        }
+
+        if ($this->match1 == null || $this->match2 == null) {
+            testWriteMatch();
+        }
+
+        $this->report1 = $this->objLayer->createScoreReport(30, 21, "2016-4-10", $this->student1, $this->match1);
+        $this->report2 = $this->objLayer->createScoreReport(23, 29, "2016-4-11", $this->student2, $this->match2);
+
+        //store
+        $this->objLayer->storeScoreReport($this->report1);
+        $this->objLayer->storeScoreReport($this->report2);
+
+        echo 'score report created and stored in persistent database successfully';
 
     }
     public function testWriteSportsVenue(){
+        //create and store
+        if ($this->league1 == null || $this->league2 == null) {
+            testWriteLeague();
+        }
+
+        $this->venue1 = $this->objLayer->createLeagueSportsVenue($this->league1, "Venue A");
+        $this->venue2 = $this->objLayer->createLeagueSportsVenue($this->league2, "Venue A");
+
+        echo 'sports venues created and stored in persistent database successfully';
 
     }
 
     public function testWriteRound(){
+        //create
+        if ($this->league1 == null || $this->league2 == null) {
+            testWriteLeague();
+        }
+
+        $this->round1 = $this->objLayer->createRound(1, $this->league1);
+        $this->round2 = $this->objLayer->createRound(2, $this->league2);
+
+        //store
+        $this->objLayer->storeRound($this->round1);
+        $this->objLayer->storeRound($this->round2);
+
+        echo 'rounds created and stored in persistent database successfully';
 
     }
 
+    public function testWriteMatch(){
+        //create
+        if ($this->team1 == null || $this->team2 == null) {
+            testWriteTeam();
+        }
+
+        if ($this->league1 == null || $this->league2 == null) {
+            testWriteLeague();
+        }
+
+        $this->match1 = $this->objLayer->createMatch(
+                30,
+                29,
+                "2016-4-11",
+                true,
+                $this->team1,
+                $this->team2,
+                $this->$round1
+            );
+
+        $this->match2 = $this->objLayer->createMatch(
+                25,
+                27,
+                "2016-4-13",
+                false,
+                $this->team2,
+                $this->team1,
+                $this->$round2
+            );
+
+        // store
+        $this->objLayer->storeMatch($this->match1);
+        $this->objLayer->storeMatch($this->match2);
+
+        echo 'matches created and stored in persistent database successfully';
+    }
 
 }
