@@ -157,9 +157,24 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      * Prints out every sports venue obj in the persistence db
      */
     public function testReadSportsVenue(){
-        //TODO
         echo 'venue objects:\n ';
+        $iter = $this->objLayer->findSportsVenue(null);
         $i=0;
+        //loop
+        while($iter->hasNext()){
+            $venue = $iter->current();
+            echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
+            $indoor = $venue->getIsIndoor();
+
+            if($indoor){
+                echo ' Allowed activity type: Indoor';
+            }
+            else{
+                echo ' Allowed activity type: Outdoor';
+            }
+            $iter->next();
+            ++$i;
+        }
         echo strval($i) . ' total objects';
     }
 
@@ -167,9 +182,18 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      * Prints out every score report obj in the persistence db
      */
     public function testReadScoreReport(){
-        //TODO
         echo 'score report objects:\n ';
+        $iter = $this->objLayer->findScoreReport(null);
         $i=0;
+        //loop
+        while($iter->hasNext()){
+            $report = $iter->current();
+            echo 'Home points: ' . $report->getHomePoints() .' Away points: '. $report->getAwayPoints() .
+                ' Date: '. strval($report->getDate()) . 'Match: '. strval($report->getMatch()) .
+                ' Student who put in the score'. strval($report->getStudent());
+            $iter->next();
+            ++$i;
+        }
         echo strval($i) . ' total objects';
     }
 
@@ -177,9 +201,16 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      * Prints out every round obj in the persistence db
      */
     public function testReadRound(){
-        //TODO
         echo 'round objects:\n ';
+        $iter = $this->objLayer->findRound(null);
         $i=0;
+        //loop
+        while($iter->hasNext()){
+            $round = $iter->current();
+            echo 'Number of round: ' . $round->getNumber() .' League: '. $round->getLeague();
+            $iter->next();
+            ++$i;
+        }
         echo strval($i) . ' total objects';
     }
 
