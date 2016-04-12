@@ -46,43 +46,31 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testUpdateLeague(){
-        //create
-        $this->league1 = $this->objLayer->createLeague(
-            'Indoor Soccer',
-            'Games only played indoor. Must be soccer rules adhereing to fifa guidelines.',
-            '3 referees, no handballs, goalie can not pick up team mate passback',
-            true,
-            4,
-            24,
-            5,
-            8
-        );
-        $this->league2 = $this->objLayer->createLeague(
-            'Curling',
-            'Games only played on ice. Rules adhere to Winter Olympic games standards CIE2.0.',
-            '3 referees, sticks must be approved by judges, puck must be lightweight uranium',
-            true,
-            4,
-            24,
-            2,
-            100
-        );
-        //store
+        //query
+        $soccer = $this->objLayer->createLeague($name = 'Indoor Soccer', $isIndoor=true, $minTeams=4);
+        $soccer = $this->objLayer->findLeague($soccer);
 
-        $this->objLayer->storeLeague($this->league1);
-        $this->objLayer->storeLeague($this->league2);
-        echo 'leagues created and stored in persistent database successfully';
+        //update
+        $soccer->setMinTeams(5);
+        $soccer->setMaxTeams(25);
+        $soccer->setMinMembers(6);
+        $soccer->setMaxMembers(10);
+
+        //store
+        $this->objLayer->storeLeague($soccer);
+        echo 'leagues queried, updated, and stored in persistent database successfully';
     }
 
     public function testUpdateTeam(){
-        //create
-        $this->team1 = $this->objLayer->createTeam('Trustii', $this->student1,$this->league1);
-        $this->team2 = $this->objLayer->createTeam('Rockets', $this->student2,$this->league2);
+        $trustii = $this->objLayer->createTeam($name='Trustii');
+        $trustii = $this->objLayer->findLeague($trustii);
+
+        //update
+        $trustii->setName('Trustii2.0');
 
         //store
-        $this->objLayer->storeTeam($this->team1);
-        $this->objLayer->storeTeam($this->team2);
-        echo 'teams created and stored in persistent database successfully';
+        $this->objLayer->storeTeam($trustii);
+        echo 'teams queried, updated, and stored in persistent database successfully';
     }
 
     public function testUpdateMatch(){
