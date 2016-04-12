@@ -66,7 +66,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
         $trustii = $this->objLayer->findLeague($trustii);
 
         //update
-        $trustii->setName('Trustii2.0');
+        $trustii->setName('Trustii-UPDATED');
 
         //store
         $this->objLayer->storeTeam($trustii);
@@ -74,13 +74,33 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testUpdateMatch(){
-
+        $match = $this->objLayer->createMatch($homePoints = 30, $awayPoints = 29, $date = "2016-4-11", 
+        $isCompleted = true);
+        
+        //update
+        $match->setHomePoints(1000);
+        $match->setAwayPoints(10000);
+        $match->setIsCompleted(false);
+        
+        //store
+        $this->objLayer->storeMatch($match);
+        echo 'Match queried, updated, and stored in persistent database successfully';
     }
     public function testUpdateScoreReport(){
-
+        $scoreReport = $this->objLayer->createScoreReport($homePoints = 30, $awayPoints = 21, $date = "2016-4-10");
+        
+        //update
+        $scoreReport->setHomePoints(1000);
+        $scoreReport->setAwayPoints(1000);
+        $scoreReport->setDate = "2016-28-10";
+        
+        //store
+        $this->objLayer->storeScoreReport($scoreReport);
+                                                    
+                                                
     }
     public function testUpdateSportsVenue(){
-
+       // $sportsVenue = $this->objLayer->createSportsVenue($name = null, $address = null, $isIndoor = null);
     }
 
     public function testUpdateRound(){
