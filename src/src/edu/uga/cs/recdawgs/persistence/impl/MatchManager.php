@@ -50,9 +50,15 @@ class MatchManager {
             $stmt->bindParam(3, $match->getDate());
             $completed = ($match->getIsCompleted() ? 1 : 0);
             $stmt->bindParam(4, $completed, \PDO::PARAM_INT);
-            $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(6, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(7, $match->getSportsVenue()->getId(), \PDO::PARAM_INT);
+            if($match->getHomeTeam() != NULL ) {
+                $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
+            }
+            if($match->getAwayTeam() != NULL) {
+                $stmt->bindParam(6, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
+            }
+            if($match->getSportsVenue() != NULL) {
+                $stmt->bindParam(7, $match->getSportsVenue()->getId(), \PDO::PARAM_INT);
+            }
             $stmt->bindParam(8, $match->getRound()->getId(), \PDO::PARAM_INT);
             $stmt->bindParam(9, $match->getId(), \PDO::PARAM_INT);
 
@@ -76,10 +82,15 @@ class MatchManager {
             $stmt->bindParam(2, $match->getAwayPoints(), \PDO::PARAM_INT);
             $stmt->bindParam(3, $match->getDate());
             $completed = ($match->getIsCompleted() ? 1 : 0);
-            $stmt->bindParam(4, $completed, \PDO::PARAM_INT);
-            $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(6, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(7, $match->getSportsVenue()->getId(), \PDO::PARAM_INT);
+            if($match->getHomeTeam() != NULL ) {
+                $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
+            }
+            if($match->getAwayTeam() != NULL) {
+                $stmt->bindParam(6, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
+            }
+            if($match->getSportsVenue() != NULL) {
+                $stmt->bindParam(7, $match->getSportsVenue()->getId(), \PDO::PARAM_INT);
+            }
             $stmt->bindParam(8, $match->getRound()->getId(), \PDO::PARAM_INT);
             if($stmt->execute()){
                 $match->setId($this->dbConnection->lastInsertId());

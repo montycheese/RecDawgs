@@ -40,7 +40,9 @@ class TeamManager {
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
             $stmt->bindParam(1, $team->getName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $team->getCaptain()->getId(), \PDO::PARAM_INT);
+            if($team->getCaptain() != NULL) {
+                $stmt->bindParam(2, $team->getCaptain()->getId(), \PDO::PARAM_INT);
+            }
             $stmt->bindParam(3, $team->getId(), \PDO::PARAM_INT);
             if($stmt->execute()){
                 echo 'team updated successfully';
@@ -57,7 +59,9 @@ class TeamManager {
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
             $stmt->bindParam(1, $team->getName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $team->getCaptain()->getId(), \PDO::PARAM_INT);
+            if($team->getCaptain() != NULL) {
+                $stmt->bindParam(2, $team->getCaptain()->getId(), \PDO::PARAM_INT);
+            }
             if($stmt->execute()){
                 $team->setId($this->dbConnection->lastInsertId());
                 echo 'Team created successfully';
@@ -123,7 +127,7 @@ class TeamManager {
             if ($attr = $modelTeam->getName() != NULL) {
                 $q .= ' AND name = ' . $attr;
             }
-            
+
             $attr = NULL;
             if ($modelTeam->getCaptain() != NULL) {
                 $attr = $modelTeam->getCaptain()->getId();

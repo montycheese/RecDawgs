@@ -41,8 +41,12 @@ class ScoreReportManager {
             $stmt->bindParam(1, $report->getHomePoints(), \PDO::PARAM_INT);
             $stmt->bindParam(2, $report->getAwayPoints(), \PDO::PARAM_INT);
             $stmt->bindParam(3, $report->getDate());
-            $stmt->bindParam(4, $report->getMatch()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(5, $report->getStudent()->getId(), \PDO::PARAM_INT);
+            if($report->getMatch() != NULL) {
+                $stmt->bindParam(4, $report->getMatch()->getId(), \PDO::PARAM_INT);
+            }
+            if($report->getStudent() != NULL) {
+                $stmt->bindParam(5, $report->getStudent()->getId(), \PDO::PARAM_INT);
+            }
             $stmt->bindParam(6, $report->getId(), \PDO::PARAM_INT);
 
             if($stmt->execute()){
@@ -63,9 +67,12 @@ class ScoreReportManager {
             $stmt->bindParam(1, $report->getHomePoints(), \PDO::PARAM_INT);
             $stmt->bindParam(2, $report->getAwayPoints(), \PDO::PARAM_INT);
             $stmt->bindParam(3, $report->getDate());
-            $stmt->bindParam(4, $report->getMatch()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(5, $report->getStudent()->getId(), \PDO::PARAM_INT);
-
+            if($report->getMatch() != NULL) {
+                $stmt->bindParam(4, $report->getMatch()->getId(), \PDO::PARAM_INT);
+            }
+            if($report->getStudent() != NULL) {
+                $stmt->bindParam(5, $report->getStudent()->getId(), \PDO::PARAM_INT);
+            }
             if($stmt->execute()){
                 $report->setId($this->dbConnection->lastInsertId());
                 echo 'report created successfully
