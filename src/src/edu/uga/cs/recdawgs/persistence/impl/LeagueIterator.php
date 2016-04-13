@@ -34,16 +34,16 @@ class LeagueIterator extends PersistenceIterator{
             $league = null;
             try {
                 $league = $objLayer->createLeague(
-                    $resultSet['name'],
-                    $resultSet['league_rules'],
-                    $resultSet['match_rules'],
-                    $resultSet['is_indoor'],
-                    intval($resultSet['min_teams']),
-                    intval($resultSet['max_teams']),
-                    intval($resultSet['min_players']),
-                    intval($resultSet['max_players'])
+                    $resultSet[$i]['name'],
+                    $resultSet[$i]['league_rules'],
+                    $resultSet[$i]['match_rules'],
+                    $resultSet[$i]['is_indoor'],
+                    intval($resultSet[$i]['min_teams']),
+                    intval($resultSet[$i]['max_teams']),
+                    intval($resultSet[$i]['min_players']),
+                    intval($resultSet[$i]['max_players'])
                 );
-                $league->setId($resultSet['$league_id']);
+                $league->setId($resultSet[$i]['$league_id']);
                 array_push($this->array, $league);
             }
             catch(RDException $rde){

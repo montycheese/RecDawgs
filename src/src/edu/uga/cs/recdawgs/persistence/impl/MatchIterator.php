@@ -26,14 +26,14 @@ class MatchIterator extends PersistenceIterator{
             $match = null;
             try {
                 $match = $objLayer->createMatch(
-                    $resultSet['home_points'],
-                    $resultSet['away_points'],
-                    $resultSet['date'],
-                    $resultSet['is_completed'],
-                    $resultSet['home_team_id'],
-                    $resultSet['away_team_id']
+                    $resultSet[$i]['home_points'],
+                    $resultSet[$i]['away_points'],
+                    $resultSet[$i]['date'],
+                    $resultSet[$i]['is_completed'],
+                    $resultSet[$i]['home_team_id'],
+                    $resultSet[$i]['away_team_id']
                 );
-                $match->setId($resultSet['match_id']);
+                $match->setId($resultSet[$i]['match_id']);
 
                 array_push($this->array, $match);
             }

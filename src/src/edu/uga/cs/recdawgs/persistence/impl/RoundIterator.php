@@ -32,9 +32,9 @@ class RoundIterator extends PersistenceIterator {
             $round = null;
             try {
                 $round = $objLayer->createRound(
-                    $resultSet['number']
+                    $resultSet[$i]['number']
                 );
-                $round->setId($resultSet['round_id']);
+                $round->setId($resultSet[$i]['round_id']);
                 array_push($this->array, $round);
             }
             catch(RDException $rde){
