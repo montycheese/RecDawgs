@@ -123,13 +123,13 @@ class MatchImpl extends Persistent implements Match {
             throw new RDException('Home team can not be null.');
         }
 
-        if($this->awayTeam == null && $this->awayTeam->getParticipatesInLeague() == null) {
-            throw new RDException('Away Team must be in the same league as the Away Team.');
-        }
+        //if($this->awayTeam == null && $this->awayTeam->getParticipatesInLeague() == null) {
+         //   throw new RDException('Away Team must be in the same league as the Away Team.');
+        //}
 
-        if (($this->$awayTeam->getParticipatesInLeague()->getId() != $homeTeam->getParticipatesInLeague()->getId())) {
-            throw new RDException('Teams dont have same league.');
-        }
+        //if (($this->$awayTeam->getParticipatesInLeague()->getId() != $homeTeam->getParticipatesInLeague()->getId())) {
+        //    throw new RDException('Teams dont have same league.');
+       // }
         $this->homeTeam = $homeTeam;
     }
 

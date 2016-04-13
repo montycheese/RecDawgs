@@ -18,7 +18,7 @@ class MatchIterator extends PersistenceIterator{
         parent::__construct();
         $this->resultSet = $resultSet;
         $this->objLayer = $objLayer;
-
+        //echo 'dump : ' . var_dump($resultSet);
         /**
          * Populate the iterator with Match objects
          */
@@ -29,7 +29,7 @@ class MatchIterator extends PersistenceIterator{
                 $homeTeam = $objLayer->createTeam();
                 $homeTeam->setId( $resultSet[$i]['home_team_id']);
                 $league = $objLayer->restoreTeamParticipatesInLeague($homeTeam);
-                //echo 'dump league: ' . var_dump($league);
+
                 $homeTeam->setParticipatesInLeague($league);
 
 
@@ -37,7 +37,6 @@ class MatchIterator extends PersistenceIterator{
                 $awayTeam->setId( $resultSet[$i]['away_team_id']);
 
                 $league2= $objLayer->restoreTeamParticipatesInLeague($awayTeam);
-
                 $awayTeam->setParticipatesInLeague($league2);
 
                 $match = $objLayer->createMatch(

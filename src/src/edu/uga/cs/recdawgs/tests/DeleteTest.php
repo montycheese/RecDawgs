@@ -31,14 +31,18 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      */
     public function testDeleteAdmin(){
         echo 'Querying an Admin object:\n ';
-        $iter = $this->objLayer->findAdministrator($this->objLayer->createAdministrator($userName='jd123'));
+        $iter = $this->objLayer->findAdministrator(null);
         while($iter->current()){
             $admin = $iter->current();
-            echo 'userid: ' . strval($admin->getId()) .' '. $admin->getFirstName() . ' '  . $admin->getLastName();
-            echo 'deleting this admin';
+            echo 'userid: ' . strval($admin->getId()) .' firstname: '. $admin->getFirstName() . ' lastname: '  . $admin->getLastName();
+            echo 'deleting this admin
+
+            ';
             try {
                 $this->objLayer->deleteAdministrator($admin);
-                echo 'Deletion successful';
+                echo 'Deletion successful
+
+                ';
             }
             catch(RDException $r){
                 echo 'Error deleting admin obj';
@@ -52,11 +56,15 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findStudent(null);
         while($iter->current()){
             $student = $iter->current();
-            echo 'student id: ' . strval($student->getId()) .' '. strval($student->getFirstName()) . ' '  . strval($student->getLastName());
-            echo 'deleting this student';
+            echo 'student id: ' . strval($student->getId()) .' firstName:'. strval($student->getFirstName()) . ' lastName:'  . strval($student->getLastName());
+            echo 'deleting this student
+
+            ';
             try {
                 $this->objLayer->deleteStudent($student);
-                echo 'Deletion successful';
+                echo 'Deletion successful
+
+                ';
             }
             catch(RDException $r){
                 echo 'Error deleting student obj';
@@ -76,10 +84,14 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
                 ' min # members:'. strval($league->getMinMembers()) . ' max # members'  . strval($league->getMaxMembers()) .
                 ' league rules: ' . strval($league->getLeagueRules()) . ' match rules' . strval($league->getMatchRules()) .
                 'league winner: ' . $league->getWinnerOfLeague();
-            echo 'deleting this league';
+            echo 'deleting this league
+
+            ';
             try {
                 $this->objLayer->deleteLeague($league);
-                echo 'Deletion successful';
+                echo 'Deletion successful
+
+                ';
             }
             catch(RDException $r){
                 echo 'Error deleting league obj';
@@ -97,11 +109,15 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             echo 'team id: ' . strval($team->getId()) .' name:'. $team->getName() . ' league:'  . $team->getParticipatesInLeague() .
             ' captain: ' . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName();
             
-            echo 'deleting this team';
+            echo 'deleting this team
+
+            ';
 
             try {
                 $this->objLayer->deleteTeam($team);
-                echo 'Deletion successful';
+                echo 'Deletion successful
+
+                ';
             }
             catch(RDException $r){
                 echo 'Error deleting team obj';
@@ -118,9 +134,11 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             $report = $iter->current();
             echo 'Home points: ' . $report->getHomePoints() .' Away points: '. $report->getAwayPoints() .
                 ' Date: '. strval($report->getDate()) . 'Match: '. strval($report->getMatch()) .
-                ' Student who put in the score'. strval($report->getStudent());
+                ' Student who put in the score: '. strval($report->getStudent());
             
-            echo 'deleting this report';
+            echo 'deleting this report
+
+            ';
 
             try {
                 $this->objLayer->deleteScoreReport($report);
@@ -141,11 +159,15 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             $venue = $iter->current();
             echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
             
-            echo 'deleting this venue';
+            echo 'deleting this venue
+
+            ';
 
             try {
                 $this->objLayer->deleteSportsVenue($venue);
-                echo 'Deletion successful';
+                echo 'Deletion successful
+
+                ';
             }
             catch(RDException $r){
                 echo 'Error deleting venue obj';
@@ -162,11 +184,15 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             $venue = $iter->current();
             echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
             
-            echo 'deleting this venue';
+            echo 'deleting this venue
+
+            ';
 
             try {
                 $this->objLayer->deleteSportsVenue($venue);
-                echo 'Deletion successful';
+                echo 'Deletion successful
+
+                ';
             }
             catch(RDException $r){
                 echo 'Error deleting venue obj';
@@ -187,11 +213,15 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             echo 'match id: ' . strval($match->getId()) .' Hometeam: '. $match->getHomeTeam()->getName() . ' Away team: '  . $match->getAwayTeam()->getName() .
                 ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
             
-            echo 'deleting this match';
+            echo 'deleting this match
+
+            ';
 
             try {
                 $this->objLayer->deleteMatch($match);
-                echo 'Deletion successful';
+                echo 'Deletion successful
+
+                ';
             }
             catch(RDException $r){
                 echo 'Error deleting match obj';

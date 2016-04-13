@@ -235,14 +235,15 @@ class TeamManager {
     public function restoreParticipatesIn($team){
         if($team == null) throw new RDException('Team parameter is null');
 
-        $q = 'SELECT * from league WHERE league_id = (SELECT league_id FROM league_team WHERE team_id = ?);';
+        $q = 'SELECT * from league WHERE league_id = (SELECT league_id FROM league_team WHERE team_id =' . $team->getId() .  ' );';
 
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        //$stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             // return first obj
+
             return new LeagueIterator($resultSet, $this->objLayer);
         }
         else{

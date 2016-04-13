@@ -168,33 +168,33 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         ';
     }
 
-    /**
-     * Prints out every match obj in the persistence db
-     */
-    public function testReadMatch(){
-        echo 'Match objects:
+        /**
+         * Prints out every match obj in the persistence db
+         */
+        public function testReadMatch(){
+            echo 'Match objects:
 
         ';
-        $iter = $this->objLayer->findMatch(null);
-        $i=0;
-        //loop through each match
-        while($iter->current()){
-            $match = $iter->current();
+            $iter = $this->objLayer->findMatch(null);
+            $i=0;
+            //loop through each match
+            while($iter->current()){
+                $match = $iter->current();
 
-            if ($match->getHomeTeam() != null && $match->getAwayTeam() != null && $match->getSportsVenue() != null) {
-                echo 'match id: ' . strval($match->getId()) . ' Hometeam: ' . $match->getHomeTeam()->getName() . ' Away team: ' . $match->getAwayTeam()->getName() .
-                    ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
+                if ($match->getHomeTeam() != null && $match->getAwayTeam() != null && $match->getSportsVenue() != null) {
+                    echo 'match id: ' . strval($match->getId()) . ' Hometeam: ' . $match->getHomeTeam()->getName() . ' Away team: ' . $match->getAwayTeam()->getName() .
+                        ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
+                }
+                $played = $match->getIsCompleted();
+                if($played){
+                    echo 'game played, home team points: ' . strval($match->getHomePoints()) . ' away team points: ' . strval($match->getAwayPoints());
+                }
+                else{
+                    echo 'game not yet played';
+                }
+                $iter->next();
+                ++$i;
             }
-            $played = $match->getIsCompleted();
-            if($played){
-                echo 'game played, home team points: ' . strval($match->getHomePoints()) . ' away team points: ' . strval($match->getAwayPoints());
-            }
-            else{
-                echo 'game not yet played';
-            }
-            $iter->next();
-            ++$i;
-        }
         echo strval($i) . ' total match objects
 
         ';
@@ -231,7 +231,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * Prints out every score report obj in the persistence db
-     */
+     *
     public function testReadScoreReport(){
         echo 'score report objects:
 
@@ -250,7 +250,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         echo strval($i) . ' total Scorereport objects
 
         ';
-    }
+    }*/
 
     /**
      * Prints out every round obj in the persistence db
