@@ -37,7 +37,8 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findAdministrator(null);
 
         $i=0;
-        while($iter->hasNext()){
+        //change is here
+        while($iter->current()){
             $admin = $iter->current();
            echo 'Admin id: ' . strval($admin->getId()) .' '. $admin->getFirstName() . ' '  . $admin->getLastName() . '
 
