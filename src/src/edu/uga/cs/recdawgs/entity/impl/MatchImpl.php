@@ -82,13 +82,14 @@ class MatchImpl extends Persistent implements Match {
      * @param date the new date of the match
      * @throws RDException in case the date is in the past
      */
-    public function setDate( $date ){ // throws RDException;
-        //TODO throw exception if date is in past
-//        try{
+    public function setDate( $date ){ // throws RDException
+
+        if (new DateTime($date) < new DateTime($format = DATE_ATOM, $time = "now", new DateTimeZone("ATLANTIC"))){
+            throw new RDException('Date is in the past.');
+        }
+        else {
             $this->date = $date;
-  //      } catch (RDException $rde) {
-    //        echo $rde;
-      //  }
+        }
     }
     /** Return the indication if this match has been completed.
      * @return the indication if this match has been completed
