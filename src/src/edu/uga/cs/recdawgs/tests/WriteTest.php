@@ -179,7 +179,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         ';
 
         $this->objLayer->createTeamParticipatesInLeague($teamB, $leagueA);
-        echo 'Team: ' . $teamB->getName() . ' added to league: ' . $leagueB->getName() . '
+        echo 'Team: ' . $teamB->getName() . ' added to league: ' . $leagueA->getName() . '
 
         ';
 

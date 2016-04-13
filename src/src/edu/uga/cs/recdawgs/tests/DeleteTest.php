@@ -30,12 +30,15 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      * Reads all admin objs from persistence db
      */
     public function testDeleteAdmin(){
-        echo 'Querying an Admin object:\n ';
+        echo 'Querying  Admin objects:
+
+         ';
         $iter = $this->objLayer->findAdministrator(null);
         while($iter->current()){
             $admin = $iter->current();
             echo 'userid: ' . strval($admin->getId()) .' firstname: '. $admin->getFirstName() . ' lastname: '  . $admin->getLastName();
-            echo 'deleting this admin
+            echo '
+            deleting this admin
 
             ';
             try {
@@ -52,12 +55,16 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testDeleteStudent(){
-        echo 'Student objects:\n ';
+        echo '
+        Student objects:
+
+         ';
         $iter = $this->objLayer->findStudent(null);
         while($iter->current()){
             $student = $iter->current();
             echo 'student id: ' . strval($student->getId()) .' firstName:'. strval($student->getFirstName()) . ' lastName:'  . strval($student->getLastName());
-            echo 'deleting this student
+            echo '
+            deleting this student
 
             ';
             try {
@@ -75,7 +82,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testDeleteLeague() {
-        echo 'League objects:\n ';
+        echo 'League objects:
+
+         ';
         $iter = $this->objLayer->findLeague(null);
         while($iter->current()){
             $league = $iter->current();
@@ -84,7 +93,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
                 ' min # members:'. strval($league->getMinMembers()) . ' max # members'  . strval($league->getMaxMembers()) .
                 ' league rules: ' . strval($league->getLeagueRules()) . ' match rules' . strval($league->getMatchRules()) .
                 'league winner: ' . $league->getWinnerOfLeague();
-            echo 'deleting this league
+            echo '
+            deleting this league
 
             ';
             try {
@@ -102,20 +112,23 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testDeleteTeam() {
-        echo 'Team objects:\n ';
+        echo 'Team objects:
+
+         ';
         $iter = $this->objLayer->findTeam(null);
         while($iter->current()){
             $team = $iter->current();
-            echo 'team id: ' . strval($team->getId()) .' name:'. $team->getName() . ' league:'  . $team->getParticipatesInLeague() .
-            ' captain: ' . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName();
+            echo 'team id: ' . strval($team->getId()) .' name:'. $team->getName() . ' league:'  . $team->getParticipatesInLeague();
             
-            echo 'deleting this team
+            echo '
+            deleting this team
 
             ';
 
             try {
                 $this->objLayer->deleteTeam($team);
-                echo 'Deletion successful
+                echo '
+                Deletion successful
 
                 ';
             }
@@ -128,7 +141,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testDeleteScoreReport() {
-        echo 'Report objects:\n ';
+        echo 'Report objects:
+
+         ';
         $iter = $this->objLayer->findScoreReport(null);
         while($iter->current()){
             $report = $iter->current();
@@ -136,13 +151,16 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
                 ' Date: '. strval($report->getDate()) . 'Match: '. strval($report->getMatch()) .
                 ' Student who put in the score: '. strval($report->getStudent());
             
-            echo 'deleting this report
+            echo '
+            deleting this report
 
             ';
 
             try {
                 $this->objLayer->deleteScoreReport($report);
-                echo 'Deletion successful';
+                echo '
+                Deletion successful
+                g';
             }
             catch(RDException $r){
                 echo 'Error deleting report obj';
@@ -153,13 +171,16 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testDeleteSportsVenue() {
-        echo 'Venue objects:\n ';
+        echo 'Venue objects:
+
+         ';
         $iter = $this->objLayer->findSportsVenue(null);
         while($iter->current()){
             $venue = $iter->current();
             echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
             
-            echo 'deleting this venue
+            echo '
+            deleting this venue
 
             ';
 
@@ -178,13 +199,16 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testDeleteRound() {
-        echo 'Venue objects:\n ';
+        echo 'Round objects:
+
+         ';
         $iter = $this->objLayer->findSportsVenue(null);
         while($iter->current()){
             $venue = $iter->current();
-            echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
+            echo 'round number: ' . strval($venue->getNumber()) .' Leagueid: '. strval($venue->getLeague()->getId());
             
-            echo 'deleting this venue
+            echo '
+            deleting this round
 
             ';
 
@@ -195,7 +219,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
                 ';
             }
             catch(RDException $r){
-                echo 'Error deleting venue obj';
+                echo 'Error deleting round obj';
             }
 
             $iter->next();
@@ -213,7 +237,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             echo 'match id: ' . strval($match->getId()) .' Hometeam: '. $match->getHomeTeam()->getName() . ' Away team: '  . $match->getAwayTeam()->getName() .
                 ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
             
-            echo 'deleting this match
+            echo '
+
+            deleting this match
 
             ';
 
