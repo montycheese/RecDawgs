@@ -56,7 +56,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
         //query
         $soccer = $this->objLayer->createLeague($name = 'Indoor Soccer', $isIndoor=true, $minTeams=4);
         $soccer = $this->objLayer->findLeague($soccer)->current();
-        //echo var_dump($soccer);
+
         //update
         $soccer->setMinTeams(5);
         $soccer->setMaxTeams(25);

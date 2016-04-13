@@ -11,6 +11,11 @@ use edu\uga\cs\recdawgs\object\impl as Object;
 use edu\uga\cs\recdawgs\persistence\impl as Persistence;
 use edu\uga\cs\recdawgs\RDException;
 
+
+spl_autoload_register(function ($class_name) {
+    include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
+});
+
 class DeleteTest extends \PHPUnit_Framework_TestCase {
     private $persistenceLayer = null;
     private $objLayer = null;

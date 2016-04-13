@@ -335,8 +335,8 @@ class ObjectLayerImpl implements ObjectLayer{
 
     /**
      * Return an iterator of Match objects satisfying the search criteria given in the modelMatch object.
-     * @param modelMatch a model Match object specifying the search criteria
-     * @return an Iterator of the located Match objects
+     * @param Entity\MatchImpl $modelMatch a model Match object specifying the search criteria
+     * @return Persistence\MatchIterator an Iterator of the located Match objects
      * @throws RDException in case there is a problem with the retrieval of the requested objects
      */
     public function findMatch($modelMatch) {

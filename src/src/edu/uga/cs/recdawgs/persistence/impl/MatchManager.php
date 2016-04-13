@@ -197,6 +197,7 @@ class MatchManager {
      * @throws RDException
      */
     public function restore($modelMatch){
+        //echo 'model match contents: ' . var_dump($modelMatch);
         $q = 'SELECT * from ' . _NAME. '.match WHERE 1=1 ';
         if($modelMatch != NULL) {
             if ($attr = $modelMatch->getHomePoints() != NULL) {
@@ -217,7 +218,7 @@ class MatchManager {
             if ($attr = $modelMatch->getAwayTeam()->getId() != NULL) {
                 $q .= ' AND away_team_id = ' . $attr;
             }
-            if ($attr = $modelMatch->getSportsTeam->getId() != NULL) {
+            if ($attr = $modelMatch->getSportsTeam()->getId() != NULL) {
                 $q .= ' AND sports_team_id = ' . $attr;
             }
             if ($attr = $modelMatch->getId() != NULL){

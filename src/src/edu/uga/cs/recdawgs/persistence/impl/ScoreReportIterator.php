@@ -27,7 +27,7 @@ class ScoreReportIterator extends PersistenceIterator{
         parent::__construct();
         $this->resultSet = $resultSet;
         $this->objLayer = $objLayer;
-
+        echo 'result set of score report: ' . var_dump($resultSet);
         /**
          * Populate the iterator with score report objects
          */
@@ -39,15 +39,15 @@ class ScoreReportIterator extends PersistenceIterator{
             try {
                 //create student obj who is team captain
                 $student = new StudentImpl();
-                $student->setId($resultSet['student_id']);
+                $student->setId($resultSet[$i]['student_id']);
                 //use ID to get specific student
                 $student = $objLayer->findStudent($student);
 
                 //create match obj that the report belongs to
                 $match = new MatchImpl();
-                $match->setId($resultSet['match_id']);
+                $match->setId($resultSet[$i]['match_id']);
                 $match = $objLayer->findMatch($match);
-
+                //echo 'match that belongs to this score report: ' . var_dump($match);
                 $report = $objLayer->createScoreReport(
                     $resultSet[$i]['home_points'],
                     $resultSet[$i]['away_points'],
