@@ -315,18 +315,19 @@ class ObjectLayerImpl implements ObjectLayer{
      * @throws RDException in case any of the po$arguments is negative or either of the teams is null or if the given teams are not in the same league
      */
     public function createMatch($homePoints = null, $awayPoints = null, $date = null, 
-        $isCompleted = null, $homeTeam = null, $awayTeam = null, $round=null) {
+        $isCompleted = null, $homeTeam = null, $awayTeam = null,$sportsVenue=null, $round=null) {
         $aMatch = new Entity\MatchImpl();
 
         //if ($homePoints != null && $awayPoints != null && $date != null &&
           //  $isCompleted != null && $homeTeam != null && $awayTeam != null) {
-            $aMatch->setHomePoints($homePoints);
-            $aMatch->setAwayPoints($awayPoints);
-            $aMatch->setDate($date);
-            $aMatch->setIsCompleted($isCompleted);
-            $aMatch->setHomeTeam($homeTeam);
-            $aMatch->setAwayTeam($awayTeam);
-            $aMatch->setRound($round);
+        $aMatch->setHomePoints($homePoints);
+        $aMatch->setAwayPoints($awayPoints);
+        $aMatch->setDate($date);
+        $aMatch->setIsCompleted($isCompleted);
+        $aMatch->setHomeTeam($homeTeam);
+        $aMatch->setAwayTeam($awayTeam);
+        $aMatch->setSportsVenue($sportsVenue);
+        $aMatch->setRound($round);
         //}
 
         return $aMatch;
@@ -427,11 +428,11 @@ class ObjectLayerImpl implements ObjectLayer{
         $aScoreReport = new Entity\ScoreReportImpl();
 
        // if ($homePoints != null && $awayPoints != null && $date != null && $student != null && $match != null) {
-            $aScoreReport->setHomePoint($homePoints);
-            $aScoreReport->setAwayPoints($awayPoints);
-            $aScoreReport->setDate($date);
-            $aScoreReport->setMatch($student);
-            $aScoreReport->setStudent($match);
+        $aScoreReport->setHomePoints($homePoints);
+        $aScoreReport->setAwayPoints($awayPoints);
+        $aScoreReport->setDate($date);
+        $aScoreReport->setMatch($match);
+        $aScoreReport->setStudent($student);
        // }
 
         return $aScoreReport;
