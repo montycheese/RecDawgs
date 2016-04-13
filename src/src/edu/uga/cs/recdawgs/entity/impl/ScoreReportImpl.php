@@ -131,7 +131,7 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
     public function setStudent( $student ) { // throws RDException;
         if(!isset($student)) {
             throw new RDException('Student can not be null');
-        } else if ((isset($this->homeTeam) && isset($this->awayTeam)) && ($student !== $this->homeTeam->getCaptain()) || ($student !== $this->awayTeam->getCaptain())) {
+        } else if ((isset($this->homeTeam) && isset($this->awayTeam)) && ($student->getId() !== $this->homeTeam->getCaptain()->getId()) || ($student->getId() !== $this->awayTeam->getCaptain()->getId())) {
             throw new RDException('Student has to be a Team Captain');   
         }
         else{

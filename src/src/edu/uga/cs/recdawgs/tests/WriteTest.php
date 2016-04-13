@@ -224,7 +224,8 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
 
         $teamA = $this->objLayer->createTeam('Trustii', $studentA, $leagueA);
         $teamB = $this->objLayer->createTeam('Rockets', $studentB, $leagueA);
-
+        $this->objLayer->createStudentCaptainOfTeam($studentA, $teamA);
+        $this->objLayer->createStudentCaptainOfTeam($studentB,$teamB);
 
         $date = date('Y-m-d H:i:s', time());
 
