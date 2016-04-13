@@ -88,7 +88,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             echo 'Members of this team: ';
             $memberIter = $this->objLayer->restoreStudentMemberOfTeam(null, $team);
             //loop through each member
-            while($memberIter->hasNext()){
+            while($memberIter->current()){
                 $student = $memberIter->current();
                 echo 'student id: ' . strval($student->getId()) .' '. $student->getFirstName() . ' '  . $student->getLastName();
                 $memberIter->next();
