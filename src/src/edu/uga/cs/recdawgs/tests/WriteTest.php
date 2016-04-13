@@ -73,6 +73,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         //store
         $this->objLayer->storeStudent($this->student1);
         $this->objLayer->storeStudent($this->student2);
+        //echo var_dump($this->student1);
         echo 'students created and stored in persistence database successfully';
     }
 
@@ -112,18 +113,63 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
      * @depends testWriteLeague
      */
     public function testWriteTeam(){
-        /*create
-        if ($this->student1 == null || $this->student2 == null) {
-            testWriteStudent();
-        }
+        //create
+        //if ($this->student1 == null || $this->student2 == null) {
+         //   testWriteStudent();
+        //}
 
-        if ($this->league1 == null || $this->league2 == null) {
-            testWriteLeague();
-        }*/
+       // if ($this->league1 == null || $this->league2 == null) {
+        //    testWriteLeague();
+        //}
 
+        //create as class var to use later when making teams
+        $studentA = $this->objLayer->createStudent(
+            'Montana',
+            'Wong',
+            'mwong9',
+            'youwish',
+            'mwong9@uga.edu',
+            '12343223',
+            'Computer Science',
+            '45 Baxter Street Athens, GA 30605'
+        );
+        $studentB = $this->objLayer->createStudent(
+            'Bernie',
+            'Sanders',
+            'feelthebern2016',
+            'vermont',
+            'bernie@berniesanders.gov',
+            'password3232',
+            'Politics',
+            '123 White Hart Lane, Tottenham, London, England 10001'
+        );
 
-        $this->team1 = $this->objLayer->createTeam('Trustii', $this->student1,$this->league1);
-        $this->team2 = $this->objLayer->createTeam('Rockets', $this->student2,$this->league2);
+        //create
+        $leagueA = $this->objLayer->createLeague(
+            'Indoor Soccer',
+            'Games only played indoor. Must be soccer rules adhereing to fifa guidelines.',
+            '3 referees, no handballs, goalie can not pick up team mate passback',
+            true,
+            4,
+            24,
+            5,
+            8,
+            null
+        );
+        $leagueB = $this->objLayer->createLeague(
+            'Curling',
+            'Games only played on ice. Rules adhere to Winter Olympic games standards CIE2.0.',
+            '3 referees, sticks must be approved by judges, puck must be lightweight uranium',
+            true,
+            4,
+            24,
+            2,
+            100,
+            null
+        );
+
+        $this->team1 = $this->objLayer->createTeam('Trustii', $studentA, $leagueA);
+        $this->team2 = $this->objLayer->createTeam('Rockets', $studentB, $leagueB);
 
         //store
         $this->objLayer->storeTeam($this->team1);
@@ -136,17 +182,85 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
      * @depends testWriteMatch
      */
     public function testWriteScoreReport(){
-        /* create
-        if ($this->student1 == null || $this->student2 == null) {
-            testWriteStudent();
-        }
+        $leagueA = $this->objLayer->createLeague(
+            'Indoor Soccer',
+            'Games only played indoor. Must be soccer rules adhereing to fifa guidelines.',
+            '3 referees, no handballs, goalie can not pick up team mate passback',
+            true,
+            4,
+            24,
+            5,
+            8,
+            null
+        );
+        $leagueB = $this->objLayer->createLeague(
+            'Curling',
+            'Games only played on ice. Rules adhere to Winter Olympic games standards CIE2.0.',
+            '3 referees, sticks must be approved by judges, puck must be lightweight uranium',
+            true,
+            4,
+            24,
+            2,
+            100,
+            null
+        );
 
-        if ($this->match1 == null || $this->match2 == null) {
-            testWriteMatch();
-        }*/
+        $roundA = $this->objLayer->createRound(1, $leagueA);
+        $roundB = $this->objLayer->createRound(2, $leagueB);
+
+        $studentA = $this->objLayer->createStudent(
+            'Montana',
+            'Wong',
+            'mwong9',
+            'youwish',
+            'mwong9@uga.edu',
+            '12343223',
+            'Computer Science',
+            '45 Baxter Street Athens, GA 30605'
+        );
+        $studentB = $this->objLayer->createStudent(
+            'Bernie',
+            'Sanders',
+            'feelthebern2016',
+            'vermont',
+            'bernie@berniesanders.gov',
+            'password3232',
+            'Politics',
+            '123 White Hart Lane, Tottenham, London, England 10001'
+        );
+
+
+        $teamA = $this->objLayer->createTeam('Trustii', $studentA, $leagueA);
+        $teamB = $this->objLayer->createTeam('Rockets', $studentB, $leagueB);
+
+
         $date = date('Y-m-d H:i:s', time());
-        $this->report1 = $this->objLayer->createScoreReport(30, 21, $date, $this->student1, $this->match1);
-        $this->report2 = $this->objLayer->createScoreReport(23, 29, $date, $this->student2, $this->match1);
+
+        $matchA = $this->objLayer->createMatch(
+            30,
+            29,
+            $date,
+            true,
+            $teamA,
+            $teamB,
+            $roundA
+        );
+
+        $matchB = $this->objLayer->createMatch(
+            25,
+            27,
+            $date,
+            false,
+            $teamB,
+            $teamA,
+            $roundB
+        );
+
+
+
+        $date = date('Y-m-d H:i:s', time());
+        $this->report1 = $this->objLayer->createScoreReport(30, 21, $date, $studentA, $matchA);
+        $this->report2 = $this->objLayer->createScoreReport(23, 29, $date, $studentB, $matchA);
 
         //store
         $this->objLayer->storeScoreReport($this->report1);
@@ -157,28 +271,50 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testWriteSportsVenue(){
-        //create and store
-        //if ($this->league1 == null || $this->league2 == null) {
-         //   testWriteLeague();
-        //}
+
 
         $this->venue1 = $this->objLayer->createSportsVenue('Court A', true, 'Ramsey Center, Athens, GA 30605');
         $this->venue2 = $this->objLayer->createSportsVenue('Field B', false, '199 River Road, Athens, GA 30605');
         echo 'sports venues created and stored in persistent database successfully';
 
+
+
     }
 
     /**
-     * @deoebds testWriteLeague
+     * @depends testWriteLeague
      */
     public function testWriteRound(){
         //create
         //if ($this->league1 == null || $this->league2 == null) {
        //     testWriteLeague();
        // }
+        //create
+        $leagueA = $this->objLayer->createLeague(
+            'Indoor Soccer',
+            'Games only played indoor. Must be soccer rules adhereing to fifa guidelines.',
+            '3 referees, no handballs, goalie can not pick up team mate passback',
+            true,
+            4,
+            24,
+            5,
+            8,
+            null
+        );
+        $leagueB = $this->objLayer->createLeague(
+            'Curling',
+            'Games only played on ice. Rules adhere to Winter Olympic games standards CIE2.0.',
+            '3 referees, sticks must be approved by judges, puck must be lightweight uranium',
+            true,
+            4,
+            24,
+            2,
+            100,
+            null
+        );
 
-        $this->round1 = $this->objLayer->createRound(1, $this->league1);
-        $this->round2 = $this->objLayer->createRound(2, $this->league2);
+        $this->round1 = $this->objLayer->createRound(1, $leagueA);
+        $this->round2 = $this->objLayer->createRound(2, $leagueB);
 
         //store
         $this->objLayer->storeRound($this->round1);
@@ -193,13 +329,58 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
      * @depends testWriteLeague
      */
     public function testWriteMatch(){
-        //create
-       // if ($this->team1 == null || $this->team2 == null) {
-        //    testWriteTeam();
-       // }
-       // if ($this->league1 == null || $this->league2 == null) {
-       //     testWriteLeague();
-       // }
+        $leagueA = $this->objLayer->createLeague(
+            'Indoor Soccer',
+            'Games only played indoor. Must be soccer rules adhereing to fifa guidelines.',
+            '3 referees, no handballs, goalie can not pick up team mate passback',
+            true,
+            4,
+            24,
+            5,
+            8,
+            null
+        );
+        $leagueB = $this->objLayer->createLeague(
+            'Curling',
+            'Games only played on ice. Rules adhere to Winter Olympic games standards CIE2.0.',
+            '3 referees, sticks must be approved by judges, puck must be lightweight uranium',
+            true,
+            4,
+            24,
+            2,
+            100,
+            null
+        );
+
+       $roundA = $this->objLayer->createRound(1, $leagueA);
+        $roundB = $this->objLayer->createRound(2, $leagueB);
+
+        $studentA = $this->objLayer->createStudent(
+            'Montana',
+            'Wong',
+            'mwong9',
+            'youwish',
+            'mwong9@uga.edu',
+            '12343223',
+            'Computer Science',
+            '45 Baxter Street Athens, GA 30605'
+        );
+        $studentB = $this->objLayer->createStudent(
+            'Bernie',
+            'Sanders',
+            'feelthebern2016',
+            'vermont',
+            'bernie@berniesanders.gov',
+            'password3232',
+            'Politics',
+            '123 White Hart Lane, Tottenham, London, England 10001'
+        );
+
+
+        $teamA = $this->objLayer->createTeam('Trustii', $studentA, $leagueA);
+        $teamB = $this->objLayer->createTeam('Rockets', $studentB, $leagueB);
+
+
         $date = date('Y-m-d H:i:s', time());
 
         $this->match1 = $this->objLayer->createMatch(
@@ -207,9 +388,9 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
                 29,
                 $date,
                 true,
-                $this->team1,
-                $this->team2,
-                $this->$round1
+                $teamA,
+                $teamB,
+                $roundA
             );
 
         $this->match2 = $this->objLayer->createMatch(
@@ -217,9 +398,9 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
                 27,
                 $date,
                 false,
-                $this->team2,
-                $this->team1,
-                $this->$round2
+                $teamB,
+                $teamA,
+                $roundB
             );
 
         // store
@@ -234,8 +415,59 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
      * @depends testWriteLeague
      */
     public function testWriteTeamParticipatesInLeague(){
-        $this->objLayer->createTeamParticipatesInLeague($this->team1, $this->league1);
-        echo 'Team: ' . $this->team1->getName() . ' added to league: ' . $this->league1->getName();
+        $leagueA = $this->objLayer->createLeague(
+            'Indoor Soccer',
+            'Games only played indoor. Must be soccer rules adhereing to fifa guidelines.',
+            '3 referees, no handballs, goalie can not pick up team mate passback',
+            true,
+            4,
+            24,
+            5,
+            8,
+            null
+        );
+        $leagueB = $this->objLayer->createLeague(
+            'Curling',
+            'Games only played on ice. Rules adhere to Winter Olympic games standards CIE2.0.',
+            '3 referees, sticks must be approved by judges, puck must be lightweight uranium',
+            true,
+            4,
+            24,
+            2,
+            100,
+            null
+        );
+
+        $roundA = $this->objLayer->createRound(1, $leagueA);
+        $roundB = $this->objLayer->createRound(2, $leagueB);
+
+        $studentA = $this->objLayer->createStudent(
+            'Montana',
+            'Wong',
+            'mwong9',
+            'youwish',
+            'mwong9@uga.edu',
+            '12343223',
+            'Computer Science',
+            '45 Baxter Street Athens, GA 30605'
+        );
+        $studentB = $this->objLayer->createStudent(
+            'Bernie',
+            'Sanders',
+            'feelthebern2016',
+            'vermont',
+            'bernie@berniesanders.gov',
+            'password3232',
+            'Politics',
+            '123 White Hart Lane, Tottenham, London, England 10001'
+        );
+
+
+        $teamA = $this->objLayer->createTeam('Trustii', $studentA, $leagueA);
+        $teamB = $this->objLayer->createTeam('Rockets', $studentB, $leagueB);
+
+        $this->objLayer->createTeamParticipatesInLeague($teamA, $leagueA);
+        echo 'Team: ' . $teamA->getName() . ' added to league: ' . $leagueA->getName() . '\n';
     }
 
 }

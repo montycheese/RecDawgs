@@ -36,8 +36,8 @@ class ObjectLayerImpl implements ObjectLayer{
 
         $anAdmin = new Entity\AdministratorImpl();
 
-        if ($firstName != null && $lastName != null && $userName != null &&
-            $password != null && $emailAddress != null) {
+        //if ($firstName != null && $lastName != null && $userName != null &&
+         //   $password != null && $emailAddress != null) {
             $anAdmin->setFirstName($firstName);
             $anAdmin->setLastName($lastName);
             $anAdmin->setUserName($userName);
@@ -45,7 +45,7 @@ class ObjectLayerImpl implements ObjectLayer{
             $anAdmin->setEmailAddress($emailAddress);
 
 
-        }
+       // }
 
         return $anAdmin;
     }
@@ -99,8 +99,8 @@ class ObjectLayerImpl implements ObjectLayer{
         $password = null, $emailAddress = null, $studentId = null, $major = null, $address = null) {
         $aStudent = new Entity\StudentImpl();
 
-        if ($firstName != null && $lastName != null && $userName != null && $password != null && 
-            $emailAddress != null && $studentId != null && $major != null && $address != null) {
+       // if ($firstName != null && $lastName != null && $userName != null && $password != null &&
+        //    $emailAddress != null && $studentId != null && $major != null && $address != null) {
             $aStudent->setFirstName($firstName);
             $aStudent->setLastName($lastName);
             $aStudent->setUserName($userName);
@@ -109,7 +109,7 @@ class ObjectLayerImpl implements ObjectLayer{
             $aStudent->setStudentId($studentId);
             $aStudent->setMajor($major);
             $aStudent->setAddress($address);
-        }
+       // }
 
         return $aStudent;
     }
@@ -160,8 +160,8 @@ class ObjectLayerImpl implements ObjectLayer{
             $isIndoor = null, $minTeams = null, $maxTeams = null, $minPlayers = null, $maxPlayers = null) {
         $aLeague = new Entity\LeagueImpl();
 
-        if ($name != null && $leagueRules != null && $matchRules && $isIndoor != null && 
-            $minTeams != null && $maxTeams != null && $minPlayers != null && $maxPlayers != null) {
+       // if ($name != null && $leagueRules != null && $matchRules && $isIndoor != null &&
+         //   $minTeams != null && $maxTeams != null && $minPlayers != null && $maxPlayers != null) {
             $aLeague->setName($name);
             $aLeague->setLeagueRules($leagueRules);
             $aLeague->setMatchRules($matchRules);
@@ -170,7 +170,7 @@ class ObjectLayerImpl implements ObjectLayer{
             $aLeague->setMaxTeams($maxTeams);
             $aLeague->setMinMembers($minPlayers);
             $aLeague->setMaxMembers($maxPlayers);
-        }
+       // }
 
         return $aLeague;
     }
@@ -206,20 +206,20 @@ class ObjectLayerImpl implements ObjectLayer{
 
     /**
      * Create a new Team object, given the set of initial attribute values.
-     * @param name the name of the team
-     * @param student the student who is the captain of the new team
-     * @param league the league in which the new team will participate
-     * @return a new Team object instance with the given attribute values
+     * @param String $name the name of the team
+     * @param Entity\StudentImpl $student the student who is the captain of the new team
+     * @param Entity\LeagueImpl $league the league in which the new team will participate
+     * @return Entity\TeamImpl a new Team object instance with the given attribute values
      * @throws RDException in case name is null
      */
     public function createTeam($name = null, $student = null, $league = null) {
         $aTeam = new Entity\TeamImpl();
 
-        if ($name != null && $student != null && $league != null) {
+        //if ($name != null && $student != null && $league != null) {
             $aTeam->setName($name);
             $aTeam->setCaptain($student);
             $aTeam->setParticipatesInLeague($league);
-        }
+        //}
 
         return $aTeam;
     } 
@@ -264,11 +264,11 @@ class ObjectLayerImpl implements ObjectLayer{
     public function createSportsVenue($name = null, $address = null, $isIndoor = null) {
         $aSportsVenue = new Entity\SportsVenueImpl();
 
-        if ($name != null && $address != null && $isIndoor != null) {
+       // if ($name != null && $address != null && $isIndoor != null) {
             $aSportsVenue->setName($name);
             $aSportsVenue->setAddress($address);
             $aSportsVenue->setIsIndoor($isIndoor);
-        }
+        //}
 
         return $aSportsVenue;
     }
@@ -318,8 +318,8 @@ class ObjectLayerImpl implements ObjectLayer{
         $isCompleted = null, $homeTeam = null, $awayTeam = null, $round=null) {
         $aMatch = new Entity\MatchImpl();
 
-        if ($homePoints != null && $awayPoints != null && $date != null && 
-            $isCompleted != null && $homeTeam != null && $awayTeam != null) {
+        //if ($homePoints != null && $awayPoints != null && $date != null &&
+          //  $isCompleted != null && $homeTeam != null && $awayTeam != null) {
             $aMatch->setHomePoint($homePoints);
             $aMatch->setAwayPoints($awayPoints);
             $aMatch->setDate($date);
@@ -327,7 +327,7 @@ class ObjectLayerImpl implements ObjectLayer{
             $aMatch->setHomeTeam($homeTeam);
             $aMatch->setAwayTeam($awayTeam);
             $aMatch->setRound($awayTeam);
-        }
+        //}
 
         return $aMatch;
     }
@@ -426,13 +426,13 @@ class ObjectLayerImpl implements ObjectLayer{
     public function createScoreReport($homePoints = null, $awayPoints = null, $date = null, $student = null, $match = null) {
         $aScoreReport = new Entity\ScoreReportImpl();
 
-        if ($homePoints != null && $awayPoints != null && $date != null && $student != null && $match != null) {
+       // if ($homePoints != null && $awayPoints != null && $date != null && $student != null && $match != null) {
             $aScoreReport->setHomePoint($homePoints);
             $aScoreReport->setAwayPoints($awayPoints);
             $aScoreReport->setDate($date);
             $aScoreReport->setMatch($student);
             $aScoreReport->setStudent($match);
-        }
+       // }
 
         return $aScoreReport;
     }
