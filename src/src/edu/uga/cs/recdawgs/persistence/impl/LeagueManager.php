@@ -202,11 +202,22 @@ class LeagueManager {
     }
 
     public function restoreParticipatesIn($league){
+        if($league == null) throw new RDException('League parameter is null');
 
-        //TODO
+        $q = '#';
 
+        $lgmt = $this->dbConnection->prepare($q);
+        $lgmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
+        if ($lgmt->execute()){
+            //get results from Query
+            $resultSet = $lgmt->fetchAll(\PDO::FETCH_ASSOC);
+            // return iter
+            return (new TeamIterator($resultSet, $this->objLayer));
+        }
+        else{
+            throw new RDException('Error restoring team members');
+        }
 
-        return (new TeamIterator($resultSet, $this->objLayer));
     }
 
     public function restore($leagueModel){
