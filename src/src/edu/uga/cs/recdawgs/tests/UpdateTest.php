@@ -22,15 +22,14 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
     public function testUpdateAdmin(){
         //create
-        $john = $this->objLayer->createAdministrator('John', 'Doe', 'jd123', 'password123', 'johndoe@rocketmail.io');
-        $sanath = $this->objLayer->createAdministrator('Sanath', 'Bhat', 'sanathbhat6789', 'somepassword', 'sanath@breakingstuff.com');
-        $maulesh = $this->objLayer->createAdministrator('Maulesh', 'Triveldi', 'ronaldofangirl123', 'iluvronaldo', 'maulesh99@gmail.com');
-        $hillary = $this->objLayer->createAdministrator('Hilary', 'Clinton', 'chillHill', 'whitehouse', 'hillary@whitehouse.edu');
+        $john = $this->objLayer->createAdministrator('jd123');
+        $john = $this->objLayer->findAdministrator($john)->current();
+
+        $john->setUserName('JOHNDOE123');
+
         //store
         $this->objLayer->storeAdministrator($john);
-        $this->objLayer->storeAdministrator($sanath);
-        $this->objLayer->storeAdministrator($maulesh);
-        $this->objLayer->storeAdministrator($hillary);
+
         echo 'admins created and stored in persistence database successfully.';
     }
 
@@ -48,7 +47,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     public function testUpdateLeague(){
         //query
         $soccer = $this->objLayer->createLeague($name = 'Indoor Soccer', $isIndoor=true, $minTeams=4);
-        $soccer = $this->objLayer->findLeague($soccer);
+        $soccer = $this->objLayer->findLeague($soccer)->current();
 
         //update
         $soccer->setMinTeams(5);
@@ -63,7 +62,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
     public function testUpdateTeam(){
         $trustii = $this->objLayer->createTeam($name='Trustii');
-        $trustii = $this->objLayer->findLeague($trustii);
+        $trustii = $this->objLayer->findLeague($trustii)->current();
 
         //update
         $trustii->setName('Trustii-UPDATED');
@@ -74,36 +73,47 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testUpdateMatch(){
-        $match = $this->objLayer->createMatch($homePoints = 30, $awayPoints = 29, $date = "2016-4-11", 
+        $match = $this->objLayer->createMatch($homePoints = 30, $awayPoints = 29,
         $isCompleted = true);
-        
+        $match = $this->objLayer->findMatch($match)->current();
+
         //update
         $match->setHomePoints(1000);
         $match->setAwayPoints(10000);
-        $match->setIsCompleted(false);
         
         //store
         $this->objLayer->storeMatch($match);
         echo 'Match queried, updated, and stored in persistent database successfully';
     }
     public function testUpdateScoreReport(){
-        $scoreReport = $this->objLayer->createScoreReport($homePoints = 30, $awayPoints = 21, $date = "2016-4-10");
-        
+        $scoreReport = $this->objLayer->createScoreReport($homePoints = 30, $awayPoints = 21);
+        $scoreReport = $this->objLayer->findScoreReport($scoreReport)->current();
         //update
         $scoreReport->setHomePoints(1000);
         $scoreReport->setAwayPoints(1000);
-        $scoreReport->setDate = "2016-28-10";
+        $scoreReport->setDate(date('Y-m-d H:i:s', time()));
         
         //store
         $this->objLayer->storeScoreReport($scoreReport);
-                                                    
+        echo 'report queried, updated, and stored in persistent database successfully';
                                                 
     }
     public function testUpdateSportsVenue(){
-       // $sportsVenue = $this->objLayer->createSportsVenue($name = null, $address = null, $isIndoor = null);
+        $sportsVenue = $this->objLayer->createSportsVenue($name = 'Field B');
+        $sportsVenue = $this->objLayer->findSportsVenue($sportsVenue)->current();
+        $sportsVenue->setName('Field C');
+        $sportsVenue->setAddress('Nowhere land, cambodia');
+
+        $this->objLayer->storeSportsVenue($sportsVenue);
+        echo 'venue queried, updated, and stored in persistent database successfully';
     }
 
     public function testUpdateRound(){
+        $r = $this->objLayer->createRound(1);
+        $r = $this->objLayer->findRound($r)->current();
 
+        $r->setNumber(5555);
+        $this->objLayer->storeRound($r);
+        echo 'round queried, updated, and stored in persistent database successfully';
     }
 }

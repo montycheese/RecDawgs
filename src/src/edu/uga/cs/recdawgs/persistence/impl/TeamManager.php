@@ -52,7 +52,7 @@ class TeamManager {
         else{
             //insert
             //create Query
-            $q = "INSERT INTO team (team.name, captain_id VALUES(?, ?);";
+            $q = "INSERT INTO team10.team (team.name, captain_id) VALUES(?, ?);";
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
