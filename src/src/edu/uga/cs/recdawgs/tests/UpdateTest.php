@@ -34,7 +34,9 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
         //store
         $this->objLayer->storeAdministrator($john);
 
-        echo 'admins created and stored in persistence database successfully.
+        echo '
+
+        admins created and stored in persistence database successfully.
 
         ';
     }
@@ -47,7 +49,9 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
         //store
         $this->objLayer->storeStudent($montana);
-        echo 'student queried, updated, and stored in persistence database successfully
+        echo '
+
+        student queried, updated, and stored in persistence database successfully
 
         ';
     }
@@ -55,8 +59,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     public function testUpdateLeague(){
         //query
         $soccer = $this->objLayer->createLeague();
-        
-            $soccer->setName('Indoor Soccer');
+        $soccer->setName('Indoor Soccer');
         $soccer->setIsIndoor(true);
         $soccer->minTeam(4);
         $soccer = $this->objLayer->findLeague($soccer)->current();
@@ -69,7 +72,9 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
         //store
         $this->objLayer->storeLeague($soccer);
-        echo 'leagues queried, updated, and stored in persistent database successfully
+        echo '
+
+        leagues queried, updated, and stored in persistent database successfully
 
         ';
     }
@@ -85,7 +90,9 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
         //store
         $this->objLayer->storeTeam($trustii);
-        echo 'teams queried, updated, and stored in persistent database successfully
+        echo '
+
+        teams queried, updated, and stored in persistent database successfully
 
         ';
     }
@@ -103,7 +110,9 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
         
         //store
         $this->objLayer->storeMatch($match);
-        echo 'Match queried, updated, and stored in persistent database successfully
+        echo '
+
+        Match queried, updated, and stored in persistent database successfully
 
         ';
     }
@@ -119,7 +128,9 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
         
         //store
         $this->objLayer->storeScoreReport($scoreReport);
-        echo 'report queried, updated, and stored in persistent database successfully
+        echo '
+
+        report queried, updated, and stored in persistent database successfully
 
         ';
                                                 
@@ -132,7 +143,9 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
         $sportsVenue->setAddress('Nowhere land, cambodia');
 
         $this->objLayer->storeSportsVenue($sportsVenue);
-        echo 'venue queried, updated, and stored in persistent database successfully
+        echo '
+
+        venue queried, updated, and stored in persistent database successfully
 
         ';
     }
@@ -144,7 +157,9 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
         $r->setNumber(5555);
         $this->objLayer->storeRound($r);
-        echo 'round queried, updated, and stored in persistent database successfully
+        echo '
+
+        round queried, updated, and stored in persistent database successfully
 
         ';
     }
