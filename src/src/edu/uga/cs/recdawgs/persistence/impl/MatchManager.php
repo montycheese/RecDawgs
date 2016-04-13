@@ -188,7 +188,14 @@ class MatchManager {
         }
     }
 
-
+    /**
+     *
+     * restore match
+     *
+     * @param $modelMatch
+     * @return MatchIterator
+     * @throws RDException
+     */
     public function restore($modelMatch){
         $q = 'SELECT * from ' . _NAME. '.match WHERE 1=1 ';
         if($modelMatch != NULL) {
@@ -222,10 +229,10 @@ class MatchManager {
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             // return iterator
-            return new StudentIterator($resultSet, $this->objLayer);
+            return new MatchIterator($resultSet, $this->objLayer);
         }
         else{
-            throw new RDException('Error restoring student model');
+            throw new RDException('Error restoring match model');
         }
     }
 

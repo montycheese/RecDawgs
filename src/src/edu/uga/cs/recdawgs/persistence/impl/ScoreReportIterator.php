@@ -7,6 +7,9 @@
  */
 namespace edu\uga\cs\recdawgs\persistence\impl;
 
+
+use edu\uga\cs\recdawgs\entity\impl\StudentImpl as StudentImpl;
+use edu\uga\cs\recdawgs\entity\impl\MatchImpl as MatchImpl;
 use edu\uga\cs\recdawgs\object\impl\ObjectLayerImpl as ObjectLayerImpl;
 use edu\uga\cs\recdawgs\RDException;
 
@@ -35,7 +38,7 @@ class ScoreReportIterator extends PersistenceIterator{
 
             try {
                 //create student obj who is team captain
-                $student = new UserImpl();
+                $student = new StudentImpl();
                 $student->setId($resultSet['student_id']);
                 //use ID to get specific student
                 $student = $objLayer->findStudent($student);
