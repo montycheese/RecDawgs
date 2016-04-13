@@ -58,7 +58,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findStudent(null);
         $i=0;
         //echo 'var dump iter: ' . var_dump($iter);
-        while($iter->hasNext()){
+        while($iter->current()){
             $student = $iter->current();
             echo 'student id: ' . strval($student->getId()) .' firstname: '. $student->getFirstName() . ' lastname: '  . $student->getLastName() . '
 
@@ -81,7 +81,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findTeam(null);
         $i=0;
         //loop through each team
-        while($iter->hasNext()){
+        while($iter->current()){
             $team = $iter->current();
             echo 'team id: ' . strval($team->getId()) .' name:'. $team->getName() . ' league:'  . $team->getParticipatesInLeague() .
             ' captain: ' . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName();
@@ -110,7 +110,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findLeague(null);
         $i=0;
         //loop through each league
-        while($iter->hasNext()){
+        while($iter->current()){
             //echo league info
             $league = $iter->current();
             echo 'league id: ' . strval($league->getId()) .' name: '. $league->getName() . ' is indoor: '  . $league->getIsIndoor() .
@@ -122,7 +122,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             $teamIter = $this->objLayer->restoreTeamParticipatesInLeague(null, $league);
 
             //loop through each team in this league
-            while($teamIter->hasNext()){
+            while($iter->current()){
                 $team = $teamIter->current();
                 echo 'team id: ' . strval($team->getId()) .' team name: '. $team->getName();
                 $teamIter->next();
@@ -131,7 +131,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             //loop through each sports venue in this league
             echo 'Sports venues used by this League: ';
             $venueIter = $this->objLayer->restoreLeagueSportsVenue($league, null);
-            while($venueIter->hasNext()){
+            while($iter->current()){
                 $venue = $venueIter->current();
                 echo 'venue id: ' . strval($venue->getId()) .' '. $venue->getName();
                 $venueIter->next();
@@ -142,7 +142,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
 
             Rounds in this League: ';
             $roundIter = $this->objLayer->restoreLeagueRound($league);
-            while($roundIter->hasNext()){
+            while($iter->current()){
                 $round = $roundIter->current();
                 echo 'Round id: ' . strval($round->getId()) .' Round number: '. $round->getNumber();
                 $roundIter->next();
@@ -165,7 +165,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findMatch(null);
         $i=0;
         //loop through each match
-        while($iter->hasNext()){
+        while($iter->current()){
             $match = $iter->current();
             echo 'match id: ' . strval($match->getId()) .' Hometeam: '. $match->getHomeTeam()->getName() . ' Away team: '  . $match->getAwayTeam()->getName() .
                 ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
