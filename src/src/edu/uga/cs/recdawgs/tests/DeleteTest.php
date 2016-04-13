@@ -27,7 +27,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     public function testDeleteAdmin(){
         echo 'Querying an Admin object:\n ';
         $iter = $this->objLayer->findAdministrator($this->objLayer->createAdministrator($userName='jd123'));
-        while($iter->hasNext()){
+        while($iter->current()){
             $admin = $iter->current();
             echo 'userid: ' . strval($admin->getId()) .' '. $admin->getFirstName() . ' '  . $admin->getLastName();
             echo 'deleting this admin';
@@ -45,7 +45,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     public function testDeleteStudent(){
         echo 'Student objects:\n ';
         $iter = $this->objLayer->findStudent(null);
-        while($iter->hasNext()){
+        while($iter->current()){
             $student = $iter->current();
             echo 'student id: ' . strval($student->getId()) .' '. strval($student->getFirstName()) . ' '  . strval($student->getLastName());
             echo 'deleting this student';
@@ -64,7 +64,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     public function testDeleteLeague() {
         echo 'League objects:\n ';
         $iter = $this->objLayer->findLeague(null);
-        while($iter->hasNext()){
+        while($iter->current()){
             $league = $iter->current();
             echo 'league id: ' . strval($league->getId()) .' name:'. $league->getName() . ' is indoor: '  . $league->getIsIndoor() .
                 ' min # teams: ' . strval($league->getMinTeams()) . ' max # teams' . strval($league->getMaxTeams()) .
@@ -87,7 +87,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     public function testDeleteTeam() {
         echo 'Team objects:\n ';
         $iter = $this->objLayer->findTeam(null);
-        while($iter->hasNext()){
+        while($iter->current()){
             $team = $iter->current();
             echo 'team id: ' . strval($team->getId()) .' name:'. $team->getName() . ' league:'  . $team->getParticipatesInLeague() .
             ' captain: ' . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName();
@@ -109,7 +109,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     public function testDeleteScoreReport() {
         echo 'Report objects:\n ';
         $iter = $this->objLayer->findScoreReport(null);
-        while($iter->hasNext()){
+        while($iter->current()){
             $report = $iter->current();
             echo 'Home points: ' . $report->getHomePoints() .' Away points: '. $report->getAwayPoints() .
                 ' Date: '. strval($report->getDate()) . 'Match: '. strval($report->getMatch()) .
@@ -132,7 +132,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     public function testDeleteSportsVenue() {
         echo 'Venue objects:\n ';
         $iter = $this->objLayer->findSportsVenue(null);
-        while($iter->hasNext()){
+        while($iter->current()){
             $venue = $iter->current();
             echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
             
@@ -153,7 +153,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     public function testDeleteRound() {
         echo 'Venue objects:\n ';
         $iter = $this->objLayer->findSportsVenue(null);
-        while($iter->hasNext()){
+        while($iter->current()){
             $venue = $iter->current();
             echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
             
@@ -174,7 +174,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     public function testDeleteMatch() {
         echo 'Match objects:\n ';
         $iter = $this->objLayer->findMatch(null);
-        while($iter->hasNext()){
+        while($iter->current()){
             $match = $iter->current();
             echo 'match id: ' . strval($match->getId()) .' Hometeam: '. $match->getHomeTeam()->getName() . ' Away team: '  . $match->getAwayTeam()->getName() .
                 ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
