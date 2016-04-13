@@ -177,7 +177,10 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testDeleteMatch() {
-        echo 'Match objects:\n ';
+        echo 'Match objects:
+
+
+         ';
         $iter = $this->objLayer->findMatch(null);
         while($iter->current()){
             $match = $iter->current();

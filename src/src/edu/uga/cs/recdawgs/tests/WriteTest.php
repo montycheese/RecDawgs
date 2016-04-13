@@ -101,7 +101,6 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
             100
         );
         //store
-        //echo var_dump($this->league1);
         $this->objLayer->storeLeague($leagueA);
         $this->objLayer->storeLeague($leagueB);
         echo 'leagues created and stored in persistent database successfully

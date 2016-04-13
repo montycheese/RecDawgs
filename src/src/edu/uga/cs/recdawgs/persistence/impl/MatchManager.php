@@ -192,7 +192,7 @@ class MatchManager {
      *
      * restore match
      *
-     * @param $modelMatch
+     * @param Entity\MatchImpl $modelMatch
      * @return MatchIterator
      * @throws RDException
      */
@@ -212,13 +212,19 @@ class MatchManager {
             if ($attr = $modelMatch->getIsCompleted() != NULL) {
                 $q .= ' AND is_completed = ' . ($attr) ? 1 : 0;
             }
-            if ($attr = $modelMatch->getHomeTeam()->getId() != NULL) {
+            $attr = NULL;
+            if ($modelMatch->getHomeTeam() != NULL) {
+                $attr = $modelMatch->getHomeTeam()->getId();
                 $q .= ' AND home_team_id = ' . $attr;
             }
-            if ($attr = $modelMatch->getAwayTeam()->getId() != NULL) {
+            $attr = NULL;
+            if ($modelMatch->getAwayTeam()!= NULL) {
+                $attr = $modelMatch->getAwayTeam()->getId();
                 $q .= ' AND away_team_id = ' . $attr;
             }
-            if ($attr = $modelMatch->getSportsTeam()->getId() != NULL) {
+            $attr = NULL;
+            if ($modelMatch->getSportsTeam() != NULL){
+                $attr = $modelMatch->getSportsTeam()->getId();
                 $q .= ' AND sports_team_id = ' . $attr;
             }
             if ($attr = $modelMatch->getId() != NULL){
