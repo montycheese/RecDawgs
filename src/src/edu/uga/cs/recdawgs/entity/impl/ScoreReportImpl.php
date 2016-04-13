@@ -13,8 +13,8 @@ use edu\uga\cs\recdawgs\RDException as RDException;
  */
 
 class ScoreReportImpl extends Persistent implements ScoreReport {
-    private $homePoint;
-    private $awayPoint;
+    private $homePoints;
+    private $awayPoints;
     private $date;
     private $match;
     private $student;
@@ -24,9 +24,9 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
     /** Constructor
      * Initalizes all of the parameter values into local variables.
      */
-    public function __constructor($homePoint=null, $awayPoint=null, $date=null, $match=null, $student=null) {
-        $this->homePoint = $homePoint;
-        $this->awayPoint = $awayPoint;
+    public function __constructor($homePoints=null, $awayPoints=null, $date=null, $match=null, $student=null) {
+        $this->homePoints = $homePoints;
+        $this->awayPoints = $awayPoints;
         $this->date = $date;
         $this->match = $match;
         $this->student = $student;
@@ -41,7 +41,7 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
      * @return the points scored by the home team
      */
     public function getHomePoints() {
-        return $this->homePoint;
+        return $this->homePoints;
     }
 
     /** Set the points scored by the home team
@@ -65,7 +65,7 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
      * @return the points scored by the away team
      */
     public function getAwayPoints() {
-        return $this->awayPoints;   
+        return $this->awayPoints;
     }
 
     /** Set the points scored by the away team
@@ -129,9 +129,20 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
      * @throws RDException in case the student is null or not the captain of the team involved in the match
      */
     public function setStudent( $student ) { // throws RDException;
+        echo 'dumping student: ' . var_dump($student);
+
+        echo 'dumping this obj: ' . var_dump($this);
+
         if(!isset($student)) {
             throw new RDException('Student can not be null');
-        } else if ((isset($this->homeTeam) && isset($this->awayTeam)) && ($student->getId() !== $this->homeTeam->getCaptain()->getId()) || ($student->getId() !== $this->awayTeam->getCaptain()->getId())) {
+        } else if (
+            (isset($this->homeTeam) && isset($this->awayTeam))
+            &&
+            (
+                $student->getId() !== $this->homeTeam->getCaptain()->getId() ||
+                $student->getId() !== $this->awayTeam->getCaptain()->getId()
+            )
+        ) {
             throw new RDException('Student has to be a Team Captain');   
         }
         else{
