@@ -215,11 +215,11 @@ class ObjectLayerImpl implements ObjectLayer{
     public function createTeam($name = null, $student = null, $league = null) {
         $aTeam = new Entity\TeamImpl();
 
-        //if ($name != null && $student != null && $league != null) {
+        if ($name != null && $student != null && $league != null) {
             $aTeam->setName($name);
             $aTeam->setCaptain($student);
             $aTeam->setParticipatesInLeague($league);
-        //}
+        }
 
         return $aTeam;
     } 
@@ -325,6 +325,7 @@ class ObjectLayerImpl implements ObjectLayer{
         $aMatch->setDate($date);
         $aMatch->setIsCompleted($isCompleted);
         $aMatch->setHomeTeam($homeTeam);
+        //echo 'match' .  var_dump($aMatch);
         $aMatch->setAwayTeam($awayTeam);
         $aMatch->setSportsVenue($sportsVenue);
         $aMatch->setRound($round);
@@ -676,7 +677,6 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function restoreTeamParticipatesInLeague($team = null, $league = null) {
         $result = $this->persistenceLayer->restoreTeamParticipatesInLeague($team, $league);
-
         return $result;
 
     }

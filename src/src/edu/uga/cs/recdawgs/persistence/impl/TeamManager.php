@@ -133,8 +133,8 @@ class TeamManager {
                 $attr = $modelTeam->getCaptain()->getId();
                 $q .= ' AND captain_id = ' . $attr;
             }
-            if ($attr = $modelTeam->getId() != NULL) {
-                $q .= ' AND team_id = ' . $attr;
+            if ($modelTeam->getId() != NULL) {
+                $q .= ' AND team_id = ' . $modelTeam->getId();
             }
 
         }

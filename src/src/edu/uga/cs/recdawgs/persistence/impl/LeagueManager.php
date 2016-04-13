@@ -227,6 +227,7 @@ class LeagueManager {
     }
 
     public function restore($leagueModel){
+        //echo 'dump lague'.  var_dump($leagueModel);
           $q = 'SELECT * from league WHERE 1=1 ';
         if($leagueModel != NULL) {
             if($attr = $leagueModel->getName() != NULL) {
@@ -254,12 +255,12 @@ class LeagueManager {
             if ($attr = $leagueModel->getMaxMembers() != NULL) {
                 $q .= ' AND max_members = ' . $attr;
             }
-            
-
-            if ($attr = $leagueModel->getId() != NULL){
-                $q .= ' AND league_id = ' . $attr;
+            if ($leagueModel->getId() != NULL){
+                $q .= ' AND league_id = ' . $leagueModel->getId();
             }
         }
+
+        //echo 'league wuery:' . $q;
         $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){
             //get results from Query

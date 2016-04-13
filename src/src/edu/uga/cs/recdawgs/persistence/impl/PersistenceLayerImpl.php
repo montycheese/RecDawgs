@@ -547,7 +547,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
     {
         //return the league
         if($team != null){
-            return (new TeamManager($this->db, $this->objLayer))->restoreParticipatesIn($team);
+            return (new TeamManager($this->db, $this->objLayer))->restoreParticipatesIn($team)->current();
         }
         //return the teams in the league
         else if ($league != null){

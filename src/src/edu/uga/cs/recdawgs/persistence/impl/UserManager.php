@@ -179,7 +179,7 @@ class UserManager {
 
     /**
      * @param Entity\StudentImpl $modelStudent
-     * @return StudentIterator
+     * @return StudentIteratorc
      * @throws RDException
      */
     public function restoreStudent($modelStudent){

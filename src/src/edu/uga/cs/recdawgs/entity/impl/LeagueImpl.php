@@ -163,7 +163,7 @@ class LeagueImpl extends Persistent implements League {
         if($maxMembers < 0 || $maxMembers < $this->minMembers) {
             throw new RDException('Max number of members of a team cannot be smaller than the min number of teams or negative.');   
         } else {
-            $this->maxMembers = maxMembers;   
+            $this->maxMembers = $maxMembers;
         }
     }
     /** Return the the winner of this league.

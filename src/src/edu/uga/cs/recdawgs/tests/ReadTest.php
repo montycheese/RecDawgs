@@ -85,9 +85,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         while($iter->current()){
             $team = $iter->current();
 
-            //echo 'team dump: ' . var_dump($team);
+            //cecho 'team dump: ' . var_dump($team);
 
-            echo 'team id: ' . strval($team->getId()) .' team name:'. $team->getName() . ' team\'s league:'  . $team->getParticipatesInLeague()->current()->getName() .
+            echo 'team id: ' . strval($team->getId()) .' team name:'. $team->getName() . ' team\'s league:'  . $team->getParticipatesInLeague()->getName() .
             ' captain: ' . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName();
 
             echo 'Members of this team:
@@ -172,7 +172,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      * Prints out every match obj in the persistence db
      */
     public function testReadMatch(){
-        echo 'Match objects: ';
+        echo 'Match objects:
+
+        ';
         $iter = $this->objLayer->findMatch(null);
         $i=0;
         //loop through each match

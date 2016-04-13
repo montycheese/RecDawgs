@@ -212,21 +212,21 @@ class MatchManager {
         //echo 'model match contents: ' . var_dump($modelMatch);
         $q = 'SELECT * from ' . DB_NAME. '.match WHERE 1=1 ';
         if($modelMatch != NULL) {
-            if ($attr = $modelMatch->getHomePoints() != NULL) {
-                $q .= ' AND home_points = ' . $attr;
+            if ($modelMatch->getHomePoints() != NULL) {
+                $q .= ' AND home_points = ' . $modelMatch->getHomePoints();
             }
-            if ($attr = $modelMatch->getAwayPoints() != NULL) {
-                $q .= ' AND away_points = ' . $attr;
+            if ($modelMatch->getAwayPoints() != NULL) {
+                $q .= ' AND away_points = ' . $modelMatch->getAwayPoints();
             }
-            if ($attr = $modelMatch->getDate() != NULL) {
-                $q .= ' AND date = ' . $attr;
+            if ($modelMatch->getDate() != NULL) {
+                $q .= ' AND date = ' . $modelMatch->getDate();
             }
-            if ($attr = $modelMatch->getIsCompleted() != NULL) {
-                $q .= ' AND is_completed = ' . ($attr) ? 1 : 0;
+            if ($modelMatch->getIsCompleted() != NULL) {
+                $q .= ' AND is_completed = ' . ($modelMatch->getIsCompleted()) ? 1 : 0;
             }
             $attr = NULL;
             if ($modelMatch->getHomeTeam() != NULL) {
-                $attr = $modelMatch->getHomeTeam()->getId();
+                $attr = $modelMatch->getHomeTeam()->gectId();
                 $q .= ' AND home_team_id = ' . $attr;
             }
             $attr = NULL;
@@ -239,8 +239,8 @@ class MatchManager {
                 $attr = $modelMatch->getSportsVenue()->getId();
                 $q .= ' AND sports_venue_id = ' . $attr;
             }
-            if ($attr = $modelMatch->getId() != NULL){
-                $q .= ' AND match_id = ' . $attr;
+            if ($modelMatch->getId() != NULL){
+                $q .= ' AND match_id = ' . $modelMatch->getId();
             }
         }
         $stmt = $this->dbConnection->prepare($q . ';');

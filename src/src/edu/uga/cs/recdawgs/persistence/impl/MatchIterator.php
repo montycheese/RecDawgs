@@ -25,13 +25,28 @@ class MatchIterator extends PersistenceIterator{
         for($i=0; $i < count($resultSet); $i++){
             $match = null;
             try {
+                //create team obj
+                $homeTeam = $objLayer->createTeam();
+                $homeTeam->setId( $resultSet[$i]['home_team_id']);
+                $league = $objLayer->restoreTeamParticipatesInLeague($homeTeam);
+                //echo 'dump league: ' . var_dump($league);
+                $homeTeam->setParticipatesInLeague($league);
+
+
+                $awayTeam = $objLayer->createTeam();
+                $awayTeam->setId( $resultSet[$i]['away_team_id']);
+
+                $league2= $objLayer->restoreTeamParticipatesInLeague($awayTeam);
+
+                $awayTeam->setParticipatesInLeague($league2);
+
                 $match = $objLayer->createMatch(
                     $resultSet[$i]['home_points'],
                     $resultSet[$i]['away_points'],
                     $resultSet[$i]['date'],
                     $resultSet[$i]['is_completed'],
-                    $resultSet[$i]['home_team_id'],
-                    $resultSet[$i]['away_team_id']
+                    $homeTeam,
+                    $awayTeam
                 );
                 $match->setId($resultSet[$i]['match_id']);
 
