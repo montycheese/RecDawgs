@@ -201,7 +201,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      * Prints out every sports venue obj in the persistence db
      */
     public function testReadSportsVenue(){
-        echo 'venue objects:\n ';
+        echo 'venue objects: '
+
+        ;
         $iter = $this->objLayer->findSportsVenue(null);
         $i=0;
         //loop

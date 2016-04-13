@@ -82,6 +82,7 @@ class MatchManager {
             $stmt->bindParam(2, $match->getAwayPoints(), \PDO::PARAM_INT);
             $stmt->bindParam(3, $match->getDate());
             $completed = ($match->getIsCompleted() ? 1 : 0);
+            $stmt->bindParam(4, $completed, \PDO::PARAM_INT);
             if($match->getHomeTeam() != NULL ) {
                 $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
             }
