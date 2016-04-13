@@ -122,7 +122,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             $teamIter = $this->objLayer->restoreTeamParticipatesInLeague(null, $league);
 
             //loop through each team in this league
-            while($iter->current()){
+            while($teamIter->current()){
                 $team = $teamIter->current();
                 echo 'team id: ' . strval($team->getId()) .' team name: '. $team->getName();
                 $teamIter->next();
@@ -131,7 +131,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             //loop through each sports venue in this league
             echo 'Sports venues used by this League: ';
             $venueIter = $this->objLayer->restoreLeagueSportsVenue($league, null);
-            while($iter->current()){
+            while($venueIter->current()){
                 $venue = $venueIter->current();
                 echo 'venue id: ' . strval($venue->getId()) .' '. $venue->getName();
                 $venueIter->next();
@@ -142,7 +142,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
 
             Rounds in this League: ';
             $roundIter = $this->objLayer->restoreLeagueRound($league);
-            while($iter->current()){
+            while($roundIter->current()){
                 $round = $roundIter->current();
                 echo 'Round id: ' . strval($round->getId()) .' Round number: '. $round->getNumber();
                 $roundIter->next();
