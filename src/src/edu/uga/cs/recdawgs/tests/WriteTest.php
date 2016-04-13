@@ -353,7 +353,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
             null
         );
 
-       $roundA = $this->objLayer->createRound(1, $leagueA);
+        $roundA = $this->objLayer->createRound(1, $leagueA);
         $roundB = $this->objLayer->createRound(2, $leagueB);
 
         $studentA = $this->objLayer->createStudent(
@@ -438,9 +438,6 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
             100,
             null
         );
-
-        $roundA = $this->objLayer->createRound(1, $leagueA);
-        $roundB = $this->objLayer->createRound(2, $leagueB);
 
         $studentA = $this->objLayer->createStudent(
             'Montana',
