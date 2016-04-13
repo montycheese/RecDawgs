@@ -55,7 +55,7 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
             throw new RDException('Home Points can not be a negative value.');
         }
         else{
-            $this->homePoint = $homePoints;
+            $this->homePoints = $homePoints;
         }
         //} catch (RDException $rde) {
           //  echo $rde;   
@@ -129,18 +129,16 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
      * @throws RDException in case the student is null or not the captain of the team involved in the match
      */
     public function setStudent( $student ) { // throws RDException;
-        echo 'dumping student: ' . var_dump($student);
-
-        echo 'dumping this obj: ' . var_dump($this);
+        echo 'dumping this obj: ' . print_r(var_dump($this));
 
         if(!isset($student)) {
             throw new RDException('Student can not be null');
         } else if (
-            (isset($this->homeTeam) && isset($this->awayTeam))
+            ($this->homeTeam && $this->awayTeam)
             &&
             (
-                $student->getId() !== $this->homeTeam->getCaptain()->getId() ||
-                $student->getId() !== $this->awayTeam->getCaptain()->getId()
+                $student->getId() != $this->homeTeam->getCaptain()->getId() &&
+                $student->getId() != $this->awayTeam->getCaptain()->getId()
             )
         ) {
             throw new RDException('Student has to be a Team Captain');   

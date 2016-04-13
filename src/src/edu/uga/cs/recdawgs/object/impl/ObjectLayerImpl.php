@@ -482,9 +482,8 @@ class ObjectLayerImpl implements ObjectLayer{
      * @throws RDException in case either the student and/or the team is null
      */
     public function createStudentCaptainOfTeam($student, $team) {
-        $aStudentCap = $this->persistenceLayer->storeStudentCaptainOfTeam($student, $team);
+        $this->persistenceLayer->storeStudentCaptainOfTeam($student, $team);
 
-        return $aStudentCap;
 
     }
     

@@ -92,7 +92,7 @@ class TeamManager {
      * @throws RDException
      */
     public function storeStudentCaptainOf($student, $team){
-        $q = 'UPDATE team SET captain_id = ? WHERE team_id = ?;';
+        $q = 'UPDATE team10.team SET captain_id = ? WHERE team_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
         $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
         $stmt->bindParam(2, $team->getId(), \PDO::PARAM_INT);
