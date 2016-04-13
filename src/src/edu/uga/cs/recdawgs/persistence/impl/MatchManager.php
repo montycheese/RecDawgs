@@ -65,7 +65,7 @@ class MatchManager {
             //insert
             //create Query
             $q = "INSERT INTO" . DB_NAME . ".match (home_points, away_points, date, is_completed,
-              home_team_id, away_team_id, sports_venue_id)
+              home_team_id, away_team_id, sports_venue_id, round_id)
               VALUES(?, ?, ?, ?, ?, ?, ?);";
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q . ';');
@@ -78,13 +78,13 @@ class MatchManager {
             $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
             $stmt->bindParam(6, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
             $stmt->bindParam(7, $match->getSportsVenue()->getId(), \PDO::PARAM_INT);
-            // ROUND? $stmt->bindParam(8, $match->get round id), \PDO::PARAM_INT);
+            $stmt->bindParam(8, $match->getRound()->getId(), \PDO::PARAM_INT);
             if($stmt->execute()){
                 $match->setId($this->dbConnection->lastInsertId());
                 echo 'Match created successfully';
             }
             else{
-                throw new RDException('Error creating match');
+                throw new RDException('Error creating match: ' . print_r($stmt->errorInfo()));
             }
         }
 
