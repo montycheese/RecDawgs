@@ -20,6 +20,7 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
     private $student;
     private $homeTeam;
     private $awayTeam;
+
     /** Constructor
      * Initalizes all of the parameter values into local variables.
      */
@@ -128,7 +129,7 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
     public function setStudent( $student ) { // throws RDException;
         if(!isset($student)) {
             throw new RDException('Student can not be null');
-        } else if (($student !== $this->homeTeam->getTeamCaptain()) || ($student !== $this->awayTeam->getTeamCaptain())) {
+        } else if ((isset($this->homeTeam) && isset($this->awayTeam)) &&($student !== $this->homeTeam->getTeamCaptain()) || ($student !== $this->awayTeam->getTeamCaptain())) {
             throw new RDException('Student has to be a Team Captain');   
         }
         else{

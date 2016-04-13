@@ -39,6 +39,7 @@ class MatchManager {
               home_team_id = ?,
               away_team_id = ?,
               sports_venue_id = ?,
+              round_id = ?
               WHERE match_id = ?;";
 
             //create prepared statement from query
@@ -52,8 +53,9 @@ class MatchManager {
             $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
             $stmt->bindParam(6, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
             $stmt->bindParam(7, $match->getSportsVenue()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(8, $match->getId(), \PDO::PARAM_INT);
-            // ROUND? $stmt->bindParam(8, $match->get round id), \PDO::PARAM_INT);
+            $stmt->bindParam(8, $match->getRound()->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(9, $match->getId(), \PDO::PARAM_INT);
+
             if($stmt->execute()){
                 echo 'Match created successfully';
             }
@@ -64,9 +66,9 @@ class MatchManager {
         else{
             //insert
             //create Query
-            $q = "INSERT INTO" . DB_NAME . ".match (home_points, away_points, date, is_completed,
+            $q = "INSERT INTO " . DB_NAME . ".match (home_points, away_points, date, is_completed,
               home_team_id, away_team_id, sports_venue_id, round_id)
-              VALUES(?, ?, ?, ?, ?, ?, ?);";
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q . ';');
             //bind parameters to prepared statement
@@ -182,7 +184,7 @@ class MatchManager {
             return $sportsVenueIter->current();
         }
         else{
-            throw new RDException('Error restoring spports venue');
+            throw new RDException('Error restoring sports venue');
         }
     }
 

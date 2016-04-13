@@ -187,12 +187,13 @@ interface ObjectLayer
      * @param isCompleted has the match been completed?
      * @param homeTeam the team which is the home team in this match
      * @param awayTeam the team which is the away team in this match
+     * @param Entity\sportsVenue $sportsVenue the team which is the away team in this match
      * @param Entity\RoundImpl $round the round in which this match is played
      * @return a new Match object instance with the given attribute values
      * @throws RDException in case any of the po$arguments is negative or either of the teams is null or if the given teams are not in the same league
      */
     public function createMatch($homePoints = null, $awayPoints = null, $date = null, 
-            $isCompleted = null, $homeTeam = null, $awayTeam = null, $round=null); // add exception
+            $isCompleted = null, $homeTeam = null, $awayTeam = null, $sportsVenue=null, $round=null); // add exception
 
     /**
      * Return an iterator of Match objects satisfying the search criteria given in the modelMatch object.
