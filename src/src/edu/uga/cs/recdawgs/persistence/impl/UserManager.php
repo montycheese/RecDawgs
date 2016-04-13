@@ -183,9 +183,8 @@ class UserManager {
      * @throws RDException
      */
     public function restoreStudent($modelStudent){
-        //echo 'model student ' . $modelStudent;
-        $q = 'SELECT * from ' . DB_NAME. '.user WHERE user.user_type=0 ';
-        if($modelStudent) {
+        $q = 'SELECT * from team10.user WHERE user.user_type=0 ';
+        if($modelStudent != null) {
             if ($attr = $modelStudent->getFirstName() != NULL) {
                 $q .= ' AND first_name = ' . $attr;
             }
@@ -210,12 +209,11 @@ class UserManager {
             if ($attr = $modelStudent->getStudentId() != NULL) {
                 $q .= ' AND student_id = ' . $attr;
             }
-            if ($attr = $modelStudent->getId() != NULL){
-                $q .= 'AND user_id = ' . $attr;
+            if($modelStudent->getId() != null){
+                $q .= 'AND user_id = ' . $modelStudent->getId();
             }
         }
 
-        //echo 'Query: ' . $q;
         $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){
             //get results from Query

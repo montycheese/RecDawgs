@@ -80,6 +80,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         ';
         $iter = $this->objLayer->findTeam(null);
         $i=0;
+
         //loop through each team
         while($iter->current()){
             $team = $iter->current();

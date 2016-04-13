@@ -138,6 +138,7 @@ class TeamManager {
             }
 
         }
+
         $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){
             //get results from Query

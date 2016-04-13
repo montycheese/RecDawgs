@@ -39,13 +39,15 @@ class TeamIterator extends PersistenceIterator{
                 $student->setId(intval($resultSet[$i]['captain_id']));
 
                 //use ID to get specific student
-                $captain = $objLayer->findStudent($student);//->current();
+                $studentIter = $objLayer->findStudent($student); //->current();
+                echo 'studnet iter: ' . var_dump($studentIter);
+                $captain = $studentIter->current();
 
                 //create league obj that the team belongs to
                 //$league = new LeagueImpl();
                 $league = $objLayer->createLeague();
                 $league->setId(intval($resultSet[$i]['league_id']));
-                $league = $objLayer->findLeague($league);//->current();
+                $league = $objLayer->findLeague($league)->current();
 
                 $team = $objLayer->createTeam(
                     $resultSet[$i]['name'],
