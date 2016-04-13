@@ -84,8 +84,8 @@ class MatchImpl extends Persistent implements Match {
      */
     public function setDate( $date ){ // throws RDException
 
-        $datetime_new = new DateTime($date);
-        $datetime_cur = new DateTime(date('Y-m-d H:i:s', time()));
+        $datetime_new = new \DateTime($date);
+        $datetime_cur = new \DateTime(date('Y-m-d H:i:s', time()));
 
        if ($datetime_new->diff($datetime_cur)->format('%R') == '+'){
             $this->date = $date;

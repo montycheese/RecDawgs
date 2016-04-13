@@ -26,25 +26,34 @@ class AdministratorIterator extends PersistenceIterator{
         $this->resultSet = $resultSet;
         $this->objLayer = $objLayer;
 
+        //echo "REsult SET: " . var_dump($resultSet);
+        //echo "REsult SET: " . var_dump($resultSet['first_name']);
         /**
          * Populate the iterator with admub objects
          */
         for($i=0; $i < count($resultSet); $i++){
             try {
                 $admin = $objLayer->createAdministrator(
-                    $resultSet['first_name'],
-                    $resultSet['last_name'],
-                    $resultSet['user_name'],
-                    $resultSet['password'],
-                    $resultSet['email_address']
+                    $firstName=$resultSet[$i]['first_name'],
+                    $lastName=$resultSet[$i]['last_name'],
+                    $userName=$resultSet[$i]['user_name'],
+                    $password=$resultSet[$i]['password'],
+                    $emailAddress=$resultSet[$i]['email_address']
                 );
-                $admin->setId($resultSet['user_id']);
+                $admin->setId($resultSet[$i]['user_id']);
+                //var_dump($admin->getUserName());
                 array_push($this->array, $admin);
+
             }
             catch(RDException $rde){
                 echo $rde;
             }
 
         }
+
+        echo '
+
+
+                AFTER: ' . var_dump($this->array);
     }
 }

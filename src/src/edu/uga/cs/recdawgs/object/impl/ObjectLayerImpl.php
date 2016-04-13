@@ -33,7 +33,7 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createAdministrator($firstName = null, $lastName = null, $userName = null, 
         $password = null, $emailAddress = null) {
-
+        //echo 'ASDFSFADFAF ' . $firstName . ' ' . $lastName . ' ' . $emailAddress;
         $anAdmin = new Entity\AdministratorImpl();
 
         //if ($firstName != null && $lastName != null && $userName != null &&
@@ -45,8 +45,8 @@ class ObjectLayerImpl implements ObjectLayer{
             $anAdmin->setEmailAddress($emailAddress);
 
 
-       // }
-
+       // }//
+       //echo var_dump($anAdmin->getUserName() . ' ' . $anAdmin->getEmailAddress());
         return $anAdmin;
     }
 

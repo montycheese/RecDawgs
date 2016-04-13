@@ -10,7 +10,7 @@ use edu\uga\cs\recdawgs\persistence\Persistable as Persistable;
  */
 
 abstract class Persistent implements Persistable{
-    private $id = -1;
+    protected $id = -1;
     private $persistent = false;
 
 

@@ -35,7 +35,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
 
         ';
         $iter = $this->objLayer->findAdministrator(null);
-        //echo var_dump($iter);
+
         $i=0;
         while($iter->hasNext()){
             $admin = $iter->current();
@@ -45,7 +45,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total objects';
+        echo strval($i) . ' total admin objects
+
+        ';
     }
     
     public function testReadStudent(){
@@ -54,22 +56,25 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
          ';
         $iter = $this->objLayer->findStudent(null);
         $i=0;
+        //echo 'var dump iter: ' . var_dump($iter);
         while($iter->hasNext()){
             $student = $iter->current();
-            echo 'student id: ' . strval($student->getId()) .' '. $student->getFirstName() . ' '  . $student->getLastName() . '
+            echo 'student id: ' . strval($student->getId()) .' firstname: '. $student->getFirstName() . ' lastname: '  . $student->getLastName() . '
 
             ';
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total objects';
+        echo strval($i) . ' total student objects
+
+        ';
     }
 
     /**
      * Prints out every team obj in the persistence db
      */
     public function testReadTeam(){
-        echo 'Team objects:\n ';
+        echo 'Team objects: ';
         $iter = $this->objLayer->findTeam(null);
         $i=0;
         //loop through each team
@@ -85,7 +90,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
                 echo 'student id: ' . strval($student->getId()) .' '. $student->getFirstName() . ' '  . $student->getLastName();
                 $memberIter->next();
             }
-            echo '---\n';
+            echo '
+
+            ';
             $iter->next();
             ++$i;
         }
@@ -103,10 +110,10 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         while($iter->hasNext()){
             //echo league info
             $league = $iter->current();
-            echo 'league id: ' . strval($league->getId()) .' name:'. $league->getName() . ' is indoor: '  . $league->getIsIndoor() .
-                ' min # teams: ' . strval($league->getMinTeams()) . ' max # teams' . strval($league->getMaxTeams()) .
-                ' min # members:'. strval($league->getMinMembers()) . ' max # members'  . strval($league->getMaxMembers()) .
-                ' league rules: ' . strval($league->getLeagueRules()) . ' match rules' . strval($league->getMatchRules()) .
+            echo 'league id: ' . strval($league->getId()) .' name: '. $league->getName() . ' is indoor: '  . $league->getIsIndoor() .
+                ' min # teams: ' . strval($league->getMinTeams()) . ' max # teams: ' . strval($league->getMaxTeams()) .
+                ' min # members: '. strval($league->getMinMembers()) . ' max # members: '  . strval($league->getMaxMembers()) .
+                ' league rules: ' . strval($league->getLeagueRules()) . ' match rules: ' . strval($league->getMatchRules()) .
             'league winner: ' . $league->getWinnerOfLeague();
             echo 'Teams of this League: ';
             $teamIter = $this->objLayer->restoreTeamParticipatesInLeague(null, $league);
@@ -114,7 +121,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             //loop through each team in this league
             while($teamIter->hasNext()){
                 $team = $teamIter->current();
-                echo 'team id: ' . strval($team->getId()) .' '. $team->getName();
+                echo 'team id: ' . strval($team->getId()) .' team name: '. $team->getName();
                 $teamIter->next();
             }
 
@@ -128,7 +135,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             }
 
             //loop through each round in this league
-            echo 'Rounds in this League: ';
+            echo '
+
+            Rounds in this League: ';
             $roundIter = $this->objLayer->restoreLeagueRound($league);
             while($roundIter->hasNext()){
                 $round = $roundIter->current();
@@ -136,18 +145,20 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
                 $roundIter->next();
             }
 
-            echo '---\n';
+
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total objects';
+        echo strval($i) . ' total league objects
+
+        ';
     }
 
     /**
      * Prints out every match obj in the persistence db
      */
     public function testReadMatch(){
-        echo 'Match objects:\n ';
+        echo 'Match objects: ';
         $iter = $this->objLayer->findMatch(null);
         $i=0;
         //loop through each match
@@ -165,7 +176,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total objects';
+        echo strval($i) . ' total match objects
+
+        ';
     }
 
     /**
@@ -190,7 +203,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total objects';
+        echo strval($i) . ' total sports venue objects
+
+        ';
     }
 
     /**
@@ -209,14 +224,18 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total objects';
+        echo strval($i) . ' total Scorereport objects
+
+        ';
     }
 
     /**
      * Prints out every round obj in the persistence db
      */
     public function testReadRound(){
-        echo 'round objects:\n ';
+        echo 'round objects:
+
+         ';
         $iter = $this->objLayer->findRound(null);
         $i=0;
         //loop
@@ -226,7 +245,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total objects';
+        echo strval($i) . ' total Round objects
+
+        ';
     }
 
 }

@@ -10,7 +10,7 @@ namespace edu\uga\cs\recdawgs\persistence\impl;
 
 class PersistenceIterator implements \Iterator {
     private $position = 0;
-    protected $array = array();
+    public $array = array();
 
 
     function __construct()

@@ -25,7 +25,6 @@ class AdministratorImpl extends Persistent implements Administrator
      * @param $password
      * @param $emailAddress
      */
-
     public function __construct($firstName = null, $lastName = null, $userName = null, $password = null, $emailAddress = null)
     {
         $this->firstName = $firstName;

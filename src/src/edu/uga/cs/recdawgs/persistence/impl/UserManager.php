@@ -185,7 +185,7 @@ class UserManager {
      */
     public function restoreStudent($modelStudent){
         $q = 'SELECT * from ' . DB_NAME. '.user WHERE user.user_type=0 ';
-        if($modelStudent != NULL) {
+        if($modelStudent) {
             if ($attr = $modelStudent->getFirstName() != NULL) {
                 $q .= ' AND first_name = ' . $attr;
             }

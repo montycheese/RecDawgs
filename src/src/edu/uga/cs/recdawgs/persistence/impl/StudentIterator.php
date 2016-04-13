@@ -27,10 +27,10 @@ class StudentIterator extends PersistenceIterator{
             $student = null;
             try {
                 $student = $objLayer->createStudent(
-                    $resultSet['first_name'], $resultSet['last_name'],$resultSet['user_name'], $resultSet['password'],
-                 $resultSet['email_address'], $resultSet['student_id'], $resultSet['major'], $resultSet['address']
+                    $resultSet[$i]['first_name'], $resultSet[$i]['last_name'],$resultSet[$i]['user_name'], $resultSet[$i]['password'],
+                 $resultSet[$i]['email_address'], $resultSet[$i]['student_id'], $resultSet[$i]['major'], $resultSet[$i]['address']
                 );
-                $student->setId($resultSet['user_id']);
+                $student->setId($resultSet[$i]['user_id']);
                 array_push($this->array, $student);
             }
             catch(RDException $rde){
