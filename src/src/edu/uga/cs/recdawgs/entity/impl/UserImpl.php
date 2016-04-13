@@ -6,11 +6,11 @@ use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
 
 class UserImpl extends Persistent implements User{
 
-    var $firstName;
-    var $lastName;
-    var $userName;
-    var $password;
-    var $emailAddress;
+    private $firstName;
+    private $lastName;
+    private $userName;
+    private $password;
+    private $emailAddress;
 
     /**
      * UserImpl constructor.

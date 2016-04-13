@@ -13,14 +13,14 @@ use edu\uga\cs\recdawgs\RDException as RDException;
 
 class StudentImpl extends Persistent implements Student {
 
-    var $firstName;
-    var $lastName;
-    var $userName;
-    var $password;
-    var $emailAddress;
-    var $studentId;
-    var $major;
-    var $address;
+    private $firstName;
+    private $lastName;
+    private $userName;
+    private $password;
+    private $emailAddress;
+    private $studentId;
+    private $major;
+    private $address;
 
     /**
      * StudentImpl constructor.
