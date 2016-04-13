@@ -68,7 +68,8 @@ class ScoreReportManager {
 
             if($stmt->execute()){
                 $report->setId($this->dbConnection->lastInsertId());
-                echo 'report created successfully';
+                echo 'report created successfully
+                ';
             }
             else{
                 throw new RDException('error creating report');
