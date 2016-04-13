@@ -281,11 +281,11 @@ class TeamManager {
      * @throws RDException
      */
     public function delete($team){
-        if($team->getId() == -1){
+        if(!$team->isPersistent()){
             //if team isn't persistent, we are done
             return;
         }
-
+        echo 'before: ' . var_dump($team);
         //Prepare mySQL query
         $q = 'DELETE FROM team WHERE team_id = ?;';
         //create Prepared statement
@@ -294,7 +294,9 @@ class TeamManager {
         $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
-            echo 'Team deleted successfully';
+            echo 'Team deleted successfully
+
+            ';
         }
         else{
             throw new RDException('Deletion of Team unsuccessful');

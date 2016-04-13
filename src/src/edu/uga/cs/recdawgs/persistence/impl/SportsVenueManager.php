@@ -174,10 +174,12 @@ class SportsVenueManager {
     }
 
     public function delete($sportsVenue){
-        if($sportsVenue->getId() == -1){
+        if(!$sportsVenue->isPersistent()){
             //if venue isn't persistent, we are done
             return;
         }
+
+        //echo 'before: ' . var_dump($sportsVenue);
 
         //Prepare mySQL query
         $q = 'DELETE FROM sports_venue WHERE sports_venue_id = ?;';

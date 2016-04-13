@@ -134,8 +134,8 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
 
         ';
 
-        $venueA = $this->objLayer->createSportsVenue('Court A', true, 'Ramsey Center, Athens, GA 30605');
-        $venueB = $this->objLayer->createSportsVenue('Field B', false, '199 River Road, Athens, GA 30605');
+        $venueA = $this->objLayer->createSportsVenue('Court A', 'Ramsey Center, Athens, GA 30605', true);
+        $venueB = $this->objLayer->createSportsVenue('Field B', '199 River Road, Athens, GA 30605', false);
 
         $this->objLayer->storeSportsVenue($venueA);
         $this->objLayer->storeSportsVenue($venueB);

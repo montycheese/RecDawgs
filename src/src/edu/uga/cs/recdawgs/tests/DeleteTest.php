@@ -26,6 +26,71 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         $this->objLayer->setPersistence($this->persistenceLayer);
     }
 
+
+    public function testDeleteMatch() {
+        echo 'Match objects:
+
+
+         ';
+        $iter = $this->objLayer->findMatch(null);
+        while($iter->current()){
+            $match = $iter->current();
+            echo 'match id: ' . strval($match->getId()) .
+                ' match date: ' . $match->getDate();
+
+            echo '
+
+            deleting this match
+
+            ';
+
+            try {
+                $this->objLayer->deleteMatch($match);
+                echo 'Deletion successful
+
+                ';
+            }
+            catch(RDException $r){
+                echo 'Error deleting match obj';
+            }
+
+            $iter->next();
+        }
+    }
+
+    public function testDeleteTeam() {
+        echo 'Team objects:
+
+         ';
+        $iter = $this->objLayer->findTeam(null);
+        //echo 'team dump: ' . var_dump($iter);
+        while($iter->current()){
+            $team = $iter->current();
+            //echo 'team dump: ' . var_dump($team);
+            echo 'team id: ' . strval($team->getId()) .' name:'. $team->getName().'
+
+            ';;
+
+            echo '
+            deleting this team
+
+            ';
+
+            try {
+                $this->objLayer->deleteTeam($team);
+                echo '
+                Deletion successful
+
+                ';
+            }
+            catch(RDException $r){
+                echo 'Error deleting team obj';
+            }
+
+            $iter->next();
+        }
+    }
+
     /**
      * Reads all admin objs from persistence db
      */
@@ -53,6 +118,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             $iter->next();
         }
     }
+
 
     public function testDeleteStudent(){
         echo '
@@ -111,64 +177,6 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
-    public function testDeleteTeam() {
-        echo 'Team objects:
-
-         ';
-        $iter = $this->objLayer->findTeam(null);
-        while($iter->current()){
-            $team = $iter->current();
-            echo 'team id: ' . strval($team->getId()) .' name:'. $team->getName() . ' league:'  . $team->getParticipatesInLeague();
-            
-            echo '
-            deleting this team
-
-            ';
-
-            try {
-                $this->objLayer->deleteTeam($team);
-                echo '
-                Deletion successful
-
-                ';
-            }
-            catch(RDException $r){
-                echo 'Error deleting team obj';
-            }
-
-            $iter->next();
-        }
-    }
-
-    public function testDeleteScoreReport() {
-        echo 'Report objects:
-
-         ';
-        $iter = $this->objLayer->findScoreReport(null);
-        while($iter->current()){
-            $report = $iter->current();
-            echo 'Home points: ' . $report->getHomePoints() .' Away points: '. $report->getAwayPoints() .
-                ' Date: '. strval($report->getDate()) . 'Match: '. strval($report->getMatch()) .
-                ' Student who put in the score: '. strval($report->getStudent());
-            
-            echo '
-            deleting this report
-
-            ';
-
-            try {
-                $this->objLayer->deleteScoreReport($report);
-                echo '
-                Deletion successful
-                g';
-            }
-            catch(RDException $r){
-                echo 'Error deleting report obj';
-            }
-
-            $iter->next();
-        }
-    }
 
     public function testDeleteSportsVenue() {
         echo 'Venue objects:
@@ -177,7 +185,10 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findSportsVenue(null);
         while($iter->current()){
             $venue = $iter->current();
-            echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
+            echo 'Venue name: ' . strval($venue->getName()) .'
+
+             Address: '. strval($venue->getAddress() . '
+                Is Indoor? ' . ($venue->getIsIndoor()) ? 'Yes' : 'No');
             
             echo '
             deleting this venue
@@ -202,10 +213,10 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         echo 'Round objects:
 
          ';
-        $iter = $this->objLayer->findSportsVenue(null);
+        $iter = $this->objLayer->findRound(null);
         while($iter->current()){
-            $venue = $iter->current();
-            echo 'round number: ' . strval($venue->getNumber()) .' Leagueid: '. strval($venue->getLeague()->getId());
+            $round = $iter->current();
+            echo 'Round number: ' . strval($round->getNumber());
             
             echo '
             deleting this round
@@ -213,7 +224,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             ';
 
             try {
-                $this->objLayer->deleteSportsVenue($venue);
+                $this->objLayer->deleteRound($round);
                 echo 'Deletion successful
 
                 ';
@@ -226,34 +237,5 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
-    public function testDeleteMatch() {
-        echo 'Match objects:
 
-
-         ';
-        $iter = $this->objLayer->findMatch(null);
-        while($iter->current()){
-            $match = $iter->current();
-            echo 'match id: ' . strval($match->getId()) .' Hometeam: '. $match->getHomeTeam()->getName() . ' Away team: '  . $match->getAwayTeam()->getName() .
-                ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
-            
-            echo '
-
-            deleting this match
-
-            ';
-
-            try {
-                $this->objLayer->deleteMatch($match);
-                echo 'Deletion successful
-
-                ';
-            }
-            catch(RDException $r){
-                echo 'Error deleting match obj';
-            }
-
-            $iter->next();
-        }
-    }
 }

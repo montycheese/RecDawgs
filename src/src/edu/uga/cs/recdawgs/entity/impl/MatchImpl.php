@@ -119,9 +119,9 @@ class MatchImpl extends Persistent implements Match {
     }
 
     public function setHomeTeam( $homeTeam ){ // throws RDException;
-        if($homeTeam == null || $homeTeam->getParticipatesInLeague() == null) {
-            throw new RDException('Home team can not be null.');
-        }
+       // if($homeTeam == null || $homeTeam->getParticipatesInLeague() == null) {
+          //  throw new RDException('Home team can not be null.');
+        //}
 
         //if($this->awayTeam == null && $this->awayTeam->getParticipatesInLeague() == null) {
          //   throw new RDException('Away Team must be in the same league as the Away Team.');
@@ -161,7 +161,7 @@ class MatchImpl extends Persistent implements Match {
      */
     public function setAwayTeam( $awayTeam ) { // throws RDException;
 
-        if($awayTeam == null  || $awayTeam->getParticipatesInLeague() ==null) {
+       /* if($awayTeam == null  || $awayTeam->getParticipatesInLeague() ==null) {
             throw new RDException('Away team can not be null');
         }
         if ($this->homeTeam == null || $this->homeTeam->getParticipatesInLeague() == null) {
@@ -174,7 +174,7 @@ class MatchImpl extends Persistent implements Match {
 
         if ($awayTeam->getParticipatesInLeague()->getId() != $this->homeTeam->getParticipatesInLeague()->getId()) {
             throw new RDException('Two teams don\'t have the same league');
-        }
+        }*/
 
         $this->awayTeam = $awayTeam;
     }

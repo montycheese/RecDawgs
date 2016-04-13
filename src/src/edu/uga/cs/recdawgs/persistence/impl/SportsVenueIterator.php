@@ -35,7 +35,7 @@ class SportsVenueIterator extends PersistenceIterator {
                     $resultSet[$i]['address'],
                     $resultSet[$i]['is_indoor']
                 );
-                $venue->setId($resultSet[$i]['$sports_venue_id']);
+                $venue->setId($resultSet[$i]['sports_venue_id']);
                 array_push($this->array, $venue);
             }
             catch(RDException $rde){
