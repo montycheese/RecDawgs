@@ -204,7 +204,11 @@ class LeagueManager {
     public function restoreParticipatesIn($league){
         if($league == null) throw new RDException('League parameter is null');
 
-        $q = '#';
+        $q = 'SELECT team.team_id, team.name, team.captain_id
+                FROM team10.team
+                INNER JOIN league_team
+                ON league_team.team_id = team.team_id
+                WHERE league_team.league_id = ?;';
 
         $lgmt = $this->dbConnection->prepare($q);
         $lgmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
@@ -262,7 +266,7 @@ class LeagueManager {
             return new LeagueIterator($resultSet, $this->objLayer);
         }
         else{
-            throw new RDException('Error restoringleague model');
+            throw new RDException('Error restoring league model');
         }
     }
 

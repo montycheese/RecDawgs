@@ -551,7 +551,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
         }
         //return the teams in the league
         else if ($league != null){
-            return (new LeagueManager($this->db,$this->objLayer ))->restoreParticipantsIn($league);
+            return (new LeagueManager($this->db,$this->objLayer ))->restoreParticipatesIn($league);
         }
         else{
             throw new RDException('Both params can not be null');

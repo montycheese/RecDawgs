@@ -85,7 +85,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             $team = $iter->current();
             echo 'team id: ' . strval($team->getId()) .' name:'. $team->getName() . ' league:'  . $team->getParticipatesInLeague() .
             ' captain: ' . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName();
-            echo 'Members of this team: ';
+            echo 'Members of this team:
+
+            ';
             $memberIter = $this->objLayer->restoreStudentMemberOfTeam(null, $team);
             //loop through each member
             while($memberIter->current()){
@@ -120,7 +122,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
                 ' min # members: '. strval($league->getMinMembers()) . ' max # members: '  . strval($league->getMaxMembers()) .
                 ' league rules: ' . strval($league->getLeagueRules()) . ' match rules: ' . strval($league->getMatchRules()) .
             'league winner: ' . $league->getWinnerOfLeague();
-            echo 'Teams of this League: ';
+            echo 'Teams of this League:
+
+            ';
             $teamIter = $this->objLayer->restoreTeamParticipatesInLeague(null, $league);
 
             //loop through each team in this league

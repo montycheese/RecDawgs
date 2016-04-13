@@ -50,10 +50,5 @@ class AdministratorIterator extends PersistenceIterator{
             }
 
         }
-
-        echo '
-
-
-                AFTER: ' . var_dump($this->array);
     }
 }
