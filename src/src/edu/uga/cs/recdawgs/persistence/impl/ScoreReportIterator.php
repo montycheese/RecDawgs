@@ -46,13 +46,13 @@ class ScoreReportIterator extends PersistenceIterator{
                 $match = $objLayer->findMatch($match);
 
                 $report = $objLayer->createScoreReport(
-                    $resultSet['home_points'],
-                    $resultSet['away_points'],
-                    $resultSet['date'],
+                    $resultSet[$i]['home_points'],
+                    $resultSet[$i]['away_points'],
+                    $resultSet[$i]['date'],
                     $match,
                     $student
                 );
-                $report->setId($resultSet['$score_report_id']);
+                $report->setId($resultSet[$i]['$score_report_id']);
                 array_push($this->array, $report);
             }
             catch(RDException $rde){
