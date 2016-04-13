@@ -84,7 +84,7 @@ class MatchImpl extends Persistent implements Match {
      */
     public function setDate( $date ){ // throws RDException
 
-        if (new DateTime($date) < new DateTime($format = DATE_ATOM, $time = "now", new DateTimeZone("ATLANTIC"))){
+        if (new \DateTime($date) < new \DateTime($format = DATE_ATOM, $time = "now", new \DateTimeZone("ATLANTIC"))){
             throw new RDException('Date is in the past.');
         }
         else {
