@@ -217,7 +217,7 @@ class MatchManager {
                 $q .= ' AND match_id = ' . $attr;
             }
         }
-        $stmt = $this->Connection->prepare($q . ';');
+        $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
