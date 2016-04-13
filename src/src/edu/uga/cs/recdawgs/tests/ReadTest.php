@@ -177,8 +177,11 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         //loop through each match
         while($iter->current()){
             $match = $iter->current();
-            echo 'match id: ' . strval($match->getId()) .' Hometeam: '. $match->getHomeTeam()->getName() . ' Away team: '  . $match->getAwayTeam()->getName() .
-                ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
+
+            if ($match->getHomeTeam() != null && $match->getAwayTeam() != null && $match->getSportsVenue() != null) {
+                echo 'match id: ' . strval($match->getId()) . ' Hometeam: ' . $match->getHomeTeam()->getName() . ' Away team: ' . $match->getAwayTeam()->getName() .
+                    ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
+            }
             $played = $match->getIsCompleted();
             if($played){
                 echo 'game played, home team points: ' . strval($match->getHomePoints()) . ' away team points: ' . strval($match->getAwayPoints());

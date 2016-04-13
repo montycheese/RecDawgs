@@ -147,8 +147,8 @@ class MatchImpl extends Persistent implements Match {
         if($awayTeam == null) {
             throw new RDException('Away team can not be null');
         }
-        //TODO 
-        else if($this->homeTeam != null && $this->homeTeam->getParticipatesInLeague()!=null && $awayTeam->getParticipatesInLeague() !=null &&
+        //TODO
+        else if($this->homeTeam != null  && $this->homeTeam->getParticipatesInLeague()!=null && $awayTeam->getParticipatesInLeague() !=null &&
             (
                 $awayTeam->getParticipatesInLeague()->getId() != $this->homeTeam->getParticipatesInLeague()->getId()
             )
