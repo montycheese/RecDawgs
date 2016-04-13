@@ -201,6 +201,14 @@ class LeagueManager {
         }
     }
 
+    public function restoreParticipatesIn($league){
+
+        //TODO
+
+
+        return (new TeamIterator($resultSet, $this->objLayer));
+    }
+
     public function restore($leagueModel){
           $q = 'SELECT * from league WHERE 1=1 ';
         if($leagueModel != NULL) {

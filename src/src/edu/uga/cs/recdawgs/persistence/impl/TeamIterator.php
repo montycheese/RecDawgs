@@ -6,8 +6,9 @@
  * Time: 11:17
  */
 namespace edu\uga\cs\recdawgs\persistence\impl;
+use edu\uga\cs\recdawgs\entity\impl\LeagueImpl  as LeagueImpl;
 use edu\uga\cs\recdawgs\object\impl\ObjectLayerImpl as ObjectLayerImpl;
-use edu\uga\cs\recdawgs\entity\impl\UserImpl as UserImpl;
+use edu\uga\cs\recdawgs\entity\impl\StudentImpl as StudentImpl;
 use edu\uga\cs\recdawgs\RDException;
 
 class TeamIterator extends PersistenceIterator{
@@ -34,7 +35,7 @@ class TeamIterator extends PersistenceIterator{
             $league = null;
             try {
                 //create student obj who is team captain
-                $student = new UserImpl();
+                $student = new StudentImpl();
                 $student->setId($resultSet[$i]['captain_id']);
                 //use ID to get specific student
                 $captain = $objLayer->findStudent($student);

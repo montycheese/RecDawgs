@@ -106,7 +106,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      * Reads and outputs to string every league objct in the data base and all of its additional constitutient data.
      */
     public function testReadLeague(){
-        echo 'League objects:\n ';
+        echo 'League objects:
+
+         ';
         $iter = $this->objLayer->findLeague(null);
         $i=0;
         //loop through each league
