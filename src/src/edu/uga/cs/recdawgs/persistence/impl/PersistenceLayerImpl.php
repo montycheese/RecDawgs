@@ -22,7 +22,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Restore all Administrator objects that match attributes of the model Administrator.
-     * @param Entity\UserImpl $modelAdministrator the model Administrator; if null is provided, all Administrator objects will be returned
+     * @param Entity\AdministratorImpl $modelAdministrator the model Administrator; if null is provided, all Administrator objects will be returned
      * @return AdministratorIterator Administrator Iterator of the located Administrator objects
      * @throws RDException in case an error occurred during the restore operation
      */
@@ -36,7 +36,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      * Store a given Administrator object in the persistent data store.
      * If the Administrator object to be stored is already persistent, the persistent
      * object in the data store is updated.
-     * @param administrator Entity\UserImpl the Administrator to be stored
+     * @param administrator Entity\AdministratorImpl the Administrator to be stored
      * @throws RDException in case an error occurred during the store operation
      */
     public function storeAdministrator($administrator)
@@ -47,7 +47,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Delete a given Administrator object from the persistent data store.
-     * @param Entity\UserImpl $administrator the Administrator to be deleted
+     * @param Entity\AdministratorImpl $administrator the Administrator to be deleted
      * @throws RDException in case an error occurred during the delete operation
      */
     public function  deleteAdministrator($administrator)
@@ -310,7 +310,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
 
     /**
      * Store a link between a Student and a Team captained by the Student.
-     * @param Entity\UserImpl $student the Student to be linked
+     * @param Entity\StudentImpl $student the Student to be linked
      * @param Entity\TeamImpl $team the Team to be linked
      * @throws RDException in case an error occurred during the store operation
      */
