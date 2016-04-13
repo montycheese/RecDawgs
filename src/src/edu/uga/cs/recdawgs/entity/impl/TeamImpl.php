@@ -1,15 +1,17 @@
 <?php
 
 namespace edu\uga\cs\recdawgs\entity\impl;
+
+use edu\uga\cs\recdawgs\entity\Team as Team;
 use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
 use edu\uga\cs\recdawgs\RDException as RDException;
 
-class TeamImpl implements Team {
+class TeamImpl extends Persistent implements Team {
 
-    var $name;
-    var $captain;
-    var $participatesInLeague;
-    var $winnerOfLeague;
+    private $name = null;
+    private $captain = null;
+    private $participatesInLeague = null;
+    private $winnerOfLeague = null;
 
     /**
      * TeamImpl constructor.
@@ -20,7 +22,7 @@ class TeamImpl implements Team {
      */
     public function __construct($name=null, $captain=null, $participatesInLeague=null, $winnerOfLeague=null)
     {
-        $this->name = name;
+        $this->name = $name;
         $this->captain = $captain;
         $this->participatesInLeague = $participatesInLeague;
         $this->winnerOfLeague = $winnerOfLeague;

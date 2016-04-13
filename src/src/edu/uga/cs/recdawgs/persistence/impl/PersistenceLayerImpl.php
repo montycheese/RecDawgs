@@ -16,7 +16,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      */
     function __construct($dbConnection, $objLayer)
     {
-        $this->dbConnection = $dbConnection->db;
+        $this->db = $dbConnection->db;
         $this->objLayer = $objLayer;
     }
 

@@ -1,6 +1,7 @@
 <?php
 namespace edu\uga\cs\recdawgs\entity\impl;
 
+use edu\uga\cs\recdawgs\entity\SportsVenue as SportsVenue;
 use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
 use edu\uga\cs\recdawgs\RDException as RDException;
 

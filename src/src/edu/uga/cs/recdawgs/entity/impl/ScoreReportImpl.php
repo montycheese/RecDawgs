@@ -1,7 +1,7 @@
 <?php
 namespace edu\uga\cs\recdawgs\entity\impl;
 
-use edu\uga\cs\recdawgs\entity\Score as ScoreReport;
+use edu\uga\cs\recdawgs\entity\ScoreReport as ScoreReport;
 
 use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
 use edu\uga\cs\recdawgs\RDException as RDException;

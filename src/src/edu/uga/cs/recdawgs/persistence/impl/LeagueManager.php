@@ -27,6 +27,10 @@ class LeagueManager {
         $this->objLayer = $objLayer;
     }
 
+    /**
+     * @param Entity\LeagueImpl $league
+     * @throws RDException
+     */
     public function save($league){
         if($league->isPersistent()){
             //update
@@ -66,27 +70,29 @@ class LeagueManager {
         else{
             //insert
             //create Query
-            $q = "INSERT INTO league (leauge.name, league.league_rules, league.match_rules, is_indoor, min_teams, max_teams, min_members, max_members) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+            $q = "INSERT INTO team10.league (league.name, league.league_rules, league.match_rules,
+                    is_indoor, min_teams, max_teams, min_members, max_members)
+                    VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
          
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-             $stmt->bindParam(1, $league->getName(), \PDO::PARAM_STR);
+            $stmt->bindParam(1, $league->getName(), \PDO::PARAM_STR);
             $stmt->bindParam(2, $league->getLeagueRules(), \PDO::PARAM_STR);
             $stmt->bindParam(3, $league->getMatchRules(), \PDO::PARAM_STR);
             $isIndoor = ($league->getIsIndoor() ? 1 : 0);
             $stmt->bindParam(4, $isIndoor, \PDO::PARAM_INT);
-            $stmt->bindParam(5, $league->getMinTeams, \PDO::PARAM_INT);
-             $stmt->bindParam(6, $league->getMaxTeams, \PDO::PARAM_INT);
-             $stmt->bindParam(7, $league->getMinMembers, \PDO::PARAM_INT);
-             $stmt->bindParam(8, $league->getMaxMembers, \PDO::PARAM_INT);
+            $stmt->bindParam(5, $league->getMinTeams(), \PDO::PARAM_INT);
+            $stmt->bindParam(6, $league->getMaxTeams(), \PDO::PARAM_INT);
+            $stmt->bindParam(7, $league->getMinMembers(), \PDO::PARAM_INT);
+            $stmt->bindParam(8, $league->getMaxMembers(), \PDO::PARAM_INT);
 
             if($stmt->execute()){
-                $sportsVenue->setId($this->dbConnection->lastInsertId());
+                $league->setId($this->dbConnection->lastInsertId());
                 echo 'league created successfully';
             }
             else{
-                throw new RDException('league creating match');
+                throw new RDException('error creating league, error info: ' . print_r($stmt->errorInfo()));
             }
         }
     }
@@ -103,7 +109,7 @@ class LeagueManager {
             echo 'Link created successfully';
         }
         else{
-            throw new RDException('Error creating ');
+            throw new RDException('Error creating winner of league');
         }
     }
 
@@ -242,7 +248,7 @@ class LeagueManager {
     }
 
     public function delete($league){
-        if($sportsVenue->getId() == -1){
+        if($league->getId() == -1){
             //if league isn't persistent, return
             return;
         }
@@ -252,7 +258,7 @@ class LeagueManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $sportsVenue->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'league deleted successfully';

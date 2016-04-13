@@ -8,6 +8,8 @@
 
 namespace edu\uga\cs\recdawgs\persistence\impl;
 
+//config file
+require_once('Config.php');
 
 class DbConnection {
 
