@@ -320,7 +320,7 @@ class ObjectLayerImpl implements ObjectLayer{
 
         //if ($homePoints != null && $awayPoints != null && $date != null &&
           //  $isCompleted != null && $homeTeam != null && $awayTeam != null) {
-            $aMatch->setHomePoint($homePoints);
+            $aMatch->setHomePoints($homePoints);
             $aMatch->setAwayPoints($awayPoints);
             $aMatch->setDate($date);
             $aMatch->setIsCompleted($isCompleted);

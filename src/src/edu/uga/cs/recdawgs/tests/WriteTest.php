@@ -32,6 +32,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         $this->objLayer = new Object\ObjectLayerImpl(null);
         $this->persistenceLayer = new Persistence\PersistenceLayerImpl(new Persistence\DbConnection(), $this->objLayer);
         $this->objLayer->setPersistence($this->persistenceLayer);
+        date_default_timezone_set('America/New_York');
     }
 
     public function testWriteAdmin(){
