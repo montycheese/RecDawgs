@@ -198,7 +198,7 @@ class MatchManager {
      */
     public function restore($modelMatch){
         //echo 'model match contents: ' . var_dump($modelMatch);
-        $q = 'SELECT * from ' . _NAME. '.match WHERE 1=1 ';
+        $q = 'SELECT * from ' . DB_NAME. '.match WHERE 1=1 ';
         if($modelMatch != NULL) {
             if ($attr = $modelMatch->getHomePoints() != NULL) {
                 $q .= ' AND home_points = ' . $attr;
@@ -223,9 +223,9 @@ class MatchManager {
                 $q .= ' AND away_team_id = ' . $attr;
             }
             $attr = NULL;
-            if ($modelMatch->getSportsTeam() != NULL){
-                $attr = $modelMatch->getSportsTeam()->getId();
-                $q .= ' AND sports_team_id = ' . $attr;
+            if ($modelMatch->getSportsVenue() != NULL){
+                $attr = $modelMatch->getSportsVenue()->getId();
+                $q .= ' AND sports_venue_id = ' . $attr;
             }
             if ($attr = $modelMatch->getId() != NULL){
                 $q .= ' AND match_id = ' . $attr;
@@ -239,7 +239,7 @@ class MatchManager {
             return new MatchIterator($resultSet, $this->objLayer);
         }
         else{
-            throw new RDException('Error restoring match model');
+            throw new RDException('Error restoring match model' . print_r($stmt->errorInfo()));
         }
     }
 

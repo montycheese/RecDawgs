@@ -129,7 +129,7 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
      * @throws RDException in case the student is null or not the captain of the team involved in the match
      */
     public function setStudent( $student ) { // throws RDException;
-        echo 'dumping this obj: ' . print_r(var_dump($this));
+        //echo 'dumping this obj: ' . print_r(var_dump($this));
 
         if(!isset($student)) {
             throw new RDException('Student can not be null');

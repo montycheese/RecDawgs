@@ -31,6 +31,7 @@ class MatchImpl extends Persistent implements Match {
          $this->awayTeam = $awayTeam;
          $this->sportsVenue = $sportsVenue;
          $this->round = $round;
+
         
     }
      
@@ -83,6 +84,7 @@ class MatchImpl extends Persistent implements Match {
      * @throws RDException in case the date is in the past
      */
     public function setDate( $date ){ // throws RDException
+        date_default_timezone_set('America/New_York');
 
         $datetime_new = new \DateTime($date);
         $datetime_cur = new \DateTime(date('Y-m-d H:i:s', time()));
@@ -123,11 +125,12 @@ class MatchImpl extends Persistent implements Match {
         
         if(!isset($homeTeam)) {
             throw new RDException('Home team can not be null.');
-        } else if($this->awayTeam != null && ($homeTeam->getParticipatesInLeague() !== $this->awayTeam->getParticipatesInLeague())) {
+        } else if($this->awayTeam != null && ($homeTeam->getParticipatesInLeague()->getId() != $this->awayTeam->getParticipatesInLeague()->getId())) {
             throw new RDException('Home Team must be in the same league as the Away Team.');   
         }
-        $this->homeTeam = $homeTeam;
-      
+        else {
+            $this->homeTeam = $homeTeam;
+        }
     }
     /** Return the away team of this match.
      * @return the away team of this match
@@ -141,11 +144,20 @@ class MatchImpl extends Persistent implements Match {
      * @throws RDException in case the awayTeam is null or not participating in the same league as the home team
      */
     public function setAwayTeam( $awayTeam ) { // throws RDException;
-        if(!isset($awayTeam)) {
+        if($awayTeam == null) {
             throw new RDException('Away team can not be null');
-        } else if($this->homeTeam != null && ( $awayTeam->getParticipatesInLeague() !== $this->homeTeam->getParticipatesInLeague())) {
+        }
+        //TODO 
+        else if($this->homeTeam != null && $this->homeTeam->getParticipatesInLeague()!=null && $awayTeam->getParticipatesInLeague() !=null &&
+            (
+                $awayTeam->getParticipatesInLeague()->getId() != $this->homeTeam->getParticipatesInLeague()->getId()
+            )
+        )
+        {
             throw new RDException('Away Team must be in the same league as the Home Team.');   
-        } else {
+        }
+
+        else {
             $this->awayTeam = $awayTeam;   
         }
    

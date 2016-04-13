@@ -55,9 +55,7 @@ class RoundManager {
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
             $stmt->bindParam(1, $round->getNumber(), \PDO::PARAM_INT);
-            //$stmt->bindParam(2, $round->getLeague()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(2, $round->getId(), \PDO::PARAM_INT);
-            ;
+            $stmt->bindParam(2, $round->getLeague()->getId(), \PDO::PARAM_INT);
 
             if($stmt->execute()){
                 $round->setId($this->dbConnection->lastInsertId());
