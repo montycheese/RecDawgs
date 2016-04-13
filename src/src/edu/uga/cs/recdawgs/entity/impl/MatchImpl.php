@@ -58,7 +58,7 @@ class MatchImpl extends Persistent implements Match {
      * @return the points scored by the away team
      */
     public function getAwayPoints() {
-        return $this->arayPoints;
+        return $this->awayPoints;
     }
 
     /** Set the points scored by the away team
@@ -83,11 +83,12 @@ class MatchImpl extends Persistent implements Match {
      * @throws RDException in case the date is in the past
      */
     public function setDate( $date ){ // throws RDException;
-        try{
+        //TODO throw exception if date is in past
+//        try{
             $this->date = $date;
-        } catch (RDException $rde) {
-            echo $rde;
-        }   
+  //      } catch (RDException $rde) {
+    //        echo $rde;
+      //  }
     }
     /** Return the indication if this match has been completed.
      * @return the indication if this match has been completed
