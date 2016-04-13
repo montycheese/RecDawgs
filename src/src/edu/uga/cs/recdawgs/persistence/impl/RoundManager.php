@@ -75,11 +75,11 @@ class RoundManager {
     public function restore($modelRound){
         $q = 'SELECT * from round WHERE 1=1 ';
         if($modelRound != NULL) {
-            if ($attr = $modelRound->getNumber() != NULL) {
-                $q .= ' AND number = ' . $attr;
+            if ($modelRound->getNumber() != NULL) {
+                $q .= ' AND number = ' . $modelRound->getNumber();
             }
-            if ($attr = $modelRound->getId() != NULL) {
-                $q .= ' AND round_id = ' . $attr;
+            if ($modelRound->getId() != NULL) {
+                $q .= ' AND round_id = ' . $modelRound->getId();
             }
          //   if ($attr = $modelRound->getLeague()->getId() != NULL){
            //     $q .= ' AND league_id = ' . $attr;

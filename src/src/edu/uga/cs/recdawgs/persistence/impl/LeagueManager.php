@@ -230,30 +230,30 @@ class LeagueManager {
         //echo 'dump lague'.  var_dump($leagueModel);
           $q = 'SELECT * from league WHERE 1=1 ';
         if($leagueModel != NULL) {
-            if($attr = $leagueModel->getName() != NULL) {
-                $q .= ' AND league.name = ' . $attr;   
+            if($leagueModel->getName() != NULL) {
+                $q .= ' AND league.name = ' . $leagueModel->getName();   
             }
-            if($attr = $leagueModel->getLeagueRules() != NULL) {
-                $q .= ' AND league.league_rules = ' . $attr;   
+            if($leagueModel->getLeagueRules() != NULL) {
+                $q .= ' AND league.league_rules = ' . $leagueModel->getLeagueRules();   
             }
-            if ($attr = $leagueModel->getMatchRules() != NULL) {
-                $q .= ' AND league.match_rules = ' . $attr;
+            if ($leagueModel->getMatchRules() != NULL) {
+                $q .= ' AND league.match_rules = ' . $leagueModel->getMatchRules();
             }
             
-            if ($attr = $leagueModel->getIsIndoor() != NULL) {
-                $q .= ' AND is_indoor = ' . ($attr ? 1 : 0);
+            if ($leagueModel->getIsIndoor() != NULL) {
+                $q .= ' AND is_indoor = ' . ($leagueModel->getIsIndoor() ? 1 : 0);
             }
-            if ($attr = $leagueModel->getMinTeams() != NULL) {
-                $q .= ' AND min_teams = ' . $attr;
+            if ($leagueModel->getMinTeams() != NULL) {
+                $q .= ' AND min_teams = ' . $leagueModel->getMinTeams();
             }
-            if ($attr = $leagueModel->getMaxTeams() != NULL) {
-                $q .= ' AND max_teams = ' . $attr;
+            if ($leagueModel->getMaxTeams() != NULL) {
+                $q .= ' AND max_teams = ' . $leagueModel->getMaxTeams();
             }
-            if ($attr = $leagueModel->getMinMembers() != NULL) {
-                $q .= ' AND min_members = ' . $attr;
+            if ($leagueModel->getMinMembers() != NULL) {
+                $q .= ' AND min_members = ' . $leagueModel->getMinMembers();
             }
-            if ($attr = $leagueModel->getMaxMembers() != NULL) {
-                $q .= ' AND max_members = ' . $attr;
+            if ($leagueModel->getMaxMembers() != NULL) {
+                $q .= ' AND max_members = ' . $leagueModel->getMaxMembers();
             }
             if ($leagueModel->getId() != NULL){
                 $q .= ' AND league_id = ' . $leagueModel->getId();
