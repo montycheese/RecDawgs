@@ -169,7 +169,6 @@ class UserManager {
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            //echo var_dump($resultSet);
             // return iterator
             return new AdministratorIterator($resultSet, $this->objLayer);
         }

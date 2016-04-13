@@ -118,7 +118,7 @@ class TeamManager {
     }
 
     public function restore($modelTeam){
-        $q = 'SELECT * from team WHERE 1=1 ';
+        $q = 'SELECT * from team10.team WHERE 1=1 ';
         if($modelTeam != NULL) {
             if ($attr = $modelTeam->getName() != NULL) {
                 $q .= ' AND name = ' . $attr;
