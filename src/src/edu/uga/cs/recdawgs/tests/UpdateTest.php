@@ -71,9 +71,11 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testUpdateTeam(){
-        $trustii = $this->objLayer->createTeam($name='Trustii');
-        $trustii = $this->objLayer->findLeague($trustii)->current();
+        $trustii = $this->objLayer->createTeam();
+        $trustii->setName('Trustii');
+        $trustii = $this->objLayer->findTeam($trustii)->current();
 
+        //echo 'testUpdateTeam ' . var_dump($trustii);
         //update
         $trustii->setName('Trustii-UPDATED');
 
@@ -85,8 +87,10 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testUpdateMatch(){
-        $match = $this->objLayer->createMatch($homePoints = 30, $awayPoints = 29,
-        $isCompleted = true);
+        $match = $this->objLayer->createMatch();
+        $match->setHomePoints(30);
+        $match->setAwayPoints(29);
+        $match->setIsCompleted(true);
         $match = $this->objLayer->findMatch($match)->current();
 
         //update
