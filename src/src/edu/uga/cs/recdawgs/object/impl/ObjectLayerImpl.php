@@ -326,7 +326,7 @@ class ObjectLayerImpl implements ObjectLayer{
             $aMatch->setIsCompleted($isCompleted);
             $aMatch->setHomeTeam($homeTeam);
             $aMatch->setAwayTeam($awayTeam);
-            $aMatch->setRound($awayTeam);
+            $aMatch->setRound($round);
         //}
 
         return $aMatch;
