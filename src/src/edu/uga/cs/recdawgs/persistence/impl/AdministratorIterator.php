@@ -31,7 +31,6 @@ class AdministratorIterator extends PersistenceIterator{
          */
         for($i=0; $i < count($resultSet); $i++){
             try {
-                //echo var_dump($resultSet);
                 $admin = $objLayer->createAdministrator(
                     $resultSet['first_name'],
                     $resultSet['last_name'],

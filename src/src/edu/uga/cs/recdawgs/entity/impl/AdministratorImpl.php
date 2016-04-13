@@ -12,7 +12,7 @@ class AdministratorImpl extends Persistent implements Administrator
 {
 
     /**
-     * UserImpl constructor.
+     * admin constructor.
      * @param $firstName
      * @param $lastName
      * @param $userName
