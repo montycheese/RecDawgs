@@ -84,12 +84,12 @@ class MatchImpl extends Persistent implements Match {
      */
     public function setDate( $date ){ // throws RDException
 
-      //  if (new \DateTime($date) < new \DateTime($format = DATE_ATOM, $time = "now", new \DateTimeZone('EST'))){
-        //    throw new RDException('Date is in the past.');
-        //}
-        //else {
+       if (new \DateTime($date) < new \DateTime($time = "now", new \DateTimeZone(32))){
+            throw new RDException('Date is in the past.');
+        }
+        else {
             $this->date = $date;
-        //}
+        }
     }
     /** Return the indication if this match has been completed.
      * @return the indication if this match has been completed
