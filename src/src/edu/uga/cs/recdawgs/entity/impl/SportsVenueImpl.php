@@ -3,7 +3,7 @@ namespace edu\uga\cs\recdawgs\entity\impl;
 
 use edu\uga\cs\recdawgs\entity\SportsVenue as SportsVenue;
 use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
-use edu\uga\cs\recdawgs\RDException as RDException;
+//use edu\uga\cs\recdawgs\RDException as RDException;
 
 class SportsVenueImpl extends Persistent implements SportsVenue {
 
@@ -12,9 +12,9 @@ class SportsVenueImpl extends Persistent implements SportsVenue {
      * The name must be unique across all sports venues.
      *
      */
-    var $name;
-    var $isIndoor;
-    var $address;
+    private $name;
+    private $isIndoor;
+    private $address;
 
     /**
      * SportsVenueImpl constructor.
