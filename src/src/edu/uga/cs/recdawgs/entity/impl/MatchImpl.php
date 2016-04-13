@@ -84,12 +84,15 @@ class MatchImpl extends Persistent implements Match {
      */
     public function setDate( $date ){ // throws RDException
 
-       //if (new \DateTime($date) < new \DateTime($time = "now", new \DateTimeZone(32))){
-         //   throw new RDException('Date is in the past.');
-        //}
-        //else {
+        $datetime_new = new DateTime($date);
+        $datetime_cur = new DateTime(date('Y-m-d H:i:s', time()));
+
+       if ($datetime_new->diff($datetime_cur)->format('%R') == '+'){
             $this->date = $date;
-        //}
+        }
+        else {
+            throw new RDException('Date is in the past.');
+        }
     }
     /** Return the indication if this match has been completed.
      * @return the indication if this match has been completed
