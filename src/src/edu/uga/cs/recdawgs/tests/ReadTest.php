@@ -11,6 +11,12 @@ namespace edu\uga\cs\recdawgs\tests;
 use edu\uga\cs\recdawgs\object\impl as Object;
 use edu\uga\cs\recdawgs\persistence\impl as Persistence;
 
+//autoload imports
+spl_autoload_register(function ($class_name) {
+    include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
+});
+
+
 class ReadTest extends \PHPUnit_Framework_TestCase {
     private $persistenceLayer = null;
     private $objLayer = null;
@@ -25,12 +31,17 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      * Reads all admin objs from persistence db
      */
     public function testReadAdmin(){
-        echo 'Admin objects:\n ';
+        echo 'Admin objects:
+
+        ';
         $iter = $this->objLayer->findAdministrator(null);
+        //echo var_dump($iter);
         $i=0;
         while($iter->hasNext()){
             $admin = $iter->current();
-           echo 'Admin id: ' . strval($admin->getId()) .' '. $admin->getFirstName() . ' '  . $admin->getLastName();
+           echo 'Admin id: ' . strval($admin->getId()) .' '. $admin->getFirstName() . ' '  . $admin->getLastName() . '
+
+           ';
             $iter->next();
             ++$i;
         }
@@ -38,12 +49,16 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
     }
     
     public function testReadStudent(){
-        echo 'Student objects:\n ';
+        echo 'Student objects:
+
+         ';
         $iter = $this->objLayer->findStudent(null);
         $i=0;
         while($iter->hasNext()){
             $student = $iter->current();
-            echo 'student id: ' . strval($student->getId()) .' '. $student->getFirstName() . ' '  . $student->getLastName();
+            echo 'student id: ' . strval($student->getId()) .' '. $student->getFirstName() . ' '  . $student->getLastName() . '
+
+            ';
             $iter->next();
             ++$i;
         }

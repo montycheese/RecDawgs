@@ -144,7 +144,7 @@ class UserManager {
      * @throws RDException
      */
     public function restoreAdministrator($modelAdministrator){
-        $q = 'SELECT * from ' . DB_NAME. '.user WHERE 1=1 ';
+        $q = 'SELECT * from ' . DB_NAME. '.user WHERE user.user_type = 1';
         if($modelAdministrator != NULL) {
             if ($attr = $modelAdministrator->getFirstName() != NULL) {
                 $q .= ' AND first_name = ' . $attr;
@@ -169,6 +169,7 @@ class UserManager {
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            //echo var_dump($resultSet);
             // return iterator
             return new AdministratorIterator($resultSet, $this->objLayer);
         }
@@ -183,7 +184,7 @@ class UserManager {
      * @throws RDException
      */
     public function restoreStudent($modelStudent){
-        $q = 'SELECT * from ' . DB_NAME. '.user WHERE 1=1 ';
+        $q = 'SELECT * from ' . DB_NAME. '.user WHERE user.user_type=0 ';
         if($modelStudent != NULL) {
             if ($attr = $modelStudent->getFirstName() != NULL) {
                 $q .= ' AND first_name = ' . $attr;

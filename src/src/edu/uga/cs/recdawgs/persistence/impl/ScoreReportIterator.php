@@ -52,7 +52,7 @@ class ScoreReportIterator extends PersistenceIterator{
                     $match,
                     $student
                 );
-                $report.setId($resultSet['$score_report_id']);
+                $report->setId($resultSet['$score_report_id']);
                 array_push($this->array, $report);
             }
             catch(RDException $rde){

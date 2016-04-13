@@ -33,7 +33,7 @@ class MatchIterator extends PersistenceIterator{
                     $resultSet['home_team_id'],
                     $resultSet['away_team_id']
                 );
-                $match.setId($resultSet['match_id']);
+                $match->setId($resultSet['match_id']);
 
                 array_push($this->array, $match);
             }

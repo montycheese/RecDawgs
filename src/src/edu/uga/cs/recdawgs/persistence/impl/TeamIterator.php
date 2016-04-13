@@ -49,7 +49,7 @@ class TeamIterator extends PersistenceIterator{
                     $captain,
                     $league
                 );
-                $team.setId($resultSet['$team_id']);
+                $team->setId($resultSet['$team_id']);
                 array_push($this->array, $team);
             }
             catch(RDException $rde){

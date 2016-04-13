@@ -30,7 +30,7 @@ class StudentIterator extends PersistenceIterator{
                     $resultSet['first_name'], $resultSet['last_name'],$resultSet['user_name'], $resultSet['password'],
                  $resultSet['email_address'], $resultSet['student_id'], $resultSet['major'], $resultSet['address']
                 );
-                $student.setId($resultSet['user_id']);
+                $student->setId($resultSet['user_id']);
                 array_push($this->array, $student);
             }
             catch(RDException $rde){
