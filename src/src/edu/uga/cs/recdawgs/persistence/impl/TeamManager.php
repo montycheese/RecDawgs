@@ -123,7 +123,10 @@ class TeamManager {
             if ($attr = $modelTeam->getName() != NULL) {
                 $q .= ' AND name = ' . $attr;
             }
-            if ($attr = $modelTeam->getCaptain()->getId() != NULL) {
+            
+            $attr = NULL;
+            if ($modelTeam->getCaptain() != NULL) {
+                $attr = $modelTeam->getCaptain()->getId();
                 $q .= ' AND captain_id = ' . $attr;
             }
             if ($attr = $modelTeam->getId() != NULL) {
