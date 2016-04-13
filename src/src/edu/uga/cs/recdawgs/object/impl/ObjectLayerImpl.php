@@ -156,7 +156,7 @@ class ObjectLayerImpl implements ObjectLayer{
      * @return a new League instance with the given attribute values
      * @throws RDException in case either the name is null or any of the team/player numbers is not positive or the given maximum is less than the corresponding minimum
      */
-    public function createLeague($name = null, $leagueRules = null, $matchRules,
+    public function createLeague($name = null, $leagueRules = null, $matchRules=null,
             $isIndoor = null, $minTeams = null, $maxTeams = null, $minPlayers = null, $maxPlayers = null) {
         $aLeague = new Entity\LeagueImpl();
 

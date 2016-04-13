@@ -84,7 +84,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         while($iter->current()){
             $team = $iter->current();
 
-            echo 'team dump: ' . var_dump($team);
+            //echo 'team dump: ' . var_dump($team);
 
             echo 'team id: ' . strval($team->getId()) .' team name:'. $team->getName() . ' team\'s league:'  . $team->getParticipatesInLeague()->current()->getName() .
             ' captain: ' . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName();

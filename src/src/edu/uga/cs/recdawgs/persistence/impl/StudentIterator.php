@@ -19,7 +19,7 @@ class StudentIterator extends PersistenceIterator{
         parent::__construct();
         $this->resultSet = $resultSet;
         $this->objLayer = $objLayer;
-
+        //echo 'result set of student iterator.' . var_dump($resultSet);
         /**
          * Populate the iterator with Student objects
          */
@@ -38,5 +38,7 @@ class StudentIterator extends PersistenceIterator{
             }
 
         }
+
+       // echo 'studnet iterator: ' . var_dump($this->array);
     }
 }

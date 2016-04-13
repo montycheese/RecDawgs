@@ -144,7 +144,7 @@ class MatchImpl extends Persistent implements Match {
      * @throws RDException in case the awayTeam is null or not participating in the same league as the home team
      */
     public function setAwayTeam( $awayTeam ) { // throws RDException;
-        echo 'var_dump : ' . var_dump($awayTeam);
+        //echo 'var_dump : ' . var_dump($awayTeam);
 
         if($awayTeam == null  || $awayTeam->getParticipatesInLeague() ==null) {
             throw new RDException('Away team can not be null');
