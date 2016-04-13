@@ -75,7 +75,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      * Prints out every team obj in the persistence db
      */
     public function testReadTeam(){
-        echo 'Team objects: ';
+        echo 'Team objects:
+
+        ';
         $iter = $this->objLayer->findTeam(null);
         $i=0;
         //loop through each team
@@ -190,7 +192,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findSportsVenue(null);
         $i=0;
         //loop
-        while($iter->hasNext()){
+        while($iter->current()){
             $venue = $iter->current();
             echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
             $indoor = $venue->getIsIndoor();
@@ -217,7 +219,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findScoreReport(null);
         $i=0;
         //loop
-        while($iter->hasNext()){
+        while($iter->current()){
             $report = $iter->current();
             echo 'Home points: ' . $report->getHomePoints() .' Away points: '. $report->getAwayPoints() .
                 ' Date: '. strval($report->getDate()) . 'Match: '. strval($report->getMatch()) .
@@ -240,7 +242,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findRound(null);
         $i=0;
         //loop
-        while($iter->hasNext()){
+        while($iter->current()){
             $round = $iter->current();
             echo 'Number of round: ' . $round->getNumber() .' League: '. $round->getLeague();
             $iter->next();
