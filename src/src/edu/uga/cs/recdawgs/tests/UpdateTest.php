@@ -54,7 +54,11 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
     public function testUpdateLeague(){
         //query
-        $soccer = $this->objLayer->createLeague($name = 'Indoor Soccer', $isIndoor=true, $minTeams=4);
+        $soccer = $this->objLayer->createLeague();
+        
+            $soccer->setName('Indoor Soccer');
+        $soccer->setIsIndoor(true);
+        $soccer->minTeam(4);
         $soccer = $this->objLayer->findLeague($soccer)->current();
 
         //update
@@ -104,7 +108,9 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
         ';
     }
     public function testUpdateScoreReport(){
-        $scoreReport = $this->objLayer->createScoreReport($homePoints = 30, $awayPoints = 21);
+        $scoreReport = $this->objLayer->createScoreReport();
+        $scoreReport->setHomePoints(30);
+        $scoreReport->setAwayPoints(21);
         $scoreReport = $this->objLayer->findScoreReport($scoreReport)->current();
         //update
         $scoreReport->setHomePoints(1000);
@@ -119,7 +125,8 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
                                                 
     }
     public function testUpdateSportsVenue(){
-        $sportsVenue = $this->objLayer->createSportsVenue($name = 'Field B');
+        $sportsVenue = $this->objLayer->createSportsVenue();
+        $sportsVenue->setName($name = 'Field B');
         $sportsVenue = $this->objLayer->findSportsVenue($sportsVenue)->current();
         $sportsVenue->setName('Field C');
         $sportsVenue->setAddress('Nowhere land, cambodia');
@@ -131,7 +138,8 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testUpdateRound(){
-        $r = $this->objLayer->createRound(1);
+        $r = $this->objLayer->createRound();
+        $r->setNumber(1);
         $r = $this->objLayer->findRound($r)->current();
 
         $r->setNumber(5555);
