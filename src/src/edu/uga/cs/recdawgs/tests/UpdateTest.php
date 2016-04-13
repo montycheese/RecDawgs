@@ -40,7 +40,12 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testUpdateStudent(){
-        $montana = $this->objLayer->createStudent($firstName="Montana", $lastName="Wong", $userName='mwong9');
+        $montana = $this->objLayer->createStudent();
+        $montana->setFirstName("Montana");
+        $montana->setLastName("Wong");
+        $montana->setUserName("mwong9");
+
+        // update
         $montana = $this->objLayer->findStudent($montana)->current();
         $montana->setUserName('montycheese');
         $montana->setEmailAddress('montanawong@gmail.com');
