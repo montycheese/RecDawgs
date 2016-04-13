@@ -69,7 +69,7 @@ class TeamManager {
     }
 
     /**
-     * @param Entity\UserImpl $student
+     * @param Entity\AdministratorImpl $student
      * @param Entity\TeamImpl $team
      * @throws RDException
      */
@@ -87,7 +87,7 @@ class TeamManager {
     }
 
     /**
-     * @param Entity\UserImpl $student
+     * @param Entity\StudentImpl $student
      * @param Entity\TeamImpl $team
      * @throws RDException
      */

@@ -28,7 +28,7 @@ class UserManager {
     /**
      * Saves an admin obj to database or updates if it already exists
      *
-     * @param Entity\UserImpl $administrator
+     * @param Entity\AdministratorImpl $administrator
      * @throws RDException
      */
     public function saveAdministrator($administrator){
@@ -139,7 +139,7 @@ class UserManager {
     }
 
     /**
-     * @param Entity\UserImpl $modelAdministrator
+     * @param Entity\AdministratorImpl $modelAdministrator
      * @return AdministratorIterator
      * @throws RDException
      */
@@ -260,7 +260,7 @@ class UserManager {
     /**
      * Deletes an Admin or Student from db.
      *
-     * @param Entity\UserImpl $user
+     * @param Entity\AdministratorImpl $user
      * @throws RDException
      */
     public function delete($user){
