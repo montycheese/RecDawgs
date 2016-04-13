@@ -11,14 +11,21 @@ use edu\uga\cs\recdawgs\persistence\impl\Persistent as Persistent;
 class AdministratorImpl extends Persistent implements Administrator
 {
 
+    private $firstName;
+    private $lastName;
+    private $userName;
+    private $password;
+    private $emailAddress;
+
     /**
-     * UserImpl constructor.
+     * AdminImpl constructor.
      * @param $firstName
      * @param $lastName
      * @param $userName
      * @param $password
      * @param $emailAddress
      */
+
     public function __construct($firstName = null, $lastName = null, $userName = null, $password = null, $emailAddress = null)
     {
         $this->firstName = $firstName;
