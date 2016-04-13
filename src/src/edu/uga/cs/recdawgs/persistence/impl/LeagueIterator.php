@@ -43,7 +43,7 @@ class LeagueIterator extends PersistenceIterator{
                     intval($resultSet[$i]['min_players']),
                     intval($resultSet[$i]['max_players'])
                 );
-                $league->setId($resultSet[$i]['$league_id']);
+                $league->setId(intval($resultSet[$i]['league_id']));
                 array_push($this->array, $league);
             }
             catch(RDException $rde){

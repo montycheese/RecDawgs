@@ -186,8 +186,10 @@ class LeagueManager {
 
 
     public function restoreRounds($league){
+        if(!isset($league)) throw new RDException($string="league is null");
+        //echo 'LEAGUE VARIABLE: ' . var_dump($league);
         $q = 'SELECT * from '. DB_NAME . '.round' .
-            'WHERE league_id =  ?;';
+            ' WHERE league_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
         $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
         if ($stmt->execute()){
@@ -197,7 +199,7 @@ class LeagueManager {
             return (new RoundIterator($resultSet, $this->objLayer));
         }
         else{
-            throw new RDException('Error restoring rounds');
+            throw new RDException('Error restoring rounds, ERROR MSG: '  . print_r($stmt->errorInfo()));
         }
     }
 

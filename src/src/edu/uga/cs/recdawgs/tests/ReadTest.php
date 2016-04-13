@@ -223,7 +223,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      * Prints out every score report obj in the persistence db
      */
     public function testReadScoreReport(){
-        echo 'score report objects:\n ';
+        echo 'score report objects:
+
+         ';
         $iter = $this->objLayer->findScoreReport(null);
         $i=0;
         //loop
