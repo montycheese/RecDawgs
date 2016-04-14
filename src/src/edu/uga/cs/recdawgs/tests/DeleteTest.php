@@ -51,7 +51,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             $iter->next();
             ++$i;
         }
-        echo "\nAll Score report objects deleted successfully\n";
+        echo "\nAll Score report objects deleted successfully.\n";
     }
 
 
@@ -59,57 +59,59 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      * Tests deleting match from db.
 */
     public function testDeleteMatch() {
-        echo '
-        Match objects to delete:
-
-
-         ';
+        echo "
+        Match objects to Delete: \n";
         $iter = $this->objLayer->findMatch(null);
         while($iter->current()){
             $match = $iter->current();
-            echo 'match id: ' . strval($match->getId()) .
-                ' match date: ' . $match->getDate();
+            echo "Match id: {$match->getId()}
+            Match home points: {$match->getHomePoints()}
+            Match away points: {$match->getAwayPoints()}
+            Match date: {$match->getDate()};
+            Match isCompleted: {$match->getIsCompleted()}
+            Match home team: {$match->getHomeTeam()}
+            Match away team: {$match->getAwayTeam()}
+            Match's sports venue: {$match->getSportsVenue()}
+            Match's round: {$match->getRound()}
+            ";
 
-            echo '
-
-            deleting this match
-
-            ';
+            echo "\nDeleting match.\n";
 
             try {
                 $this->objLayer->deleteMatch($match);
-                echo 'Deletion successful
-
-                ';
+                echo "\nDeletion successful.\n";
             }
             catch(RDException $r){
-                echo 'Error deleting match obj';
+                echo "\nError deleting Match.\n";
             }
 
             $iter->next();
         }
+        echo "\nAll Match objects deleted successfully.\n";
     }
+    
+    /**
+     * Tests deleting all members of a team.
+     */
 
     public function testDeleteMembersOfTeam(){
-        echo "Team objects to delete:\n";
+        echo "\nTeam member objects to delete:\n";
         $iter = $this->objLayer->findTeam(null);
         //echo 'team dump: ' . var_dump($iter);
         while($iter->current()){
             $_team = $iter->current();
             //echo 'team dump: ' . var_dump($_team);
-            echo '
-
-            Team id: ' . strval($_team->getId()) .' team name:'. $_team->getName().'
-
-            ';;
-
-            echo '
-            Removing members of this team EXCEPT the team captain...
-
-            ';
-
+            echo "Team id: {$_team->getId()}
+            Team name: {$_team->getName()}
+            Team captain: {$_team->getCaptain()}
+            Team participates in this league: {$_team->getParticipatesinLeague()}
+            Team has won in this league: {$_team->getWinnerOfLeague()}
+            ";
             //  try {
             //get member iter
+            
+            echo "\nDeleting all members of this team.\n";
+            
             $teamMemberIter = $this->objLayer->restoreStudentMemberOfTeam(null,$_team);
 
             //loop thru all members of this team
@@ -119,19 +121,19 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
                 //we'll only delete the team if they are not a captain, otherwise the team won't exist.
                 if($teamMember->getId() != $_team->getCaptain()->getId()){
                     $this->objLayer->deleteStudentMemberOfTeam($teamMember, $_team);
-                    echo "{$teamMember->getFirstName()} {$teamMember->getLastName()} removed from {$_team->getName()}\n";
+                    echo "\n{$teamMember->getFirstName()} {$teamMember->getLastName()} removed from {$_team->getName()} successfully.\n";
                 }
                 $teamMemberIter->next();
             }
 
-
-
-
             $iter->next();
         }
+        echo "\nAll team members deleted successfully.\n";
     }
 
-
+    /**
+     * Tests deleting a team from a league.
+     */ 
 
     public function testDeleteTeamFromLeague(){
         echo "\nLeague Objects: \n";
@@ -198,83 +200,69 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
-
-
-
     /**
      * Tests deleting team from db.
      */
     public function testDeleteTeam() {
-        echo 'Team objects:
-
-         ';
+        echo "\nTeams to delete: \n";
         $iter = $this->objLayer->findTeam(null);
-        //echo 'team dump: ' . var_dump($iter);
+        
         while($iter->current()){
             $team = $iter->current();
-            //echo 'team dump: ' . var_dump($team);
-            echo 'team id: ' . strval($team->getId()) .' name:'. $team->getName().'
-
-            ';;
-
-            echo '
-            deleting this team
-
-            ';
+            echo "Team id: {$team->getId()}
+            Team name: {$team->getName()}
+            Team captain: {$team->getCaptain()}
+            Team participates in this league: {$team->getParticipatesinLeague()}
+            Team has won in this league: {$team->getWinnerOfLeague()}
+            ";
 
             try {
                 $this->objLayer->deleteTeam($team);
-                echo '
-                Deletion successful
-
-                ';
             }
             catch(RDException $r){
-                echo 'Error deleting team obj';
+                echo "\nError deleting team object.\n";
             }
 
             $iter->next();
         }
+        
+        echo "\nAll teams deleted successfully.\n"
     }
 
     /**
      * Reads all admin objs from persistence db
      */
     public function testDeleteAdmin(){
-        echo '
-        Admin objects:
-
-         ';
+        echo "\nAdmin objects to delete:\n";
         $iter = $this->objLayer->findAdministrator(null);
         while($iter->current()){
             $admin = $iter->current();
-            echo 'userid: ' . strval($admin->getId()) .' firstname: '. $admin->getFirstName() . ' lastname: '  . $admin->getLastName();
-            echo '
-            deleting this admin
-
-            ';
+            echo "Admin id: {$admin->getId()}
+            First name: {$admin->getFirstName()}
+            Last name: {$admin->getLastName()}
+            Username: ($admin->getUserName()}
+            Password: {$admin->getPassword()}
+            Email address: {$admin->getEmailAddress()}
+            ";
+            
             try {
                 $this->objLayer->deleteAdministrator($admin);
-                echo '
-                Deletion successful
-
-                ';
             }
             catch(RDException $r){
-                echo 'Error deleting admin obj';
+                echo "\nError deleting administator object.\n";
             }
             $iter->next();
         }
+        echo "\nAll admin objects deleted successfully.\n";
     }
 
     /**
      * Tests deleting student from db.
      */
+     
     public function testDeleteStudent(){
-        echo '
-        Student objects:
-
-         ';
+        echo "
+        Student objects:";
         $iter = $this->objLayer->findStudent(null);
         while($iter->current()){
             $student = $iter->current();
