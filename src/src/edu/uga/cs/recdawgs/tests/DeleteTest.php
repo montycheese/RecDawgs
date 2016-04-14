@@ -29,12 +29,38 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         $this->objLayer->setPersistence($this->persistenceLayer);
     }
 
+    /*public function testDeleteScoreReport(){
+        echo "\nScore report objects to Delete: \n";
+        $iter = $this->objLayer->findScoreReport(null);
+        $i=0;
+        //loop
+        while($iter->current()){
+            $report = $iter->current();
+            //echo var_dump($report);
+            echo "
+            Report id: {$report->getId()}
+            Report home points: {$report->getHomePoints()}
+            Report away points: {$report->getAwayPoints()}
+            Report submit date: {$report->getDate()}
+            Report match's id: {$report->getMatch()->getId()}
+            Report submitted by user: {$report->getStudent()->getFirstName()} {$report->getStudent()->getLastName()}
+            ";
+
+            echo "\nDeleting report.\n";
+            $this->objLayer->deleteScoreReport($report);
+            $iter->next();
+            ++$i;
+        }
+        echo "\nAll Score report objects deleted successfully\n";
+    }
+*/
 
     /**
      * Tests deleting match from db.
-     */
+
     public function testDeleteMatch() {
-        echo 'Match objects:
+        echo '
+        Match objects to delete:
 
 
          ';
@@ -62,7 +88,60 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
 
             $iter->next();
         }
+    }*/
+
+
+    public function testDeleteMembersOfTeam(){
+        echo "Team objects to delete:\n";
+        $iter = $this->objLayer->findTeam(null);
+        //echo 'team dump: ' . var_dump($iter);
+        while($iter->current()){
+            $_team = $iter->current();
+            //echo 'team dump: ' . var_dump($team);
+            echo '
+
+            Team id: ' . strval($_team->getId()) .' team name:'. $_team->getName().'
+
+            ';;
+
+            echo '
+            Removing members of this team EXCEPT the team captain...
+
+            ';
+
+          //  try {
+                //get member iter
+            $teamMemberIter = $this->objLayer->restoreStudentMemberOfTeam($team=$_team);
+            echo 'line 115 delete test'. var_dump($teamMemberIter);
+            //loop thru all members of this team
+            while($teamMemberIter->current()){
+
+                $teamMember = $teamMemberIter->current();
+                //we'll only delete the team if they are not a captain, otherwise the team doesnt exist.
+                if($teamMember->getId() == $team->getCaptain()->getId()){
+                    $this->objLayer->deleteStudentMemberOfTeam($teamMember, $_team);
+                    echo "{$teamMember->getFirstName} {$teamMember->getLastName} removed from {$_team->getName()}\n";
+                }
+            }
+
+            echo '
+            Deleting this team
+            ';
+            //delete team
+            $this->objLayer->deleteTeam($_team);
+            echo '
+            Deletion successful!
+
+            ';
+           // }
+           // catch(RDException $r){
+            //    echo 'Error deleting team obj';
+           // }
+
+            $iter->next();
+        }
     }
+
 
     /**
      * Tests deleting team from db.
@@ -104,7 +183,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      * Reads all admin objs from persistence db
      */
     public function testDeleteAdmin(){
-        echo 'Querying  Admin objects:
+        echo '
+        Admin objects:
 
          ';
         $iter = $this->objLayer->findAdministrator(null);
@@ -117,7 +197,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             ';
             try {
                 $this->objLayer->deleteAdministrator($admin);
-                echo 'Deletion successful
+                echo '
+                Deletion successful
 
                 ';
             }
@@ -162,7 +243,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      * Tests deleting league from db.
      */
     public function testDeleteLeague() {
-        echo 'League objects:
+        echo '
+        League objects:
 
          ';
         $iter = $this->objLayer->findLeague(null);
@@ -171,7 +253,11 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             echo 'league id: ' . strval($league->getId()) .' name:'. $league->getName() . ' is indoor: '  . $league->getIsIndoor() .
                 ' min # teams: ' . strval($league->getMinTeams()) . ' max # teams' . strval($league->getMaxTeams()) .
                 ' min # members:'. strval($league->getMinMembers()) . ' max # members'  . strval($league->getMaxMembers()) .
-                ' league rules: ' . strval($league->getLeagueRules()) . ' match rules' . strval($league->getMatchRules()) .
+                '
+                league rules:
+                ' . strval($league->getLeagueRules()) . '
+                match rules:
+                ' . strval($league->getMatchRules()) .
                 'league winner: ' . $league->getWinnerOfLeague();
             echo '
             deleting this league
@@ -196,7 +282,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      */
 
     public function testDeleteSportsVenue() {
-        echo 'Venue objects:
+        echo '
+        Venue objects:
 
          ';
         $iter = $this->objLayer->findSportsVenue(null);
@@ -231,7 +318,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      */
     
     public function testDeleteRound() {
-        echo 'Round objects:
+        echo '
+        Round objects:
 
          ';
         $iter = $this->objLayer->findRound(null);

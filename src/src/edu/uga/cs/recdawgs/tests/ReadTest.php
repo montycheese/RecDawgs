@@ -34,24 +34,25 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      * Reads all admin objs from persistence db
      */
     public function testReadAdmin(){
-        echo 'Admin objects:
-
-        ';
+        echo "\nAdmin objects:\n";
         $iter = $this->objLayer->findAdministrator(null);
 
         $i=0;
         //change is here
         while($iter->current()){
             $admin = $iter->current();
-           echo 'Admin id: ' . strval($admin->getId()) .' '. $admin->getFirstName() . ' '  . $admin->getLastName() . '
-
-           ';
+            echo "
+            Admin id: {$admin->getId()}
+            Admin name: {$admin->getFirstName()} {$admin->getLastName()}
+            Admin email: {$admin->getEmailAddress()}
+            Admin username: {$admin->getUserName()}
+            Admin password: {$admin->getPassword()}
+            ";
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total admin objects
+        echo "\n {$i} total Admin objects\n";
 
-        ';
     }
 
     /**
@@ -59,110 +60,155 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
      */
     
     public function testReadStudent(){
-        echo 'Student objects:
-
-         ';
+        echo "\nStudent objects:\n";
         $iter = $this->objLayer->findStudent(null);
         $i=0;
         //echo 'var dump iter: ' . var_dump($iter);
         while($iter->current()){
             $student = $iter->current();
-            echo 'student id: ' . strval($student->getId()) .' firstname: '. $student->getFirstName() . ' lastname: '  . $student->getLastName() . '
+           echo "
+            Student id: {$student->getId()}
+            Student name: {$student->getFirstName()} {$student->getLastName()}
+            Student email: {$student->getEmailAddress()}
+            Student username: {$student->getUserName()}
+            Student password: {$student->getPassword()}
+            Student major: {$student->getMajor()}
+            Student address: {$student->getAddress()}
+            Student student id: {$student->getStudentId()}
+            ";
+            /*echo 'student id: ' . strval($student->getId()) .' firstname: '. $student->getFirstName() . ' lastname: '  . $student->getLastName() . '
 
-            ';
+            ';*/
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total student objects
-
-        ';
+        echo "\n {$i} total student objects\n";
     }
 
     /**
      * Prints out every team obj in the persistence db
      */
     public function testReadTeam(){
-        echo 'Team objects:
-
-        ';
+        echo "\nTeam objects:\n";
         $iter = $this->objLayer->findTeam(null);
         $i=0;
 
         //loop through each team
         while($iter->current()){
             $team = $iter->current();
+            echo "
+            Team id: {$team->getId()}
+            Team name: {$team->getName()}
+            Team's League: {$team->getParticipatesInLeague()->getName()}
+            Team captain: {$team->getCaptain()->getFirstName()} {$team->getCaptain()->getLastName()}
+            Winner of League?: {$team->getWinnerOfLeague()}
+            ";
 
-            //cecho 'team dump: ' . var_dump($team);
 
-            echo 'team id: ' . strval($team->getId()) .' team name:'. $team->getName() . ' team\'s league:'  . $team->getParticipatesInLeague()->getName() .
-            ' captain: ' . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName();
+            /*echo 'team id: ' . strval($team->getId()) .' team name:'. $team->getName() . ' team\'s league:'  . $team->getParticipatesInLeague()->getName() .
+            ' captain: ' . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName();*/
 
-            echo 'Members of this team:
-
-            ';
+            echo "Members of this team:\n";
             $memberIter = $this->objLayer->restoreStudentMemberOfTeam(null, $team);
+            //echo var_dump($memberIter);
             //loop through each member
             while($memberIter->current()){
                 $student = $memberIter->current();
-                echo 'student id: ' . strval($student->getId()) .' '. $student->getFirstName() . ' '  . $student->getLastName();
+                echo "
+                Student id: {$student->getId()}
+                Student name: {$student->getFirstName()} {$student->getLastName()}
+                Student email: {$student->getEmailAddress()}
+                Student username: {$student->getUserName()}
+                Student password: {$student->getPassword()}
+                Student major: {$student->getMajor()}
+                Student address: {$student->getAddress()}
+                Student student id: {$student->getStudentId()}
+                ";
+                //echo 'student id: ' . strval($student->getId()) .' '. $student->getFirstName() . ' '  . $student->getLastName();
                 $memberIter->next();
             }
-            echo '
-
-            ';
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total objects';
+        echo "\n{$i}  total Team objects\n";
     }
 
     /**
-     * Reads and outputs to string every league objct in the data base and all of its additional constitutient data.
+     * Reads and outputs to string every league object in the data base and all of its additional constitutient data.
      */
     public function testReadLeague(){
-        echo 'League objects:
-
-         ';
+        echo "\nLeague objects:\n";
         $iter = $this->objLayer->findLeague(null);
         $i=0;
         //loop through each league
         while($iter->current()){
             //echo league info
             $league = $iter->current();
-            echo 'league id: ' . strval($league->getId()) .' name: '. $league->getName() . ' is indoor: '  . $league->getIsIndoor() .
+            echo "
+            League id: {$league->getId()}
+            League name: {$league->getName()}
+            League is indoor?: {$league->getIsIndoor()}
+            League min # teams: {$league->getMinTeams()}
+            League max # teams: {$league->getMaxTeams()}
+            League min # members: {$league->getMinMembers()}
+            League max # members: {$league->getMaxMembers()}
+            League rules: {$league->getLeagueRules()}
+            Match name: {$league->getMatchRules()}
+            League Winner: {$league->getWinnerOfLeague()}
+            ";
+
+            /*echo 'league id: ' . strval($league->getId()) .' name: '. $league->getName() . ' is indoor: '  . $league->getIsIndoor() .
                 ' min # teams: ' . strval($league->getMinTeams()) . ' max # teams: ' . strval($league->getMaxTeams()) .
                 ' min # members: '. strval($league->getMinMembers()) . ' max # members: '  . strval($league->getMaxMembers()) .
                 ' league rules: ' . strval($league->getLeagueRules()) . ' match rules: ' . strval($league->getMatchRules()) .
-            'league winner: ' . $league->getWinnerOfLeague();
-            echo 'Teams of this League:
+            'league winner: ' . $league->getWinnerOfLeague();*/
+            echo "Teams of this League:\n";
 
-            ';
             $teamIter = $this->objLayer->restoreTeamParticipatesInLeague(null, $league);
 
             //loop through each team in this league
             while($teamIter->current()){
                 $team = $teamIter->current();
-                echo 'team id: ' . strval($team->getId()) .' team name: '. $team->getName();
+                echo "
+                Team id: {$team->getId()}
+                Team name: {$team->getName()}
+                Team captain: {$team->getCaptain()->getFirstName()} {$team->getCaptain()->getLastName()}
+                Winner of League?: {$team->getWinnerOfLeague()}
+                ";
+                //echo 'team id: ' . strval($team->getId()) .' team name: '. $team->getName();
                 $teamIter->next();
             }
 
             //loop through each sports venue in this league
-            echo 'Sports venues used by this League: ';
+            echo "
+            Sports venues used by this League: \n";
             $venueIter = $this->objLayer->restoreLeagueSportsVenue($league, null);
+            //var_dump($venueIter);
             while($venueIter->current()){
                 $venue = $venueIter->current();
-                echo 'venue id: ' . strval($venue->getId()) .' '. $venue->getName();
+                echo "
+                Venue id: {$venue->getId()}
+                Venue name: {$venue->getName()}
+                Venue address: {$venue->getAddress()}
+                Is Indoor?: {$venue->getIsIndoor()}
+                ";
+                //echo 'venue id: ' . strval($venue->getId()) .' '. $venue->getName();
                 $venueIter->next();
             }
 
             //loop through each round in this league
-            echo '
-
-            Rounds in this League: ';
+            echo "
+            Rounds in this League:\n";
             $roundIter = $this->objLayer->restoreLeagueRound($league);
             while($roundIter->current()){
                 $round = $roundIter->current();
-                echo 'Round id: ' . strval($round->getId()) .' Round number: '. $round->getNumber();
+                echo "
+                Round id: {$round->getId()}
+                Round number: {$round->getNumber()}
+                ";
+                //Belong to league: {$round->getLeague()->getName()}
+                //";
+                //echo 'Round id: ' . strval($round->getId()) .' Round number: '. $round->getNumber();
                 $roundIter->next();
             }
 
@@ -170,48 +216,50 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total league objects
-
-        ';
+        echo "\n{$i} total league objects\n";
     }
 
         /**
          * Prints out every match obj in the persistence db
          */
         public function testReadMatch(){
-            echo 'Match objects:
-
-        ';
+            echo "\nMatch objects:\n";
             $iter = $this->objLayer->findMatch(null);
             $i=0;
+            //echo var_dump($iter);
             //loop through each match
             while($iter->current()){
                 $match = $iter->current();
 
-                if ($match->getHomeTeam() != null && $match->getAwayTeam() != null && $match->getSportsVenue() != null) {
+                /*if ($match->getHomeTeam() != null && $match->getAwayTeam() != null && $match->getSportsVenue() != null) {
                     echo 'match id: ' . strval($match->getId()) . ' Hometeam: ' . $match->getHomeTeam()->getName() . ' Away team: ' . $match->getAwayTeam()->getName() .
                         ' match date: ' . $match->getDate() . ' venue: ' . $match->getSportsVenue()->getName();
-                }
+                }*/
+                echo "
+                Match id: {$match->getId()}
+                Match hometeam: {$match->getHomeTeam()->getName()}
+                Match awayteam: {$match->getAwayTeam()->getName()}
+                Match date: {$match->getDate()}
+                Match venue: {$match->getSportsVenue()->getName()}
+                ";
                 $played = $match->getIsCompleted();
                 if($played){
-                    echo 'game played, home team points: ' . strval($match->getHomePoints()) . ' away team points: ' . strval($match->getAwayPoints());
+                    echo "game played, home team points: {$match->getHomePoints()} away team points: {$match->getAwayPoints()}\n";
                 }
                 else{
-                    echo 'game not yet played';
+                    echo "game not yet played\n";
                 }
                 $iter->next();
                 ++$i;
             }
-        echo strval($i) . ' total match objects
-
-        ';
+        echo "\n{$i} total match objects\n";
     }
 
     /**
      * Prints out every sports venue obj in the persistence db
      */
     public function testReadSportsVenue(){
-        echo 'venue objects: '
+        echo "\nSports Venue objects:\n";
 
         ;
         $iter = $this->objLayer->findSportsVenue(null);
@@ -219,42 +267,67 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
         //loop
         while($iter->current()){
             $venue = $iter->current();
-            echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
+            echo "
+            Venue id: {$venue->getId()}
+            Venue name: {$venue->getName()}
+            Venue address: {$venue->getAddress()}
+            ";
+            //echo 'Venue name: ' . strval($venue->getName()) .' Address: '. strval($venue->getAddress());
             $indoor = $venue->getIsIndoor();
-
             if($indoor){
-                echo ' Allowed activity type: Indoor';
+                echo "Allowed activity type: Indoor\n";
             }
             else{
-                echo ' Allowed activity type: Outdoor';
+                echo "Allowed activity type: Outdoor\n9";
             }
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total sports venue objects
-
-        ';
+        echo "\n {$i} total sports venue objects\n";
     }
 
     /**
      * Prints out every round obj in the persistence db
      */
     public function testReadRound(){
-        echo 'round objects:
-
-         ';
+        echo "\nRound objects\n";
         $iter = $this->objLayer->findRound(null);
         $i=0;
         //loop
         while($iter->current()){
             $round = $iter->current();
-            echo 'Number of round: ' . $round->getNumber() .' League: '. $round->getLeague();
+            echo "
+            Round id: {$round->getId()}
+            Round number: {$round->getNumber()}
+            Belongs to league: {$round->getLeague()->getName()}
+            ";
+            //echo 'Number of round: ' . $round->getNumber() .' League: '. $round->getLeague();
             $iter->next();
             ++$i;
         }
-        echo strval($i) . ' total Round objects
+        echo "\n{$i} total Round objects\n";
+    }
 
-        ';
+    public function testReadScoreReport(){
+        echo "\nScore report objects\n";
+        $iter = $this->objLayer->findScoreReport(null);
+        $i=0;
+        //loop
+        while($iter->current()){
+            $report = $iter->current();
+            echo "
+            Report id: {$report->getId()}
+            Report home points: {$report->getHomePoints()}
+            Report away points: {$report->getAwayPoints()}
+            Report submit date: {$report->getDate()}
+            Report match's id: {$report->getMatch()->getId()}
+            Report submitted by user: {$report->getStudent()->getFirstName()} {$report->getStudent()->getLastName()}
+            ";
+            //echo 'Number of round: ' . $round->getNumber() .' League: '. $round->getLeague();
+            $iter->next();
+            ++$i;
+        }
+        echo "\n{$i} total Score report objects\n";
     }
 
 }

@@ -74,7 +74,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
             'feelthebern2016',
             'vermont',
             'bernie@berniesanders.gov',
-            'password3232',
+            '810989877',
             'Politics',
             '123 White Hart Lane, Tottenham, London, England 10001'
         );
@@ -93,9 +93,9 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
             'Ferris',
             'Bueller',
             'Porcheguy123',
-            'movie',
+            'password123',
             'ferrisbuller@anders.gov',
-            'password11',
+            '98796656',
             'Math',
             '123 fun lane, Chicago, Illinois 10001'
         );
@@ -155,14 +155,15 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
 
         $roundA = $this->objLayer->createRound(1, $leagueA);
         $roundB = $this->objLayer->createRound(2, $leagueA);
+        $roundC = $this->objLayer->createRound(5, $leagueB);
+        $roundD = $this->objLayer->createRound(6, $leagueB);
 
         //store
         $this->objLayer->storeRound($roundA);
         $this->objLayer->storeRound($roundB);
-
-        echo 'rounds created and stored in persistent database successfully
-
-        ';
+        $this->objLayer->storeRound($roundC);
+        $this->objLayer->storeRound($roundD);
+        echo "rounds created and stored in persistent database successfully\n";
 
         $venueA = $this->objLayer->createSportsVenue('Court A', 'Ramsey Center, Athens, GA 30605', true);
         $venueB = $this->objLayer->createSportsVenue('Field B', '199 River Road, Athens, GA 30605', false);
@@ -187,9 +188,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         // store
         $this->objLayer->storeMatch($matchA);
 
-        echo 'matches created and stored in persistent database successfully
-
-        ';
+        echo "matches created and stored in persistent database successfully\n";
 
         $reportA = $this->objLayer->createScoreReport(30, 21, $date, $studentA, $matchA);
         $reportB = $this->objLayer->createScoreReport(23, 29, $date, $studentB, $matchA);
@@ -198,9 +197,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         $this->objLayer->storeScoreReport($reportA);
         $this->objLayer->storeScoreReport($reportB);
 
-        echo 'score report created and stored in persistent database successfully
-
-        ';
+        echo "Score report created and stored in persistent database successfully\n";
 
 
         $this->objLayer->createTeamParticipatesInLeague($teamA, $leagueA);
@@ -222,6 +219,14 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         Student: ' . $studentD->getFirstName() . ' ' . $studentD->getLastName() . ' added to team: ' . $teamB->getName() . '
         ';
 
+        $this->objLayer->createLeagueSportsVenue($leagueA, $venueA);
+        echo "Sports Venue: {$venueA->getName()} added to League: {$leagueA->getName()}\n";
+        $this->objLayer->createLeagueSportsVenue($leagueA, $venueB);
+        echo "Sports Venue: {$venueB->getName()} added to League: {$leagueA->getName()}\n";
+        $this->objLayer->createLeagueSportsVenue($leagueB, $venueA);
+        echo "Sports Venue: {$venueA->getName()} added to League: {$leagueB->getName()}\n";
+        $this->objLayer->createLeagueSportsVenue($leagueB, $venueB);
+        echo "Sports Venue: {$venueB->getName()} added to League: {$leagueB->getName()}\n";
     }
 
 //    public function testWriteAdmin(){
