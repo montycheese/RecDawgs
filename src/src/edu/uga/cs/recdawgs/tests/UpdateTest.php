@@ -33,6 +33,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
     public function testUpdateAdmin(){
         //create
+        echo "\nUpdating an Administrator object:\n";
         $john = $this->objLayer->createAdministrator();
         $oldUserName = 'jd123';
         $newUserName = 'JOHNDOE123';
@@ -52,6 +53,8 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
      */
 
     public function testUpdateStudent(){
+        echo "\nUpdating a Student object:\n";
+
         $oldUserName = 'mwong9';
         $newUserName = 'montycheese';
         $oldEmailAddress = "mwong9@uga.edu";
@@ -76,6 +79,8 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
 
     public function testUpdateRound(){
+        echo "\nUpdating a Round object:\n";
+
         $oldNumber = 1;
         $newNumber = 5555;
 
@@ -88,6 +93,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testUpdateScoreReport(){
+        echo "\nUpdating a Score Report object:\n";
         $oldHomePoints = 23;
         $newHomePoints = 24;
         $oldAwayPoints = 29;
@@ -113,6 +119,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
      */
 
     public function testUpdateLeague(){
+        echo "\nUpdating an League object:\n";
         //query
         $oldMinTeams = 4;
         $oldMaxTeams = 24;
@@ -154,6 +161,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
      */
 
    public function testUpdateTeam(){
+        echo "\nUpdating a Team object:\n";
         $oldName = 'Trustii';
         $newName = 'Maximum Ride';
         $trustii = $this->objLayer->createTeam();
@@ -169,7 +177,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
 
 
-       echo "\nTeam { {$trustii->getName()} has updated their name from {$oldName} to {$newName}\n";
+       echo "\nTeam {$oldName} has updated their name from {$oldName} to {$newName}\n";
        /* echo '
 
         teams queried, updated, and stored in persistent database successfully
@@ -183,6 +191,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
      */
 
     public function testUpdateSportsVenue(){
+        echo "\nUpdating a Sports Venue object:\n";
         $oldName = 'Field B';
         $oldAddress = '199 River Road, Athens, GA 30605';
         $newName = 'Field C';
@@ -197,7 +206,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
         $this->objLayer->storeSportsVenue($sportsVenue);
 
-        echo "\nThe sports venue {$oldName} at {$oldAddress} has been updated from {$newName} to {$newAddress}\n";
+        echo "\nThe sports venue {$oldName} at {$oldAddress} has been updated its name to {$newName} and its address to {$newAddress}\n";
         /*echo '
 
         venue queried, updated, and stored in persistent database successfully
