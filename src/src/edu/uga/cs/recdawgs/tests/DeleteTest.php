@@ -64,7 +64,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findMatch(null);
         while($iter->current()){
             $match = $iter->current();
-            echo "Match id: {$match->getId()}
+            echo "
+            Match id: {$match->getId()}
             Match home points: {$match->getHomePoints()}
             Match away points: {$match->getAwayPoints()}
             Match date: {$match->getDate()};
