@@ -78,9 +78,32 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
             'Politics',
             '123 White Hart Lane, Tottenham, London, England 10001'
         );
+
+        $studentC = $this->objLayer->createStudent(
+            'Neo',
+            'Hao',
+            'qianghao',
+            'paswordio',
+            'nao@uga.edu',
+            '810232424',
+            'Computer Learning',
+            '6969 Baxter Street Athens, GA 30605'
+        );
+        $studentD = $this->objLayer->createStudent(
+            'Ferris',
+            'Bueller',
+            'Porcheguy123',
+            'movie',
+            'ferrisbuller@anders.gov',
+            'password11',
+            'Math',
+            '123 fun lane, Chicago, Illinois 10001'
+        );
         //store
         $this->objLayer->storeStudent($studentA);
         $this->objLayer->storeStudent($studentB);
+        $this->objLayer->storeStudent($studentC);
+        $this->objLayer->storeStudent($studentD);
         //echo var_dump($this->student1);
         echo 'students created and stored in persistence database successfully
 
@@ -188,6 +211,15 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         $this->objLayer->createTeamParticipatesInLeague($teamB, $leagueA);
         echo 'Team: ' . $teamB->getName() . ' added to league: ' . $leagueA->getName() . '
 
+        ';
+
+        $this->objLayer->createStudentMemberOfTeam($studentC, $teamA);
+        echo '
+        Student: ' . $studentC->getFirstName() . ' ' . $studentC->getLastName() . ' added to team: ' . $teamA->getName() . '
+            ';
+        $this->objLayer->createStudentMemberOfTeam($studentD, $teamB);
+        echo '
+        Student: ' . $studentD->getFirstName() . ' ' . $studentD->getLastName() . ' added to team: ' . $teamB->getName() . '
         ';
 
     }
