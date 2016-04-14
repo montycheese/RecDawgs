@@ -69,10 +69,10 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             Match away points: {$match->getAwayPoints()}
             Match date: {$match->getDate()};
             Match isCompleted: {$match->getIsCompleted()}
-            Match home team: {$match->getHomeTeam()}
-            Match away team: {$match->getAwayTeam()}
-            Match's sports venue: {$match->getSportsVenue()}
-            Match's round: {$match->getRound()}
+            Match home team: {$match->getHomeTeam()->getName()}
+            Match away team: {$match->getAwayTeam()->getName()}
+            Match's sports venue: {$match->getSportsVenue()->getName()}
+            Match's round number: {$match->getRound()->getNumber()}
             ";
 
             echo "\nDeleting match.\n";
@@ -103,7 +103,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             //echo 'team dump: ' . var_dump($_team);
             echo "Team id: {$_team->getId()}
             Team name: {$_team->getName()}
-            Team captain: {$_team->getCaptain()}
+            Team captain: {$_team->getCaptain()->getFirstName()} {$_team->getCaptain()->getLastName()}
             Team participates in this league: {$_team->getParticipatesinLeague()}
             Team has won in this league: {$_team->getWinnerOfLeague()}
             ";
@@ -183,7 +183,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             League max # members: {$league->getMaxMembers()}
             League rules: {$league->getLeagueRules()}
             Match name: {$league->getMatchRules()}
-            League Winner: {$league->getWinnerOfLeague()}";
+            ";
             echo "\nRemoving Sports venues from this league\n";
 
             $venueIter = $this->objLayer->restoreLeagueSportsVenue($league,null);
@@ -211,9 +211,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             $team = $iter->current();
             echo "Team id: {$team->getId()}
             Team name: {$team->getName()}
-            Team captain: {$team->getCaptain()}
-            Team participates in this league: {$team->getParticipatesinLeague()}
-            Team has won in this league: {$team->getWinnerOfLeague()}
+            Team captain: {$team->getCaptain()->getFirstName()} {$team->getCaptain()->getLastName()}
             ";
 
             try {
@@ -226,7 +224,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             $iter->next();
         }
         
-        echo "\nAll teams deleted successfully.\n"
+        echo "\nAll teams deleted successfully.\n";
     }
 
     /**
@@ -240,7 +238,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             echo "Admin id: {$admin->getId()}
             First name: {$admin->getFirstName()}
             Last name: {$admin->getLastName()}
-            Username: ($admin->getUserName()}
+            Username: {$admin->getUserName()}
             Password: {$admin->getPassword()}
             Email address: {$admin->getEmailAddress()}
             ";
