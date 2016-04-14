@@ -16,6 +16,8 @@ class MatchManager {
     private $objLayer = null;
 
     /**
+     * Constructor
+     *
      * @param \PDO $dbConnection A connection to the database in form of PDO
      * @param Object\ObjectLayerImpl $objLayer
      */
@@ -25,6 +27,8 @@ class MatchManager {
     }
 
     /**
+     * Creates Match in database.
+     *
      * @param Entity\MatchImpl $match
      * @throws RDException
      */
@@ -105,6 +109,13 @@ class MatchManager {
 
     }
 
+    /**
+     * Stores home team in database.
+     * 
+     * @param $team to store as home team
+     * @param $match to link home team with
+     * @throws RDException
+     */
     public function storeHomeTeam($team, $match){
         $q = "UPDATE " . DB_NAME . ".match" .
             "set
@@ -124,6 +135,13 @@ class MatchManager {
         }
     }
 
+    /**
+     * Stores away team in database.
+     *
+     * @param $team to store as away team
+     * @param $match to link away team with
+     * @throws RDException
+     */
     public function storeAwayTeam($team, $match){
         $q = "UPDATE " . DB_NAME . ".match" .
             "set
@@ -142,6 +160,15 @@ class MatchManager {
             throw new RDException('Error creating link');
         }
     }
+
+
+    /**
+     * Stores SportsVenue in database.
+     *
+     * @param $match to link the venue with
+     * @param $sportsVenue to store
+     * @throws RDException
+     */
     public function storeSportsVenue($match, $sportsVenue){
         $q = "UPDATE " . DB_NAME . ".match" .
             "set
@@ -161,6 +188,13 @@ class MatchManager {
         }
     }
 
+    /**
+     * Stores Round object in database.
+     * 
+     * @param $round to store
+     * @param $match to link the round with
+     * @throws RDException
+     */
     public function storeRound($round, $match){
         $q = "UPDATE " . DB_NAME . ".match" .
             "set
@@ -180,6 +214,13 @@ class MatchManager {
         }
     }
 
+    /**
+     * Restore SportsVenue object.
+     *
+     * @param $match that the sports venue is associated with
+     * @return SportsVenue corresponding to that match
+     * @throws RDException
+     */
     public function restoreSportsVenue($match){
         if($match == NULL || !$match->isPersistent()) {
             throw new RDException('Match is not persistent');
@@ -200,11 +241,10 @@ class MatchManager {
         }
     }
 
-    /**
+    /*
+     * Restores match.
      *
-     * restore match
-     *
-     * @param Entity\MatchImpl $modelMatch
+     * @param Entity\MatchImpl $modelMatch match to store
      * @return MatchIterator
      * @throws RDException
      */
@@ -256,7 +296,7 @@ class MatchManager {
     }
 
     /**
-     * Return the home team that participated in this match
+     * Return the home team that participated in this match.
      *
      * @param $match
      * @throws RDException
@@ -283,7 +323,7 @@ class MatchManager {
     }
 
     /**
-     * Return the away team that participated in this match
+     * Return the away team that participated in this match.
      *
      * @param $match
      * @throws RDException
@@ -310,7 +350,12 @@ class MatchManager {
     }
 
 
-
+    /**
+     * Deletes match.
+     *
+     * @param $match to delete
+     * @throws RDException
+     */
     public function delete($match){
         if($match->getId() == -1){
             //if match isn't persistent, we are done
@@ -332,6 +377,12 @@ class MatchManager {
         }
     }
 
+    /**
+     * Deletes home team.
+     * 
+     * @param $match with the corresponding home team
+     * @throws RDException
+     */
     public function deleteHomeTeam($match){
         if($match->getId() == -1){
             //if match isn't persistent, we are done
@@ -357,6 +408,12 @@ class MatchManager {
         }
     }
 
+    /**
+     * Deletes away team.
+     * 
+     * @param $match with corresponding away team
+     * @throws RDException
+     */
     public function deleteAwayTeam($match){
         if($match->getId() == -1){
             //if match isn't persistent, we are done
@@ -380,6 +437,14 @@ class MatchManager {
             throw new RDException('Error deleting link');
         }
     }
+
+
+    /**
+     * Deletes sports venue.
+     * 
+     * @param $match corresponding with that sports venue
+     * @throws RDException
+     */
     public function deleteSportsVenue($match){
         if($match->getId() == -1){
             //if match isn't persistent, we are done
@@ -404,6 +469,13 @@ class MatchManager {
         }
     }
 
+    /**
+     * Deletes round.
+     * 
+     * @param $round to delete
+     * @param $match corresponding with that round
+     * @throws RDException
+     */
     public function deleteRound($round, $match){
         if($match->getId() == -1 && $round->getId() == -1){
             throw new RDException('neither objects are persistent');

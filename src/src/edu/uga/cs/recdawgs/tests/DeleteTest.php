@@ -20,6 +20,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     private $persistenceLayer = null;
     private $objLayer = null;
 
+    /**
+     * DeleteTest constructor.
+     */
     public function __construct(){
         $this->objLayer = new Object\ObjectLayerImpl(null);
         $this->persistenceLayer = new Persistence\PersistenceLayerImpl(new Persistence\DbConnection(), $this->objLayer);
@@ -27,6 +30,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
     }
 
 
+    /**
+     * Tests deleting match from db.
+     */
     public function testDeleteMatch() {
         echo 'Match objects:
 
@@ -58,6 +64,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
+    /**
+     * Tests deleting team from db.
+     */
     public function testDeleteTeam() {
         echo 'Team objects:
 
@@ -119,7 +128,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
-
+    /**
+     * Tests deleting student from db.
+     */
     public function testDeleteStudent(){
         echo '
         Student objects:
@@ -147,6 +158,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
+    /**
+     * Tests deleting league from db.
+     */
     public function testDeleteLeague() {
         echo 'League objects:
 
@@ -177,6 +191,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
+    /**
+     * Tests deleting sports venue from db.
+     */
 
     public function testDeleteSportsVenue() {
         echo 'Venue objects:
@@ -209,6 +226,10 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
+    /**
+     * Tests deleting round from db.
+     */
+    
     public function testDeleteRound() {
         echo 'Round objects:
 

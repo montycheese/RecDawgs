@@ -18,7 +18,7 @@ class ScoreReportIterator extends PersistenceIterator{
     private $objLayer = null;
 
     /**
-     * Creates a ScoreReport  Iterator
+     * Creates a ScoreReport Iterator
      *
      * @param $resultSet array Associative array containing an array of rows of scorereport data returned from a DB query
      * @param $objLayer ObjectLayerImpl instance of the object layer object

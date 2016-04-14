@@ -28,12 +28,19 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
     private $round1, $round2;
     private $report1, $report2;
 
+    /**
+     * WriteTest constructor.
+     */
     public function __construct(){
         $this->objLayer = new Object\ObjectLayerImpl(null);
         $this->persistenceLayer = new Persistence\PersistenceLayerImpl(new Persistence\DbConnection(), $this->objLayer);
         $this->objLayer->setPersistence($this->persistenceLayer);
         date_default_timezone_set('America/New_York');
     }
+
+    /**
+     * Tests writing all objs to persistence db
+     */
 
     public function testAll(){
         //create

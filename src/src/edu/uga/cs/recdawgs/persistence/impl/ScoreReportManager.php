@@ -16,6 +16,8 @@ class ScoreReportManager {
     private $objLayer = null;
 
     /**
+     * Constructor
+     * 
      * @param \PDO $dbConnection A connection to the database in form of PDO
      * @param Object\ObjectLayerImpl $objLayer
      */
@@ -24,6 +26,12 @@ class ScoreReportManager {
         $this->objLayer = $objLayer;
     }
 
+    /**
+     * saves report in database
+     * 
+     * @param $report to save
+     * @throws RDException
+     */
     public function save($report){
         //gecho var_dump($report);
         if($report->isPersistent()){

@@ -16,7 +16,7 @@ class AdministratorIterator extends PersistenceIterator{
     private $objLayer = null;
 
     /**
-     * Creates a admin Iterator
+     * Creates an Admin Iterator.
      *
      * @param $resultSet array Associative array containing an array of rows of admin data returned from a DB query
      * @param $objLayer ObjectLayerImpl instance of the object layer object

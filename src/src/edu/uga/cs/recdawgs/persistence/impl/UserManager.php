@@ -26,7 +26,7 @@ class UserManager {
     }
 
     /**
-     * Saves an admin obj to database or updates if it already exists
+     * Saves an admin obj to database or updates if it already exists.
      *
      * @param Entity\AdministratorImpl $administrator
      * @throws RDException
@@ -82,6 +82,8 @@ class UserManager {
     }
 
     /**
+     * Saves student in database.
+     *
      * @param Entity\StudentImpl $student
      * @throws RDException
      */
@@ -141,6 +143,8 @@ class UserManager {
     }
 
     /**
+     * Restores Administrator in database.
+     *
      * @param Entity\AdministratorImpl $modelAdministrator
      * @return AdministratorIterator
      * @throws RDException
@@ -186,6 +190,8 @@ class UserManager {
     }
 
     /**
+     * Restores student in database.
+     *
      * @param Entity\StudentImpl $modelStudent
      * @return StudentIteratorc
      * @throws RDException
@@ -235,6 +241,13 @@ class UserManager {
         }
     }
 
+    /**
+     * Restores teams captained by specific student.
+     *
+     * @param $student
+     * @return TeamIterator
+     * @throws RDException
+     */
     public function restoreTeamsCaptainedBy($student){
         $q = 'SELECT * FROM team WHERE captain_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
@@ -249,6 +262,14 @@ class UserManager {
             throw new RDException('Error restoring teams captained by this student');
         }
     }
+
+    /**
+     * Restores teams that the student has joined.
+     * 
+     * @param $student
+     * @return TeamIterator
+     * @throws RDException
+     */
     public function restoreTeamsMemberOf($student){
         $q = 'SELECT team.team_id, team.name, team.captain_id FROM team
                 INNER JOIN is_member_of
