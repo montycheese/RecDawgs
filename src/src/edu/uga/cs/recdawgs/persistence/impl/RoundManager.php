@@ -33,29 +33,27 @@ class RoundManager {
      * @throws RDException
      */
     public function save($round){
-        //TODO
         if($round->isPersistent()){
             //update
             $q = "UPDATE round
                 set round.number = ?,
-              league_id = ?,
+              league_id = ?
               WHERE round_id = ?;";
 
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
             $stmt->bindParam(1, $round->getNumber(), \PDO::PARAM_INT);
-            //$stmt->bindParam(2, $round->getLeague()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(2, $round->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(2, $round->getLeague()->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(3, $round->getId(), \PDO::PARAM_INT);
             if($stmt->execute()){
                 echo 'round created successfully';
             }
             else{
-                throw new RDException('Error creating round');
+                throw new RDException('Error creating round' . print_r($stmt->errorInfo()));
             }
         }
         else{
-            //TODO
             //insert
             //create Query
             $q = "INSERT INTO round (round.number, league_id) VALUES(?, ?);";
@@ -84,23 +82,25 @@ class RoundManager {
      */
     public function restore($modelRound){
         //echo 'restore model roind' . var_dump($modelRound);
-        $q = 'SELECT * from round WHERE 1=1 ';
+        $q = 'SELECT * from team10.round WHERE 1=1 ';
         if($modelRound != NULL) {
             if ($modelRound->getNumber() != NULL) {
                 $q .= ' AND number = ' . $modelRound->getNumber();
             }
-            if ($modelRound->getId() != NULL) {
+            if ($modelRound->getId() != -1) {
                 $q .= ' AND round_id = ' . $modelRound->getId();
             }
-         //   if ($attr = $modelRound->getLeague()->getId() != NULL){
-           //     $q .= ' AND league_id = ' . $attr;
-            //}
+            if($modelRound->getLeague() != null){
+                $q .= " AND league_id = " . $modelRound->getLeague()->getId();
+            }
         }
+
         $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             // return iterator
+            //echo " round manager line 104" .var_dump($resultSet);
             return new RoundIterator($resultSet, $this->objLayer);
         }
         else{
