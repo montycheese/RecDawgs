@@ -106,8 +106,8 @@ class ScoreReportManager {
             if ($modelReport->getDate() != NULL) {
                 $q .= ' AND score_report.date = ' . $modelReport->getDate();
             }
-
             if ($modelReport->getId() != -1){
+
                 $q .= ' AND score_report_id = ' . $modelReport->getId();
             }
         }
