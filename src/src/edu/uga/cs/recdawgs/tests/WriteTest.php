@@ -229,25 +229,25 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         $this->objLayer->createTeamParticipatesInLeague($teamB, $leagueA);
         echo "\nTeam:  {$teamB->getName()} added to league: {$leagueA->getName()}\n";
 
-        //TODOecho "Add";
+        //adding student to teams
+        echo "Adding STUDENTS to TEAMS";
 
         $this->objLayer->createStudentMemberOfTeam($studentC, $teamA);
-        echo '
-        Student: ' . $studentC->getFirstName() . ' ' . $studentC->getLastName() . ' added to team: ' . $teamA->getName() . '
-            ';
+        echo "\nStudent: {$studentC->getFirstName()} {$studentC->getLastName()} added to team: {$teamA->getName()}\n";
+
         $this->objLayer->createStudentMemberOfTeam($studentD, $teamB);
-        echo '
-        Student: ' . $studentD->getFirstName() . ' ' . $studentD->getLastName() . ' added to team: ' . $teamB->getName() . '
-        ';
+        echo "\nStudent: {$studentD->getFirstName()} {$studentD->getLastName()} added to team: {$teamB->getName()}\n";
+
+        echo "Adding SPORTS VENUE to be used by Leagues\n";
 
         $this->objLayer->createLeagueSportsVenue($leagueA, $venueA);
-        echo "Sports Venue: {$venueA->getName()} added to League: {$leagueA->getName()}\n";
+        echo "\nSports Venue: {$venueA->getName()} added to League: {$leagueA->getName()}\n";
         $this->objLayer->createLeagueSportsVenue($leagueA, $venueB);
-        echo "Sports Venue: {$venueB->getName()} added to League: {$leagueA->getName()}\n";
+        echo "\nSports Venue: {$venueB->getName()} added to League: {$leagueA->getName()}\n";
         $this->objLayer->createLeagueSportsVenue($leagueB, $venueA);
-        echo "Sports Venue: {$venueA->getName()} added to League: {$leagueB->getName()}\n";
+        echo "\nSports Venue: {$venueA->getName()} added to League: {$leagueB->getName()}\n";
         $this->objLayer->createLeagueSportsVenue($leagueB, $venueB);
-        echo "Sports Venue: {$venueB->getName()} added to League: {$leagueB->getName()}\n";
+        echo "\nSports Venue: {$venueB->getName()} added to League: {$leagueB->getName()}\n";
     }
 
 //    public function testWriteAdmin(){
