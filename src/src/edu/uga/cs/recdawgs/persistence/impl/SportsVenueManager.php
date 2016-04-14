@@ -204,10 +204,10 @@ class SportsVenueManager {
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
         $stmt->bindParam(1, $sportsVenue->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(2, $league->getId(), \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
-            echo 'link deleted successfully';
+            echo "Link deleted successfully";
         }
         else{
             throw new RDException('Deletion of link unsuccessful');

@@ -55,8 +55,12 @@ class TeamIterator extends PersistenceIterator{
                 $team->setName($resultSet[$i]['name']);
                 $team->setCaptain($captain);
                 //get league
-                $league = $objLayer->restoreTeamParticipatesInLeague($team);
-                $team->setParticipatesInLeague($league);
+                $leagueIter = $objLayer->restoreTeamParticipatesInLeague($team);
+                while($leagueIter->current()){
+                    $team->setParticipatesInLeague($leagueIter->current());
+                    $leagueIter->next();
+                }
+
                    // $resultSet[$i]['name'],
                     //$captain,
                     //$league
@@ -70,6 +74,7 @@ class TeamIterator extends PersistenceIterator{
             }
 
         }
+        //echo 'Team iterator lime 76' . var_dump($this->array);
 
 
     }

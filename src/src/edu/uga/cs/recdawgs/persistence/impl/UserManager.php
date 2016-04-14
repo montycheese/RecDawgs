@@ -51,7 +51,7 @@ class UserManager {
             $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
             $stmt->bindParam(6, $administrator->getId(), \PDO::PARAM_STR);
 
-            echo $q;
+            //echo $q;
             if ($stmt->execute()) {
                 echo 'Administrator updated successfully';
             } else {

@@ -157,11 +157,6 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
             League Winner: {$league->getWinnerOfLeague()}
             ";
 
-            /*echo 'league id: ' . strval($league->getId()) .' name: '. $league->getName() . ' is indoor: '  . $league->getIsIndoor() .
-                ' min # teams: ' . strval($league->getMinTeams()) . ' max # teams: ' . strval($league->getMaxTeams()) .
-                ' min # members: '. strval($league->getMinMembers()) . ' max # members: '  . strval($league->getMaxMembers()) .
-                ' league rules: ' . strval($league->getLeagueRules()) . ' match rules: ' . strval($league->getMatchRules()) .
-            'league winner: ' . $league->getWinnerOfLeague();*/
             echo "Teams of this League:\n";
 
             $teamIter = $this->objLayer->restoreTeamParticipatesInLeague(null, $league);

@@ -34,45 +34,49 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     public function testUpdateAdmin(){
         //create
         $john = $this->objLayer->createAdministrator();
-        $john->setUserName('jd123');
+        $oldUserName = 'jd123';
+        $newUserName = 'JOHNDOE123';
+        $john->setUserName($oldUserName);
         $john = $this->objLayer->findAdministrator($john)->current();
 
-        $john->setUserName('JOHNDOE123');
+        $john->setUserName($newUserName);
 
         //store
         $this->objLayer->storeAdministrator($john);
 
-        echo '
-
-        admins created and stored in persistence database successfully.
-
-        ';
+        echo "\nAdmin {$john->getFirstName()} {$john->getLastName()} has updated username from {$oldUserName} to {$newUserName}\n";
     }
 
     /**
      * Tests updating student objs from persistence db
      */
-    
+
     public function testUpdateStudent(){
+        $oldUserName = 'mwong9';
+        $newUserName = 'montycheese';
+        $oldEmailAddress = "mwong9@uga.edu";
+        $newEmailAddress = "montanawong@gmail.com";
+
         $montana = $this->objLayer->createStudent();
         $montana->setFirstName("Montana");
         $montana->setLastName("Wong");
-        $montana->setUserName("mwong9");
+        $montana->setUserName($oldUserName);
 
         // update
         $montana = $this->objLayer->findStudent($montana)->current();
-        $montana->setUserName('montycheese');
+        $montana->setUserName($newUserName);
         $montana->setEmailAddress('montanawong@gmail.com');
 
         //store
         $this->objLayer->storeStudent($montana);
-        echo '
+        echo "\nStudent {$montana->getFirstName()} {$montana->getLastName()} has updated username from {$oldUserName} to {$newUserName}\n";
+        echo "and updated email address from {$oldEmailAddress} to {$newEmailAddress}\n";
 
-        student queried, updated, and stored in persistence database successfully
-
-        ';
     }
 
+    
+
+    //EVERYTHING UNDER THIS IS TODO
     /**
      * Tests updating league objs from persistence db
      */

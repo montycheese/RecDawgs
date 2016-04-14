@@ -664,7 +664,7 @@ class ObjectLayerImpl implements ObjectLayer{
     /**
      * Returns either a league or an array of teams based on which param is not null
      *
-     * Return the League in which a given Team participates.
+     * Return the Leagues in which a given Team participates.
      * @param team the Team
      * @return the League in which the Team participates
      * @throws RDException in case an error occurred during the restore operation
