@@ -215,6 +215,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             Team name: {$team->getName()}
             Team captain: {$team->getCaptain()->getFirstName()} {$team->getCaptain()->getLastName()}
             ";
+            
+            echo "\nDeleting team.\n";
 
             try {
                 $this->objLayer->deleteTeam($team);
@@ -247,6 +249,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
 
             ";
             
+            echo "\nDeleting adminstrator.\n";
+            
             try {
                 $this->objLayer->deleteAdministrator($admin);
             }
@@ -278,6 +282,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             Student major: {$student->getMajor()}
             Student address: {$student->getAddress()}
             ";
+            
+            echo "\nDeleting student.\n";
             try {
                 $this->objLayer->deleteStudent($student);
             }
@@ -309,6 +315,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             League rules: {$league->getLeagueRules()}
             League's match rules: {$league->getMatchRules()}
             ";
+            echo "\nDeleting league.\n";
             try {
                 $this->objLayer->deleteLeague($league);
             }
@@ -336,6 +343,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             Is Indoor? {$venue->getIsIndoor()}
             ";
 
+            echo "\nDeleting venue.\n";
             try {
                 $this->objLayer->deleteSportsVenue($venue);
                 echo "\nDeletion successful\n";
@@ -362,6 +370,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             echo "
             Round number: {$round->getNumber()}
             ";
+            
+            echo "\nDeleting round.\n";
+            
             try {
                 $this->objLayer->deleteRound($round);
             }
