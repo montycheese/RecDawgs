@@ -43,6 +43,9 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
      */
 
     public function testAll(){
+        echo "BEGIN WRITE TEST\n\n";
+
+        echo "Creating ADMIN objects\n";
         //create
         $john = $this->objLayer->createAdministrator('John', 'Doe', 'jd123', 'password123', 'johndoe@rocketmail.io');
         $sanath = $this->objLayer->createAdministrator('Sanath', 'Bhat', 'sanathbhat6789', 'somepassword', 'sanath@breakingstuff.com');
@@ -50,13 +53,15 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         $hillary = $this->objLayer->createAdministrator('Hilary', 'Clinton', 'chillHill', 'whitehouse', 'hillary@whitehouse.edu');
         //store
         $this->objLayer->storeAdministrator($john);
+        echo "\nAdmin {$john->getUserName()} created and stored in db.\n";
         $this->objLayer->storeAdministrator($sanath);
+        echo "\nAdmin {$sanath->getUserName()} created and stored in db.\n";
         $this->objLayer->storeAdministrator($maulesh);
+        echo "\nAdmin {$maulesh->getUserName()} created and stored in db.\n";
         $this->objLayer->storeAdministrator($hillary);
-        echo 'admins created and stored in persistence database successfully.
+        echo "\nAdmin {$hillary->getUserName()} created and stored in db.\n";
 
-        ';
-
+        echo "Creating STUDENT objects\n";
         //create as class var to use later when making teams
         $studentA = $this->objLayer->createStudent(
             'Montana',
@@ -71,7 +76,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         $studentB = $this->objLayer->createStudent(
             'Bernie',
             'Sanders',
-            'feelthebern2016',
+            'Feelthebern2016',
             'vermont',
             'bernie@berniesanders.gov',
             '810989877',
@@ -101,14 +106,15 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         );
         //store
         $this->objLayer->storeStudent($studentA);
+        echo "\nStudent {$studentA->getFirstName()} {$studentA->getLastName()} created and stored in db.\n";
         $this->objLayer->storeStudent($studentB);
+        echo "\nStudent {$studentB->getFirstName()} {$studentB->getLastName()} created and stored in db.\n";
         $this->objLayer->storeStudent($studentC);
+        echo "\nStudent {$studentC->getFirstName()} {$studentC->getLastName()} created and stored in db.\n";
         $this->objLayer->storeStudent($studentD);
-        //echo var_dump($this->student1);
-        echo 'students created and stored in persistence database successfully
+        echo "\nStudent {$studentD->getFirstName()} {$studentD->getLastName()} created and stored in db.\n";
 
-        ';
-
+        echo "Creating LEAGUE objects\n";
         //create
         $leagueA = $this->objLayer->createLeague(
             'Indoor Soccer',
@@ -132,27 +138,33 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         );
         //store
         $this->objLayer->storeLeague($leagueA);
+        echo "\nLeague {$leagueA->getName()} created and stored in db.\n";
         $this->objLayer->storeLeague($leagueB);
-        echo 'leagues created and stored in persistent database successfully
+        echo "\nLeague {$leagueB->getName()} created and stored in db.\n";
 
-        ';
+        echo "Creating TEAMS objects\n";
 
         $teamA = $this->objLayer->createTeam('Trustii', $studentA, $leagueA);
         $teamB = $this->objLayer->createTeam('Rockets', $studentB, $leagueA);
 
+
         //store
         $this->objLayer->storeTeam($teamA);
+        echo "\nTeam {$teamA->getName()} created and stored in db.\n";
         $this->objLayer->storeTeam($teamB);
-        echo 'teams created and stored in persistent database successfully
+        echo "\nTeam {$teamB->getName()} created and stored in db.\n";
 
-        ';
+        echo "Adding STUDENTS as TEAM CAPTAINS OF A TEAM\n";
 
         $this->objLayer->createStudentCaptainOfTeam($studentA, $teamA);
+        echo "\nStudent: {$studentA->getFirstName()} {$studentA->getLastName()} added to Team: {$teamA->getName()}\n";
         $this->objLayer->createStudentCaptainOfTeam($studentB, $teamB);
+        echo "\nStudent: {$studentB->getFirstName()} {$studentB->getLastName()} added to Team: {$teamB->getName()}\n";
 
         $date = date('Y-m-d H:i:s', time());
 
 
+        echo "Creating ROUND objects\n";
         $roundA = $this->objLayer->createRound(1, $leagueA);
         $roundB = $this->objLayer->createRound(2, $leagueA);
         $roundC = $this->objLayer->createRound(5, $leagueB);
@@ -160,20 +172,24 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
 
         //store
         $this->objLayer->storeRound($roundA);
+        echo "\nCreating round #{$roundA->getNumber()} in League: {$leagueA->getName()}\n";
         $this->objLayer->storeRound($roundB);
+        echo "\nCreating round #{$roundB->getNumber()} in League: {$leagueA->getName()}\n";
         $this->objLayer->storeRound($roundC);
+        echo "\nCreating round #{$roundC->getNumber()} in League: {$leagueB->getName()}\n";
         $this->objLayer->storeRound($roundD);
-        echo "rounds created and stored in persistent database successfully\n";
+        echo "\nCreating round #{$roundD->getNumber()} in League: {$leagueB->getName()}\n";
 
+        echo "Creating SPORTS VENUE objects\n";
         $venueA = $this->objLayer->createSportsVenue('Court A', 'Ramsey Center, Athens, GA 30605', true);
         $venueB = $this->objLayer->createSportsVenue('Field B', '199 River Road, Athens, GA 30605', false);
 
         $this->objLayer->storeSportsVenue($venueA);
+        echo "\nSports Venue: {$venueA->getName()} created and stored in db.\n";
         $this->objLayer->storeSportsVenue($venueB);
-        echo 'sports venues created and stored in persistent database successfully
+        echo "\nSports Venue: {$venueB->getName()} created and stored in db.\n";
 
-        ';
-
+        echo "Creating MATCH object\n";
         $matchA = $this->objLayer->createMatch(
             30,
             29,
@@ -185,30 +201,35 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
             $roundA
         );
 
+
         // store
         $this->objLayer->storeMatch($matchA);
+        echo "\nMatch on {$matchA->getDate()} between Team: {$matchA->getHomeTeam()->getName()} and Team:  {$matchA->getAwayTeam()->getName()}\n";
+        echo  "at Venue: {$matchA->getVenue()->getName()} for Round #{$matchA->getRound()->getNumber()} created and stored in db.\n";
 
-        echo "matches created and stored in persistent database successfully\n";
 
+        echo "Creating SCORE REPORT objects\n";
         $reportA = $this->objLayer->createScoreReport(30, 21, $date, $studentA, $matchA);
         $reportB = $this->objLayer->createScoreReport(23, 29, $date, $studentB, $matchA);
 
         //store
         $this->objLayer->storeScoreReport($reportA);
+        echo "\nScore Report submitted by Student: {$reportA->getStudent()->getFirstName()} {$reportA->getStudent()->getLastName()}\n";
+        echo "for match with id: {$reportA->getMatch()->getId()} created and stored in db.\n";
         $this->objLayer->storeScoreReport($reportB);
+        echo "\nScore Report submitted by Student: {$reportB->getStudent()->getFirstName()} {$reportB->getStudent()->getLastName()}\n";
+        echo "for match with id: {$reportB->getMatch()->getId()} created and stored in db.\n";
 
-        echo "Score report created and stored in persistent database successfully\n";
 
+        echo "Adding TEAMS to LEAGUE \n";
 
         $this->objLayer->createTeamParticipatesInLeague($teamA, $leagueA);
-        echo 'Team: ' . $teamA->getName() . ' added to league: ' . $leagueA->getName() . '
-
-        ';
+        echo "\nTeam:  {$teamA->getName()} added to league: {$leagueA->getName()}\n";
 
         $this->objLayer->createTeamParticipatesInLeague($teamB, $leagueA);
-        echo 'Team: ' . $teamB->getName() . ' added to league: ' . $leagueA->getName() . '
+        echo "\nTeam:  {$teamB->getName()} added to league: {$leagueA->getName()}\n";
 
-        ';
+        //TODOecho "Add";
 
         $this->objLayer->createStudentMemberOfTeam($studentC, $teamA);
         echo '
