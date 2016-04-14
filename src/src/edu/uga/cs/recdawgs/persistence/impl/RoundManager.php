@@ -16,6 +16,8 @@ class RoundManager {
     private $objLayer = null;
 
     /**
+     * Constructor
+     * 
      * @param \PDO $dbConnection A connection to the database in form of PDO
      * @param Object\ObjectLayerImpl $objLayer
      */
@@ -24,6 +26,12 @@ class RoundManager {
         $this->objLayer = $objLayer;
     }
 
+    /**
+     * Save round in database.
+     * 
+     * @param $round to store
+     * @throws RDException
+     */
     public function save($round){
         //TODO
         if($round->isPersistent()){
@@ -68,6 +76,8 @@ class RoundManager {
     }
 
     /**
+     * Returns the round.
+     * 
      * @param Entity\RoundImpl $modelRound
      * @return RoundIterator
      * @throws RDException
@@ -98,6 +108,13 @@ class RoundManager {
         }
     }
 
+    /**
+     * Returns match.
+     * 
+     * @param $round to restore
+     * @return MatchIterator containing the match
+     * @throws RDException
+     */
     public function restoreMatches($round){
         if($round == NULL || !$round->isPersistent()) {
             throw new RDException('Round is not persistent');
@@ -119,7 +136,9 @@ class RoundManager {
     }
 
     /**
-     * @param Entity\RoundImpl $round
+     * Deletes round.
+     * 
+     * @param Entity\RoundImpl $round to delete
      * @throws RDException
      */
     public function delete($round){

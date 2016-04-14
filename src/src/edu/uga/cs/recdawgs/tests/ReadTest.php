@@ -21,6 +21,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
     private $persistenceLayer = null;
     private $objLayer = null;
 
+    /**
+     * ReadTest constructor.
+     */
     public function __construct(){
         $this->objLayer = new Object\ObjectLayerImpl(null);
         $this->persistenceLayer = new Persistence\PersistenceLayerImpl(new Persistence\DbConnection(), $this->objLayer);
@@ -50,6 +53,10 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
 
         ';
     }
+
+    /**
+     * Reads all student objs from persistence db
+     */
     
     public function testReadStudent(){
         echo 'Student objects:

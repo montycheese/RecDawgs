@@ -22,12 +22,19 @@ class DbConnection {
     private $dbname = DB_NAME;
     public $db = NULL;
 
+    /**
+     * DbConnection constructor.
+     */
     public function __construct(){
 
         $this->dbConnect();
 
     }
 
+    /**
+     * dbConnect()
+     *Connects the Database (MySql)
+     */
     private function dbConnect()    {
 
         $dbconn = "";

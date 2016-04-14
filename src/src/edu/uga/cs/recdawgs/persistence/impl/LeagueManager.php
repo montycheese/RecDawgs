@@ -28,6 +28,8 @@ class LeagueManager {
     }
 
     /**
+     * Saves league in database.
+     *
      * @param Entity\LeagueImpl $league
      * @throws RDException
      */
@@ -97,6 +99,13 @@ class LeagueManager {
         }
     }
 
+    /**
+     * Stores winner.
+     *
+     * @param $team object that wins
+     * @param $league object
+     * @throws RDException if there is a problem storing
+     */
     public function storeWinner($team, $league){
         //create entry in is_winner_of table
         $q = 'INSERT INTO is_winner_of (team_id, league_id) VALUES(?, ?);';
@@ -113,6 +122,13 @@ class LeagueManager {
         }
     }
 
+    /**
+     * Stores round in database.
+     * 
+     * @param $league object to store
+     * @param $round object to store
+     * @throws RDException if score report cannot be stored.
+     */
     public function storeRound($league, $round) {
         if ($league->isPersistent() && $round->isPersistent()) {
             //update
@@ -138,7 +154,7 @@ class LeagueManager {
     }
 
     /**
-     * Return winner of this league
+     * Return winner of this league.
      *
      * @param Entity\LeagueImpl $league
      * @return Entity\TeamImpl
@@ -165,6 +181,13 @@ class LeagueManager {
         }
     }
 
+    /**
+     * Restores sports venues.
+     * 
+     * @param $league object to restore
+     * @return SportsVenueIterator returns an iterator of sports venues
+     * @throws RDException if there was a problem restoring the sports venue
+     */
     public function restoreSportsVenues($league){
         $q = 'SELECT sports_venue.sports_venue_id, sports_venue.name, sports_venue.address, sports_venue.is_indoor
             from sports_venue
@@ -185,6 +208,13 @@ class LeagueManager {
     }
 
 
+    /**
+     * Restores rounds.
+     * 
+     * @param $league object to restore
+     * @return RoundIterator: Iterators of the rounds object
+     * @throws RDException If there was a problem restoring the rounds
+     */
     public function restoreRounds($league){
         if(!isset($league)) throw new RDException($string="league is null");
         //echo 'LEAGUE VARIABLE: ' . var_dump($league);
@@ -203,6 +233,13 @@ class LeagueManager {
         }
     }
 
+    /**
+     * Restores team members participating in this league.
+     * 
+     * @param $league Object to store
+     * @return TeamIterator: iterator of Teams
+     * @throws RDException
+     */
     public function restoreParticipatesIn($league){
         if($league == null) throw new RDException('League parameter is null');
 
@@ -225,9 +262,22 @@ class LeagueManager {
         }
 
     }
+
+    /**
+     * @param $str
+     * @return string
+     */
     private function wrap($str){
         return "'" . $str . "'";
     }
+
+    /**
+     * Restores league.
+     * 
+     * @param Entity\LeagueImpl $leagueModel
+     * @return LeagueIterator
+     * @throws RDException
+     */
     public function restore($leagueModel){
         //echo 'dump lague'.  var_dump($leagueModel);
           $q = 'SELECT * from league WHERE 1=1 ';
@@ -275,6 +325,12 @@ class LeagueManager {
         }
     }
 
+    /**
+     * Deletes league from database.
+     *
+     * @param Entity\LeagueImpl $league
+     * @throws RDException
+     */
     public function delete($league){
         if($league->getId() == -1){
             //if league isn't persistent, return
@@ -297,6 +353,8 @@ class LeagueManager {
     }
 
     /**
+     * Deletes winner.
+     *
      * @param Entity\TeamImpl $team
      * @param Entity\LeagueImpl $league
      * @throws RDException
@@ -318,6 +376,8 @@ class LeagueManager {
     }
 
     /**
+     * Deletes round.
+     *
      * @param Entity\LeagueImpl $league
      * @param Entity\RoundImpl $round
      * @throws RDException

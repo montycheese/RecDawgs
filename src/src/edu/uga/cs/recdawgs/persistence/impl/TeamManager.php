@@ -17,7 +17,7 @@ class TeamManager {
     private $objLayer = null;
 
     /**
-     * constructor
+     * Constructor
      *
      * @param \PDO $dbConnection A connection to the database in form of PDO
      * @param Object\ObjectLayerImpl $objLayer
@@ -28,6 +28,12 @@ class TeamManager {
     }
 
 
+    /**
+     * Creates or updates team in database.
+     * 
+     * @param $team
+     * @throws RDException
+     */
     public function save($team){
 
         if($team->isPersistent()){
@@ -76,6 +82,8 @@ class TeamManager {
     }
 
     /**
+     * Adds student as member of team.
+     * 
      * @param Entity\AdministratorImpl $student
      * @param Entity\TeamImpl $team
      * @throws RDException
@@ -94,6 +102,8 @@ class TeamManager {
     }
 
     /**
+     * Stores link between captain and team.
+     * 
      * @param Entity\StudentImpl $student
      * @param Entity\TeamImpl $team
      * @throws RDException
@@ -111,6 +121,13 @@ class TeamManager {
         }
     }
 
+    /**
+     * Stores link between league and team.
+     * 
+     * @param $team
+     * @param $league
+     * @throws RDException
+     */
     public function storeParticipatesIn($team, $league){
         $q = 'INSERT INTO league_team (team_id, league_id) VALUES(?, ?);';
         $stmt = $this->dbConnection->prepare($q);
@@ -127,6 +144,15 @@ class TeamManager {
     private function wrap($str){
         return "'" . $str . "'";
     }
+
+
+    /**
+     * Restores team in database.
+     * 
+     * @param $modelTeam to restore
+     * @return TeamIterator 
+     * @throws RDException
+     */
     public function restore($modelTeam){
         //echo 'teammanager restore' . var_dump($modelTeam);
         $q = 'SELECT * from team10.team WHERE 1=1 ';
@@ -158,6 +184,13 @@ class TeamManager {
         }
     }
 
+    /** 
+     * Restores team members.
+     * 
+     * @param $team
+     * @return StudentIterator
+     * @throws RDException
+     */
     public function restoreStudentMemberOf($team){
         if($team == null) throw new RDException('Team parameter is null');
 
@@ -181,6 +214,13 @@ class TeamManager {
         }
     }
 
+    /**
+     * Restores away matches.
+     * 
+     * @param $team
+     * @return MatchIterator
+     * @throws RDException
+     */
     public function restoreMatchesAway($team){
         $q = 'SELECT * FROM '. DB_NAME .  '.match WHERE away_team_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
@@ -197,6 +237,13 @@ class TeamManager {
         }
     }
 
+    /**
+     * Restores home matches.
+     * 
+     * @param $team
+     * @return MatchIterator
+     * @throws RDException
+     */
     public function restoreMatchesHome($team){
         $q = 'SELECT * FROM '. DB_NAME .  '.match WHERE home_team_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
@@ -214,8 +261,8 @@ class TeamManager {
     }
 
     /**
-     *
-     * Return captain of this team
+     * Return captain of this team.
+     * 
      * @param Entity\TeamImpl $team
      * @return Entity\StudentImpl
      * @throws RDException
@@ -239,6 +286,13 @@ class TeamManager {
         }
     }
 
+    /**
+     * Restores league.
+     * 
+     * @param $team
+     * @return LeagueIterator
+     * @throws RDException
+     */
     public function restoreParticipatesIn($team){
         if($team == null) throw new RDException('Team parameter is null');
 
@@ -254,11 +308,13 @@ class TeamManager {
             return new LeagueIterator($resultSet, $this->objLayer);
         }
         else{
-            throw new RDException('Error restoring laegue');
+            throw new RDException('Error restoring league');
         }
     }
 
     /**
+     * Restores winner of league.
+     * 
      * @param Entity\TeamImpl $team
      * @return Entity\LeagueImpl
      * @throws RDException
@@ -309,10 +365,23 @@ class TeamManager {
         }
     }
 
+    /**
+     * Deletes the winning team. 
+     * 
+     * @param $league
+     * @param $team
+     */
     public function deleteTeamWinnerOf($league, $team){
 
     }
 
+    /**
+     * Deletes the link between league and team.
+     * 
+     * @param $league
+     * @param $team
+     * @throws RDException
+     */
     public function deleteParticipatesIn($league, $team){
         if($team->getId() == -1){
             //if team isn't persistent, we are done
@@ -333,6 +402,14 @@ class TeamManager {
             throw new RDException('Deletion of link unsuccessful');
         }
     }
+    
+    /**
+     * Deletes link between student and team.
+     * 
+     * @param $student
+     * @param $team
+     * @throws RDException
+     */
     public function deleteStudentMemberOf($student, $team){
         //Prepare mySQL query
         $q = 'DELETE FROM is_member_of WHERE team_id = ? and user_id = ?;';
@@ -349,7 +426,14 @@ class TeamManager {
             throw new RDException('Deletion of link unsuccessful');
         }
     }
-
+    
+    /**
+     * Deletes captain from team.
+     * 
+     * @param $student
+     * @param $team
+     * @throws RDException
+     */
     public function deleteStudentCaptainOf($student, $team){
         $q = 'UPDATE team SET captain_id = ? WHERE team_id = ?;';
         $stmt = $this->dbConnection->prepare($q);

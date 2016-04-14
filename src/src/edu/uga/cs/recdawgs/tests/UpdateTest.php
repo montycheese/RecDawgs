@@ -18,11 +18,18 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     private $persistenceLayer = null;
     private $objLayer = null;
 
+    /**
+     * UpdateTest constructor.
+     */
     public function __construct(){
         $this->objLayer = new Object\ObjectLayerImpl(null);
         $this->persistenceLayer = new Persistence\PersistenceLayerImpl(new Persistence\DbConnection(), $this->objLayer);
         $this->objLayer->setPersistence($this->persistenceLayer);
     }
+
+    /**
+     * Tests updating admin objs from persistence db
+     */
 
     public function testUpdateAdmin(){
         //create
@@ -42,6 +49,10 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
         ';
     }
 
+    /**
+     * Tests updating student objs from persistence db
+     */
+    
     public function testUpdateStudent(){
         $montana = $this->objLayer->createStudent();
         $montana->setFirstName("Montana");
@@ -61,6 +72,10 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
         ';
     }
+
+    /**
+     * Tests updating league objs from persistence db
+     */
 
     public function testUpdateLeague(){
         //query
@@ -84,6 +99,10 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
         ';
     }
 
+    /**
+     * Tests updating team objs from persistence db
+     */
+
    public function testUpdateTeam(){
         $trustii = $this->objLayer->createTeam();
         $trustii->setName('Trustii');
@@ -103,6 +122,10 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     }
 
 
+    /**
+     * Tests updating admin objs from persistence db
+     */
+    
     public function testUpdateSportsVenue(){
         $sportsVenue = $this->objLayer->createSportsVenue();
         $sportsVenue->setName('Field B');

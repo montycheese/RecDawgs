@@ -25,6 +25,8 @@ class SportsVenueManager {
     }
 
     /**
+     * creates sports venue
+     * 
      * @param Entity\SportsVenueImpl $sportsVenue
      * @throws RDException
      */
@@ -75,6 +77,14 @@ class SportsVenueManager {
         }
     }
 
+
+    /**
+     * stores link between league and sports venue
+     *
+     * @param $league
+     * @param $sportsVenue
+     * @throws RDException
+     */
     public function storeLeagueUsedIn($league, $sportsVenue){
         $q = "INSERT INTO league_venue (league_id, venue_id) VALUES(?, ?);";
         //create prepared statement from query
@@ -93,6 +103,14 @@ class SportsVenueManager {
     private function wrap($str){
         return "'" . $str . "'";
     }
+
+    /**
+     * restore sports venue in database
+     *
+     * @param $modelSportsVenue to store
+     * @return SportsVenueIterator
+     * @throws RDException
+     */
     public function restore($modelSportsVenue){
         $q = 'SELECT * from sports_venue WHERE 1=1 ';
         if($modelSportsVenue != NULL) {
@@ -122,6 +140,13 @@ class SportsVenueManager {
         }
     }
 
+    /**
+     * restore league used in given sports venue
+     *
+     * @param $sportsVenue
+     * @return LeagueIterator
+     * @throws RDException
+     */
     public function restoreLeaguesUsedIn($sportsVenue){
         $q = 'SELECT league.league_id, league.name, league, league_rules,
                league.match_rules, league.is_indoor, league.min_teams, league.max_teams, league.min_members, league.max_members
@@ -143,6 +168,13 @@ class SportsVenueManager {
 
     }
 
+    /**
+     * restores matches played at the sports venue
+     *
+     * @param $sportsVenue
+     * @return MatchIterator
+     * @throws RDException
+     */
     public function restoreMatchesPlayedIn($sportsVenue){
         $q = 'SELECT * FROM '. DB_NAME . '.match WHERE match.sports_venue_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
@@ -158,6 +190,13 @@ class SportsVenueManager {
         }
     }
 
+    /**
+     * deletes link between league and sports venue
+     *
+     * @param $league
+     * @param $sportsVenue
+     * @throws RDException
+     */
     public function deleteLeagueUsedIn($league, $sportsVenue){
         //Prepare mySQL query
         $q = 'DELETE FROM league_venue WHERE venue_id = ? AND league_id = ?;';
@@ -171,10 +210,16 @@ class SportsVenueManager {
             echo 'link deleted successfully';
         }
         else{
-            throw new RDException('Deletion of lnik unsuccessful');
+            throw new RDException('Deletion of link unsuccessful');
         }
     }
 
+    /**
+     * deletes sports venue
+     *
+     * @param $sportsVenue to delete
+     * @throws RDException
+     */
     public function delete($sportsVenue){
         if(!$sportsVenue->isPersistent()){
             //if venue isn't persistent, we are done

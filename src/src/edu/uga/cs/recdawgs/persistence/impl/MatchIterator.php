@@ -9,7 +9,7 @@ class MatchIterator extends PersistenceIterator{
     private $objLayer = null;
 
     /**
-     * Creates a Match Iterator
+     * Creates a Match Iterator.
      *
      * @param $resultSet array Associative array containing an array of rows of match data returned from a DB query
      * @param $objLayer ObjectLayerImpl instance of the object layer object
