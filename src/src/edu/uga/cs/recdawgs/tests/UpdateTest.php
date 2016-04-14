@@ -74,9 +74,40 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    
 
-    //EVERYTHING UNDER THIS IS TODO
+    public function testUpdateRound(){
+        $oldNumber = 1;
+        $newNumber = 5555;
+
+        $r = $this->objLayer->createRound();
+        $r->setNumber($oldNumber);
+        $r = $this->objLayer->findRound($r)->current();
+        $r->setNumber($newNumber);
+        $this->objLayer->storeRound($r);
+        echo "\nRound with number: {$oldNumber} has updated it's number to {$newNumber}\n";
+    }
+
+    public function testUpdateScoreReport(){
+        $oldHomePoints = 23;
+        $newHomePoints = 24;
+        $oldAwayPoints = 29;
+        $newAwayPoints = 5;
+        //create model score report
+        $sr = $this->objLayer->createScoreReport();
+        $sr->setHomePoints($oldHomePoints);
+        $sr->setAwayPoints($oldAwayPoints);
+        //find acutal score report
+        $sr = $this->objLayer->findScoreReport($sr)->current();
+
+        $sr->setHomePoints($newHomePoints);
+        $sr->setAwayPoints($newAwayPoints);
+
+        echo "\nScore report with id: {$sr->getId()}\n";
+        echo "updated it's home points from {$oldHomePoints} to {$newHomePoints} \n";
+        echo "and updated it's away points from {$oldAwayPoints} to {$newAwayPoints} \n";
+    }
+
+    //EVERYTHING UNDER THIS IS TODO FOLLOW EXAMPLE AS ABOVE
     /**
      * Tests updating league objs from persistence db
      */
@@ -129,7 +160,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
     /**
      * Tests updating admin objs from persistence db
      */
-    
+
     public function testUpdateSportsVenue(){
         $sportsVenue = $this->objLayer->createSportsVenue();
         $sportsVenue->setName('Field B');
@@ -144,6 +175,8 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
         ';
     }
+
+
 
 
 }
