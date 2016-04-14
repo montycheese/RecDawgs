@@ -179,12 +179,9 @@ class LeagueImpl extends Persistent implements League {
     public function setWinnerOfLeague($team ) { // throws RDException;
         if(!isset($team)) {
             throw new RDException('Winner of league cannot be null');
-        } else if ($team->getParticipatesInLeague()->getName() !== $this->name) {
-            throw new RDException('Team must be participating in the league.');
-        } else {
-            $this->winnerOfLeague = $team;   
         }
-            
+
+        $this->winnerOfLeague = $team;
     }
     
 }

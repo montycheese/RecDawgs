@@ -98,11 +98,11 @@ class TeamImpl extends Persistent implements Team {
         if ($league == null)  {
             throw new RDException('The league object is null.');
         }
-        else if ($this->participatesInLeague == false) {
+        
+        if ($this->participatesInLeague == false) {
             throw new RDException('This team does not participate in this league.');
         }
-        else {
-            $this->winnerOfLeague = $league;
-        }
+
+        $this->winnerOfLeague = $league;
     }
 }
