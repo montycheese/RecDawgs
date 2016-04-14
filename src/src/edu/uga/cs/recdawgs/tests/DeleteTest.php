@@ -139,7 +139,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findLeague(null);
         while($iter->current()){
             $league = $iter->current();
-            echo "League id: {$league->getId()}
+            echo "
+            League id: {$league->getId()}
             League name: {$league->getName()}
             League is indoor?: {$league->getIsIndoor()}
             League min # teams: {$league->getMinTeams()}
@@ -173,7 +174,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findLeague(null);
         while($iter->current()){
             $league = $iter->current();
-            echo "League id: {$league->getId()}
+            echo "
+            League id: {$league->getId()}
             League name: {$league->getName()}
             League is indoor?: {$league->getIsIndoor()}
             League min # teams: {$league->getMinTeams()}
@@ -237,11 +239,11 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             $admin = $iter->current();
             echo "
             Admin id: {$admin->getId()}
-            First name: {$admin->getFirstName()}
-            Last name: {$admin->getLastName()}
-            Username: {$admin->getUserName()}
-            Password: {$admin->getPassword()}
-            Email address: {$admin->getEmailAddress()}
+            Admin first name: {$admin->getFirstName()}
+            Admin last name: {$admin->getLastName()}
+            Admin username: ($admin->getUserName()}
+            Admin password: {$admin->getPassword()}
+            Admin email address: {$admin->getEmailAddress()}
 
             ";
             
@@ -261,66 +263,62 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      */
      
     public function testDeleteStudent(){
-        echo "
-        Student objects:";
+        echo "\nStudent objects to delete:\n";
         $iter = $this->objLayer->findStudent(null);
         while($iter->current()){
             $student = $iter->current();
-            echo 'student id: ' . strval($student->getId()) .' firstName:'. strval($student->getFirstName()) . ' lastName:'  . strval($student->getLastName());
-            echo '
-            deleting this student
-
-            ';
+            echo "
+            Student id: {$student->getId()}
+            Student first name: {$student->getFirstName()}
+            Student last name: {$student->getLastName()}
+            Student username: {$student->getUserName()}
+            Student password: {$student->getPassword()}
+            Student email address: {$student->getEmailAddress()}
+            Student id: {$student->getStudentId()}
+            Student major: {$student->getMajor()}
+            Student address: {$student->getAddress()}
+            ";
             try {
                 $this->objLayer->deleteStudent($student);
-                echo 'Deletion successful
-
-                ';
             }
             catch(RDException $r){
-                echo 'Error deleting student obj';
+                echo "\nError deleting student object.\n";
             }
 
             $iter->next();
         }
+        echo "\nAll student objects deleted successfully.\n";
     }
 
     /**
      * Tests deleting league from db.
      */
     public function testDeleteLeague() {
-        echo '
-        League objects:
-
-         ';
+        echo "\nLeague objects to delete:\n";
         $iter = $this->objLayer->findLeague(null);
         while($iter->current()){
             $league = $iter->current();
-            echo 'league id: ' . strval($league->getId()) .' name:'. $league->getName() . ' is indoor: '  . $league->getIsIndoor() .
-                ' min # teams: ' . strval($league->getMinTeams()) . ' max # teams' . strval($league->getMaxTeams()) .
-                ' min # members:'. strval($league->getMinMembers()) . ' max # members'  . strval($league->getMaxMembers()) .
-                '
-                league rules:
-                ' . strval($league->getLeagueRules()) . '
-                match rules:
-                ' . strval($league->getMatchRules()) .
-                'league winner: ' . $league->getWinnerOfLeague();
-            echo '
-            deleting this league
-
-            ';
+            echo "
+            League id: {$league->getId()}
+            League Name: {$league->getName()}
+            League isIndoor: {$league->getIsIndoor()}
+            League minimum number of teams: {$league->getMinTeams()}
+            League maximum number of teams: {$league->getMaxTeams()}
+            Leageue minimum number of members: {$league->getMinMembers()}
+            Leageue maximim number of members: {$league->getMaxMembers()}
+            League rules: {$league->getLeagueRules()}
+            League's match rules: {$league->getMatchRules()}
+            ";
             try {
                 $this->objLayer->deleteLeague($league);
-                echo 'Deletion successful
-
-                ';
             }
             catch(RDException $r){
-                echo 'Error deleting league obj';
+                echo "\nError deleting league object.\n";
             }
 
             $iter->next();
         }
+        echo "\nAll leagues deleted successfully.\n";
     }
 
     /**
@@ -328,35 +326,28 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      */
 
     public function testDeleteSportsVenue() {
-        echo '
-        Venue objects:
-
-         ';
+        echo "\nSports venues to delete:\n";
         $iter = $this->objLayer->findSportsVenue(null);
         while($iter->current()){
             $venue = $iter->current();
-            echo 'Venue name: ' . strval($venue->getName()) .'
-
-             Address: '. strval($venue->getAddress() . '
-                Is Indoor? ' . ($venue->getIsIndoor()) ? 'Yes' : 'No');
-
-            echo '
-            deleting this venue
-
-            ';
+            echo "
+            Venue name: {$venue->getName()}
+            Address: {$venue->getAddress()}
+            Is Indoor? {$venue->getIsIndoor()}
+            ";
 
             try {
                 $this->objLayer->deleteSportsVenue($venue);
-                echo 'Deletion successful
-
-                ';
+                echo "\nDeletion successful\n";
             }
             catch(RDException $r){
-                echo 'Error deleting venue obj';
+                echo "\nError deleting venue object.\n";
             }
 
             $iter->next();
         }
+        
+        echo "\nAll sports venues deleted successfully.\n";
     }
 
     /**
@@ -364,32 +355,24 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      */
 
     public function testDeleteRound() {
-        echo '
-        Round objects:
-
-         ';
+        echo "\nRound objects to delete:\n";
         $iter = $this->objLayer->findRound(null);
         while($iter->current()){
             $round = $iter->current();
-            echo 'Round number: ' . strval($round->getNumber());
-
-            echo '
-            deleting this round
-
-            ';
-
+            echo "
+            Round number: {$round->getNumber()}
+            ";
             try {
                 $this->objLayer->deleteRound($round);
-                echo 'Deletion successful
-
-                ';
             }
             catch(RDException $r){
-                echo 'Error deleting round obj';
+                echo "\nError deleting round object.\n";
             }
 
             $iter->next();
         }
+        
+        echo "\nAll round objects deleted successfully.\n";
     }
 
 
