@@ -1,0 +1,252 @@
+PHPUnit 4.8.24 by Sebastian Bergmann and contributors.
+
+.
+Admin objects:
+
+            Admin id: 693
+            Admin name: Hilary Clinton
+            Admin email: hillary@whitehouse.edu
+            Admin username: chillHill
+            Admin password: whitehouse
+            
+            Admin id: 690
+            Admin name: John Doe
+            Admin email: johndoe@rocketmail.io
+            Admin username: jd123
+            Admin password: password123
+            
+            Admin id: 691
+            Admin name: Sanath Bhat
+            Admin email: sanath@breakingstuff.com
+            Admin username: sanathbhat6789
+            Admin password: somepassword
+            
+            Admin id: 692
+            Admin name: Maulesh Triveldi
+            Admin email: maulesh99@gmail.com
+            Admin username: ronaldofangirl123
+            Admin password: iluvronaldo
+            
+ 4 total Admin objects
+.
+Student objects:
+
+            Student id: 697
+            Student name: Ferris Bueller
+            Student email: ferrisbuller@anders.gov
+            Student username: Porcheguy123
+            Student password: password123
+            Student major: Math
+            Student address: 123 fun lane, Chicago, Illinois 10001
+            Student student id: 98796656
+            
+            Student id: 696
+            Student name: Neo Hao
+            Student email: nao@uga.edu
+            Student username: qianghao
+            Student password: paswordio
+            Student major: Computer Learning
+            Student address: 6969 Baxter Street Athens, GA 30605
+            Student student id: 810232424
+            
+            Student id: 695
+            Student name: Bernie Sanders
+            Student email: bernie@berniesanders.gov
+            Student username: Feelthebern2016
+            Student password: vermont
+            Student major: Politics
+            Student address: 123 White Hart Lane, Tottenham, London, Engla
+            Student student id: 810989877
+            
+            Student id: 694
+            Student name: Montana Wong
+            Student email: mwong9@uga.edu
+            Student username: mwong9
+            Student password: youwish
+            Student major: Computer Science
+            Student address: 45 Baxter Street Athens, GA 30605
+            Student student id: 12343223
+            
+ 4 total student objects
+.
+Team objects:
+
+            Team id: 167
+            Team name: Rockets
+            Team's League: Indoor Soccer
+            Team captain: Bernie Sanders
+            Winner of League?: 
+            Members of this team:
+
+                Student id: 697
+                Student name: Ferris Bueller
+                Student email: ferrisbuller@anders.gov
+                Student username: Porcheguy123
+                Student password: password123
+                Student major: Math
+                Student address: 123 fun lane, Chicago, Illinois 10001
+                Student student id: 98796656
+                
+            Team id: 166
+            Team name: Trustii
+            Team's League: Indoor Soccer
+            Team captain: Montana Wong
+            Winner of League?: 
+            Members of this team:
+
+                Student id: 696
+                Student name: Neo Hao
+                Student email: nao@uga.edu
+                Student username: qianghao
+                Student password: paswordio
+                Student major: Computer Learning
+                Student address: 6969 Baxter Street Athens, GA 30605
+                Student student id: 810232424
+                
+2  total Team objects
+.
+League objects:
+
+            League id: 196
+            League name: Indoor Soccer
+            League is indoor?: 1
+            League min # teams: 4
+            League max # teams: 24
+            League min # members: 0
+            League max # members: 0
+            League rules: Games only played indoor. Must be soccer rule
+            Match name: 3 referees, no handballs, goalie can not pick
+            League Winner: 
+            Teams of this League:
+
+                Team id: 167
+                Team name: Rockets
+                Team captain: Bernie Sanders
+                Winner of League?: 
+                
+                Team id: 166
+                Team name: Trustii
+                Team captain: Montana Wong
+                Winner of League?: 
+                
+            Sports venues used by this League: 
+
+                Venue id: 134
+                Venue name: Field B
+                Venue address: 199 River Road, Athens, GA 30605
+                Is Indoor?: 0
+                
+                Venue id: 133
+                Venue name: Court A
+                Venue address: Ramsey Center, Athens, GA 30605
+                Is Indoor?: 1
+                
+            Rounds in this League:
+
+                Round id: 222
+                Round number: 2
+                
+                Round id: 221
+                Round number: 1
+                
+            League id: 197
+            League name: Curling
+            League is indoor?: 1
+            League min # teams: 4
+            League max # teams: 24
+            League min # members: 0
+            League max # members: 0
+            League rules: Games only played on ice. Rules adhere to Win
+            Match name: 3 referees, sticks must be approved by judges
+            League Winner: 
+            Teams of this League:
+
+            Sports venues used by this League: 
+
+                Venue id: 134
+                Venue name: Field B
+                Venue address: 199 River Road, Athens, GA 30605
+                Is Indoor?: 0
+                
+                Venue id: 133
+                Venue name: Court A
+                Venue address: Ramsey Center, Athens, GA 30605
+                Is Indoor?: 1
+                
+            Rounds in this League:
+
+                Round id: 224
+                Round number: 6
+                
+                Round id: 223
+                Round number: 5
+                
+2 total league objects
+.
+Match objects:
+
+                Match id: 69
+                Match hometeam: Trustii
+                Match awayteam: Rockets
+                Match date: 2016-04-14 16:02:15
+                Match venue: Court A
+                game played, home team points: 30 away team points: 29
+
+1 total match objects
+.
+Sports Venue objects:
+
+            Venue id: 134
+            Venue name: Field B
+            Venue address: 199 River Road, Athens, GA 30605
+            Allowed activity type: Outdoor
+9
+            Venue id: 133
+            Venue name: Court A
+            Venue address: Ramsey Center, Athens, GA 30605
+            Allowed activity type: Indoor
+
+ 2 total sports venue objects
+.
+Round objects
+
+            Round id: 224
+            Round number: 6
+            Belongs to league: Curling
+            
+            Round id: 223
+            Round number: 5
+            Belongs to league: Curling
+            
+            Round id: 222
+            Round number: 2
+            Belongs to league: Indoor Soccer
+            
+            Round id: 221
+            Round number: 1
+            Belongs to league: Indoor Soccer
+            
+4 total Round objects
+.
+Score report objects
+
+            Report id: 102
+            Report home points: 23
+            Report away points: 29
+            Report submit date: 2016-04-14 16:02:15
+            Report match's id: 69
+            Report submitted by user: Bernie Sanders
+            
+            Report id: 101
+            Report home points: 30
+            Report away points: 21
+            Report submit date: 2016-04-14 16:02:15
+            Report match's id: 69
+            Report submitted by user: Montana Wong
+            
+2 total Score report objects
+
+
+Time: 341 ms, Memory: 13.25Mb
+
+OK (8 tests, 0 assertions)

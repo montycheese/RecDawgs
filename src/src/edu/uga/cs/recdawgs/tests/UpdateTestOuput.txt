@@ -1,0 +1,42 @@
+PHPUnit 4.8.24 by Sebastian Bergmann and contributors.
+
+.
+Updating an Administrator object:
+Administrator updated successfully
+Admin John Doe has updated username from jd123 to JOHNDOE123
+.
+Updating a Student object:
+student updated successfully
+Student Montana Wong has updated username from mwong9 to montycheese
+and updated email address from mwong9@uga.edu to montanawong@gmail.com
+.
+Updating a Round object:
+round created successfully
+Round with number: 1 has updated it's number to 5555
+.
+Updating a Score Report object:
+
+Score report with id: 102
+updated it's home points from 23 to 24 
+and updated it's away points from 29 to 5 
+.
+Updating an League object:
+league created successfully
+League with name: Indoor Soccer
+has updated it's minimum team from 4 to 4 
+and updated it's maximum team from 24 to 24 
+and updated it's minimum amount of members from 0 to 0 
+and updated it's maximum amount of members from 0 to 0 
+.
+Updating a Team object:
+team updated successfully
+Team Trustii has updated their name from Trustii to Maximum Ride
+.
+Updating a Sports Venue object:
+venue created successfully
+The sports venue Field B at 199 River Road, Athens, GA 30605 has been updated its name to Field C and its address to Nowhere Land, Cambodia
+
+
+Time: 232 ms, Memory: 13.00Mb
+
+OK (7 tests, 0 assertions)

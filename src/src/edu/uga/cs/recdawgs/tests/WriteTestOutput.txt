@@ -1,0 +1,96 @@
+PHPUnit 4.8.24 by Sebastian Bergmann and contributors.
+
+.BEGIN WRITE TEST
+
+Creating ADMIN objects
+Administrator created successfully
+Admin jd123 created and stored in db.
+Administrator created successfully
+Admin sanathbhat6789 created and stored in db.
+Administrator created successfully
+Admin ronaldofangirl123 created and stored in db.
+Administrator created successfully
+Admin chillHill created and stored in db.
+Creating STUDENT objects
+student created successfully
+Student Montana Wong created and stored in db.
+student created successfully
+Student Bernie Sanders created and stored in db.
+student created successfully
+Student Neo Hao created and stored in db.
+student created successfully
+Student Ferris Bueller created and stored in db.
+Creating LEAGUE objects
+league created successfully
+League Indoor Soccer created and stored in db.
+league created successfully
+League Curling created and stored in db.
+Creating TEAMS objects
+
+                Team created successfully
+                
+Team Trustii created and stored in db.
+
+                Team created successfully
+                
+Team Rockets created and stored in db.
+Adding STUDENTS as TEAM CAPTAINS OF A TEAM
+
+            Montana Wong successfully added as team captain of: Trustii
+Student: Montana Wong added to Team: Trustii
+
+            Bernie Sanders successfully added as team captain of: Rockets
+Student: Bernie Sanders added to Team: Rockets
+Creating ROUND objects
+round created successfully
+Creating round #1 in League: Indoor Soccer
+round created successfully
+Creating round #2 in League: Indoor Soccer
+round created successfully
+Creating round #5 in League: Curling
+round created successfully
+Creating round #6 in League: Curling
+Creating SPORTS VENUE objects
+venue created successfully
+Sports Venue: Court A created and stored in db.
+venue created successfully
+Sports Venue: Field B created and stored in db.
+Creating MATCH object
+Match created successfully
+Match on 2016-04-14 16:02:15 between Team: Trustii and Team:  Rockets
+at Venue: Court A for Round #1 created and stored in db.
+Creating SCORE REPORT objects
+report created successfully
+                
+Score Report submitted by Student: Montana Wong
+for match with id: 69 created and stored in db.
+report created successfully
+                
+Score Report submitted by Student: Bernie Sanders
+for match with id: 69 created and stored in db.
+Adding TEAMS to LEAGUE 
+Link successfully created
+Team:  Trustii added to league: Indoor Soccer
+Link successfully created
+Team:  Rockets added to league: Indoor Soccer
+Adding STUDENTS to TEAMS
+
+            Neo Hao successfully added as team member of: Trustii
+Student: Neo Hao added to team: Trustii
+
+            Ferris Bueller successfully added as team member of: Rockets
+Student: Ferris Bueller added to team: Rockets
+Adding SPORTS VENUE to be used by Leagues
+link created successfully
+Sports Venue: Court A added to League: Indoor Soccer
+link created successfully
+Sports Venue: Field B added to League: Indoor Soccer
+link created successfully
+Sports Venue: Court A added to League: Curling
+link created successfully
+Sports Venue: Field B added to League: Curling
+
+
+Time: 196 ms, Memory: 13.00Mb
+
+OK (1 test, 0 assertions)
