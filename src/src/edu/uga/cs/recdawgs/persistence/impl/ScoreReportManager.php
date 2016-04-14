@@ -25,7 +25,7 @@ class ScoreReportManager {
     }
 
     public function save($report){
-        echo var_dump($report);
+        //gecho var_dump($report);
         if($report->isPersistent()){
             //update
             $q = "UPDATE score_report
