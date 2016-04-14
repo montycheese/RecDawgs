@@ -215,6 +215,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             Team participates in this league: {$team->getParticipatesinLeague()}
             Team has won in this league: {$team->getWinnerOfLeague()}
             ";
+            
+            echo "\nDeleting team.\n";
 
             try {
                 $this->objLayer->deleteTeam($team);
@@ -244,6 +246,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             Admin password: {$admin->getPassword()}
             Admin email address: {$admin->getEmailAddress()}
             ";
+            
+            echo "\nDeleting adminstrator.\n";
             
             try {
                 $this->objLayer->deleteAdministrator($admin);
@@ -275,6 +279,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             Student major: {$student->getMajor()}
             Student address: {$student->getAddress()}
             ";
+            
+            echo "\nDeleting student.\n";
             try {
                 $this->objLayer->deleteStudent($student);
             }
@@ -306,6 +312,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             League's match rules: {$league->getMatchRules()}
             League's winner: {$league->getWinnerOfLeague()}
             ";
+            echo "\nDeleting league.\n";
             try {
                 $this->objLayer->deleteLeague($league);
             }
@@ -332,6 +339,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             Is Indoor? {$venue->getIsIndoor()}
             ";
 
+            echo "\nDeleting venue.\n";
             try {
                 $this->objLayer->deleteSportsVenue($venue);
                 echo "\nDeletion successful\n";
@@ -358,6 +366,9 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             echo "Round number: {$round->getNumber()}
             Round's league: {$round->getLeague()}
             ";
+            
+            echo "\nDeleting round.\n";
+            
             try {
                 $this->objLayer->deleteRound($round);
             }
