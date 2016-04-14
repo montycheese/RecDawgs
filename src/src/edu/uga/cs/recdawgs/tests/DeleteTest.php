@@ -72,7 +72,6 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             Match home team: {$match->getHomeTeam()->getName()}
             Match away team: {$match->getAwayTeam()->getName()}
             Match's sports venue: {$match->getSportsVenue()->getName()}
-            Match's round number: {$match->getRound()->getNumber()}
             ";
 
             echo "\nDeleting match.\n";
@@ -104,7 +103,6 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
             echo "Team id: {$_team->getId()}
             Team name: {$_team->getName()}
             Team captain: {$_team->getCaptain()->getFirstName()} {$_team->getCaptain()->getLastName()}
-            Team participates in this league: {$_team->getParticipatesinLeague()}
             Team has won in this league: {$_team->getWinnerOfLeague()}
             ";
             //  try {
@@ -209,7 +207,8 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         
         while($iter->current()){
             $team = $iter->current();
-            echo "Team id: {$team->getId()}
+            echo "
+            Team id: {$team->getId()}
             Team name: {$team->getName()}
             Team captain: {$team->getCaptain()->getFirstName()} {$team->getCaptain()->getLastName()}
             ";
@@ -235,12 +234,14 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
         $iter = $this->objLayer->findAdministrator(null);
         while($iter->current()){
             $admin = $iter->current();
-            echo "Admin id: {$admin->getId()}
+            echo "
+            Admin id: {$admin->getId()}
             First name: {$admin->getFirstName()}
             Last name: {$admin->getLastName()}
             Username: {$admin->getUserName()}
             Password: {$admin->getPassword()}
             Email address: {$admin->getEmailAddress()}
+
             ";
             
             try {
