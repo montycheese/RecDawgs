@@ -29,12 +29,13 @@ class TeamManager {
 
 
     public function save($team){
+
         if($team->isPersistent()){
             //update
             $q = "UPDATE team
               set team.name = ?,
-              captain_id = ?,
-              WHERE team_id = ?;";
+              captain_id = ?
+               WHERE team_id = ?;";
 
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
@@ -44,11 +45,13 @@ class TeamManager {
                 $stmt->bindParam(2, $team->getCaptain()->getId(), \PDO::PARAM_INT);
             }
             $stmt->bindParam(3, $team->getId(), \PDO::PARAM_INT);
+
+            //echo $q;
             if($stmt->execute()){
                 echo 'team updated successfully';
             }
             else{
-                throw new RDException('Error updating team');
+                throw new RDException('Error updating team' . print_r($stmt->errorInfo()));
             }
         }
         else{
@@ -121,11 +124,15 @@ class TeamManager {
         }
     }
 
+    private function wrap($str){
+        return "'" . $str . "'";
+    }
     public function restore($modelTeam){
+        //echo 'teammanager restore' . var_dump($modelTeam);
         $q = 'SELECT * from team10.team WHERE 1=1 ';
         if($modelTeam != NULL) {
-            if ($attr = $modelTeam->getName() != NULL) {
-                $q .= ' AND name = ' . $attr;
+            if ($modelTeam->getName() != NULL) {
+                $q .= ' AND name = ' . $this->wrap($modelTeam->getName());
             }
 
             $attr = NULL;
@@ -133,12 +140,12 @@ class TeamManager {
                 $attr = $modelTeam->getCaptain()->getId();
                 $q .= ' AND captain_id = ' . $attr;
             }
-            if ($modelTeam->getId() != NULL) {
+            if ($modelTeam->getId() != -1 ){
                 $q .= ' AND team_id = ' . $modelTeam->getId();
             }
 
         }
-
+        //echo 'query: ' . $q;
         $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){
             //get results from Query
@@ -147,7 +154,7 @@ class TeamManager {
             return new TeamIterator($resultSet, $this->objLayer);
         }
         else{
-            throw new RDException('Error restoring team model');
+            throw new RDException('Error restoring team model' . print_r($stmt->errorInfo()));
         }
     }
 
@@ -285,7 +292,6 @@ class TeamManager {
             //if team isn't persistent, we are done
             return;
         }
-        echo 'before: ' . var_dump($team);
         //Prepare mySQL query
         $q = 'DELETE FROM team WHERE team_id = ?;';
         //create Prepared statement

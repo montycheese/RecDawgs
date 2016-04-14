@@ -43,17 +43,26 @@ class TeamIterator extends PersistenceIterator{
                 $captain = $studentIter->current();
 
                 //create league obj that the team belongs to
-                //$league = new LeagueImpl();
-                $league = $objLayer->createLeague();
-                $league->setId(intval($resultSet[$i]['league_id']));
-                $league = $objLayer->findLeague($league)->current();
 
-                $team = $objLayer->createTeam(
-                    $resultSet[$i]['name'],
-                    $captain,
-                    $league
-                );
+                $league = $objLayer->createLeague();
+
+                //$league->setId(intval($resultSet[$i]['league_id']));
+                //$league = $objLayer->findLeague($league)->current();
+                //echo var_dump($league);
+
+                $team = $objLayer->createTeam();
                 $team->setId($resultSet[$i]['team_id']);
+                $team->setName($resultSet[$i]['name']);
+                $team->setCaptain($captain);
+                //get league
+                $league = $objLayer->restoreTeamParticipatesInLeague($team);
+                $team->setParticipatesInLeague($league);
+                   // $resultSet[$i]['name'],
+                    //$captain,
+                    //$league
+                //);
+
+
                 array_push($this->array, $team);
             }
             catch(RDException $rde){
@@ -61,7 +70,6 @@ class TeamIterator extends PersistenceIterator{
             }
 
         }
-        echo 'teamiterator.php ' . var_dump($this->array);
 
 
     }

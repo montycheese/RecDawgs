@@ -428,13 +428,13 @@ class ObjectLayerImpl implements ObjectLayer{
     public function createScoreReport($homePoints = null, $awayPoints = null, $date = null, $student = null, $match = null) {
         $aScoreReport = new Entity\ScoreReportImpl();
 
-       // if ($homePoints != null && $awayPoints != null && $date != null && $student != null && $match != null) {
+        if ($homePoints != null && $awayPoints != null && $date != null && $student != null && $match != null) {
         $aScoreReport->setHomePoints($homePoints);
         $aScoreReport->setAwayPoints($awayPoints);
         $aScoreReport->setDate($date);
         $aScoreReport->setMatch($match);
         $aScoreReport->setStudent($student);
-       // }
+        }
 
         return $aScoreReport;
     }

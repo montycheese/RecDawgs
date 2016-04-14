@@ -25,6 +25,7 @@ class ScoreReportManager {
     }
 
     public function save($report){
+        echo var_dump($report);
         if($report->isPersistent()){
             //update
             $q = "UPDATE score_report
@@ -84,6 +85,10 @@ class ScoreReportManager {
         }
     }
 
+    private function wrap($str){
+        return "'" . $str . "'";
+    }
+
     /**
      * @param Entity\ScoreReportImpl $modelReport
      * @return ScoreReportIterator
@@ -92,18 +97,18 @@ class ScoreReportManager {
     public function restore($modelReport){
         $q = 'SELECT * from score_report WHERE 1=1 ';
         if($modelReport != NULL) {
-            if ($attr = $modelReport->getHomePoints() != NULL) {
-                $q .= ' AND home_points = ' . $attr;
+            if ($modelReport->getHomePoints() != NULL) {
+                $q .= ' AND home_points = ' . $modelReport->getHomePoints();
             }
-            if ($attr = $modelReport->getAwayPoints() != NULL) {
-                $q .= ' AND away_points = ' . $attr;
+            if ($modelReport->getAwayPoints() != NULL) {
+                $q .= ' AND away_points = ' . $modelReport->getAwayPoints();
             }
-            if ($attr = $modelReport->getDate() != NULL) {
-                $q .= ' AND score_report.date = ' . $attr;
+            if ($modelReport->getDate() != NULL) {
+                $q .= ' AND score_report.date = ' . $modelReport->getDate();
             }
 
-            if ($attr = $modelReport->getId() != NULL){
-                $q .= ' AND score_report_id = ' . $attr;
+            if ($modelReport->getId() != -1){
+                $q .= ' AND score_report_id = ' . $modelReport->getId();
             }
         }
         $stmt = $this->dbConnection->prepare($q . ';');

@@ -73,6 +73,7 @@ class RoundManager {
      * @throws RDException
      */
     public function restore($modelRound){
+        //echo 'restore model roind' . var_dump($modelRound);
         $q = 'SELECT * from round WHERE 1=1 ';
         if($modelRound != NULL) {
             if ($modelRound->getNumber() != NULL) {

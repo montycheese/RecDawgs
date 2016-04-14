@@ -328,7 +328,7 @@ class MatchManager {
             echo 'match deleted successfully';
         }
         else{
-            throw new RDException('Deletion of match successful');
+            throw new RDException('Deletion of match unsuccessful');
         }
     }
 

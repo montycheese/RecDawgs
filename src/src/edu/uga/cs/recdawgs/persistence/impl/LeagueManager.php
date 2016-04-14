@@ -225,19 +225,21 @@ class LeagueManager {
         }
 
     }
-
+    private function wrap($str){
+        return "'" . $str . "'";
+    }
     public function restore($leagueModel){
         //echo 'dump lague'.  var_dump($leagueModel);
           $q = 'SELECT * from league WHERE 1=1 ';
         if($leagueModel != NULL) {
             if($leagueModel->getName() != NULL) {
-                $q .= ' AND league.name = ' . $leagueModel->getName();   
+                $q .= ' AND league.name = ' . $this->wrap($leagueModel->getName());
             }
             if($leagueModel->getLeagueRules() != NULL) {
-                $q .= ' AND league.league_rules = ' . $leagueModel->getLeagueRules();   
+                $q .= ' AND league.league_rules = ' . $this->wrap($leagueModel->getLeagueRules());
             }
             if ($leagueModel->getMatchRules() != NULL) {
-                $q .= ' AND league.match_rules = ' . $leagueModel->getMatchRules();
+                $q .= ' AND league.match_rules = ' . $this->wrap($leagueModel->getMatchRules());
             }
             
             if ($leagueModel->getIsIndoor() != NULL) {
@@ -255,7 +257,7 @@ class LeagueManager {
             if ($leagueModel->getMaxMembers() != NULL) {
                 $q .= ' AND max_members = ' . $leagueModel->getMaxMembers();
             }
-            if ($leagueModel->getId() != NULL){
+            if ($leagueModel->getId() != -1){
                 $q .= ' AND league_id = ' . $leagueModel->getId();
             }
         }
@@ -269,7 +271,7 @@ class LeagueManager {
             return new LeagueIterator($resultSet, $this->objLayer);
         }
         else{
-            throw new RDException('Error restoring league model');
+            throw new RDException('Error restoring league model' . print_r($stmt->errorInfo()));
         }
     }
 

@@ -107,14 +107,17 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
      * @throws RDException in case the match is null
      */
     public function setMatch( $match ){ // throws RDException;
-        if(!isset($match)) {
-            throw new RDException('Match can not be null'); 
-        }
-        else{
+       // if(!isset($match)) {
+        //    throw new RDException('Match can not be null');
+        //}
+        //else{
+
             $this->match = $match;
+        if($match != null) {
             $this->homeTeam = $match->getHomeTeam();
             $this->awayTeam = $match->getAwayTeam();
         }
+       // }
        
     }
     /** Return the student involved in the report.
@@ -129,12 +132,10 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
      * @throws RDException in case the student is null or not the captain of the team involved in the match
      */
     public function setStudent( $student ) { // throws RDException;
-        //echo 'dumping this obj: ' . print_r(var_dump($this));
-
         if(!isset($student)) {
             throw new RDException('Student can not be null');
         } else if (
-            ($this->homeTeam && $this->awayTeam)
+            ($this->homeTeam && $this->awayTeam) && ($this->homeTeam->getCaptain() && $this->awayTeam->getCaptain())
             &&
             (
                 $student->getId() != $this->homeTeam->getCaptain()->getId() &&

@@ -90,22 +90,24 @@ class SportsVenueManager {
             throw new RDException('Error creating link');
         }
     }
-
+    private function wrap($str){
+        return "'" . $str . "'";
+    }
     public function restore($modelSportsVenue){
         $q = 'SELECT * from sports_venue WHERE 1=1 ';
         if($modelSportsVenue != NULL) {
-            if ($attr = $modelSportsVenue->getName() != NULL) {
-                $q .= ' AND sports_venue.name = ' . $attr;
+            if ($modelSportsVenue->getName() != NULL) {
+                $q .= ' AND sports_venue.name = ' . $this->wrap($modelSportsVenue->getName());
             }
-            if ($attr = $modelSportsVenue->getAddress() != NULL) {
-                $q .= ' AND address = ' . $attr;
+            if ($modelSportsVenue->getAddress() != NULL) {
+                $q .= ' AND address = ' . $this->wrap($modelSportsVenue->getAddress());
             }
-            if ($attr = $modelSportsVenue->getIsIndoor() != NULL) {
-                $q .= ' AND is_indoor = ' . ($attr ? 1 : 0);
+            if ($modelSportsVenue->getIsIndoor() != NULL) {
+                $q .= ' AND is_indoor = ' . ($modelSportsVenue->getIsIndoor() ? 1 : 0);
             }
 
-            if ($attr = $modelSportsVenue->getId() != NULL){
-                $q .= ' AND sports_venue_id = ' . $attr;
+            if ( $modelSportsVenue->getId() != -1){
+                $q .= ' AND sports_venue_id = ' . $modelSportsVenue->getId();
             }
         }
         $stmt = $this->dbConnection->prepare($q . ';');

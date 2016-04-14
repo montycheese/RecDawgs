@@ -34,7 +34,7 @@ class UserManager {
     public function saveAdministrator($administrator){
         if($administrator->isPersistent()){
             //update
-            $q = "UPDATE " . DB_NAME . ".user" .
+            $q = "UPDATE " . DB_NAME . ".user " .
               "set first_name = ?,
               last_name = ?,
               user_name = ?,
@@ -49,11 +49,13 @@ class UserManager {
             $stmt->bindParam(3, $administrator->getUserName(), \PDO::PARAM_STR);
             $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
             $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
-            $stmt->bindParam(5, $administrator->getId(), \PDO::PARAM_STR);
+            $stmt->bindParam(6, $administrator->getId(), \PDO::PARAM_STR);
+
+            echo $q;
             if ($stmt->execute()) {
                 echo 'Administrator updated successfully';
             } else {
-                throw new RDException('Error updating Administrator');
+                throw new RDException('Error updating Administrator ' . print_r($stmt->errorInfo()));
             }
         }
         else {
@@ -86,7 +88,7 @@ class UserManager {
     public function saveStudent($student){
         if($student->isPersistent()){
             //update
-            $q = "UPDATE " . DB_NAME . ".user" .
+            $q = "UPDATE " . DB_NAME . ".user " .
                 "set first_name = ?,
               last_name = ?,
               user_name = ?,
@@ -146,26 +148,28 @@ class UserManager {
     public function restoreAdministrator($modelAdministrator){
         $q = 'SELECT * from ' . DB_NAME. '.user WHERE user.user_type = 1';
         if($modelAdministrator != NULL) {
-            if ($attr = $modelAdministrator->getFirstName() != NULL) {
-                $q .= ' AND first_name = ' . $attr;
+            if ($modelAdministrator->getFirstName() != NULL) {
+                $q .= ' AND first_name = ' . $modelAdministrator->getFirstName();
             }
-            if ($attr = $modelAdministrator->getLastName() != NULL) {
-                $q .= ' AND last_name = ' . $attr;
+            if ($modelAdministrator->getLastName() != NULL) {
+                $q .= ' AND last_name = ' . $modelAdministrator->getLastName();
             }
-            if ($attr = $modelAdministrator->getUserName() != NULL) {
-                $q .= ' AND user_name = ' . $attr;
+            if ($modelAdministrator->getUserName() != NULL) {
+                $q .= ' AND user.user_name = "' . $modelAdministrator->getUserName() . '"';
             }
-            if ($attr = $modelAdministrator->getPassword() != NULL) {
-                $q .= ' AND password = ' . $attr;
+            if ($modelAdministrator->getPassword() != NULL) {
+                $q .= ' AND password = ' . $modelAdministrator->getPassword();
             }
-            if ($attr = $modelAdministrator->getEmailAddress() != NULL) {
-                $q .= ' AND email_address = ' . $attr;
+            if ($modelAdministrator->getEmailAddress() != NULL) {
+                $q .= ' AND email_address = ' . $modelAdministrator->getEmailAddress() ;
             }
-            if ($attr = $modelAdministrator->getId() != NULL){
-                $q .= 'AND user_id = ' . $attr;
+            if ($modelAdministrator->getId() != -1){
+                $q .= ' AND user_id = ' . $modelAdministrator->getId();
             }
         }
+
         $stmt = $this->dbConnection->prepare($q . ';');
+
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -173,8 +177,12 @@ class UserManager {
             return new AdministratorIterator($resultSet, $this->objLayer);
         }
         else{
-            throw new RDException('Error restoring administrator model');
+            throw new RDException('Error restoring administrator model error:' .  print_r($stmt->errorInfo()));
         }
+    }
+
+    private function wrap($str){
+        return "'" . $str . "'";
     }
 
     /**
@@ -183,37 +191,38 @@ class UserManager {
      * @throws RDException
      */
     public function restoreStudent($modelStudent){
-        $q = 'SELECT * from team10.user WHERE user.user_type=0 ';
+        $q = 'SELECT * from team10.user WHERE user.user_type = 0 ';
         if($modelStudent != null) {
-            if ($attr = $modelStudent->getFirstName() != NULL) {
-                $q .= ' AND first_name = ' . $attr;
+            if ($modelStudent->getFirstName() != NULL) {
+                $q .= ' AND first_name = ' . $this->wrap($modelStudent->getFirstName());
             }
-            if ($attr = $modelStudent->getLastName() != NULL) {
-                $q .= ' AND last_name = ' . $attr;
+            if ($modelStudent->getLastName() != NULL) {
+                $q .= ' AND last_name = ' . $this->wrap($modelStudent->getLastName()) ;
             }
-            if ($attr = $modelStudent->getUserName() != NULL) {
-                $q .= ' AND user_name = ' . $attr;
+            if ($modelStudent->getUserName() != NULL) {
+                $q .= ' AND user_name = ' . $this->wrap($modelStudent->getUserName() );
             }
-            if ($attr = $modelStudent->getPassword() != NULL) {
-                $q .= ' AND password = ' . $attr;
+            if ($modelStudent->getPassword() != NULL) {
+                $q .= ' AND password = ' . $this->wrap($modelStudent->getPassword());
             }
-            if ($attr = $modelStudent->getEmailAddress() != NULL) {
-                $q .= ' AND email_address = ' . $attr;
+            if ($modelStudent->getEmailAddress() != NULL) {
+                $q .= ' AND email_address = ' . $this->wrap($modelStudent->getEmailAddress());
             }
-            if ($attr = $modelStudent->getMajor() != NULL) {
-                $q .= ' AND major = ' . $attr;
+            if ( $modelStudent->getMajor() != NULL) {
+                $q .= ' AND major = ' . $this->wrap($modelStudent->getMajor());
             }
-            if ($attr = $modelStudent->getAddress() != NULL) {
-                $q .= ' AND address = ' . $attr;
+            if ($modelStudent->getAddress() != NULL) {
+                $q .= ' AND address = ' . $this->wrap($modelStudent->getMajor());
             }
-            if ($attr = $modelStudent->getStudentId() != NULL) {
-                $q .= ' AND student_id = ' . $attr;
+            if ($modelStudent->getStudentId() != NULL) {
+                $q .= ' AND student_id = ' . $modelStudent->getStudentId();
             }
-            if($modelStudent->getId() != null){
-                $q .= 'AND user_id = ' . $modelStudent->getId();
+            if($modelStudent->getId() != -1){
+                $q .= ' AND user_id = ' . $modelStudent->getId();
             }
         }
 
+        //echo $q;
         $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){
             //get results from Query
