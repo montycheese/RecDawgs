@@ -147,7 +147,6 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         $teamA = $this->objLayer->createTeam('Trustii', $studentA, $leagueA);
         $teamB = $this->objLayer->createTeam('Rockets', $studentB, $leagueA);
 
-
         //store
         $this->objLayer->storeTeam($teamA);
         echo "\nTeam {$teamA->getName()} created and stored in db.\n";
@@ -205,7 +204,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         // store
         $this->objLayer->storeMatch($matchA);
         echo "\nMatch on {$matchA->getDate()} between Team: {$matchA->getHomeTeam()->getName()} and Team:  {$matchA->getAwayTeam()->getName()}\n";
-        echo  "at Venue: {$matchA->getVenue()->getName()} for Round #{$matchA->getRound()->getNumber()} created and stored in db.\n";
+        echo  "at Venue: {$matchA->getSportsVenue()->getName()} for Round #{$matchA->getRound()->getNumber()} created and stored in db.\n";
 
 
         echo "Creating SCORE REPORT objects\n";
@@ -230,7 +229,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase {
         echo "\nTeam:  {$teamB->getName()} added to league: {$leagueA->getName()}\n";
 
         //adding student to teams
-        echo "Adding STUDENTS to TEAMS";
+        echo "Adding STUDENTS to TEAMS\n";
 
         $this->objLayer->createStudentMemberOfTeam($studentC, $teamA);
         echo "\nStudent: {$studentC->getFirstName()} {$studentC->getLastName()} added to team: {$teamA->getName()}\n";
