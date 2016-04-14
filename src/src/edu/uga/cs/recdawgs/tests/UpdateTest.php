@@ -114,24 +114,39 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
     public function testUpdateLeague(){
         //query
+        $oldMinTeams = 4;
+        $oldMaxTeams = 24;
+        $oldMinMembers = 0;
+        $oldMaxMembers = 0;
+        $newMinTeams = 4;
+        $newMaxTeams = 24;
+        $newMinMembers = 0;
+        $newMaxMembers = 0;
+
         $soccer = $this->objLayer->createLeague();
         $soccer->setName('Indoor Soccer');
         $soccer->setIsIndoor(true);
         $soccer = $this->objLayer->findLeague($soccer)->current();
 
         //update
-        $soccer->setMinTeams(5);
-        $soccer->setMaxTeams(25);
-        $soccer->setMinMembers(6);
-        $soccer->setMaxMembers(10);
+        $soccer->setMinTeams($newMinTeams);
+        $soccer->setMaxTeams($newMaxTeams);
+        $soccer->setMinMembers($newMinMembers);
+        $soccer->setMaxMembers($newMaxMembers);
 
         //store
         $this->objLayer->storeLeague($soccer);
-        echo '
+
+        echo "\nLeague with name: {$soccer->getName()}\n";
+        echo "has updated it's minimum team from {$oldMinTeams} to {$newMinTeams} \n";
+        echo "and updated it's maximum team from {$oldMaxTeams} to {$newMaxTeams} \n";
+        echo "and updated it's minimum amount of members from {$oldMinMembers} to {$newMinMembers} \n";
+        echo "and updated it's maximum amount of members from {$oldMaxMembers} to {$newMaxMembers} \n";
+        /*echo '
 
         leagues queried, updated, and stored in persistent database successfully
 
-        ';
+        ';*/
     }
 
     /**
@@ -139,21 +154,27 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
      */
 
    public function testUpdateTeam(){
+        $oldName = 'Trustii';
+        $newName = 'Maximum Ride';
         $trustii = $this->objLayer->createTeam();
-        $trustii->setName('Trustii');
+        $trustii->setName($oldName);
         $trustii = $this->objLayer->findTeam($trustii)->current();
 
         //echo 'testUpdateTeam ' . var_dump($trustii);
         //update
-        $trustii->setName('Trustii-UPDATED');
+        $trustii->setName($newName);
 
         //store
         $this->objLayer->storeTeam($trustii);
-        echo '
+
+
+
+       echo "\nTeam { {$trustii->getName()} has updated their name from {$oldName} to {$newName}\n";
+       /* echo '
 
         teams queried, updated, and stored in persistent database successfully
 
-        ';
+        ';*/
     }
 
 
@@ -162,18 +183,26 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
      */
 
     public function testUpdateSportsVenue(){
+        $oldName = 'Field B';
+        $oldAddress = '199 River Road, Athens, GA 30605';
+        $newName = 'Field C';
+        $newAddress = 'Nowhere Land, Cambodia';
+
+
         $sportsVenue = $this->objLayer->createSportsVenue();
-        $sportsVenue->setName('Field B');
+        $sportsVenue->setName($oldName);
         $sportsVenue = $this->objLayer->findSportsVenue($sportsVenue)->current();
-        $sportsVenue->setName('Field C');
-        $sportsVenue->setAddress('Nowhere land, cambodia');
+        $sportsVenue->setName($newName);
+        $sportsVenue->setAddress($newAddress);
 
         $this->objLayer->storeSportsVenue($sportsVenue);
-        echo '
+
+        echo "\nThe sports venue {$oldName} at {$oldAddress} has been updated from {$newName} to {$newAddress}\n";
+        /*echo '
 
         venue queried, updated, and stored in persistent database successfully
 
-        ';
+        ';*/
     }
 
 
