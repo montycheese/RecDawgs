@@ -230,29 +230,6 @@ class ReadTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Prints out every score report obj in the persistence db
-     *
-    public function testReadScoreReport(){
-        echo 'score report objects:
-
-         ';
-        $iter = $this->objLayer->findScoreReport(null);
-        $i=0;
-        //loop
-        while($iter->current()){
-            $report = $iter->current();
-            echo 'Home points: ' . $report->getHomePoints() .' Away points: '. $report->getAwayPoints() .
-                ' Date: '. strval($report->getDate()) . 'Match: '. strval($report->getMatch()) .
-                ' Student who put in the score'. strval($report->getStudent());
-            $iter->next();
-            ++$i;
-        }
-        echo strval($i) . ' total Scorereport objects
-
-        ';
-    }*/
-
-    /**
      * Prints out every round obj in the persistence db
      */
     public function testReadRound(){
