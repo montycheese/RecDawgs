@@ -318,8 +318,8 @@ class ObjectLayerImpl implements ObjectLayer{
         $isCompleted = null, $homeTeam = null, $awayTeam = null,$sportsVenue=null, $round=null) {
         $aMatch = new Entity\MatchImpl();
 
-        //if ($homePoints != null && $awayPoints != null && $date != null &&
-          //  $isCompleted != null && $homeTeam != null && $awayTeam != null) {
+        if ($homePoints != null && $awayPoints != null && $date != null &&
+            $isCompleted != null && $homeTeam != null && $awayTeam != null) {
         $aMatch->setHomePoints($homePoints);
         $aMatch->setAwayPoints($awayPoints);
         $aMatch->setDate($date);
@@ -329,7 +329,7 @@ class ObjectLayerImpl implements ObjectLayer{
         $aMatch->setAwayTeam($awayTeam);
         $aMatch->setSportsVenue($sportsVenue);
         $aMatch->setRound($round);
-        //}
+        }
 
         return $aMatch;
     }

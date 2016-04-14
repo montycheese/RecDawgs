@@ -28,6 +28,7 @@ class MatchIterator extends PersistenceIterator{
                 //create team obj
                 $homeTeam = $objLayer->createTeam();
                 $homeTeam->setId( $resultSet[$i]['home_team_id']);
+                $homeTeam = $objLayer->findTeam($homeTeam)->current();
                 $league = $objLayer->restoreTeamParticipatesInLeague($homeTeam);
 
                 $homeTeam->setParticipatesInLeague($league);
@@ -35,19 +36,31 @@ class MatchIterator extends PersistenceIterator{
 
                 $awayTeam = $objLayer->createTeam();
                 $awayTeam->setId( $resultSet[$i]['away_team_id']);
-
+                $awayTeam = $objLayer->findTeam($awayTeam)->current();
                 $league2= $objLayer->restoreTeamParticipatesInLeague($awayTeam);
                 $awayTeam->setParticipatesInLeague($league2);
 
-                $match = $objLayer->createMatch(
+                //create match obj to get sports venue from
+                $match = $objLayer->createMatch();
+                $match->setId($resultSet[$i]['match_id']);
+                $sportsVenue = $objLayer->restoreMatchSportsVenue($match);
+                /*$match = $objLayer->createMatch(
                     $resultSet[$i]['home_points'],
                     $resultSet[$i]['away_points'],
                     $resultSet[$i]['date'],
                     $resultSet[$i]['is_completed'],
                     $homeTeam,
                     $awayTeam
-                );
-                $match->setId($resultSet[$i]['match_id']);
+                );*/
+                //$match = $objLayer->createMatch();
+                $match->setHomePoints($resultSet[$i]['home_points']);
+                $match->setAwayPoints($resultSet[$i]['away_points']);
+                $match->setDate($resultSet[$i]['date']);
+                $match->setIsCompleted($resultSet[$i]['is_completed']);
+                $match->setHomeTeam($homeTeam);
+                $match->setAwayTeam($awayTeam);
+                $match->setSportsVenue($sportsVenue);
+                //$match->setId($resultSet[$i]['match_id']);
 
                 array_push($this->array, $match);
             }
@@ -56,6 +69,7 @@ class MatchIterator extends PersistenceIterator{
             }
 
         }
+       // echo 'match iterator' .  var_dump($this->array);
     }
 
 }

@@ -12,9 +12,9 @@ class SportsVenueImpl extends Persistent implements SportsVenue {
      * The name must be unique across all sports venues.
      *
      */
-    private $name;
-    private $isIndoor;
-    private $address;
+    private $name = null;
+    private $isIndoor = null;
+    private $address = null;
 
     /**
      * SportsVenueImpl constructor.

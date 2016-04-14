@@ -31,10 +31,19 @@ class RoundIterator extends PersistenceIterator {
         for($i=0; $i < count($resultSet); $i++){
             $round = null;
             try {
-                $round = $objLayer->createRound(
+                /*$round = $objLayer->createRound(
                     $resultSet[$i]['number']
-                );
+                );*/
+                $round = $objLayer->createRound();
+                $round->setNumber($resultSet[$i]['number']);
                 $round->setId($resultSet[$i]['round_id']);
+
+                //find the league that is assoc with this round
+                $modelLeague = $this->objLayer->createLeague();
+                $modelLeague->setId($resultSet[$i]['league_id']);
+                $league = $this->objLayer->findLeague($modelLeague)->current();
+                //set the league into this round
+                $round->setLeague($league);
                 array_push($this->array, $round);
             }
             catch(RDException $rde){

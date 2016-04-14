@@ -387,7 +387,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      * @return an Iterator with all Students who are members of the team
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreStudentMemberOfTeam($team = null, $student = null)
+    public function restoreStudentMemberOfTeam($student = null, $team=null)
     {
         //return iterator of students
         if ($team != null){

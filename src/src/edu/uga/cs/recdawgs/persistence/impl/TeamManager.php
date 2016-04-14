@@ -73,7 +73,9 @@ class TeamManager {
             }
             if($stmt->execute()){
                 $team->setId($this->dbConnection->lastInsertId());
-                echo 'Team created successfully';
+                echo '
+                Team created successfully
+                ';
             }
             else{
                 throw new RDException('Error creating team');
@@ -94,7 +96,8 @@ class TeamManager {
         $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
         $stmt->bindParam(2, $team->getId(), \PDO::PARAM_INT);
         if($stmt->execute()){
-            echo $student->getUserName() . ' successfully added as team member of: ' . $team->getName();
+            echo "
+            {$student->getFirstName()} {$student->getLastName()} successfully added as team member of: " . $team->getName();
         }
         else{
             throw new RDException($student->getUserName() . ' unsuccessfully added as team member of: ' . $team->getName());
@@ -114,7 +117,9 @@ class TeamManager {
         $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
         $stmt->bindParam(2, $team->getId(), \PDO::PARAM_INT);
         if($stmt->execute()){
-            echo $student->getUserName() . ' successfully added as team captain of: ' . $team->getName();
+            echo "
+            {$student->getFirstName()} {$student->getLastName()} successfully added as team captain of: " . $team->getName();
+
         }
         else{
             throw new RDException($student->getUserName() . ' unsuccessfully added as team captain of: ' . $team->getName());
@@ -196,10 +201,11 @@ class TeamManager {
 
         $q = 'SELECT user.user_id, user.first_name, user.last_name, user.user_name,
               user.password, user.email_address, user.student_id, user.major, user.address, user.user_type
-              from' . DB_NAME .  '.user INNER JOIN is_member_of
+              from ' . DB_NAME .  '.user INNER JOIN is_member_of
                ON is_member_of.user_id = user.user_id
                WHERE is_member_of.team_id = ?;';
 
+        //echo $q;
         $stmt = $this->dbConnection->prepare($q);
         $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
         if ($stmt->execute()){
@@ -210,7 +216,7 @@ class TeamManager {
 
         }
         else{
-            throw new RDException('Error restoring team members');
+            throw new RDException('Error restoring team members: ' . print_r($stmt->errorInfo()));
         }
     }
 
@@ -294,6 +300,7 @@ class TeamManager {
      * @throws RDException
      */
     public function restoreParticipatesIn($team){
+        //echo 'team manager line 303'. var_dump($team);
         if($team == null) throw new RDException('Team parameter is null');
 
         $q = 'SELECT * from league WHERE league_id = (SELECT league_id FROM league_team WHERE team_id =' . $team->getId() .  ' );';
@@ -396,7 +403,7 @@ class TeamManager {
         $stmt->bindParam(2, $league->getId(), \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
-            echo 'Link deleted successfully';
+            echo 'Link deleted successfully ';
         }
         else{
             throw new RDException('Deletion of link unsuccessful');
@@ -420,7 +427,7 @@ class TeamManager {
         $stmt->bindParam(2, $student->getId(), \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
-            echo 'lnik deleted successfully';
+            echo 'link deleted successfully ';
         }
         else{
             throw new RDException('Deletion of link unsuccessful');
@@ -441,7 +448,7 @@ class TeamManager {
         $stmt->bindParam(1, $null);
         $stmt->bindParam(2, $team->getId(), \PDO::PARAM_INT);
         if($stmt->execute()){
-            echo $student->getUserName() . ' successfully removed as team captain of: ' . $team->getName();
+            echo "{$student->getFirstName()} {$student->getLastName()} successfully removed as team captain of: " . $team->getName();
         }
         else{
             throw new RDException($student->getUserName() . ' unsuccessfully removed as team captain of: ' . $team->getName());

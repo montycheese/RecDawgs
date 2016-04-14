@@ -18,8 +18,8 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
     private $date;
     private $match;
     private $student;
-    private $homeTeam;
-    private $awayTeam;
+   // private $homeTeam;
+   // private $awayTeam;
 
     /** Constructor
      * Initalizes all of the parameter values into local variables.
@@ -31,10 +31,10 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
         $this->match = $match;
         $this->student = $student;
         
-        if(isset($match)) {
+        /*if(isset($match)) {
             $this->homeTeam = $match->getHomeTeam();
             $this->awayTeam = $match->getAwayTeam();
-        }
+        }*/
     }
     
     /** Return the points scored by the home team.
@@ -110,10 +110,10 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
 
         $this->match = $match;
 
-        if($match != null) {
+       /* if($match != null) {
             $this->homeTeam = $match->getHomeTeam();
             $this->awayTeam = $match->getAwayTeam();
-        }
+        }*/
        // }
        
     }
@@ -133,7 +133,7 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
             throw new RDException('Student can not be null');
         } 
 
-        if ($this->homeTeam == null || $this->awayTeam == null) {
+       /* if ($this->homeTeam == null || $this->awayTeam == null) {
             throw new RDException('Teams involved in the report can not be null');
         }
 
@@ -141,7 +141,7 @@ class ScoreReportImpl extends Persistent implements ScoreReport {
             $student->getId() != $this->awayTeam->getCaptain()->getId())
         {
             throw new RDException('Student has to be a Team Captain');   
-        }
+        }*/
         
         $this->student = $student;
     }
