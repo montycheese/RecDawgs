@@ -95,7 +95,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      */
 
     public function testDeleteMembersOfTeam(){
-        echo "\nTeam member objects to delete:\n";
+        echo "\nTeam member objects to remove from Team:\n";
         $iter = $this->objLayer->findTeam(null);
         //echo 'team dump: ' . var_dump($iter);
         while($iter->current()){
@@ -135,7 +135,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      */ 
 
     public function testDeleteTeamFromLeague(){
-        echo "\nLeague Objects: \n";
+        echo "\nTeam Objects to remove from league: \n";
         $iter = $this->objLayer->findLeague(null);
         while($iter->current()){
             $league = $iter->current();
@@ -170,7 +170,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase {
      * Remove the relationship between a sports venue and league
      */
     public function testDeleteSportsVenueFromLeague(){
-        echo "\nLeague Objects: \n";
+        echo "\n Sports Venue Objects to remove from league: \n";
         $iter = $this->objLayer->findLeague(null);
         while($iter->current()){
             $league = $iter->current();
