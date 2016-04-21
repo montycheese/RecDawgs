@@ -12,9 +12,29 @@ namespace edu\uga\cs\recdawgs\logic\impl;
 use edu\uga\cs\recdawgs\entity\impl as Entity;
 use edu\uga\cs\recdawgs\logic\LogicLayer;
 use edu\uga\cs\recdawgs\persistence\impl as Persistence;
+use edu\uga\cs\recdawgs\object\impl as Object;
 use edu\uga\cs\recdawgs\RDException;
 
 class LogicLayerImpl implements LogicLayer{
+
+    private $objectLayer = null;
+
+    function __construct($objectLayer=null, $dbConnection=null)
+    {
+        if ($objectLayer != null) {
+            $this->objectLayer = $objectLayer;
+        }
+        else if ($dbConnection != null) {
+            $dbConnection = new Persistence\DbConnection();
+            $objectLayer = new Object\ObjectLayerImpl();
+            $persistenceLayer = new Persistence\PersistenceLayerImpl($dbConnection, $objectLayer);
+            $objectLayer->setPersistence($persistenceLayer);
+            $this->objectLayer = $objectLayer;
+        }
+        else {
+            throw new RDException("Both parameters can not be null");
+        }
+    }
 
     /**
      * @param String $userName
@@ -341,8 +361,5 @@ class LogicLayerImpl implements LogicLayer{
         // TODO: Implement selectLeagueWinner() method.
     }
 
-    function __construct()
-    {
-        // TODO: Implement __construct() method.
-    }
+
 }
