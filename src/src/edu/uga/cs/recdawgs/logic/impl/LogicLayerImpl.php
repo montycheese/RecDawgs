@@ -262,8 +262,27 @@ class LogicLayerImpl implements LogicLayer{
         if($firstName!=null){
             $ourStudent->setFirstName($firstName);
         }
-        //do for rest
-
+        if($lastName != null) {
+            $ourStudent->setLastName($lastName);
+        }
+        if($userName != null) {
+            $ourStudent->setUserName($userName);
+        }
+        if($password != null) {
+            $ourStudent->setPassword($password);
+        }
+        if($emailAddress != null) {
+            $ourStudent->setEmailAddress($emailAddress);
+        }
+        if($studentId != null) {
+            $ourStudent->setStudentId($studentId);
+        }
+        if($major != null) {
+            $ourStudent->setMajor($major);
+        }
+        if($address != null) {
+            $ourStudent->setAddress($address);
+        }
         $this->objectLayer->storeStudent($ourStudent);
 
     }
@@ -271,6 +290,30 @@ class LogicLayerImpl implements LogicLayer{
     public function updateTeam($teamName, $newName=null, $teamCaptain=null, $league=null, $winnerOfLeague=null)
     {
         // TODO: Implement updateTeam() method.
+        $teamModel = new Entity\TeamImpl();
+        $teamModel->setName($teamName);
+        $teamIter = $this->objectLayer->findTeam($teamModel);
+
+        if($teamIter->size() <= 0) {
+            throw new RDException("Team not found");
+        } else {
+            $team = $teamIter->current();
+            if($newName != null) {
+                $team->setName($newName);
+            }
+            if($teamCaptain != null) {
+                $team->setCaptain($teamCaptain);
+            }
+            if($league != null) {
+                $team->setParticipatesInLeague($league);
+            }
+            if($winnerOfLeague != null) {
+                $team->setWinnerOfLeague($winnerOfLeague);
+            }
+
+            //updates team
+            $this->objectLayer->storeTeam($team);
+        }
     }
 
     public function updateLeague($leagueName, $newName=null, $leagueRules=null, $matchRules=null, $isIndoor=null, $minTeams=null, $maxTeams=null, $minMembers=null, $maxMembers=null, $winnerOfLeague=null)
@@ -288,7 +331,31 @@ class LogicLayerImpl implements LogicLayer{
             if($newName != null){
                 $league->setName($newName);
             }
-            //and so on
+            if($leagueRules != null) {
+                $league->setLeagueRules($leagueRules);
+            }
+            if($matchRules != null) {
+                $league->setMatchRules($matchRules);
+            }
+            if($isIndoor != null) {
+                $league->setIsIndoor($isIndoor);
+            }
+            if($minTeams != null) {
+                $league->setMinTeams($minTeams);
+            }
+            if($maxTeams != null) {
+                $league->setMaxTeams($maxTeams);
+            }
+            if($minMembers != null) {
+                $league->setMinMembers($minMembers);
+            }
+            if($maxMembers != null) {
+                $league->setMaxMembers($minMembers);
+            }
+            if($winnerOfLeague != null) {
+                $league->setWinnerOfLeague($winnerOfLeague);
+            }
+
 
             $this->objectLayer->storeLeague($league);
         }
@@ -297,6 +364,26 @@ class LogicLayerImpl implements LogicLayer{
     public function updateSportsVenue($venueName, $newName=null, $isIndoor=null, $address=null)
     {
         // TODO: Implement updateSportsVenue() method.
+        $sportsVenueModel = new Entity\SportsVenueImpl();
+        $sportsVenueModel->setName($venueName);
+        $sportsVenueIter = $this->objectLayer->findSportsVenue($sportsVenueModel);
+
+        if($sportsVenueIter->size() <= 0) {
+            throw new RDException("Sports Venue not found");
+        } else {
+            $sportsVenue = $sportsVenueIter->current();
+            if($newName != null) {
+                $sportsVenue->setName($newName);
+            }
+            if($isIndoor != null) {
+                $sportsVenue->setIsIndoor($isIndoor);
+            }
+            if($address != null) {
+                $sportsVenue->setAddress($address);
+            }
+            $this->objectLayer->storeSportsVenue($sportsVenue);
+        }
+
     }
 
     public function resetPassword()
