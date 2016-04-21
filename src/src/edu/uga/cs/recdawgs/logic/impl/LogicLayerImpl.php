@@ -86,7 +86,8 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function findLeague($modelLeague)
     {
-        // TODO: Implement findLeague() method.
+        return $this->objectLayer->findLeague($modelLeague);
+
     }
 
     /**
@@ -97,7 +98,7 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function findStudent($modelStudent)
     {
-        // TODO: Implement findStudent() method.
+        return $this->objectLayer->findStudent($modelStudent);
     }
 
     /**
@@ -108,7 +109,7 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function findAdmin($modelAdmin)
     {
-        // TODO: Implement findAdmin() method.
+        return $this->objectLayer->findAdministrator($modelAdmin);
     }
 
     /**
@@ -119,7 +120,7 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function findSportVenue($modelSportsVenue)
     {
-        // TODO: Implement findSportVenue() method.
+        return $this->objectLayer->findSportsVenue($modelSportsVenue);
     }
 
     /**
@@ -138,7 +139,22 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function createStudent($firstName, $lastName, $userName, $password, $emailAddress, $studentId, $major, $address)
     {
-        // TODO: Implement createStudent() method.
+        if($firstName=null || $lastName=null || $userName=null || $password=null ||  $emailAddress=null || $studentId=null || $major=null || $address==null)
+            throw new RDException("Parameters can not be null.");
+        
+        $student = $this->objectLayer->createStudent(
+            $firstName,
+            $lastName,
+            $userName,
+            $password,
+            $emailAddress,
+            $studentId,
+            $major,
+            $address
+        );
+
+        return $student->getId();
+
     }
 
     /**
@@ -152,7 +168,11 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function createTeam($teamName, $student, $league)
     {
-        // TODO: Implement createTeam() method.
+        if($teamName=null || $student == null || $league == null) 
+            throw new RDException("Parameters can not be null.");
+        
+        $team = $this->objectLayer->createTeam($teamName, $student, $league);
+        return $team->getId();
     }
 
     /**
@@ -171,18 +191,37 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function createLeague($name, $leagueRules, $matchRules, $isIndoor, $minTeams, $maxTeams, $minMembers, $maxMembers)
     {
-        // TODO: Implement createLeague() method.
+        if($name=null ||  $leagueRules=null ||  $matchRules=null ||  $isIndoor=null ||  $minTeams=null ||  $maxTeams=null ||  $minMembers=null ||  $maxMembers=null ||  $winnerOfLeague=null)
+            throw new RDException("Parameters can not be null.");
+
+        $league = $this->objectLayer->createLeague(
+            $name,
+            $leagueRules,
+            $matchRules,
+            $isIndoor,
+            $minTeams,
+            $maxTeams,
+            $minMembers,
+            $maxMembers
+        );
+
+        return $league->getId();
     }
 
     /**
      * @param String $name
      * @param boolean $isIndoor
      * @param String $address
+     * @throws RDException if venue name already exists or one of the parameters is null
      * @return int
      */
     public function createSportsVenue($name, $isIndoor, $address)
     {
-        // TODO: Implement createSportsVenue() method.
+        if($name=null || $isIndoor=null || $address=null){
+            throw new RDException("Parameters can not be null");
+        }
+
+        $venue = $this->objectLayer->createSportsVenue($name,$address, $isIndoor);
     }
 
     /**
@@ -291,7 +330,7 @@ class LogicLayerImpl implements LogicLayer{
      * select a new captain for a team. If the team has only one user, then the team
      * is destroyed also.
      *
-     * @param Entity\Student $student The user to be deleted
+     * @param Entity\StudentImpl $student The user to be deleted
      * @return void
      */
     public function deleteUser($user)
