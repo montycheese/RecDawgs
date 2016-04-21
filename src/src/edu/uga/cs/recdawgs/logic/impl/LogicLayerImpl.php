@@ -280,6 +280,8 @@ class LogicLayerImpl implements LogicLayer{
     public function scheduleMatch($team, $match, $venue, $date)
     {
         // TODO: Implement scheduleMatch() method.
+        
+
     }
 
     public function updateUser($firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null,$studentId=null, $major=null, $address=null)
