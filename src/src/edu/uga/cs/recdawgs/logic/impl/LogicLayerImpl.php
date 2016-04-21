@@ -411,6 +411,17 @@ class LogicLayerImpl implements LogicLayer{
         // TODO: Implement resetPassword() method.
     }
 
+
+
+    public function getRandomPassword() {
+        $charSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $password = "";
+        for($i = 0; $i < 8; $i++) {
+            $randNum = rand(0, strlen($charSet)-1);
+            $password .= $charSet[$i];
+        }
+        return $password;
+    }
     /**
      * Called to join a player to a team
      *
