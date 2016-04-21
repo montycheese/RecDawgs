@@ -83,6 +83,9 @@ class PersistenceIterator implements \Iterator {
         return $this->position < count($this->array) - 1;
     }
 
+    public function size(){
+        return count($this->array);
+    }
 
 
 

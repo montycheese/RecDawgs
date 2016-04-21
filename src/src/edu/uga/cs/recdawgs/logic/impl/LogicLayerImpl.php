@@ -40,11 +40,21 @@ class LogicLayerImpl implements LogicLayer{
      * @param String $userName
      * @param String $password
      * @throws RDException if incorrect username/pw
-     * @return String $response a response saying the student/admin obj has been located. echo their ID.
+     * @return Entity\StudentImpl the student obj
      */
     public function login($userName, $password)
     {
-        // TODO: Implement login() method.
+
+        $modelStudent = new Entity\StudentImpl();
+        $modelStudent->setUserName($userName);
+        $modelStudent->setPassword($password);
+        $studentIter = $this->objectLayer->findStudent($modelStudent);
+        if($studentIter->size() <= 0){
+            throw new RDException($string="Username or Password incorrect");
+        }
+        else{
+            return $studentIter->current();
+        }
     }
 
     /**
@@ -55,6 +65,7 @@ class LogicLayerImpl implements LogicLayer{
     public function logout()
     {
         // TODO: Implement logout() method.
+        //handle this in presentation layer
     }
 
     /**
@@ -64,7 +75,7 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function findTeam($modelTeam)
     {
-        // TODO: Implement findTeam() method.
+        return $this->objectLayer->findTeam($modelTeam);
     }
 
     /**
@@ -205,22 +216,46 @@ class LogicLayerImpl implements LogicLayer{
         // TODO: Implement scheduleMatch() method.
     }
 
-    public function updateUser()
+    public function updateUser($firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null,$studentId=null, $major=null, $address=null)
     {
-        // TODO: Implement updateUser() method.
+        //we have to assume that they are logged in
+        $ourStudent = $_SESSION['studentObject'];
+        if($firstName!=null){
+            $ourStudent->setFirstName($firstName);
+        }
+        //do for rest
+
+        $this->objectLayer->storeStudent($ourStudent);
+
     }
 
-    public function updateTeam()
+    public function updateTeam($teamName, $newName=null, $teamCaptain=null, $league=null, $winnerOfLeague=null)
     {
         // TODO: Implement updateTeam() method.
     }
 
-    public function updateLeague()
+    public function updateLeague($leagueName, $newName=null, $leagueRules=null, $matchRules=null, $isIndoor=null, $minTeams=null, $maxTeams=null, $minMembers=null, $maxMembers=null, $winnerOfLeague=null)
     {
         // TODO: Implement updateLeague() method.
+        $leagueModel = new Entity\LeagueImpl();
+        $leagueModel->setName($leagueName);
+        $leagueIter = $this->objectLayer->findLeague($leagueModel);
+
+        if($leagueIter->size() <= 0){
+            throw new RDException($string="League not found");
+        }
+        else{
+            $league = $leagueIter->current();
+            if($newName != null){
+                $league->setName($newName);
+            }
+            //and so on
+
+            $this->objectLayer->storeLeague($league);
+        }
     }
 
-    public function updateSportsVenue()
+    public function updateSportsVenue($venueName, $newName=null, $isIndoor=null, $address=null)
     {
         // TODO: Implement updateSportsVenue() method.
     }
