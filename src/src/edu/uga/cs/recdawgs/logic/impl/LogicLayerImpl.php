@@ -404,11 +404,20 @@ class LogicLayerImpl implements LogicLayer{
      * @param String $teamName The string name of the team to join
      * @param Entity\StudentImpl $studentObj The Student persistence object of the user joining the team
      * @param int $studentId The MySQL id of the student joining the team
+     * @throws RDException throw exception if the two conditions are not met
      * @return int ID of the team joined
      */
     public function appointCaptain($teamObj = null, $teamName = null, $studentObj = null, $studentId = -1)
     {
-        // TODO: Implement appointCaptain() method.
+        if($teamObj != null && $studentObj != null){
+            $this->objectLayer->createStudentCaptainOfTeam($studentObj, $teamObj);
+        }
+        else if($teamName != null && $studentId > -1){
+            //TODO write 2nd case here
+        }
+        else{
+            throw new RDException("Parameters are null");
+        }
     }
 
     /**
@@ -427,12 +436,15 @@ class LogicLayerImpl implements LogicLayer{
      *
      * @param Entity\LeagueImpl $league
      * @param Entity\TeamImpl $team
-     * @RDException is thrown if team is not in the league.
+     * @throws RDException is thrown if team is not in the league.
      * @return void
      */
     public function selectLeagueWinner($league, $team)
     {
-        // TODO: Implement selectLeagueWinner() method.
+        if($team->getParticipatesInLeague()->getName() != $league->getName()){
+            throw new RDException($string="Team is not in this league.");
+        }
+        $this->objectLayer->createTeamWinnerOfLeague($team, $league);
     }
 
 
