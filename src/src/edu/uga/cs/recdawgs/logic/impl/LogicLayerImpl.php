@@ -238,7 +238,30 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function enterMatchScore($captain, $match, $homeTeamScore, $awayTeamScore)
     {
-        // TODO: Implement enterMatchScore() method.
+        if($captain == null || $match == null || $homeTeamScore < 0 || $awayTeamScore < 0){
+            throw new RDException($string="check paraams");
+        }
+
+        //first check if there are already 2 score reports for this match.
+        $modelScoreReport = new Entity\ScoreReportImpl();
+        $modelScoreReport->setMatch($match);
+        //returns iter of all reports of this match
+        $scoreReportIter = $this->objectLayer->findScoreReport($modelScoreReport);
+
+        if($scoreReportIter->size() >= 2){
+            throw new RDException($string="There's already 2 score reports for this match.");
+        }
+
+        //now create it.
+        $date = new \DateTime(date('Y-m-d H:i:s', time()));
+        $scoreReport = $this->objectLayer->createScoreReport($homeTeamScore, $awayTeamScore, $date, $captain, $match);
+        $this->objectLayer->storeScoreReport($scoreReport);
+
+        if($scoreReportIter->size() == 1){
+            $this->confirmMatchScore($scoreReportIter->current(), $scoreReport, $match);
+        }
+
+
     }
 
     /**
@@ -289,7 +312,6 @@ class LogicLayerImpl implements LogicLayer{
 
     public function updateTeam($teamName, $newName=null, $teamCaptain=null, $league=null, $winnerOfLeague=null)
     {
-        // TODO: Implement updateTeam() method.
         $teamModel = new Entity\TeamImpl();
         $teamModel->setName($teamName);
         $teamIter = $this->objectLayer->findTeam($teamModel);
@@ -318,7 +340,6 @@ class LogicLayerImpl implements LogicLayer{
 
     public function updateLeague($leagueName, $newName=null, $leagueRules=null, $matchRules=null, $isIndoor=null, $minTeams=null, $maxTeams=null, $minMembers=null, $maxMembers=null, $winnerOfLeague=null)
     {
-        // TODO: Implement updateLeague() method.
         $leagueModel = new Entity\LeagueImpl();
         $leagueModel->setName($leagueName);
         $leagueIter = $this->objectLayer->findLeague($leagueModel);
@@ -363,7 +384,6 @@ class LogicLayerImpl implements LogicLayer{
 
     public function updateSportsVenue($venueName, $newName=null, $isIndoor=null, $address=null)
     {
-        // TODO: Implement updateSportsVenue() method.
         $sportsVenueModel = new Entity\SportsVenueImpl();
         $sportsVenueModel->setName($venueName);
         $sportsVenueIter = $this->objectLayer->findSportsVenue($sportsVenueModel);
@@ -404,11 +424,20 @@ class LogicLayerImpl implements LogicLayer{
      * @param String $teamName The string name of the team to join
      * @param Entity\StudentImpl $studentObj The Student persistence object of the user joining the team
      * @param int $studentId The MySQL id of the student joining the team
+     * @throws RDException
      * @return int ID of the team joined
      */
     public function joinTeam($teamObj = null, $teamName = null, $studentObj = null, $studentId = -1)
     {
-        // TODO: Implement joinTeam() method.
+        if($teamObj != null && $studentObj != null){
+
+        }
+        else if($teamName != null && $studentId > -1){
+
+        }
+        else{
+            throw new RDException("Parameters are not correct");
+        }
     }
 
     /**
