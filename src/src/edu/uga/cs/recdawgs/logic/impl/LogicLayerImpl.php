@@ -406,19 +406,47 @@ class LogicLayerImpl implements LogicLayer{
 
     }
 
-    public function resetPassword()
+    public function resetPassword($student = null, $admin = null)
     {
-        // TODO: Implement resetPassword() method.
+
+        $userIter = null;
+        if($student != null) {
+            $userIter = $this->objectLayer->findStudent($student);
+        } else if ($admin != null) {
+            $userIter = $this->objectLayer->findAdministrator($admin);
+        } else {
+            throw new RDException("Student and admin both null");
+        }
+
+        //change user's password and store in database
+        if($userIter->size() <=0) {
+            throw new RDException("User not found");
+        } else {
+            $user = $userIter->current();
+            $user->setPassword($this->getRandomPassword());
+            if($student != null) {
+                $this->objectLayer->storeStudent($user);
+            } else if ($admin != null) {
+                $this->objectLayer->storeAdministrator($user);
+            }
+
+        }
+
+        //TODO: Send email functionality? (maybe)
+        //return $user;
+
     }
 
 
-
-    public function getRandomPassword() {
+    /**
+     * @return string (random password)
+     */
+    private function getRandomPassword() {
         $charSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $password = "";
         for($i = 0; $i < 8; $i++) {
             $randNum = rand(0, strlen($charSet)-1);
-            $password .= $charSet[$i];
+            $password .= $charSet[$randNum];
         }
         return $password;
     }
