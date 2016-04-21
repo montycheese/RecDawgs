@@ -514,7 +514,52 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function deleteUser($user)
     {
-        // TODO: Implement deleteUser() method. make separate delete admin method
+        // get the team info of that user
+        $teams = $this->objectLayer->restoreStudentMemberOfTeam($user, null);
+        $team = $teams->current();
+        while ($team != null) {
+            $this->deleteUserHelper($user, $team);
+            $team = $teams->next();
+        }
+    }
+
+    private function deleteUserHelper($user, $team) {
+        
+        // if student is a captain of this team
+        if (checkCaptain($user, $team)) {
+            $members = $this->objectLayer->restoreStudentMemberOfTeam(null, $team);
+
+            if ($members->size() > 1) {
+                $this->objectLayer->deleteStudentCaptainOfTeam($user, $team);
+                $this->objectLayer->deleteStudent($user);
+            } else {
+                $this->objectLayer->deleteStudentCaptainOfTeam($user, $team);
+                $this->objectLayer->deleteStudent($user);
+            }
+            
+        } else {
+            $this->objectLayer->deleteStudentMemberOfTeam($user, $team);
+            $this->objectLayer->deleteStudent($user);
+        }
+    }
+
+    private function checkCaptain($user, $team) {
+        // check if this student captains that team
+        $teams = $this->objectLayer->restoreStudentCaptainOfTeam($user, null);
+
+        if ($teams->size() == 0) {
+            return false;
+        }
+
+        $currentTeam = $teams->current();
+        while ($team != null) {
+            if (strcmp($currentTeam->getName(), $team-> getName()) == 0) {
+                return true;
+            }
+            $currentTeam = $teams->next();
+        }
+
+        return false;
     }
 
     /**
