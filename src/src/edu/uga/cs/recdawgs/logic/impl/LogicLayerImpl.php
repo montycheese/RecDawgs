@@ -239,7 +239,7 @@ class LogicLayerImpl implements LogicLayer{
     public function enterMatchScore($captain, $match, $homeTeamScore, $awayTeamScore)
     {
         if($captain == null || $match == null || $homeTeamScore < 0 || $awayTeamScore < 0){
-            throw new RDException($string="check paraams");
+            throw new RDException($string="check params");
         }
 
         //first check if there are already 2 score reports for this match.
@@ -260,7 +260,6 @@ class LogicLayerImpl implements LogicLayer{
         if($scoreReportIter->size() == 1){
             $this->confirmMatchScore($scoreReportIter->current(), $scoreReport, $match);
         }
-
 
     }
 
@@ -406,19 +405,47 @@ class LogicLayerImpl implements LogicLayer{
 
     }
 
-    public function resetPassword()
+    public function resetPassword($student = null, $admin = null)
     {
-        // TODO: Implement resetPassword() method.
+
+        $userIter = null;
+        if($student != null) {
+            $userIter = $this->objectLayer->findStudent($student);
+        } else if ($admin != null) {
+            $userIter = $this->objectLayer->findAdministrator($admin);
+        } else {
+            throw new RDException("Student and admin both null");
+        }
+
+        //change user's password and store in database
+        if($userIter->size() <=0) {
+            throw new RDException("User not found");
+        } else {
+            $user = $userIter->current();
+            $user->setPassword($this->getRandomPassword());
+            if($student != null) {
+                $this->objectLayer->storeStudent($user);
+            } else if ($admin != null) {
+                $this->objectLayer->storeAdministrator($user);
+            }
+
+        }
+
+        //TODO: Send email functionality? (maybe)
+        //return $user;
+
     }
 
 
-
-    public function getRandomPassword() {
+    /**
+     * @return string (random password)
+     */
+    private function getRandomPassword() {
         $charSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $password = "";
         for($i = 0; $i < 8; $i++) {
             $randNum = rand(0, strlen($charSet)-1);
-            $password .= $charSet[$i];
+            $password .= $charSet[$randNum];
         }
         return $password;
     }
@@ -435,16 +462,28 @@ class LogicLayerImpl implements LogicLayer{
      * @param String $teamName The string name of the team to join
      * @param Entity\StudentImpl $studentObj The Student persistence object of the user joining the team
      * @param int $studentId The MySQL id of the student joining the team
-     * @throws RDException
+     * @throws RDException if any parameter is null
      * @return int ID of the team joined
      */
     public function joinTeam($teamObj = null, $teamName = null, $studentObj = null, $studentId = -1)
     {
         if($teamObj != null && $studentObj != null){
-
+            $this->objectLayer->createStudentMemberOfTeam($studentObj, $teamObj);
         }
         else if($teamName != null && $studentId > -1){
+            //create iter to find student with given id
+            $modelStudent = new Entity\StudentImpl();
+            $modelStudent->setId($studentId);
+            $studentIter = $this->objectLayer->findStudent($modelStudent);
+            $newStudentObj = $studentIter->current();
 
+            //create iter to find team with given team name
+            $modelTeam = new Entity\TeamImpl();
+            $modelTeam->setName($teamName);
+            $teamIter = $this->objectLayer->findTeam($modelTeam);
+            $newTeamObj = $teamIter->current();
+
+            $this->objectLayer->createStudentMemberOfTeam($newStudentObj, $newTeamObj);
         }
         else{
             throw new RDException("Parameters are not correct");
