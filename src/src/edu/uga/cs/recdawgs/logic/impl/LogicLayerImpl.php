@@ -495,7 +495,7 @@ class LogicLayerImpl implements LogicLayer{
         //check for maximum number of players in the team
         $teamMemberIter = $this->objectLayer->restoreStudentMemberOfTeam($teamObj);
         $leagueIter = $this->objectLayer->restoreTeamParticipatesInLeague($teamObj);
-        $league = $leagueIter.current();
+        $league = $leagueIter->current();
         if ($teamMemberIter->size() >= $league->getMaxMembers()) {
             throw new RDException("Maximum number of members has been reached.");
         }
@@ -526,7 +526,7 @@ class LogicLayerImpl implements LogicLayer{
     private function deleteUserHelper($user, $team) {
         
         // if student is a captain of this team
-        if (checkCaptain($user, $team)) {
+        if ($this->checkCaptain($user, $team)) {
             $members = $this->objectLayer->restoreStudentMemberOfTeam(null, $team);
 
             if ($members->size() > 1) {
