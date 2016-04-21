@@ -467,32 +467,38 @@ class LogicLayerImpl implements LogicLayer{
      * @param String $teamName The string name of the team to join
      * @param Entity\StudentImpl $studentObj The Student persistence object of the user joining the team
      * @param int $studentId The MySQL id of the student joining the team
-     * @throws RDException if any parameter is null
+     * @throws RDException if any parameter is null or if the max number of team members has been reached
      * @return int ID of the team joined
      */
     public function joinTeam($teamObj = null, $teamName = null, $studentObj = null, $studentId = -1)
     {
-        if($teamObj != null && $studentObj != null){
-            $this->objectLayer->createStudentMemberOfTeam($studentObj, $teamObj);
-        }
-        else if($teamName != null && $studentId > -1){
+
+        if($teamName != null && $studentId > -1){
             //create iter to find student with given id
             $modelStudent = new Entity\StudentImpl();
             $modelStudent->setId($studentId);
             $studentIter = $this->objectLayer->findStudent($modelStudent);
-            $newStudentObj = $studentIter->current();
+            $studentObj = $studentIter->current();
 
             //create iter to find team with given team name
             $modelTeam = new Entity\TeamImpl();
             $modelTeam->setName($teamName);
             $teamIter = $this->objectLayer->findTeam($modelTeam);
-            $newTeamObj = $teamIter->current();
-
-            $this->objectLayer->createStudentMemberOfTeam($newStudentObj, $newTeamObj);
+            $teanObj = $teamIter->current();
         }
         else{
             throw new RDException("Parameters are not correct");
         }
+
+        //check for maximum number of players in the team
+        $teamMemberIter = $this->objectLayer->restoreStudentMemberOfTeam($teamObj);
+        $leagueIter = $this->objectLayer->restoreTeamParticipatesInLeague($teamObj);
+        $league = $leagueIter.current();
+        if ($teamMemberIter->size() >= $league->getMaxMembers()) {
+            throw new RDException("Maximum number of members has been reached.");
+        }
+
+        $this->objectLayer->createStudentMemberOfTeam($studentObj, $teamObj);
     }
 
     /**
