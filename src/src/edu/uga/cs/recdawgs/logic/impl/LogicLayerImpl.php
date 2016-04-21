@@ -239,7 +239,7 @@ class LogicLayerImpl implements LogicLayer{
     public function enterMatchScore($captain, $match, $homeTeamScore, $awayTeamScore)
     {
         if($captain == null || $match == null || $homeTeamScore < 0 || $awayTeamScore < 0){
-            throw new RDException($string="check paraams");
+            throw new RDException($string="check params");
         }
 
         //first check if there are already 2 score reports for this match.
@@ -260,7 +260,6 @@ class LogicLayerImpl implements LogicLayer{
         if($scoreReportIter->size() == 1){
             $this->confirmMatchScore($scoreReportIter->current(), $scoreReport, $match);
         }
-
 
     }
 
@@ -463,16 +462,28 @@ class LogicLayerImpl implements LogicLayer{
      * @param String $teamName The string name of the team to join
      * @param Entity\StudentImpl $studentObj The Student persistence object of the user joining the team
      * @param int $studentId The MySQL id of the student joining the team
-     * @throws RDException
+     * @throws RDException if any parameter is null
      * @return int ID of the team joined
      */
     public function joinTeam($teamObj = null, $teamName = null, $studentObj = null, $studentId = -1)
     {
         if($teamObj != null && $studentObj != null){
-
+            $this->objectLayer->createStudentMemberOfTeam($studentObj, $teamObj);
         }
         else if($teamName != null && $studentId > -1){
+            //create iter to find student with given id
+            $modelStudent = new Entity\StudentImpl();
+            $modelStudent->setId($studentId);
+            $studentIter = $this->objectLayer->findStudent($modelStudent);
+            $newStudentObj = $studentIter->current();
 
+            //create iter to find team with given team name
+            $modelTeam = new Entity\TeamImpl();
+            $modelTeam->setName($teamName);
+            $teamIter = $this->objectLayer->findTeam($modelTeam);
+            $newTeamObj = $teamIter->current();
+
+            $this->objectLayer->createStudentMemberOfTeam($newStudentObj, $newTeamObj);
         }
         else{
             throw new RDException("Parameters are not correct");
