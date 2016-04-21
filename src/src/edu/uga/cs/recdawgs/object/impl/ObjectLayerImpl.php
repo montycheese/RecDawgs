@@ -423,7 +423,7 @@ class ObjectLayerImpl implements ObjectLayer{
      * @param date the date of the match
      * @param student the Student submitting the match score report
      * @param match the Match for which the score is reported
-     * @return a new ScoreReport object instance with the given attribute values 
+     * @return Entity\ScoreReportImpl a new ScoreReport object instance with the given attribute values
      * @throws RDException in case any of the po$arguments is negative, either student or match is null, or if the student is not the captain of one of the teams in the match
      */
     public function createScoreReport($homePoints = null, $awayPoints = null, $date = null, $student = null, $match = null) {

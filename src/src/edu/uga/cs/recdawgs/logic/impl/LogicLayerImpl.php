@@ -163,14 +163,19 @@ class LogicLayerImpl implements LogicLayer{
      * @param Entity\TeamImpl $teamName
      * @param Entity\StudentImpl $student
      * @param Entity\LeagueImpl $league
-     * @throws RDException if team name already exists or one of the parameters is null
+     * @throws RDException if team name already exists or one of the parameters is null or league is full
      * @return int $teamId The ID of the team obj created.
      */
     public function createTeam($teamName, $student, $league)
     {
         if($teamName=null || $student == null || $league == null) 
             throw new RDException("Parameters can not be null.");
-        
+        //check if league is full
+        $teamIter = $this->objectLayer->restoreTeamParticipatesInLeague(null, $league);
+        if($teamIter->size() >= $league->getMaxTeams()){
+            throw new RDException("League is full");
+        }
+
         $team = $this->objectLayer->createTeam($teamName, $student, $league);
         return $team->getId();
     }
