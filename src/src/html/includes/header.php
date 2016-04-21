@@ -1,5 +1,10 @@
-<?php include_once('../resources/config.php');
+<?php// include_once('../resources/config.php');
 //include banner somewhere
+/*if (!isset($_SESSION['student'])){
+    //redirect to login page
+
+}*/
+
 ?>
 
 <!doctype html>
