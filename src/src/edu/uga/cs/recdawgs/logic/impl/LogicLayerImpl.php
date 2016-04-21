@@ -486,7 +486,7 @@ class LogicLayerImpl implements LogicLayer{
             $modelTeam = new Entity\TeamImpl();
             $modelTeam->setName($teamName);
             $teamIter = $this->objectLayer->findTeam($modelTeam);
-            $teanObj = $teamIter->current();
+            $teamObj = $teamIter->current();
         }
         else{
             throw new RDException("Parameters are not correct");
