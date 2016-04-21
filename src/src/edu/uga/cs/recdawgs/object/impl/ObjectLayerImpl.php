@@ -97,6 +97,7 @@ class ObjectLayerImpl implements ObjectLayer{
      */
     public function createStudent($firstName = null, $lastName = null, $userName = null, 
         $password = null, $emailAddress = null, $studentId = null, $major = null, $address = null) {
+        
         $aStudent = new Entity\StudentImpl();
 
        // if ($firstName != null && $lastName != null && $userName != null && $password != null &&
@@ -177,8 +178,8 @@ class ObjectLayerImpl implements ObjectLayer{
 
     /**
      * Return an iterator of League objects satisfying the search criteria given in the modelLeague object.
-     * @param modelLeague a model League object specifying the search criteria
-     * @return an Iterator of the located League objects
+     * @param Entity\LeagueImpl $modelLeague a model League object specifying the search criteria
+     * @return Persistence\LeagueIterator $Iterator of the located League objects
      * @throws RDException in case there is a problem with the retrieval of the requested objects
      */
     public function findLeague($modelLeague) {
