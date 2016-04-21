@@ -501,7 +501,10 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function confirmMatchScore($report1, $report2, $match)
     {
-        // TODO: Implement confirmMatchScore() method.
+        // TODO: figure out how to notify admin of a dispute
+        if(!($report2->getHomePoints() == $report1->getAwayPoints() && $report1->getHomePoints() == $report2->getAwayPoints())){
+            throw new RDException($string="There are discrepancies in the two score reports");
+        }
     }
 
     /**
@@ -515,7 +518,21 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function resolveMatchScore($fixedHomeScore, $fixedAwayScore, $match)
     {
-        // TODO: Implement resolveMatchScore() method.
+        $homeTeam = $match->getHomeTeam();
+        $awayTeam = $match->getAwayTeam();
+        //create empty score report
+        $modelScoreReport = $this->objectLayer->createScoreReport();
+        $modelScoreReport->setMatch($match);
+
+        //get both score reports for this match
+        $scoreReportIter = $this->objectLayer->findScoreReport($modelScoreReport);
+
+        //go through both reports and update the scores
+        while($scoreReportIter->current()){
+            $scoreReport = $scoreReportIter->current();
+            //TODO figure out how to set the currect values of the score reports
+            $scoreReportIter->next();
+        }
     }
 
     /**
