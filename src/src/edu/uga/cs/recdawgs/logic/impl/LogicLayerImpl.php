@@ -523,12 +523,14 @@ class LogicLayerImpl implements LogicLayer{
         }
     }
 
+    // delete the relationship between user and the team; then delete the team
     private function deleteUserHelper($user, $team) {
         
         // if student is a captain of this team
         if ($this->checkCaptain($user, $team)) {
             $members = $this->objectLayer->restoreStudentMemberOfTeam(null, $team);
 
+            // TO DO
             if ($members->size() > 1) {
                 $this->objectLayer->deleteStudentCaptainOfTeam($user, $team);
                 $this->objectLayer->deleteStudent($user);
@@ -543,6 +545,7 @@ class LogicLayerImpl implements LogicLayer{
         }
     }
 
+    // check if the user is the captain of the team
     private function checkCaptain($user, $team) {
         // check if this student captains that team
         $teams = $this->objectLayer->restoreStudentCaptainOfTeam($user, null);
