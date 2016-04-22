@@ -1,9 +1,11 @@
-<?php// include_once('../resources/config.php');
-//include banner somewhere
-/*if (!isset($_SESSION['student'])){
+<?php
+// include_once('../resources/config.php');
+if (!isset($_SESSION) || !isset($_SESSION['userObject'])){
     //redirect to login page
-
-}*/
+    //header("Location: login.php");
+    //exit();
+}
+//echo var_dump($_SESSION);
 
 ?>
 
@@ -43,19 +45,17 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
-                <li><a href="user_info.php">My Account</a></li>
+                <li><a href="leagues.php">Leagues</a></li>
+                <!--
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sports <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
+                        <li><a href="index.php"></a></li>
+                        <li><a href="#">Leagues</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
+                        <li><a href="#">My Teams</a></li>
                     </ul>
-                </li>
+                </li>-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="logout.php">Logout</a></li>

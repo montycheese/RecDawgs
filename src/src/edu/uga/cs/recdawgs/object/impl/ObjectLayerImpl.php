@@ -92,7 +92,7 @@ class ObjectLayerImpl implements ObjectLayer{
      * @param studentId the student identifier
      * @param major the student's major
      * @param address the student's address
-     * @return a new Student object instance with the given attribute values
+     * @return Entity\StudentImpl a new Student object instance with the given attribute values
      * @throws RDException in case either firstName, lastName, userName, or studentId is null
      */
     public function createStudent($firstName = null, $lastName = null, $userName = null, 

@@ -287,7 +287,7 @@ class LogicLayerImpl implements LogicLayer{
     public function updateUser($firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null,$studentId=null, $major=null, $address=null)
     {
         //we have to assume that they are logged in
-        $ourStudent = $_SESSION['studentObject'];
+        $ourStudent = $_SESSION['userObject'];
         if($firstName!=null){
             $ourStudent->setFirstName($firstName);
         }
