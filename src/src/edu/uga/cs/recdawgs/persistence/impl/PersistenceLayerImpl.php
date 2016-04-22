@@ -318,6 +318,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
     {
         $mgmt = new TeamManager($this->db, $this->objLayer);
         $mgmt->storeStudentCaptainOf($student, $team);
+        //also add the captain as a member of the team
+        (new TeamManager($this->db, $this->objLayer))->storeStudentMemberOf($student, $team);
     }
 
     /**
@@ -360,6 +362,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
     public function  deleteStudentCaptainOfTeam($student, $team)
     {
         (new TeamManager($this->db, $this->objLayer))->deleteStudentCaptainOf($student, $team);
+        //also delete the team captain from being a member of the team
+        (new TeamManager($this->db, $this->objLayer))->deleteStudentMemberOf($student, $team);
     }
 
     /**
