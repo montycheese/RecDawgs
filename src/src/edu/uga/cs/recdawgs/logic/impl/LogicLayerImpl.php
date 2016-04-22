@@ -514,23 +514,31 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function deleteUser($user)
     {
-        // get the team info of that user
+        // try getting the team info of that user
         $teams = $this->objectLayer->restoreStudentMemberOfTeam($user, null);
+
+        // when the student is not associated with any teams
+        if ($teams->size() == 0) {
+            $this->objectLayer->deleteStudent($user);
+            return;
+        }
+
+        // when the student is associated with teams
         $team = $teams->current();
         while ($team != null) {
-            $this->deleteUserHelper($user, $team);
+            $this->deleteUserAndTeam($user, $team);
             $team = $teams->next();
         }
     }
 
-    // delete the relationship between user and the team; then delete the team
-    private function deleteUserHelper($user, $team) {
-        
+    // delete the relationship between user and the team firstly
+    // delete the team secondly
+    private function deleteUserAndTeam($user, $team) {       
         // if student is a captain of this team
         if ($this->checkCaptain($user, $team)) {
             $members = $this->objectLayer->restoreStudentMemberOfTeam(null, $team);
 
-            // TO DO
+            // TO DO: matches unclear
             if ($members->size() > 1) {
                 $this->objectLayer->deleteStudentCaptainOfTeam($user, $team);
                 $this->objectLayer->deleteStudent($user);
@@ -555,7 +563,7 @@ class LogicLayerImpl implements LogicLayer{
         }
 
         $currentTeam = $teams->current();
-        while ($team != null) {
+        while ($currentTeam != null) {
             if (strcmp($currentTeam->getName(), $team-> getName()) == 0) {
                 return true;
             }
@@ -574,7 +582,20 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function deleteSportsVenue($venue)
     {
-        // TODO: Implement deleteSportsVenue() method.
+        // see if there are any associated matches first
+        $matches = $this->objectLayer->restoreMatchSportsVenue(null, $venue);
+        if ($matches->size() > 0) {
+            throw new RDException('Delete failure: There are matches associated with this venue.');
+        }
+
+        // see if there are any lassociated leagues secondly
+        $leagues = $this->objectLayer->restoreLeagueSportsVenue(null, $venue);
+        if ($leagues->size() > 0) {
+            throw new RDException('Delete failure: There are leagues associated with this venue.');
+        }
+
+        // excute deletion
+        $this->objectLayer->deleteSportsVenue($venue);
     }
 
     /**
@@ -584,8 +605,31 @@ class LogicLayerImpl implements LogicLayer{
      * @return void
      */
     public function deleteLeague($league)
-    {
-        // TODO: Implement deleteLeague() method.
+    {   
+        // determine the team numbers of a league
+        $teams = $this->objectLayer->restoreTeamParticipatesInLeague(null, $league);
+        $team = $teams->current();
+        // To Do: the relationship between leagues and teams is unclear
+
+
+        // try deleting all associated sports venue relationship firstly
+        $venues = $this->objectLayer->restoreLeagueSportsVenue($league, null);
+        $venue = $venues->current();
+        while ($venue != null) {
+            $this->objectLayer->deleteLeagueSportsVenue($league, $venue);
+            $venue = $venues->next();
+        }
+
+        // try deleting all associated rounds relationship secondly
+        $rounds = $this->objectLayer->restoreLeagueRound($league);
+        $round = $rounds->current();
+        while ($round != null) {
+            $this->objectLayer->deleteLeagueRound($league, $round);
+            $round = $rounds->next();
+        }
+
+        // delete leagues thirdly
+        $this->objectLayer->deleteLeague($league);
     }
 
     /**
