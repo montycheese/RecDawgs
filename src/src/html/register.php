@@ -6,7 +6,7 @@
     <br>
 
     <p>
-    <form id="register" action="LogicLayerImpl.php" method="post">
+    <form id="register" action="" method="post">
         <table>
             <tr>
                 <td>
