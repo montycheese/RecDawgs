@@ -6,15 +6,28 @@
     
    
     <p>
-        <form method="POST" action=""> 
+        <form method="POST" action="leagues.php"> 
              
             
             
             
-            <input type="submit" value="showLeagues"> 
+            <input type="image" src = "img/leagueButton.png" value="showLeagues" alt = "Submit"> 
         </form>
         
     </p>
+    
+      <p>
+        <form method="POST" action="teams.php"> 
+             
+            
+            
+            
+            <input type="image" src = "img/teamButton.png" value="showTeams" alt = "Submit"> 
+        </form>
+        
+    </p>
+    
+    
 </div
 </body>
 </html>
