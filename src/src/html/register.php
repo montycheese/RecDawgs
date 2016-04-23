@@ -6,7 +6,7 @@
     <br>
 
     <p>
-    <form id="register" action="" method="post">
+    <form id="register" action="php/createUser.php" method="post">
         <table>
             <tr>
                 <td>
