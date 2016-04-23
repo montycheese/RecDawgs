@@ -85,7 +85,7 @@ class AuthUI {
             return "Username not found.";
         }
 
-        //try admin
+
     }
 
     /**
