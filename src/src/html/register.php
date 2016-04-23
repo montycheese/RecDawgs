@@ -29,14 +29,14 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <br>
-                        <input name="password" id="password" type="password" required="true" pattern="[A-z0-9]{6,}" placeholder="••••••" title="6 character minimum" id="password" style="border-radius:5px;padding:12px;width:200px;height:10px">
+                        <input name="password" id="password" type="password" required="true" pattern="[A-z0-9]{6,}" placeholder="••••••" title="6 character minimum" style="border-radius:5px;padding:12px;width:200px;height:10px">
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
                         <label for="passwordVerify">Verify Password</label>
                         <br>
-                        <input name="passwordVerify" id="passwordVerify" type="password" required="true" placeholder="••••••" id="passwordVerify" style="border-radius:5px;padding:12px;width:200px;height:10px">
+                        <input name="passwordVerify" id="passwordVerify" type="password" required="true" placeholder="••••••" style="border-radius:5px;padding:12px;width:200px;height:10px">
                     </div>
                 </td>
             </tr>
