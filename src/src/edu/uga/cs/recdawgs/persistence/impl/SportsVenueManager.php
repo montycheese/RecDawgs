@@ -42,11 +42,14 @@ class SportsVenueManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $sportsVenue->getName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $sportsVenue->getAddress(), \PDO::PARAM_STR);
+            $sportsVenueName = $sportsVenue->getName();
+            $address = $sportsVenue->getAddress();
             $isIndoor = ($sportsVenue->getIsIndoor() ? 1 : 0);
+            $sportsVenueId = $sportsVenue->getId();
+            $stmt->bindParam(1, $sportsVenueName, \PDO::PARAM_STR);
+            $stmt->bindParam(2, $address, \PDO::PARAM_STR);
             $stmt->bindParam(3, $isIndoor, \PDO::PARAM_INT);
-            $stmt->bindParam(4, $sportsVenue->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(4, $sportsVenueId, \PDO::PARAM_INT);
             
             if($stmt->execute()){
                 echo 'venue created successfully';
@@ -62,9 +65,12 @@ class SportsVenueManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $sportsVenue->getName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $sportsVenue->getAddress(), \PDO::PARAM_STR);
+
+            $sportsVenueName = $sportsVenue->getName();
+            $address = $sportsVenue->getAddress();
             $isIndoor = ($sportsVenue->getIsIndoor() ? 1 : 0);
+            $stmt->bindParam(1, $sportsVenueName, \PDO::PARAM_STR);
+            $stmt->bindParam(2, $address, \PDO::PARAM_STR);
             $stmt->bindParam(3, $isIndoor, \PDO::PARAM_INT);
 
             if($stmt->execute()){
@@ -90,8 +96,11 @@ class SportsVenueManager {
         //create prepared statement from query
         $stmt = $this->dbConnection->prepare($q);
         //bind parameters to prepared statement
-        $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $sportsVenue->getId(), \PDO::PARAM_INT);
+
+        $leagueId = $league->getId();
+        $sportsVenueId = $sportsVenue->getId();
+        $stmt->bindParam(1, $leagueId, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $sportsVenueId, \PDO::PARAM_INT);
 
         if($stmt->execute()){
             echo 'link created successfully';
@@ -155,7 +164,8 @@ class SportsVenueManager {
               ON league.league_id = league_venue.league_id
               WHERE league_venue.venue_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $sportsVenue->getId(), \PDO::PARAM_INT);
+        $sportsVenueId = $sportsVenue->getId();
+        $stmt->bindParam(1, $sportsVenueId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -178,7 +188,8 @@ class SportsVenueManager {
     public function restoreMatchesPlayedIn($sportsVenue){
         $q = 'SELECT * FROM '. DB_NAME . '.match WHERE match.sports_venue_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $sportsVenue->getId(), \PDO::PARAM_INT);
+        $sportsVenueId = $sportsVenue->getId();
+        $stmt->bindParam(1, $sportsVenueId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -203,8 +214,10 @@ class SportsVenueManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $sportsVenue->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $league->getId(), \PDO::PARAM_INT);
+        $sportsVenueId = $sportsVenue->getId();
+        $leagueId = $league->getId();
+        $stmt->bindParam(1, $sportsVenueId, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $leagueId, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo "Link deleted successfully";
@@ -233,7 +246,8 @@ class SportsVenueManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $sportsVenue->getId(), \PDO::PARAM_INT);
+        $sportsVenueId = $sportsVenue->getId();
+        $stmt->bindParam(1, $sportsVenueId, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'venue deleted successfully';
