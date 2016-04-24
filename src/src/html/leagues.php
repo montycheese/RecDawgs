@@ -26,7 +26,7 @@ include('includes/header.php');
         echo '<select class="form-control">';
 
         while ($leagueIndoor != null) {
-            $leagueName = $leagueIndoor->getName()
+            $leagueName = $leagueIndoor->getName();
             echo '<option value = "'.$leagueName.'">'.$leagueName.'</option>';
             $leagueIndoor = $leaguesIndoor->next();
         }
@@ -55,7 +55,7 @@ include('includes/header.php');
         echo '<select class="form-control">';
 
         while ($leagueIndoor != null) {
-            $leagueName = $leagueIndoor->getName()
+            $leagueName = $leagueIndoor->getName();
             echo '<option value = "'.$leagueName.'">'.$leagueName.'</option>';
             $leagueIndoor = $leaguesIndoor->next();
         }
