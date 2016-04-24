@@ -64,3 +64,9 @@ if (!isset($_SESSION) || !isset($_SESSION['userObject'])){
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+<?php
+if(isset($_GET['status'])) {
+    $alert = urldecode($_GET['status']);
+    echo("<div class='alert-danger'><h3>{$alert}</h3></div>");
+}
+?>
