@@ -1,7 +1,7 @@
 <?php include('includes/header.php')?>
 
 <body>
-    <h1>(Leagues Name)</h1>
+    <h1>(League Name)</h1>
     
      <form method="POST" action="php/joinTeam.php"> 
              
@@ -14,7 +14,7 @@
         </form>
     
     <br> <br> <br>
-    
+    <p>
     <form method="POST" action="php/createTeam.php">
         Create your own Team:
         <br><br>
@@ -29,6 +29,6 @@
             <input type="submit" value = "Create Team"> 
         </p>
     </form>
-   
+   </p>
 
 </body>

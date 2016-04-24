@@ -5,6 +5,12 @@
  * Date: 4/23/16
  * Time: 13:56
  */
+spl_autoload_register(function ($class_name) {
+    include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
+});
+
+use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
+//die(var_dump($_POST));
 //check to make sure none of the data is null or empty
 foreach($_POST as $inputData){
     if($inputData == "" or $inputData == null){
@@ -27,7 +33,7 @@ try {
     // this code is used to hash the password into DB. when we register a user.
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $logicLayer = $_SESSION['logicLayer'];
+    $logicLayer = isset($_SESSION) ? $_SESSION['logicLayer'] : new LogicLayerImpl();
     //store the user in the DB.
     $persistenceId = $logicLayer->createStudent(
         $firstName,
@@ -40,7 +46,8 @@ try {
         $major
     );
 
-    header("Location: ../register.php?status=Success}");
+
+    header("Location: ../login.php?status=Success");
     //echo $persistenceId;
 }
 catch(\edu\uga\cs\recdawgs\RDException $rde){

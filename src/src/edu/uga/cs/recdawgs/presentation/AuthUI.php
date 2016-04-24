@@ -109,6 +109,6 @@ class AuthUI {
             //admin
             $_SESSION['userType'] = 1;
         }
-        return "Login created, session started.";
+        return "Login created, session started";
     }
 }
