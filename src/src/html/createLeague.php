@@ -28,7 +28,10 @@
         <div class="form-group">
             <label for="isIndoor">Indoor?</label>
             <br>
-            <input name="isIndoor" id="isIndoor" type="text" pattern="[A-z]{1,}" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <select name="isIndoor" id="isIndoor">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
         </div>
 
         <div class="form-group">
