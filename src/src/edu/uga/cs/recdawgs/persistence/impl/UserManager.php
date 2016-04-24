@@ -66,11 +66,17 @@ class UserManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $administrator->getFirstName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $administrator->getLastName(), \PDO::PARAM_STR);
-            $stmt->bindParam(3, $administrator->getUserName(), \PDO::PARAM_STR);
-            $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
-            $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
+            $firstName = $administrator->getFirstName();
+            $lastName = $administrator->getLastName();
+            $userName = $administrator->getUserName();
+            $password = $administrator->getPassword();
+            $emailAddress = $administrator->getEmailAddress();
+            $stmt->bindParam(1, $firstName, \PDO::PARAM_STR);
+            $stmt->bindParam(2,$lastName, \PDO::PARAM_STR);
+            $stmt->bindParam(3, $userName, \PDO::PARAM_STR);
+            $stmt->bindParam(4, $password, \PDO::PARAM_STR);
+            $stmt->bindParam(5, $emailAddress, \PDO::PARAM_STR);
+           
             if ($stmt->execute()) {
                 //set the persistence id of this obj
                 $administrator->setId($this->dbConnection->lastInsertId());
@@ -88,6 +94,7 @@ class UserManager {
      * @throws RDException
      */
     public function saveStudent($student){
+        //die(var_dump($student));
         if($student->isPersistent()){
             //update
             $q = "UPDATE " . DB_NAME . ".user " .
@@ -103,15 +110,25 @@ class UserManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $student->getFirstName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $student->getLastName(), \PDO::PARAM_STR);
-            $stmt->bindParam(3, $student->getUserName(), \PDO::PARAM_STR);
-            $stmt->bindParam(4, $student->getPassword(), \PDO::PARAM_STR);
-            $stmt->bindParam(5, $student->getEmailAddress(), \PDO::PARAM_STR);
-            $stmt->bindParam(6, $student->getStudentId(), \PDO::PARAM_STR);
-            $stmt->bindParam(7, $student->getAddress(), \PDO::PARAM_STR);
-            $stmt->bindParam(8, $student->getMajor(), \PDO::PARAM_STR);
-            $stmt->bindParam(9, $student->getId(), \PDO::PARAM_STR);
+            //bind parameters to prepared statement
+            $firstName = $student->getFirstName();
+            $lastName = $student->getLastName();
+            $userName = $student->getUserName();
+            $password = $student->getPassword();
+            $emailAddress = $student->getEmailAddress();
+            $address = $student->getAddress();
+            $major = $student->getMajor();
+            $studentId = $student->getStudentId();
+            $persistenceId = $student->getId();
+            $stmt->bindParam(1, $firstName, \PDO::PARAM_STR);
+            $stmt->bindParam(2,$lastName, \PDO::PARAM_STR);
+            $stmt->bindParam(3, $userName, \PDO::PARAM_STR);
+            $stmt->bindParam(4, $password, \PDO::PARAM_STR);
+            $stmt->bindParam(5, $emailAddress, \PDO::PARAM_STR);
+            $stmt->bindParam(6, $studentId, \PDO::PARAM_STR);
+            $stmt->bindParam(7, $address, \PDO::PARAM_STR);
+            $stmt->bindParam(8, $major, \PDO::PARAM_STR);
+            $stmt->bindParam(9, $persistenceId, \PDO::PARAM_STR);
             if ($stmt->execute()) {
                 echo 'student updated successfully';
             } else {
@@ -125,19 +142,27 @@ class UserManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $student->getFirstName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $student->getLastName(), \PDO::PARAM_STR);
-            $stmt->bindParam(3, $student->getUserName(), \PDO::PARAM_STR);
-            $stmt->bindParam(4, $student->getPassword(), \PDO::PARAM_STR);
-            $stmt->bindParam(5, $student->getEmailAddress(), \PDO::PARAM_STR);
-            $stmt->bindParam(6, $student->getStudentId(), \PDO::PARAM_STR);
-            $stmt->bindParam(7, $student->getAddress(), \PDO::PARAM_STR);
-            $stmt->bindParam(8, $student->getMajor(), \PDO::PARAM_STR);
+            $firstName = $student->getFirstName();
+            $lastName = $student->getLastName();
+            $userName = $student->getUserName();
+            $password = $student->getPassword();
+            $emailAddress = $student->getEmailAddress();
+            $address = $student->getAddress();
+            $major = $student->getMajor();
+            $studentId = $student->getStudentId();
+            $stmt->bindParam(1, $firstName, \PDO::PARAM_STR);
+            $stmt->bindParam(2,$lastName, \PDO::PARAM_STR);
+            $stmt->bindParam(3, $userName, \PDO::PARAM_STR);
+            $stmt->bindParam(4, $password, \PDO::PARAM_STR);
+            $stmt->bindParam(5, $emailAddress, \PDO::PARAM_STR);
+            $stmt->bindParam(6, $studentId, \PDO::PARAM_STR);
+            $stmt->bindParam(7, $address, \PDO::PARAM_STR);
+            $stmt->bindParam(8, $major, \PDO::PARAM_STR);
             if ($stmt->execute()) {
                 $student->setId($this->dbConnection->lastInsertId());
                 echo 'student created successfully';
             } else {
-                throw new RDException('Error creating or updating Administrator');
+                throw new RDException('Error creating or updating Student ' . print_r($stmt->errorInfo()));
             }
         }
     }
@@ -251,7 +276,8 @@ class UserManager {
     public function restoreTeamsCaptainedBy($student){
         $q = 'SELECT * FROM team WHERE captain_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
+        $persistenceId = $student->getId();
+        $stmt->bindParam(1, $persistenceId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -276,7 +302,8 @@ class UserManager {
                 ON team.team_id = is_member_of.team_id
                 WHERE is_member_of.user_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
+        $persistenceId = $student->getId();
+        $stmt->bindParam(1, $persistenceId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -305,7 +332,8 @@ class UserManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $user->getId(), \PDO::PARAM_INT);
+        $persistenceId = $user->getId();
+        $stmt->bindParam(1, $persistenceId, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'User deleted successfully';
