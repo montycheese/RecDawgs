@@ -9,6 +9,16 @@
 namespace edu\uga\cs\recdawgs\presentation;
 
 
-class UserCtrl {
+class UserUI {
+
+    private $logicLayer = null;
+
+    public function __construct(){
+        $this->logicLayer = $_SESSION['logicLayer'];
+    }
+
+    public function create(){
+
+    }
 
 }

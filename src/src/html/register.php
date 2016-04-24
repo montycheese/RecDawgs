@@ -42,6 +42,11 @@
             </tr>
         </table>
         <div class="form-group">
+            <label for="userName">User Name</label>
+            <br>
+            <input name="userName" id="userName" type="text" placeholder="player123" required="true" title="Student username" style="border-radius:5px;padding:12px;width:200px;height:10px">
+        </div>
+        <div class="form-group">
             <label for="email">Email</label>
             <br>
             <input name="email" id="email" type="email" placeholder="player@example.com" required="true" title="Student email" style="border-radius:5px;padding:12px;width:200px;height:10px">

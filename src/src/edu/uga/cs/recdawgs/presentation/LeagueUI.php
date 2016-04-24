@@ -9,6 +9,6 @@
 namespace edu\uga\cs\recdawgs\presentation;
 
 
-class LeagueCtrl {
+class LeagueUI {
 
 }
