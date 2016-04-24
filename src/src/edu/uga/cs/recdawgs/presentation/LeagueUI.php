@@ -32,20 +32,21 @@ class LeagueUI {
 		    $leagueIndoor = $leaguesIndoor->current();
 
 		    if ($leaguesIndoor->size() == 0) {
-		        $html += "<p>No indoor leagues</p>";
+		        $html .= "<p>No indoor leagues</p>";
 		    } else {
-		        $html += "<form method='POST' action='league.php'>";
-		        $html += "<select class='form-control'>";
+		        $html .= "<form method='POST' action='league.php'>";
+		        $html .= "<select class='form-control'>";
 
 		        while ($leagueIndoor != null) {
 		            $leagueName = $leagueIndoor->getName();
-		            $html += "<option value = '{$leagueName}'>{$leagueName}</option>";
-		            $leagueIndoor = $leaguesIndoor->next();
+		            $html .= "<option value = '{$leagueName}'>{$leagueName}</option>";
+		            $leaguesIndoor->next();
+                    $leagueIndoor = $leaguesIndoor->current();
 		        }
 
-		        $html += "</select>";
-		        $html += "<p><input type='submit' value = 'Select League'></p>";
-		        $html += "</form>";
+		        $html .= "</select>";
+		        $html .= "<p><input type='submit' value = 'Select League'></p>";
+		        $html .= "</form>";
 		    }
         }
         catch(RDException $rde){
@@ -66,20 +67,21 @@ class LeagueUI {
 		    $leagueIndoor = $leaguesIndoor->current();
 
 		    if ($leaguesIndoor->size() == 0) {
-		        $html += "<p>No outdoor leagues</p>";
+		        $html .= "<p>No outdoor leagues</p>";
 		    } else {
-		        $html += "<form method='POST' action='league.php'>";
-		        $html += "<select class='form-control'>";
+		        $html .= "<form method='POST' action='league.php'>";
+		        $html .= "<select class='form-control'>";
 
 		        while ($leagueIndoor != null) {
 		            $leagueName = $leagueIndoor->getName();
-		            $html += "<option value = '{$leagueName}'>{$leagueName}</option>";
-		            $leagueIndoor = $leaguesIndoor->next();
+		            $html .= "<option value = '{$leagueName}'>{$leagueName}</option>";
+		            $leaguesIndoor->next();
+                    $leagueIndoor = $leaguesIndoor->current();
 		        }
 
-		        $html += "</select>";
-		        $html += "<p><input type='submit' value = 'Select League'></p>";
-		        $html += "</form>";
+		        $html .= "</select>";
+		        $html .= "<p><input type='submit' value = 'Select League'></p>";
+		        $html .= "</form>";
 		    }
         }
         catch(RDException $rde){
