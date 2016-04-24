@@ -43,9 +43,12 @@ class RoundManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $round->getNumber(), \PDO::PARAM_INT);
-            $stmt->bindParam(2, $round->getLeague()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(3, $round->getId(), \PDO::PARAM_INT);
+            $roundNum = $round->getNumber();
+            $leagueId = $round->getLeague()->getId();
+            $roundId = $round->getId();
+            $stmt->bindParam(1, $roundNum, \PDO::PARAM_INT);
+            $stmt->bindParam(2, $leagueId, \PDO::PARAM_INT);
+            $stmt->bindParam(3, $roundId, \PDO::PARAM_INT);
             if($stmt->execute()){
                 echo 'round created successfully';
             }
@@ -60,8 +63,10 @@ class RoundManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $round->getNumber(), \PDO::PARAM_INT);
-            $stmt->bindParam(2, $round->getLeague()->getId(), \PDO::PARAM_INT);
+            $roundNum = $round->getNumber();
+            $leagueId = $round->getLeague()->getId();
+            $stmt->bindParam(1, $roundNum, \PDO::PARAM_INT);
+            $stmt->bindParam(2, $leagueId, \PDO::PARAM_INT);
 
             if($stmt->execute()){
                 $round->setId($this->dbConnection->lastInsertId());
@@ -122,7 +127,8 @@ class RoundManager {
 
         $q = 'SELECT * FROM '. DB_NAME . '.match WHERE round_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $round->getId(), \PDO::PARAM_INT);
+        $roundId = $round->getId();
+        $stmt->bindParam(1, $roundId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -152,7 +158,8 @@ class RoundManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $round->getId(), \PDO::PARAM_INT);
+        $roundId = $round->getId();
+        $stmt->bindParam(1, $roundId, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'round deleted successfully';

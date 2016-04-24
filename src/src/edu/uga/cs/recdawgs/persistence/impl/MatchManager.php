@@ -48,23 +48,33 @@ class MatchManager {
 
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q . ';');
+
+
+            $homePoints = $match->getHomePoints();
+            $awayPoints = $match->getAwayPoints();
+            $date = $match->getDate();
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $match->getHomePoints(), \PDO::PARAM_INT);
-            $stmt->bindParam(2, $match->getAwayPoints(), \PDO::PARAM_INT);
-            $stmt->bindParam(3, $match->getDate());
+            $stmt->bindParam(1, $homePoints, \PDO::PARAM_INT);
+            $stmt->bindParam(2, $awayPoints, \PDO::PARAM_INT);
+            $stmt->bindParam(3, $date);
             $completed = ($match->getIsCompleted() ? 1 : 0);
             $stmt->bindParam(4, $completed, \PDO::PARAM_INT);
             if($match->getHomeTeam() != NULL ) {
-                $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
+                $homeTeam = $match->getHomeTeam()->getId();
+                $stmt->bindParam(5, $homeTeam, \PDO::PARAM_INT);
             }
             if($match->getAwayTeam() != NULL) {
-                $stmt->bindParam(6, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
+                $awayTeam = $match->getAwayTeam()->getId();
+                $stmt->bindParam(6, $awayTeam, \PDO::PARAM_INT);
             }
             if($match->getSportsVenue() != NULL) {
-                $stmt->bindParam(7, $match->getSportsVenue()->getId(), \PDO::PARAM_INT);
+                $sportsVenue = $match->getSportsVenue()->getId();
+                $stmt->bindParam(7, $sportsVenue, \PDO::PARAM_INT);
             }
-            $stmt->bindParam(8, $match->getRound()->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(9, $match->getId(), \PDO::PARAM_INT);
+            $round = $match->getRound()->getId();
+            $matchID = $match->getId();
+            $stmt->bindParam(8, $round, \PDO::PARAM_INT);
+            $stmt->bindParam(9, $matchID, \PDO::PARAM_INT);
 
             if($stmt->execute()){
                 echo 'Match created successfully';
@@ -82,21 +92,29 @@ class MatchManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q . ';');
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $match->getHomePoints(), \PDO::PARAM_INT);
-            $stmt->bindParam(2, $match->getAwayPoints(), \PDO::PARAM_INT);
-            $stmt->bindParam(3, $match->getDate());
+            $homePoints = $match->getHomePoints();
+            $awayPoints = $match->getAwayPoints();
+            $date = $match->getDate();
+            //bind parameters to prepared statement
+            $stmt->bindParam(1, $homePoints, \PDO::PARAM_INT);
+            $stmt->bindParam(2, $awayPoints, \PDO::PARAM_INT);
+            $stmt->bindParam(3, $date);
             $completed = ($match->getIsCompleted() ? 1 : 0);
             $stmt->bindParam(4, $completed, \PDO::PARAM_INT);
             if($match->getHomeTeam() != NULL ) {
-                $stmt->bindParam(5, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
+                $homeTeam = $match->getHomeTeam()->getId();
+                $stmt->bindParam(5, $homeTeam, \PDO::PARAM_INT);
             }
             if($match->getAwayTeam() != NULL) {
-                $stmt->bindParam(6, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
+                $awayTeam = $match->getAwayTeam()->getId();
+                $stmt->bindParam(6, $awayTeam, \PDO::PARAM_INT);
             }
             if($match->getSportsVenue() != NULL) {
-                $stmt->bindParam(7, $match->getSportsVenue()->getId(), \PDO::PARAM_INT);
+                $sportsVenue = $match->getSportsVenue()->getId();
+                $stmt->bindParam(7, $sportsVenue, \PDO::PARAM_INT);
             }
-            $stmt->bindParam(8, $match->getRound()->getId(), \PDO::PARAM_INT);
+            $round = $match->getRound()->getId();
+            $stmt->bindParam(8, $round, \PDO::PARAM_INT);
             if($stmt->execute()){
                 $match->setId($this->dbConnection->lastInsertId());
                 echo 'Match created successfully';
@@ -125,8 +143,10 @@ class MatchManager {
         //create prepared statement from query
         $stmt = $this->dbConnection->prepare($q);
         //bind parameters to prepared statement
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        $teamId = $team->getId();
+        $matchId = $match->getId();
+        $stmt->bindParam(1, $teamId, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $matchId, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo 'Home team link created successfully';
         }
@@ -151,8 +171,10 @@ class MatchManager {
         //create prepared statement from query
         $stmt = $this->dbConnection->prepare($q);
         //bind parameters to prepared statement
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        $teamId = $team->getId();
+        $matchId = $match->getId();
+        $stmt->bindParam(1, $teamId, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $matchId, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo 'away team link created successfully';
         }
@@ -178,8 +200,10 @@ class MatchManager {
         //create prepared statement from query
         $stmt = $this->dbConnection->prepare($q);
         //bind parameters to prepared statement
-        $stmt->bindParam(1, $sportsVenue->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        $sportsVenueId = $sportsVenue->getId();
+        $matchId = $match->getId();
+        $stmt->bindParam(1, $sportsVenueId, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $matchId, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo 'away venue link created successfully';
         }
@@ -204,8 +228,11 @@ class MatchManager {
         //create prepared statement from query
         $stmt = $this->dbConnection->prepare($q);
         //bind parameters to prepared statement
-        $stmt->bindParam(1, $round->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+
+        $roundId = $round->getId();
+        $matchId = $match->getId();
+        $stmt->bindParam(1, $roundId, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $matchId, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo 'Round match link created successfully';
         }
@@ -228,7 +255,9 @@ class MatchManager {
 
         $q = 'SELECT * from sports_venue where sports_venue_id = (SELECT sports_venue_id FROM '. DB_NAME  .'.match WHERE match_id = ?);';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $match->getId(), \PDO::PARAM_INT);
+
+        $matchId = $match->getId();
+        $stmt->bindParam(1, $matchId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -309,7 +338,8 @@ class MatchManager {
 
         $q = 'SELECT * FROM team WHERE team_id = ?;';
         $stmt = $this->dbConnection->prepare($q );
-        $stmt->bindParam(1, $match->getHomeTeam()->getId(), \PDO::PARAM_INT);
+        $homeTeamId = $match->getHomeTeam()->getId();
+        $stmt->bindParam(1, $homeTeamId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -336,7 +366,8 @@ class MatchManager {
 
         $q = 'SELECT * FROM team WHERE team_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $match->getAwayTeam()->getId(), \PDO::PARAM_INT);
+        $awayTeamId = $match->getAwayTeam()->getId();
+        $stmt->bindParam(1, $awayTeamId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -367,7 +398,8 @@ class MatchManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $match->getId(), \PDO::PARAM_INT);
+        $matchId = $match->getId();
+        $stmt->bindParam(1, $matchId, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'match deleted successfully';
@@ -399,7 +431,8 @@ class MatchManager {
         //bind parameters to prepared statement
         $null = NULL;
         $stmt->bindParam(1, $null);
-        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        $matchId = $match->getId();
+        $stmt->bindParam(2, $matchId, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo 'Home team link deleted successfully';
         }
@@ -429,7 +462,8 @@ class MatchManager {
         //bind parameters to prepared statement
         $null = NULL;
         $stmt->bindParam(1, $null);
-        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        $matchId = $match->getId();
+        $stmt->bindParam(2, $matchId, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo 'away team link deleted successfully';
         }
@@ -460,7 +494,8 @@ class MatchManager {
         //bind parameters to prepared statement
         $null = NULL;
         $stmt->bindParam(1, $null);
-        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        $matchId = $match->getId();
+        $stmt->bindParam(2, $matchId, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo 'venue link deleted successfully';
         }
@@ -490,7 +525,8 @@ class MatchManager {
         //bind parameters to prepared statement
         $null = NULL;
         $stmt->bindParam(1, $null);
-        $stmt->bindParam(2, $match->getId(), \PDO::PARAM_INT);
+        $matchId = $match->getId();
+        $stmt->bindParam(2, $matchId, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo 'link deleted successfully';
         }
