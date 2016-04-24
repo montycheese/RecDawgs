@@ -5,11 +5,11 @@
     <h1>Log-in</h1>
     
    
-    <form id="login" action="#" method="post">
+    <form id="login" action="" method="post">
         <div class="form-group">
-            <label for="email">Email Address</label>
+            <label for="userName">User Name</label>
             <br>
-            <input name="email" id="email" type="email" placeholder="player@example.com" required="true" title="Student email">
+            <input name="userName" id="userName" type="userName" placeholder="player123" required="true" title="username">
         </div>
         <div class="form-group">
             <label for="password">Password</label>
