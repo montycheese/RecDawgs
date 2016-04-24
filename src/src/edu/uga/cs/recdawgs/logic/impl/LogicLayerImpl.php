@@ -85,14 +85,15 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function findLeague($modelLeague=null, $leagueId=-1)
     {
-        if($modelLeague) {
+        return $this->objectLayer->findLeague($modelLeague);
+        /*if($modelLeague) {
             return $this->objectLayer->findLeague($modelLeague);
         }
         else if($leagueId > -1){
             $modelLeague = $this->objectLayer->createLeague();
             $modelLeague->setId($leagueId);
             return $this->objectLayer->findLeague($modelLeague);
-        }
+        }*/
 
     }
 
@@ -142,13 +143,13 @@ class LogicLayerImpl implements LogicLayer{
 
     public function findTeamsIsMemberOf($student=null, $studentId=-1){
 
-        if ($student) {
+        if ($student != null) {
             return $this->objectLayer->restoreStudentMemberOfTeam($student, null);
         }
         else if($studentId > -1){
             $modelStudent = $this->objectLayer->createStudent();
             $modelStudent->setId($studentId);
-            $student = $this->objectLayer->findStudent($modelStudent);
+            $student = $this->objectLayer->findStudent($modelStudent)->current();
             return $this->objectLayer->restoreStudentMemberOfTeam($student, null);
         }
         else return null;

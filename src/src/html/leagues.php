@@ -11,9 +11,10 @@ use edu\uga\cs\recdawgs\presentation as Presentation;
 <div class="container">
 <h1>Leagues</h1>
 
-    <h3>Indoor:</h3>
+    <h3>All:</h3>
 
     <?php
+    //echo var_dump($_SESSION);
     $leagueUI = new Presentation\LeagueUI();
     echo $leagueUI->listIndoor();
     ?>
@@ -21,8 +22,8 @@ use edu\uga\cs\recdawgs\presentation as Presentation;
     <h3>Outdoor:</h3>
 
     <?php
-    $leagueUI = new Presentation\LeagueUI();
-    echo $leagueUI->listOutdoor();
+    //leagueUI = new Presentation\LeagueUI();
+    //echo $leagueUI->listOutdoor();
     ?>
    
 </div>

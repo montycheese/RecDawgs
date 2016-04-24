@@ -18,7 +18,7 @@ class TeamUI {
      * @param LogicLayerImpl $logicLayer
      */
     public function __construct($logicLayer=null){
-        $this->logicLayer = (isset($logicLayer)) ? $logicLayer : $_SESSION['logicLayer'];
+        $this->logicLayer = (isset($logicLayer)) ? $logicLayer : new LogicLayerImpl();
     }
 
     public function listAll(){

@@ -19,20 +19,19 @@ class LeagueUI {
      * @param LogicLayerImpl $logicLayer
      */
     public function __construct($logicLayer=null){
-        $this->logicLayer = (isset($logicLayer)) ? $logicLayer : $_SESSION['logicLayer'];
+        $this->logicLayer = (isset($logicLayer)) ? $logicLayer : new LogicLayerImpl();
     }
 
     public function listIndoor() {
     	$html = "";
 
         try{
-        	$leagueModel = $_SESSION['logicLayer']->createLeague(
-			    null, null, null, True, null, null, null, null);
-        	$leaguesIndoor = $this->logicLayer->findLeague($leagueModel);
+
+        	$leaguesIndoor = $this->logicLayer->findLeague(null, -1);
 		    $leagueIndoor = $leaguesIndoor->current();
 
 		    if ($leaguesIndoor->size() == 0) {
-		        $html .= "<p>No indoor leagues</p>";
+		        $html .= "<p>No leagues</p>";
 		    } else {
 		        $html .= "<form method='POST' action='league.php'>";
 		        $html .= "<select class='form-control'>";

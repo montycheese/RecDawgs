@@ -7,14 +7,11 @@
  */
 
 //check if user is even logged in
-if(isset($_SESSION) && isset($_SESSION['userObject'])) {
 
-    //unset all session variables.
-    for ($i = 0; $i < count($_SESSION); $i++) {
-        unset($_SESSION[$i]);
-    }
+session_start();
     //destroy the php session.
-    session_destroy();
-}
+session_unset();
+session_destroy();
+
 //redirect to login page.
 header("Location: login.php");

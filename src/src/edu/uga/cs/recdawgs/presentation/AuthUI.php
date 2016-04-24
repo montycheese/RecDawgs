@@ -8,6 +8,10 @@
 
 namespace edu\uga\cs\recdawgs\presentation;
 
+spl_autoload_register(function ($class_name) {
+    include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
+});
+
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 use edu\uga\cs\recdawgs\object\impl\ObjectLayerImpl as ObjectLayerImpl;
 use edu\uga\cs\recdawgs\persistence\impl\PersistenceLayerImpl as PersistenceLayerImpl;
@@ -20,18 +24,23 @@ class AuthUI {
      */
     public function __construct($dbConnection=null){
         if($dbConnection==null){
-            $dbConnection = new \edu\uga\cs\recdawgs\persistence\impl\DbConnection();
+            $this->dbConnection = new \edu\uga\cs\recdawgs\persistence\impl\DbConnection();
         }
-        $objectLayer = new ObjectLayerImpl(null);
-        $persistenceLayer = new PersistenceLayerImpl($dbConnection, $objectLayer);
-        $objectLayer->setPersistence($persistenceLayer);
-        $logicLayer = new LogicLayerImpl($objectLayer, $dbConnection);
-
+        else{
+            $this->dbConnection = $dbConnection;
+        }
+        $this->objectLayer = new ObjectLayerImpl(null);
+        $this->persistenceLayer = new PersistenceLayerImpl($this->dbConnection, $this->objectLayer);
+        $this->objectLayer->setPersistence($this->persistenceLayer);
+        $this->logicLayer = new LogicLayerImpl($this->objectLayer, $this->dbConnection);
+/*
         //store in Auth UI obj. dont add to session until user has been authenticated.
         $this->dbConnection = $dbConnection;
         $this->objectLayer = $objectLayer;
         $this->persistenceLayer = $persistenceLayer;
-        $this->logicLayer = $logicLayer;
+        $this->logicLayer = $logicLayer;*/
+
+
     }
 
     /**
@@ -100,12 +109,13 @@ class AuthUI {
     private function createSession($user, $student=true){
 
         session_start();
-        $_SESSION['userObject'] = $user;
-        $_SESSION['logicLayer'] = $this->logicLayer;
+        $_SESSION['userId'] = $user->getId();
+       /* $_SESSION['logicLayer'] = $this->logicLayer;
         $_SESSION['objectLayer'] = $this->objectLayer;
         $_SESSION['persistenceLayer'] = $this->persistenceLayer;
-        $_SESSION['dbConnection'] = $this->dbConnection;
-        if($student){
+        $_SESSION['dbConnection'] = $this->dbConnection;*/
+
+        if($student == true){
             $_SESSION['userType'] = 0;
         }
         else{

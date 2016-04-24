@@ -40,8 +40,8 @@ class LeagueIterator extends PersistenceIterator{
                     $resultSet[$i]['is_indoor'],
                     intval($resultSet[$i]['min_teams']),
                     intval($resultSet[$i]['max_teams']),
-                    intval($resultSet[$i]['min_players']),
-                    intval($resultSet[$i]['max_players'])
+                    intval($resultSet[$i]['min_members']),
+                    intval($resultSet[$i]['max_members'])
                 );
                 $league->setId(intval($resultSet[$i]['league_id']));
                 array_push($this->array, $league);
