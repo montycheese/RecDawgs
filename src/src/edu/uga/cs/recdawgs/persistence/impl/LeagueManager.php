@@ -50,16 +50,26 @@ class LeagueManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $league->getName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $league->getLeagueRules(), \PDO::PARAM_STR);
-            $stmt->bindParam(3, $league->getMatchRules(), \PDO::PARAM_STR);
+
+            $name = $league->getName();
+            $leagueRules = $league->getLeagueRules();
+            $matchRules = $league->getMatchRules();
             $isIndoor = ($league->getIsIndoor() ? 1 : 0);
+            $minTeams = $league->getMinTeams();
+            $maxTeams = $league->getMaxTeams();
+            $minMembers = $league->getMinMembers();
+            $maxMembers = $league->getMaxMembers();
+            $leagueId = $league->getId();
+
+            $stmt->bindParam(1, $name, \PDO::PARAM_STR);
+            $stmt->bindParam(2, $leagueRules, \PDO::PARAM_STR);
+            $stmt->bindParam(3, $matchRules, \PDO::PARAM_STR);
             $stmt->bindParam(4, $isIndoor, \PDO::PARAM_INT);
-            $stmt->bindParam(5, $league->getMinTeams, \PDO::PARAM_INT);
-             $stmt->bindParam(6, $league->getMaxTeams, \PDO::PARAM_INT);
-             $stmt->bindParam(7, $league->getMinMembers, \PDO::PARAM_INT);
-             $stmt->bindParam(8, $league->getMaxMembers, \PDO::PARAM_INT);
-             $stmt->bindParam(9, $league->getId(), \PDO::PARAM_INT);
+            $stmt->bindParam(5, $minTeams, \PDO::PARAM_INT);
+             $stmt->bindParam(6, $maxTeams, \PDO::PARAM_INT);
+             $stmt->bindParam(7, $minMembers, \PDO::PARAM_INT);
+             $stmt->bindParam(8, $maxMembers, \PDO::PARAM_INT);
+             $stmt->bindParam(9, $leagueId, \PDO::PARAM_INT);
       
             
             if($stmt->execute()){
@@ -79,15 +89,24 @@ class LeagueManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $league->getName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $league->getLeagueRules(), \PDO::PARAM_STR);
-            $stmt->bindParam(3, $league->getMatchRules(), \PDO::PARAM_STR);
+
+            $name = $league->getName();
+            $leagueRules = $league->getLeagueRules();
+            $matchRules = $league->getMatchRules();
             $isIndoor = ($league->getIsIndoor() ? 1 : 0);
+            $minTeams = $league->getMinTeams();
+            $maxTeams = $league->getMaxTeams();
+            $minMembers = $league->getMinMembers();
+            $maxMembers = $league->getMaxMembers();
+
+            $stmt->bindParam(1, $name, \PDO::PARAM_STR);
+            $stmt->bindParam(2, $leagueRules, \PDO::PARAM_STR);
+            $stmt->bindParam(3, $matchRules, \PDO::PARAM_STR);
             $stmt->bindParam(4, $isIndoor, \PDO::PARAM_INT);
-            $stmt->bindParam(5, $league->getMinTeams(), \PDO::PARAM_INT);
-            $stmt->bindParam(6, $league->getMaxTeams(), \PDO::PARAM_INT);
-            $stmt->bindParam(7, $league->getMinMembers(), \PDO::PARAM_INT);
-            $stmt->bindParam(8, $league->getMaxMembers(), \PDO::PARAM_INT);
+            $stmt->bindParam(5, $minTeams, \PDO::PARAM_INT);
+            $stmt->bindParam(6, $maxTeams, \PDO::PARAM_INT);
+            $stmt->bindParam(7, $minMembers, \PDO::PARAM_INT);
+            $stmt->bindParam(8, $maxTeams, \PDO::PARAM_INT);
 
             if($stmt->execute()){
                 $league->setId($this->dbConnection->lastInsertId());
@@ -112,8 +131,12 @@ class LeagueManager {
         //create prepared statement from query
         $stmt = $this->dbConnection->prepare($q);
         //bind parameters to prepared statement
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $league->getId(), \PDO::PARAM_INT);
+
+        $teamId = $team->getId();
+        $leagueId = $league->getId();
+
+        $stmt->bindParam(1, $teamId, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $leagueId, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo 'Link created successfully';
         }
@@ -139,8 +162,12 @@ class LeagueManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
-            $stmt->bindParam(2, $round->getId(), \PDO::PARAM_INT);
+
+            $leagueId = $league->getId();
+            $roundId = $round->getId();
+
+            $stmt->bindParam(1, $leagueId, \PDO::PARAM_INT);
+            $stmt->bindParam(2, $roundId, \PDO::PARAM_INT);
 
             if ($stmt->execute()) {
                 echo 'link created successfully';
@@ -169,7 +196,10 @@ class LeagueManager {
             LIMIT 1;';
 
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
+
+        $leagueId = $league->getId();
+
+        $stmt->bindParam(1, $leagueId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -195,7 +225,10 @@ class LeagueManager {
             ON sports_venue.sports_venue_id = league_venue.venue_id
             WHERE league_venue.league_id =  ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
+
+        $leagueId = $league->getId();
+
+        $stmt->bindParam(1, $leagueId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -221,7 +254,10 @@ class LeagueManager {
         $q = 'SELECT * from '. DB_NAME . '.round' .
             ' WHERE league_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
+
+        $leagueId = $league->getId();
+
+        $stmt->bindParam(1, $leagueId, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -250,7 +286,9 @@ class LeagueManager {
                 WHERE league_team.league_id = ?;';
 
         $lgmt = $this->dbConnection->prepare($q);
-        $lgmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
+        $leagueId = $league->getId();
+
+        $lgmt->bindParam(1, $leagueId, \PDO::PARAM_INT);
         if ($lgmt->execute()){
             //get results from Query
             $resultSet = $lgmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -342,7 +380,8 @@ class LeagueManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $league->getId(), \PDO::PARAM_INT);
+        $leagueId = $league->getId();
+        $stmt->bindParam(1, $leagueId, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'league deleted successfully';
@@ -364,8 +403,11 @@ class LeagueManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $league->getId(), \PDO::PARAM_INT);
+        $teamId = $team->getId();
+        $leagueId = $league->getId();
+
+        $stmt->bindParam(1, $teamId, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $leagueId, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'link deleted successfully';
@@ -388,8 +430,9 @@ class LeagueManager {
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
         $null = null;
+        $roundId = $round->getId();
         $stmt->bindParam(1, $null);
-        $stmt->bindParam(2, $round->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam(2, $roundId, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'link deleted successfully';

@@ -6,7 +6,7 @@
     <br>
 
     <p>
-    <form id="createLeague" action="php\createLeague.php" method="post">
+    <form id="createLeague" action="createLeague.php" method="post">
         <div class="form-group">
             <label for="leagueName">League Name</label>
             <br>
