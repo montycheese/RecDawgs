@@ -46,11 +46,14 @@ class TeamManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $team->getName(), \PDO::PARAM_STR);
+            $teamName = $team->getName();
+            $stmt->bindParam(1, $teamName, \PDO::PARAM_STR);
             if($team->getCaptain() != NULL) {
-                $stmt->bindParam(2, $team->getCaptain()->getId(), \PDO::PARAM_INT);
+                $teamCapID = $team->getCaptain()->getId();
+                $stmt->bindParam(2, $teamCapID, \PDO::PARAM_INT);
             }
-            $stmt->bindParam(3, $team->getId(), \PDO::PARAM_INT);
+            $teamID = $team->getId();
+            $stmt->bindParam(3, $teamID, \PDO::PARAM_INT);
 
             //echo $q;
             if($stmt->execute()){
@@ -67,9 +70,11 @@ class TeamManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $team->getName(), \PDO::PARAM_STR);
+            $teamName = $team->getName();
+            $stmt->bindParam(1, $teamName, \PDO::PARAM_STR);
             if($team->getCaptain() != NULL) {
-                $stmt->bindParam(2, $team->getCaptain()->getId(), \PDO::PARAM_INT);
+                $teamCapID = $team->getCaptain()->getId();
+                $stmt->bindParam(2, $teamCapID, \PDO::PARAM_INT);
             }
             if($stmt->execute()){
                 $team->setId($this->dbConnection->lastInsertId());
@@ -93,8 +98,10 @@ class TeamManager {
     public function storeStudentMemberOf($student, $team){
        $q = 'INSERT INTO is_member_of (user_id, team_id) VALUES(?, ?);';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $team->getId(), \PDO::PARAM_INT);
+        $studentID = $student->getId();
+        $teamID = $team->getId();
+        $stmt->bindParam(1, $studentID, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $teamID, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo "
             {$student->getFirstName()} {$student->getLastName()} successfully added as team member of: " . $team->getName();
@@ -114,8 +121,10 @@ class TeamManager {
     public function storeStudentCaptainOf($student, $team){
         $q = 'UPDATE team10.team SET captain_id = ? WHERE team_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $student->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $team->getId(), \PDO::PARAM_INT);
+        $studentID = $student->getId();
+        $teamID = $team->getId();
+        $stmt->bindParam(1, $studentID, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $teamID, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo "
             {$student->getFirstName()} {$student->getLastName()} successfully added as team captain of: " . $team->getName();
@@ -136,8 +145,10 @@ class TeamManager {
     public function storeParticipatesIn($team, $league){
         $q = 'INSERT INTO league_team (team_id, league_id) VALUES(?, ?);';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $league->getId(), \PDO::PARAM_INT);
+        $teamID = $team->getId();
+        $leagueID = $league->getId();
+        $stmt->bindParam(1, $teamID, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $leagueID, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo 'Link successfully created';
         }
@@ -207,7 +218,8 @@ class TeamManager {
 
         //echo $q;
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        $teamID = $team->getId();
+        $stmt->bindParam(1, $teamID, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -230,7 +242,8 @@ class TeamManager {
     public function restoreMatchesAway($team){
         $q = 'SELECT * FROM '. DB_NAME .  '.match WHERE away_team_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        $teamID = $team->getId();
+        $stmt->bindParam(1, $teamID, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -253,7 +266,8 @@ class TeamManager {
     public function restoreMatchesHome($team){
         $q = 'SELECT * FROM '. DB_NAME .  '.match WHERE home_team_id = ?;';
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        $teamID = $team->getId();
+        $stmt->bindParam(1, $teamID, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -279,7 +293,8 @@ class TeamManager {
         $q = 'SELECT * from ' . DB_NAME .  '.user WHERE user.user_id = ? ';
 
         $stmt = $this->dbConnection->prepare($q . ';');
-        $stmt->bindParam(1, $team->getCaptain()->getId(), \PDO::PARAM_INT);
+        $teamCapID = $team->getCaptain()->getId();
+        $stmt->bindParam(1, $teamCapID, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -332,7 +347,8 @@ class TeamManager {
         $q = 'SELECT * from league WHERE league_id = (SELECT league_id FROM league_team WHERE team_id = ? LIMIT 1);';
 
         $stmt = $this->dbConnection->prepare($q);
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        $teamID = $team->getId();
+        $stmt->bindParam(1, $teamID, \PDO::PARAM_INT);
         if ($stmt->execute()){
             //get results from Query
             $resultSet = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -360,7 +376,8 @@ class TeamManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
+        $teamID = $team->getId();
+        $stmt->bindParam(1, $teamID, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'Team deleted successfully
@@ -399,8 +416,10 @@ class TeamManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $league->getId(), \PDO::PARAM_INT);
+        $teamID = $team->getId();
+        $leagueID = $league->getId();
+        $stmt->bindParam(1, $teamID, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $leagueID, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'Link deleted successfully ';
@@ -423,8 +442,10 @@ class TeamManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $team->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam(2, $student->getId(), \PDO::PARAM_INT);
+        $teamID = $team->getId();
+        $studentID = $student->getId();
+        $stmt->bindParam(1, $teamID, \PDO::PARAM_INT);
+        $stmt->bindParam(2, $studentID, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'link deleted successfully ';
@@ -446,7 +467,8 @@ class TeamManager {
         $stmt = $this->dbConnection->prepare($q);
         $null = null;
         $stmt->bindParam(1, $null);
-        $stmt->bindParam(2, $team->getId(), \PDO::PARAM_INT);
+        $teamID = $team->getId();
+        $stmt->bindParam(2, $teamID, \PDO::PARAM_INT);
         if($stmt->execute()){
             echo "{$student->getFirstName()} {$student->getLastName()} successfully removed as team captain of: " . $team->getName();
         }
