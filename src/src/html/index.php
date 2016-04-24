@@ -1,4 +1,4 @@
-<?php include('includes/header.php')?>
+<?php include('includes/header.php');?>
 
 <body>
 <div class="container">
@@ -28,6 +28,6 @@
     </p>
     
     
-</div
+</div>
 </body>
 </html>
