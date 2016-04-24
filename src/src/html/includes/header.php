@@ -12,8 +12,7 @@ if (strpos($url,'login.php') === false) {
     }
 }
 
-//echo var_dump($_SESSION);
-use edu\uga\cs\recdawgs\presentation as Presentation;
+//use edu\uga\cs\recdawgs\presentation as Presentation;
 
 ?>
 
