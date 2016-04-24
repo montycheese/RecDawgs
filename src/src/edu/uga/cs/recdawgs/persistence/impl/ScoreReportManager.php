@@ -46,17 +46,23 @@ class ScoreReportManager {
 
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
+            $homePoints = $report->getHomePoints();
+            $awayPoints = $report->getAwayPoints();
+            $DATE = $report->getDate();
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $report->getHomePoints(), \PDO::PARAM_INT);
-            $stmt->bindParam(2, $report->getAwayPoints(), \PDO::PARAM_INT);
-            $stmt->bindParam(3, $report->getDate());
+            $stmt->bindParam(1, $homePoints, \PDO::PARAM_INT);
+            $stmt->bindParam(2, $awayPoints, \PDO::PARAM_INT);
+            $stmt->bindParam(3, $DATE);
             if($report->getMatch() != NULL) {
-                $stmt->bindParam(4, $report->getMatch()->getId(), \PDO::PARAM_INT);
+                $matchId = $report->getMatch()->getId();
+                $stmt->bindParam(4, $matchId, \PDO::PARAM_INT);
             }
             if($report->getStudent() != NULL) {
-                $stmt->bindParam(5, $report->getStudent()->getId(), \PDO::PARAM_INT);
+                $studentId = $report->getStudent()->getId();
+                $stmt->bindParam(5, $studentId, \PDO::PARAM_INT);
             }
-            $stmt->bindParam(6, $report->getId(), \PDO::PARAM_INT);
+            $reportId = $report->getId();
+            $stmt->bindParam(6, $reportId, \PDO::PARAM_INT);
 
             if($stmt->execute()){
                 echo 'report created successfully';
@@ -73,14 +79,20 @@ class ScoreReportManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $report->getHomePoints(), \PDO::PARAM_INT);
-            $stmt->bindParam(2, $report->getAwayPoints(), \PDO::PARAM_INT);
-            $stmt->bindParam(3, $report->getDate());
+            $homePoints = $report->getHomePoints();
+            $awayPoints = $report->getAwayPoints();
+            $DATE = $report->getDate();
+            //bind parameters to prepared statement
+            $stmt->bindParam(1, $homePoints, \PDO::PARAM_INT);
+            $stmt->bindParam(2, $awayPoints, \PDO::PARAM_INT);
+            $stmt->bindParam(3, $DATE);
             if($report->getMatch() != NULL) {
-                $stmt->bindParam(4, $report->getMatch()->getId(), \PDO::PARAM_INT);
+                $matchId = $report->getMatch()->getId();
+                $stmt->bindParam(4, $matchId, \PDO::PARAM_INT);
             }
             if($report->getStudent() != NULL) {
-                $stmt->bindParam(5, $report->getStudent()->getId(), \PDO::PARAM_INT);
+                $studentId = $report->getStudent()->getId();
+                $stmt->bindParam(5, $studentId, \PDO::PARAM_INT);
             }
             if($stmt->execute()){
                 $report->setId($this->dbConnection->lastInsertId());
@@ -146,7 +158,8 @@ class ScoreReportManager {
         //create Prepared statement
         $stmt = $this->dbConnection->prepare($q);
         //bind parameter to query
-        $stmt->bindParam(1, $report->getId(), \PDO::PARAM_INT);
+        $reportId = $report->getId();
+        $stmt->bindParam(1, $reportId, \PDO::PARAM_INT);
         //execute query
         if ($stmt->execute()) {
             echo 'report deleted successfully';
