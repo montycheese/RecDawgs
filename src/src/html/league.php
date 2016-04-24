@@ -15,7 +15,7 @@
     
     <br> <br> <br>
     <p>
-    <form method="POST" action="php/createTeam.php">
+    <form method="POST" action="php/doCreateTeam.php">
         Create your own Team:
         <br><br>
         
