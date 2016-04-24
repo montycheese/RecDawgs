@@ -73,9 +73,10 @@ class LogicLayerImpl implements LogicLayer{
      * @return Persistence\TeamIterator An iterator of all teams that match the attributes of the modelTeam
      * or null if none found
      */
-    public function findTeam($modelTeam)
+    public function findTeam($modelTeam=null)
     {
         return $this->objectLayer->findTeam($modelTeam);
+
     }
 
     /**
@@ -84,9 +85,16 @@ class LogicLayerImpl implements LogicLayer{
      * @param Entity\LeagueImpl $modelLeague
      * @return Persistence\LeagueIterator or null
      */
-    public function findLeague($modelLeague)
+    public function findLeague($modelLeague=null, $leagueId=-1)
     {
-        return $this->objectLayer->findLeague($modelLeague);
+        if($modelLeague) {
+            return $this->objectLayer->findLeague($modelLeague);
+        }
+        else if($leagueId > -1){
+            $modelLeague = $this->objectLayer->createLeague();
+            $modelLeague->setId($leagueId);
+            return $this->objectLayer->findLeague($modelLeague);
+        }
 
     }
 
@@ -96,9 +104,20 @@ class LogicLayerImpl implements LogicLayer{
      * @param Entity\studentImpl $modelStudent
      * @return Persistence\StudentIterator or null
      */
-    public function findStudent($modelStudent)
+    public function findStudent($modelStudent=null, $studentId=-1)
     {
-        return $this->objectLayer->findStudent($modelStudent);
+        if($modelStudent !=null ) {
+            return $this->objectLayer->findStudent($modelStudent);
+        }
+        else if($studentId > -1){
+            $modelStudent = $this->objectLayer->createStudent();
+            $modelStudent->setId($studentId);
+            return $this->objectLayer->findStudent($modelStudent);
+
+        }
+        else{
+            return null;
+        }
     }
 
     /**
@@ -121,6 +140,20 @@ class LogicLayerImpl implements LogicLayer{
     public function findSportVenue($modelSportsVenue)
     {
         return $this->objectLayer->findSportsVenue($modelSportsVenue);
+    }
+
+    public function findTeamsIsMemberOf($student=null, $studentId=-1){
+
+        if ($student) {
+            return $this->objectLayer->restoreStudentMemberOfTeam($student, null);
+        }
+        else if($studentId > -1){
+            $modelStudent = $this->objectLayer->createStudent();
+            $modelStudent->setId($studentId);
+            $student = $this->objectLayer->findStudent($modelStudent);
+            return $this->objectLayer->restoreStudentMemberOfTeam($student, null);
+        }
+        else return null;
     }
 
     /**

@@ -8,7 +8,8 @@
 //check to make sure none of the data is null or empty
 foreach($_POST as $inputData){
     if($inputData == "" or $inputData == null){
-        header("Location: ../register.php?status=failure");
+        $errorMsg = urlencode("Missing form field");
+        header("Location: ../teams.php?status={$errorMsg}");
         exit();
     }
 }
@@ -47,6 +48,7 @@ catch(\edu\uga\cs\recdawgs\RDException $rde){
     header("Location: ../register.php?status={$error_msg}");
 }
 catch(Exception $e){
-    header("Location: ../register.php?status={urlencode(Unexpected error)}");
+    $errorMsg = urlencode("Unexpected error");
+    header("Location: ../register.php?status={$errorMsg}");
 }
 exit();

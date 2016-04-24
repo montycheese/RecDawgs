@@ -38,6 +38,7 @@ catch(\edu\uga\cs\recdawgs\RDException $rde){
     header("Location: ../leagues.php?status={$error_msg}");
 }
 catch(Exception $e){
-    header("Location: ../leagues.php?status={urlencode(Unexpected error)}");
+    $errorMsg= urlencode("Unexpected error");
+    header("Location: ../leagues.php?status={$errorMsg}");
 }
 exit();

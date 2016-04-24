@@ -9,7 +9,8 @@
 //check to make sure none of the data is null or empty
 foreach($_POST as $inputData){
     if($inputData == "" or $inputData == null){
-        header("Location: ../teams.php?status=failure");
+        $errorMsg = urlencode("Missing form field");
+        header("Location: ../teams.php?status={$errorMsg}");
         exit();
     }
 }
@@ -30,7 +31,7 @@ try {
         $league
     );
 
-    $successMsg = urlencode("Team successfulyl created!");
+    $successMsg = urlencode("Team successfully created!");
     header("Location: ../teams.php?status={$successMsg}");
     //echo $persistenceId;
 }
@@ -39,6 +40,7 @@ catch(\edu\uga\cs\recdawgs\RDException $rde){
     header("Location: ../teams.php?status={$error_msg}");
 }
 catch(Exception $e){
-    header("Location: ../teams.php?status={urlencode(Unexpected error)}");
+    $errorMsg = urlencode("Unexpected error");
+    header("Location: ../teams.php?status={$errorMsg}");
 }
 exit();

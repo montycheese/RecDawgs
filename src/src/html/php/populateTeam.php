@@ -2,6 +2,7 @@
 
 //used to populate the teams that a given user is part of, in teams.php
 
+
 try {
     $logicLayer = $_SESSION['logicLayer'];
 

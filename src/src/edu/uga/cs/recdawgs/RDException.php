@@ -3,6 +3,7 @@ namespace edu\uga\cs\recdawgs;
 
 class RDException extends \Exception {
     private static $serialVersionUID = 1;
+    public $string;
     /**
      * Create a new RDException object.
      * @param String $string A string containing the message pertaining to the exception
@@ -10,6 +11,7 @@ class RDException extends \Exception {
      */
     public function __construct($string=null,$prev=null)
         {
+            $this->string = $string;
             if($prev != null) {
                 parent::__construct($previous=$prev);
             }

@@ -10,7 +10,9 @@
 foreach($_POST as $inputData){
     if($inputData == "" or $inputData == null){
         //todo figure out where im rerouting traffic
-        //header("Location: ../teams.php?status=failure");
+        $errorMsg = urlencode("Missing form field");
+     //   header("Location: ../teams.php?status={$errorMsg}");
+
         exit();
     }
 }
@@ -35,10 +37,11 @@ try {
     //echo $persistenceId;
 }
 catch(\edu\uga\cs\recdawgs\RDException $rde){
-    $error_msg = urlencode($rde->string);
-    //header("Location: ../teams.php?status={$error_msg}");
+    $errorMsg = urlencode($rde->string);
+    //header("Location: ../teams.php?status={$errorMsg}");
 }
 catch(Exception $e){
-    //header("Location: ../teams.php?status={urlencode(Unexpected error)}");
+    $errorMsg = urlencode("Unexpected error");
+    //header("Location: ../teams.php?status={$errorMsg}");
 }
 exit();
