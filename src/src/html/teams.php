@@ -1,6 +1,12 @@
 <?php include('includes/header.php')?>
 
 <body>
-<h1>Teams</h1>
+    <div class="container">
+        <h3>Teams</h3>
+        
+        <select name="teams" id="teams">
 
+        </select>
+
+    </div>
 </body>
