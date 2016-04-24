@@ -1,10 +1,18 @@
 <?php
 // include_once('../resources/config.php');
-if (!isset($_SESSION) || !isset($_SESSION['userObject'])){
-    //redirect to login page
-    //header("Location: login.php");
-    //exit();
+session_start();
+$url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+
+if (strpos($url,'login.php') === false) {
+    die(var_dump($_SESSION));
+    if (!isset($_SESSION) || !isset($_SESSION['userObject'])){
+        die(var_dump($_SESSION));
+        //redirect to login page
+        header("Location: login.php");
+        exit();
+    }
 }
+
 //echo var_dump($_SESSION);
 use edu\uga\cs\recdawgs\presentation as Presentation;
 

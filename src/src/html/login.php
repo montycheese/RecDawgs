@@ -5,7 +5,7 @@
     <h1>Log-in</h1>
     
    
-    <form id="login" action="" method="post">
+    <form id="login" action="php/auth.php" method="post">
         <div class="form-group">
             <label for="userName">User Name</label>
             <br>

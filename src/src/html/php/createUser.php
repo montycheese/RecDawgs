@@ -5,10 +5,7 @@
  * Date: 4/23/16
  * Time: 13:56
  */
-spl_autoload_register(function ($class_name) {
-    include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
-});
-
+require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 //die(var_dump($_POST));
 //check to make sure none of the data is null or empty
