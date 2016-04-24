@@ -55,7 +55,9 @@ class AuthUI {
             //get student
             $student = $studentIter->current();
             //compare entered password and hashed one in db
-            if(password_verify($password, $student->getPassword())){
+            //if(password_verify($password, $student->getPassword())){
+            //TODO FIX to hash
+            if($password == $student->getPassword()){
                 return $this->createSession($student, true);
             }
             else{
@@ -96,6 +98,7 @@ class AuthUI {
      * @return string, session create success.
      */
     private function createSession($user, $student=true){
+
         session_start();
         $_SESSION['userObject'] = $user;
         $_SESSION['logicLayer'] = $this->logicLayer;
@@ -109,6 +112,7 @@ class AuthUI {
             //admin
             $_SESSION['userType'] = 1;
         }
+        //die(var_dump($_SESSION));
         return "Login created, session started";
     }
 }

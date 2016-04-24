@@ -44,12 +44,18 @@ class UserManager {
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
-            $stmt->bindParam(1, $administrator->getFirstName(), \PDO::PARAM_STR);
-            $stmt->bindParam(2, $administrator->getLastName(), \PDO::PARAM_STR);
-            $stmt->bindParam(3, $administrator->getUserName(), \PDO::PARAM_STR);
-            $stmt->bindParam(4, $administrator->getPassword(), \PDO::PARAM_STR);
-            $stmt->bindParam(5, $administrator->getEmailAddress(), \PDO::PARAM_STR);
-            $stmt->bindParam(6, $administrator->getId(), \PDO::PARAM_STR);
+            $firstName = $administrator->getFirstName();
+            $lastName = $administrator->getLastName();
+            $userName = $administrator->getUserName();
+            $password = $administrator->getPassword();
+            $emailAddress = $administrator->getEmailAddress();
+            $persistenceId = $administrator->getId();
+            $stmt->bindParam(1, $firstName, \PDO::PARAM_STR);
+            $stmt->bindParam(2,$lastName, \PDO::PARAM_STR);
+            $stmt->bindParam(3, $userName, \PDO::PARAM_STR);
+            $stmt->bindParam(4, $password, \PDO::PARAM_STR);
+            $stmt->bindParam(5, $emailAddress, \PDO::PARAM_STR);
+            $stmt->bindParam(6, $persistenceId, \PDO::PARAM_STR);
 
             //echo $q;
             if ($stmt->execute()) {

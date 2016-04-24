@@ -24,16 +24,14 @@ class LogicLayerImpl implements LogicLayer{
         if ($objectLayer != null) {
             $this->objectLayer = $objectLayer;
         }
-        else if ($dbConnection != null) {
+        else  {
             $dbConnection = new Persistence\DbConnection();
             $objectLayer = new Object\ObjectLayerImpl();
             $persistenceLayer = new Persistence\PersistenceLayerImpl($dbConnection, $objectLayer);
             $objectLayer->setPersistence($persistenceLayer);
             $this->objectLayer = $objectLayer;
         }
-        else {
-            throw new RDException("Both parameters can not be null");
-        }
+
     }
 
     /**
@@ -172,7 +170,7 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function createStudent($firstName, $lastName, $userName, $password, $emailAddress, $studentId, $major, $address)
     {
-        if($firstName=null || $lastName=null || $userName=null || $password=null ||  $emailAddress=null || $studentId=null || $major=null || $address==null)
+        if($firstName==null || $lastName==null || $userName==null || $password==null ||  $emailAddress==null || $studentId==null || $major==null || $address==null)
             throw new RDException("Parameters can not be null.");
         
         $student = $this->objectLayer->createStudent(
@@ -186,6 +184,7 @@ class LogicLayerImpl implements LogicLayer{
             $address
         );
 
+        $this->objectLayer->storeStudent($student);
         return $student->getId();
 
     }
@@ -201,7 +200,7 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function createTeam($teamName, $student, $league)
     {
-        if($teamName=null || $student == null || $league == null) 
+        if($teamName==null || $student == null || $league == null)
             throw new RDException("Parameters can not be null.");
         //check if league is full
         $teamIter = $this->objectLayer->restoreTeamParticipatesInLeague(null, $league);
@@ -210,6 +209,7 @@ class LogicLayerImpl implements LogicLayer{
         }
 
         $team = $this->objectLayer->createTeam($teamName, $student, $league);
+        $this->objectLayer->storeTeam($team);
         return $team->getId();
     }
 
@@ -229,7 +229,7 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function createLeague($name, $leagueRules, $matchRules, $isIndoor, $minTeams, $maxTeams, $minMembers, $maxMembers)
     {
-        if($name=null ||  $leagueRules=null ||  $matchRules=null ||  $isIndoor=null ||  $minTeams=null ||  $maxTeams=null ||  $minMembers=null ||  $maxMembers=null ||  $winnerOfLeague=null)
+        if($name==null ||  $leagueRules==null ||  $matchRules==null ||  $isIndoor==null ||  $minTeams==null ||  $maxTeams==null ||  $minMembers==null ||  $maxMembers==null)
             throw new RDException("Parameters can not be null.");
 
         $league = $this->objectLayer->createLeague(
@@ -242,6 +242,7 @@ class LogicLayerImpl implements LogicLayer{
             $minMembers,
             $maxMembers
         );
+        $this->objectLayer->storeLeague($league);
 
         return $league->getId();
     }
@@ -255,11 +256,14 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function createSportsVenue($name, $isIndoor, $address)
     {
-        if($name=null || $isIndoor=null || $address=null){
+        if($name==null || $isIndoor==null || $address==null){
             throw new RDException("Parameters can not be null");
         }
 
         $venue = $this->objectLayer->createSportsVenue($name,$address, $isIndoor);
+        $this->objectLayer->storeSportsVenue($venue);
+
+        return $venue->getId();
     }
 
     /**

@@ -20,11 +20,12 @@ try {
         //die(var_dump($_SESSION));
         $message = urlencode($message);
         header("Location: ../index.php?status={$message}");
+        exit();
     }
 }
 catch(Exception $e){
     $message = urlencode("Unexpected Error during authentication");
     header("Location: ../login.php?status={$message}");
 }
-//exit();
+exit();
 ?>
