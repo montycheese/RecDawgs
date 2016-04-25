@@ -1,42 +1,40 @@
-<?php include('includes/header.php')?>
+<?php include('includes/header.php'); ?>
 
 <body>
+
+    <div class="container">
     <h1>Create Sports Venue</h1>
     
     
-    <form method="POST" action="php/createSportsVenue">
-        Create your own Team:
-        <br><br>
+    <form method="POST" action="php/doCreateSportsVenue.php">
+
+        <div class="form-group">
+            <label for="venueName">Venue Name</label>
+            <br>
+            <input name="venueName" id="venueName" type="text" placeholder="Diagon Alley" pattern="[A-z]{1,}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="venueType">Indoor or Outdoor?</label>
+            <br>
+            <select name="isIndoor" id="isIndoor"> 
+                <option value="0">Indoor</option>
+                <option value="1">Outdoor</option>
+            </select>
+        </div>
         
-        <label for="venueName">Venue Name</label>
-        <br>
-        <input name="venueName" id="venueName" type="text" placeholder="Diagon Alley" required="true" pattern="[A-z]{1,}" title="venue name" style="border-radius:5px;padding:12px;width:200px;height:10px">
-        
-        
-        <br><br>    
-        
-        
-         <label for="venueType">Is this an indoor or outdoor venue?</label>
-        <br>
-        <select name="isIndoor" id="isIndoor"> 
-            <option value="indoor">Indoor</option>
-            <option value="outdoor">Outdoor</option>
-        
-        </select>
-        
-        
-        <br><br>    
-        
-        <label for="address">Address</label>
-        <br>
-        <input name="address" id="address" type="text"  required="true" pattern="[A-z]{1,}" title="address" style="border-radius:5px;padding:12px;width:200px;height:10px">
-        
-        
-        <br><br>    
+        <div class="form-group">
+            <label for="address">Address</label>
+            <br>
+            <input name="address" id="address" type="text"  pattern="[A-z]{1,}" title="address" required>
+        </div>
+
         <p>
             <input type="submit" value = "Create Sports Venue"> 
         </p>
     </form>
-   </p>
+    </div>
 
 </body>
+
+<?php include('includes/footer.php'); ?>

@@ -19,4 +19,5 @@ use edu\uga\cs\recdawgs\presentation as Presentation;
    
 </div>
 </body>
-</html>
+
+<?php include('includes/footer.php'); ?>

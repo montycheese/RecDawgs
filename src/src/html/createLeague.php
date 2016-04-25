@@ -1,4 +1,7 @@
-<?php include('includes/header.php')?>
+<?php 
+include('includes/header.php'); 
+// add $isIndoor
+?>
 
 <body>
 <div class="container">
@@ -10,52 +13,59 @@
         <div class="form-group">
             <label for="leagueName">League Name</label>
             <br>
-            <input name="name" id="leagueName" type="text" pattern="[A-z]{1,}" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <input name="name" id="leagueName" type="text" pattern="[A-z]{1,}" required>
         </div>
 
         <div class="form-group">
             <label for="leagueRules">League Rules</label>
             <br>
-            <input name="leagueRules" id="leagueRules" type="text" pattern="[A-z]{1,}" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <input name="leagueRules" id="leagueRules" type="text" pattern="[A-z]{1,}" required>
         </div>
 
         <div class="form-group">
             <label for="matchRules">Match Rules</label>
             <br>
-            <input name="matchRules" id="matchRules" type="text" pattern="[A-z]{1,}" style="border-radius:5px;padding:12px;width:200px;height:10px">
-        </div>
-
-        <div class="form-group">
-            <label for="isIndoor">Indoor?</label>
-            <br>
-            <select name="isIndoor" id="isIndoor">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
+            <input name="matchRules" id="matchRules" type="text" pattern="[A-z]{1,}" required>
         </div>
 
         <div class="form-group">
             <label for="minTeams">Minimum Number of Teams</label>
             <br>
-            <input name="matchRules" id="matchRules" type="text" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <input name="matchRules" id="matchRules" type="text" required>
         </div>
 
         <div class="form-group">
-            <label for="maxTeams">Minimum Number of Teams</label>
+            <label for="maxTeams">Maximum Number of Teams</label>
             <br>
-            <input name="maxTeams" id="maxTeams" type="text" pattern="[A-z]{1,}" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <input name="maxTeams" id="maxTeams" type="text" pattern="[A-z]{1,}" required>
         </div>
 
         <div class="form-group">
             <label for="minMembers">Minimum Number of Members on a Team</label>
             <br>
-            <input name="minMembers" id="minMembers" type="text" pattern="[A-z]{1,}" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <input name="minMembers" id="minMembers" type="text" pattern="[A-z]{1,}" required>
         </div>
 
         <div class="form-group">
             <label for="maxMembers">Maximum Number of Members on a Team</label>
             <br>
-            <input name="maxMembers" id="maxMembers" type="text" pattern="[A-z]{1,}" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <input name="maxMembers" id="maxMembers" type="text" pattern="[A-z]{1,}" required>
+        </div>
+
+        <!-- notice: sports venue -->
+        <div class="form-group">
+            <label for="sportsVenue">Sports Venue</label>
+            <br>
+            <select name="sportsVenue" id="sportsVenue">
+                <option value="-1">---SELECT TEAM TO VIEW---</option>
+                <!-- add sth -->
+            </select>
+        </div>
+        <!-- notice: indoor should be retrieved from sports venue info -->
+        <input name="isIndoor" id="isIndoor" type="hidden" value="<?php echo $isIndoor ?>">
+
+        <div class="form-group">
+            <input style="form-control" type="submit" name="Create A League">
         </div>
 
     </form>
@@ -64,3 +74,5 @@
 </div>
 
 </body>
+
+<?php include('includes/footer.php'); ?>
