@@ -15,7 +15,7 @@ class UserUI {
     private $logicLayer = null;
 
     public function __construct(){
-        $this->logicLayer = new LogicLayerImpl();
+        $this->logicLayer = new LogicLayerImpl\LogicLayerImpl();
     }
 
     public function create(){
