@@ -6,12 +6,11 @@
  * Time: 13:56
  */
 
-use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
-
-$logicLayer = new LogicLayerImpl\LogicLayerImpl();
 
 require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
+
+$logicLayer = new LogicLayerImpl();
 //die(var_dump($_POST));
 //check to make sure none of the data is null or empty
 foreach($_POST as $inputData){

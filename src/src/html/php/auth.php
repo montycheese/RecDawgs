@@ -24,7 +24,7 @@ try {
     }
 }
 catch(Exception $e){
-    $message = urlencode("Unexpected Error during authentication");
+    $message = urlencode($e->getTraceAsString());//urlencode("Unexpected Error during authentication");
     header("Location: ../login.php?status={$message}");
 }
 exit();

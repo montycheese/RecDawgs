@@ -1,8 +1,8 @@
-<?php 
-
+<?php
+require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 
-$logicLayer = new LogicLayerImpl\LogicLayerImpl();
+$logicLayer = new LogicLayerImpl();
 
 //check to make sure none of the data is null or empty
 foreach($_POST as $inputData){

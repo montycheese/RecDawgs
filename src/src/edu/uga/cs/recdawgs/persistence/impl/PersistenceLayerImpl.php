@@ -399,7 +399,8 @@ class PersistenceLayerImpl implements PersistenceLayer{
         }
         //return iterator of teams
         else if ($student != null){
-            return (new UserManager($this->db, $this->objLayer))->restoreTeamsMemberOf($student);
+            return (new UserManager($this->db, $this->objLayer))
+                ->restoreTeamsMemberOf($student);
         }
         else{
             throw new RDException('Both params can not be null');
