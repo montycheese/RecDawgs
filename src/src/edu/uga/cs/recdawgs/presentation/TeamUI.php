@@ -119,6 +119,7 @@ class TeamUI {
         return $html;
     }
 
+
     /**
      * Generate html dropdown of all teams a student is in
      *

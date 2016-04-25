@@ -26,7 +26,9 @@ if($teamObj->getCaptain()->getId() == $_SESSION['userId']) {
 
 
     <form method='POST' action='php/doUpdateTeam.php'>
-        <input name='teamID' id='teamID' type='hidden' value='<{$teamId}'>
+    <label for='teamName'>Team Name</label>
+    <input name='teamName' placeholder='New Team name'>
+        <input name='teamId' id='teamId' type='hidden' value='<{$teamId}'>
         <p>
             <input type='submit' value = 'Update Team'>
         </p>

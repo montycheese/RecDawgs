@@ -1,18 +1,31 @@
 <?php 
 include('includes/header.php');
-$theLeagueID = $_POST['leagues'];
+
+spl_autoload_register(function ($class_name) {
+    include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
+});
+use edu\uga\cs\recdawgs\presentation as Presentation;
+
+
+if(!isset($_POST) || !isset($_POST['leagueId'])){
+    $errorMsg  = urlencode("League not found.");
+    header("Location: leagues.php?status={$errorMsg}");
+}
+$leagueId = $_POST['leagueId'];
+$leagueUI = new Presentation\LeagueUI();
+$leagueObj = $leagueUI->getLeague($leagueId);
 ?>
 
 <body>
-    <h1>(League Name)</h1>
+    <h1><?php echo $leagueObj->getName();?></h1><br/>
+    <p>Select a team in this league to join</p>
     
-    <form method="POST" action="php/joinTeam.php"> 
+    <form method="POST" action="php/doJoinTeam.php">
              
         <select name="teams" id="teams">
             <option value="-1">---SELECT TEAM TO VIEW---</option>
             <?php
-            $teamUI = new Presentation\TeamUI();
-            echo $teamUI->listAll();
+            echo $leagueUI->listAllTeams($leagueObj);
             ?>
         </select>
             
@@ -23,9 +36,9 @@ $theLeagueID = $_POST['leagues'];
 
     <h1>Create a Team under this League</h1>
 
-    <form id="createTeam" action="doCreateTeam.php" method="post">
-        <input name="league" id="league" type="hidden" value="<?php echo $theLeagueID ?>">
-        <input name="teamCap" id="teamCap" type="hidden" value="<?php echo $_SESSION['userId'] ?>">
+    <form id="createTeam" action="php/doCreateTeam.php" method="post">
+        <input name="league" id="league" type="hidden" value="<?php echo $leagueId ?>">
+        <input name="teamCaptainId" id="teamCaptainId" type="hidden" value="<?php echo $_SESSION['userId'] ?>">
 
         <div class="form-group">
             <label for="teamName">Team Name</label>

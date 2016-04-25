@@ -22,6 +22,10 @@ class LeagueUI {
         $this->logicLayer = new LogicLayerImpl();
     }
 
+    public function getLeague($leagueId){
+        return $this->logicLayer->findLeague(null, $leagueId)->current();
+    }
+
     public function listAll() {
     	$html = "";
 
@@ -54,7 +58,7 @@ class LeagueUI {
             }
             else {
                 $html .= "<form method='POST' action='league.php'>";
-                $html .= "<select class='form-control'>";
+                $html .= "<select class='form-control' name='leagueId'>";
                 while ($leagueIter->valid()) {
                     $league = $leagueIter->current();
                     $leagueId = $league->getId();
@@ -72,6 +76,49 @@ class LeagueUI {
             echo $rde->string;
         }
 
+        return $html;
+    }
+
+
+    /**
+     *
+     * generate html toList all teams in the league.
+     * @param null $league
+     * @param int $leagueId
+     * @return string
+     */
+    public function listAllTeams($league=null, $leagueId=-1){
+        $html = "";
+        try {
+            if ($league != null) {
+                $teamIter = $this->logicLayer->findTeamsInLeague($league);
+                if ($teamIter != null) {
+                    while ($teamIter->valid()) {
+                        $team = $teamIter->current();
+                        $teamName = $team->getName();
+                        $teamId = $team->getId();
+                        $html .= "<option value='{$teamId}'>{$teamName}</option>";
+                        $teamIter->next();
+                    }
+                }
+            }
+            else if ($leagueId > -1) {
+                $league = $this->logicLayer->findLeague(null, $leagueId);
+                $teamIter = $this->logicLayer->findTeamsInLeague($league);
+                if ($teamIter != null) {
+                    while ($teamIter->valid()) {
+                        $team = $teamIter->current();
+                        $teamName = $team->getName();
+                        $teamId = $team->getId();
+                        $html .= "<option value='{$teamId}'>{$teamName}</option>";
+                        $teamIter->next();
+                    }
+                }
+            }
+        }
+        catch (RDException $rde){
+            echo $rde->getTraceAsString();
+        }
         return $html;
     }
 }
