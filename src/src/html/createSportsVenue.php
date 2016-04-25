@@ -18,8 +18,8 @@
             <label for="venueType">Indoor or Outdoor?</label>
             <br>
             <select name="isIndoor" id="isIndoor"> 
-                <option value="0">Indoor</option>
-                <option value="1">Outdoor</option>
+                <option value="true">Indoor</option>
+                <option value="false">Outdoor</option>
             </select>
         </div>
         

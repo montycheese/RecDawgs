@@ -1,6 +1,5 @@
 <?php 
 include('includes/header.php'); 
-// add $isIndoor
 ?>
 
 <body>
@@ -52,17 +51,14 @@ include('includes/header.php');
             <input name="maxMembers" id="maxMembers" type="text" pattern="[A-z]{1,}" required>
         </div>
 
-        <!-- notice: sports venue -->
         <div class="form-group">
-            <label for="sportsVenue">Sports Venue</label>
+            <label for="venueType">Indoor or Outdoor?</label>
             <br>
-            <select name="sportsVenue" id="sportsVenue">
-                <option value="-1">---SELECT TEAM TO VIEW---</option>
-                <!-- add sth -->
+            <select name="isIndoor" id="isIndoor"> 
+                <option value="true">Indoor</option>
+                <option value="false">Outdoor</option>
             </select>
         </div>
-        <!-- notice: indoor should be retrieved from sports venue info -->
-        <input name="isIndoor" id="isIndoor" type="hidden" value="<?php echo $isIndoor ?>">
 
         <div class="form-group">
             <input style="form-control" type="submit" name="Create A League">
