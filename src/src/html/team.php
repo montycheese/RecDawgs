@@ -37,4 +37,5 @@ if($teamObj->getCaptain()->getId() == $_SESSION['userId']) {
 ?>
 
 </body>
-</html>
+
+<?php include('includes/footer.php'); ?>

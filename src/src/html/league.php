@@ -21,18 +21,21 @@ $leagueObj = $leagueUI->getLeague($leagueId);
     <p>Select a team in this league to join</p>
     
     <form method="POST" action="php/doJoinTeam.php">
-             
-        <select name="teams" id="teams">
-            <option value="-1">---SELECT TEAM TO VIEW---</option>
-            <?php
-            echo $leagueUI->listAllTeams($leagueObj);
-            ?>
-        </select>
-            
-        <input type="submit" value = "Join Team"> 
+        
+        <div class="form-group">
+            <select name="teams" id="teams">
+                <option value="-1">---SELECT TEAM TO VIEW---</option>
+                <?php
+                echo $leagueUI->listAllTeams($leagueObj);
+                ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value = "Join Team"> 
+        </div>
     </form>
     
-    <br> <br> <br>
+    <br>
 
     <h1>Create a Team under this League</h1>
 
@@ -54,4 +57,5 @@ $leagueObj = $leagueUI->getLeague($leagueId);
    </p>
 
 </body>
-</html>
+
+<?php include('includes/footer.php'); ?>

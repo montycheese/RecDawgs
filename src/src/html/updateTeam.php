@@ -41,4 +41,5 @@ $theTeamID = $_POST['teamID'];
 </div>
 
 </body>
-</html>
+
+<?php include('includes/footer.php'); ?>
