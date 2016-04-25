@@ -565,7 +565,8 @@ class LogicLayerImpl implements LogicLayer{
         $team = $teams->current();
         while ($team != null) {
             $this->deleteUserAndTeam($user, $team);
-            $team = $teams->next();
+            $teams->next();
+            $team = $teams->current();
         }
     }
 
@@ -605,7 +606,8 @@ class LogicLayerImpl implements LogicLayer{
             if (strcmp($currentTeam->getName(), $team-> getName()) == 0) {
                 return true;
             }
-            $currentTeam = $teams->next();
+            $teams->next();
+            $currentTeam = $teams->current();
         }
 
         return false;
@@ -646,16 +648,17 @@ class LogicLayerImpl implements LogicLayer{
     {   
         // determine the team numbers of a league
         $teams = $this->objectLayer->restoreTeamParticipatesInLeague(null, $league);
-        $team = $teams->current();
-        // To Do: the relationship between leagues and teams is unclear
-
+        if ($teams->size() > 0) {
+            throw new RDException('Delete failure: There are teams associated with this league.');
+        }
 
         // try deleting all associated sports venue relationship firstly
         $venues = $this->objectLayer->restoreLeagueSportsVenue($league, null);
         $venue = $venues->current();
         while ($venue != null) {
             $this->objectLayer->deleteLeagueSportsVenue($league, $venue);
-            $venue = $venues->next();
+            $venues->next();
+            $venue = $venues->current();
         }
 
         // try deleting all associated rounds relationship secondly
@@ -663,7 +666,8 @@ class LogicLayerImpl implements LogicLayer{
         $round = $rounds->current();
         while ($round != null) {
             $this->objectLayer->deleteLeagueRound($league, $round);
-            $round = $rounds->next();
+            $rounds->next();
+            $round = $rounds->current();
         }
 
         // delete leagues thirdly
