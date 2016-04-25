@@ -21,6 +21,84 @@ class TeamUI {
         $this->logicLayer = new LogicLayerImpl();
     }
 
+    /**
+     * returns the team object
+     *
+     * @param $teamId
+     * @return TeamImpl|null
+     */
+    public function getTeam($teamId){
+        $teamIter = $this->logicLayer->findTeam(null, $teamId);
+        if($teamIter != null && $teamIter->valid()) {
+            return $teamIter->current();
+        }
+        else{
+            return null;
+        }
+
+    }
+
+    public function listTeamInformation($team=null, $teamId = -1){
+        $html = "<h1>Team Information</h1>";
+        if($team != null){
+            $teamIter = $this->logicLayer->findTeam($team, -1);
+            $teamCaptainId = -1;
+            if($teamIter != null && $teamIter->valid()){
+                $team = $teamIter->current();
+                $html .= "Team name: " . $team->getName() . '<br/>';
+                $html .= "League: " . $team->getParticipatesInLeague()->getName() . '<br/>';
+                $html .= "Team captain: " . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName() . '<br/>';
+                //use this so he/she doesnt show up in reg. member list
+                $teamCaptainId = $team->getCaptain()->getId();
+
+                $html .= "<h2>Team members: </h2><br/>";
+                $memberIter = $this->logicLayer->findMembersOfTeam($team);
+                if($memberIter != null){
+                    //add members to html page
+                    $html .= "<ul>";
+                    while($memberIter->valid()){
+                        $member = $memberIter->current();
+                        $firstName = $member->getFirstName();
+                        $lastName = $member->getLastName();
+                        $html .= "<li>{$firstName} {$lastName}</li>";
+                        $memberIter->next();
+                    }
+                    $html .= "</ul>";
+                }
+            }
+        }
+        else if($teamId > -1){
+            $teamIter = $this->logicLayer->findTeam(null, $teamId);
+            $teamCaptainId = -1;
+            if($teamIter != null && $teamIter->valid()){
+                $team = $teamIter->current();
+                $html .= "Team name: " . $team->getName() . '<br/>';
+                $html .= "League: " . $team->getParticipatesInLeague()->getName() . '<br/>';
+                $html .= "Team captain: " . $team->getCaptain()->getFirstName() . ' ' . $team->getCaptain()->getLastName() . '<br/>';
+                //use this so he/she doesnt show up in reg. member list
+                $teamCaptainId = $team->getCaptain()->getId();
+
+                $html .= "<h2>Team members: </h2><br/>";
+                $memberIter = $this->logicLayer->findMembersOfTeam($team);
+                if($memberIter != null){
+                    //add members to html page
+                    $html .= "<ul>";
+                    while($memberIter->valid()){
+                        $member = $memberIter->current();
+                        $firstName = $member->getFirstName();
+                        $lastName = $member->getLastName();
+                        //do not add team captain to this list.
+                        $html .= ($member->getId() != $teamCaptainId) ? "<li>{$firstName} {$lastName}</li>" : "";
+                        $memberIter->next();
+                    }
+                    $html .= "</ul>";
+                }
+            }
+
+        }
+        return $html;
+    }
+
     public function listAll(){
         $html="";
         try{

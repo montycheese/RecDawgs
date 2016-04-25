@@ -8,13 +8,16 @@ use edu\uga\cs\recdawgs\presentation as Presentation;
 <body>
     <div class="container">
         <h3>My Teams</h3>
-        
-        <select name="teams" id="teams">
+        <form action="team.php" method="post">
+        <select name="teamId" id="teamId">
             <option value="-1">---SELECT TEAM TO VIEW---</option>
             <?php
             $teamUI = new Presentation\TeamUI();
             echo $teamUI->listAllContainingStudent(null, $_SESSION['userId']);?>
         </select>
+            <br/>
+            <input type="submit" value="View team">
+        </form>
 
     </div>
 </body>

@@ -29,17 +29,30 @@ class UserUI {
         $html = "";
         if($userType == 0){
             $studentIter = $this->logicLayer->findStudent(null, $userId);
-            if($studentIter != null){
-                while($studentIter->valid()){
-                    $student = $studentIter->current();
-                    $html .= "";
-                }
+            if($studentIter != null && $studentIter->valid()){
+                $student = $studentIter->current();
+                $html .= "First Name: " . $student->getFirstName() . "<br/>";
+                $html .= "Last Name: " . $student->getLastName() . "<br/>";
+                $html .= "User Name: " . $student->getUserName() . "<br/>";
+                $html .= "Email: " . $student->getEmailAddress() . "<br/>";
+                $html .= "Student ID: " . $student->getStudentId() . "<br/>";
+                $html .= "Address: " . $student->getAddress() . "<br/>";
+                $html .= "Major: " . $student->getMajor() . "<br/>";
+
             }
+
         }
         else if($userType == 1){
             $adminIter = $this->logicLayer->findAdmin(null, $userId);
-            if($adminIter){
+            if($adminIter != null && $adminIter->valid()){
+                if($adminIter != null && $adminIter->valid()){
+                    $admin = $adminIter->current();
+                    $html .= "First Name: " . $admin->getFirstName() . "<br/>";
+                    $html .= "Last Name: " . $admin->getLastName() . "<br/>";
+                    $html .= "User Name: " . $admin->getUserName() . "<br/>";
+                    $html .= "Email: " . $admin->getEmailAddress() . "<br/>";
 
+                }
             }
         }
         return $html;

@@ -71,10 +71,17 @@ class LogicLayerImpl implements LogicLayer{
      * @return Persistence\TeamIterator An iterator of all teams that match the attributes of the modelTeam
      * or null if none found
      */
-    public function findTeam($modelTeam=null)
+    public function findTeam($modelTeam=null, $teamId=-1)
     {
-        return $this->objectLayer->findTeam($modelTeam);
-
+        if($modelTeam!=null){
+            return $this->objectLayer->findTeam($modelTeam);
+        }
+        else if($teamId > -1){
+            $modelTeam = $this->objectLayer->createTeam();
+            $modelTeam->setId($teamId);
+            return $this->objectLayer->findTeam($modelTeam);
+        }
+        return null;
     }
 
     /**
@@ -85,15 +92,16 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function findLeague($modelLeague=null, $leagueId=-1)
     {
-        return $this->objectLayer->findLeague($modelLeague);
-        /*if($modelLeague) {
+        //return $this->objectLayer->findLeague($modelLeague);
+        if($modelLeague) {
             return $this->objectLayer->findLeague($modelLeague);
         }
         else if($leagueId > -1){
             $modelLeague = $this->objectLayer->createLeague();
             $modelLeague->setId($leagueId);
             return $this->objectLayer->findLeague($modelLeague);
-        }*/
+        }
+        return null;
 
     }
 
@@ -153,6 +161,19 @@ class LogicLayerImpl implements LogicLayer{
             return $this->objectLayer->restoreStudentMemberOfTeam($student, null);
         }
         else return null;
+    }
+
+    public function findMembersOfTeam($team=null, $teamId = -1){
+        if($team != null){
+            return $this->objectLayer->restoreStudentMemberOfTeam(null, $team);
+        }
+        else if($teamId > -1){
+            $modelTeam = $this->objectLayer->createTeam();
+            $modelTeam->setId($teamId);
+            $team = $this->objectLayer->findTeam($modelTeam)->current();
+            return (isset($team)) ? $this->objectLayer->restoreStudentMemberOfTeam(null, $team) : null;
+        }
+        return null;
     }
 
     /**

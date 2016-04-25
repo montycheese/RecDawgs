@@ -1,23 +1,38 @@
 <?php 
 include('includes/header.php');
-$theTeamID = $_POST['teams'];
+spl_autoload_register(function ($class_name) {
+    include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
+});
+use edu\uga\cs\recdawgs\presentation as Presentation;
+if(!isset($_POST) || !isset($_POST['teamId'])){
+    $errorMsg  = urlencode("Team not found.");
+    header("Location: teams.php?status={$errorMsg}");
+}
+$teamId = $_POST['teamId'];
+$teamUI = new Presentation\TeamUI();
+$teamObj = $teamUI->getTeam($teamId);
 ?>
 
 <body>
-    <h1>(Team Name)</h1>
-    
-    <h3>Team Members</h3>
+<?php
 
-    <h3>Update Team Information</h3>
+echo $teamUI->listTeamInformation(null, $teamId);
+?>
+
+<?php
+//only allow updating team if the user is team captain
+if($teamObj->getCaptain()->getId() == $_SESSION['userId']) {
+    echo "<h3>Update Team Information </h3>
 
 
-    <form method="POST" action="php/updateTeam.php">
-        <input name="teamID" id="teamID" type="hidden" value="<?php echo $theTeamID ?>">
+    <form method='POST' action='php/doUpdateTeam.php'>
+        <input name='teamID' id='teamID' type='hidden' value='<{$teamId}'>
         <p>
-            <input type="submit" value = "Update Team"> 
+            <input type='submit' value = 'Update Team'>
         </p>
-    </form>
-   </p>
+    </form>";
+}
+?>
 
 </body>
 </html>
