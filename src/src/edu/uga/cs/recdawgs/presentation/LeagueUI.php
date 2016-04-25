@@ -34,7 +34,7 @@ class LeagueUI {
 		        $html .= "<p>No leagues</p>";
 		    } else {
 		        $html .= "<form method='POST' action='league.php'>";
-		        $html .= "<select class='form-control'>";
+		        $html .= "<select class='form-control' name='leagues' id='leagues'>";
 
 		        while ($league != null) {
 		            $leagueName = $league->getName();
