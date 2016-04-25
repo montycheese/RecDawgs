@@ -1,34 +1,44 @@
-<?php include('includes/header.php')?>
+<?php 
+include('includes/header.php');
+$theLeagueID = $_POST['leagues'];
+?>
 
 <body>
     <h1>(League Name)</h1>
     
-     <form method="POST" action="php/joinTeam.php"> 
+    <form method="POST" action="php/joinTeam.php"> 
              
-         <p>
-             List of current teams:
-        </p>
+        <select name="teams" id="teams">
+            <option value="-1">---SELECT TEAM TO VIEW---</option>
+            <?php
+            $teamUI = new Presentation\TeamUI();
+            echo $teamUI->listAll();
+            ?>
+        </select>
             
-            
-            <input type="submit" value = "Join Team"> 
-        </form>
+        <input type="submit" value = "Join Team"> 
+    </form>
     
     <br> <br> <br>
-    <p>
-    <form method="POST" action="php/doCreateTeam.php">
-        Create your own Team:
-        <br><br>
-        
-        <label for="teamName">Team Name</label>
-        <br>
-        <input name="teamName" id="teamName" type="text" placeholder="Team Name" required="true" pattern="[A-z]{1,}" title="team name" style="border-radius:5px;padding:12px;width:200px;height:10px">
-        
-        
-        <br><br>    
-        <p>
-            <input type="submit" value = "Create Team"> 
-        </p>
+
+    <h1>Create a Team under this League</h1>
+
+    <form id="createTeam" action="doCreateTeam.php" method="post">
+        <input name="league" id="league" type="hidden" value="<?php echo $theLeagueID ?>">
+        <input name="teamCap" id="teamCap" type="hidden" value="<?php echo $_SESSION['userId'] ?>">
+
+        <div class="form-group">
+            <label for="teamName">Team Name</label>
+            <br>
+            <input name="name" id="teamName" type="text" pattern="[A-z]{1,}">
+        </div>
+
+        <div class="form-group">
+            <input style="form-control" type="submit" name="Submit">
+        </div>
+
     </form>
    </p>
 
 </body>
+</html>
