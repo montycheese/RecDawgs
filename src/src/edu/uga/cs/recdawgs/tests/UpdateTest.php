@@ -107,7 +107,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
         $sr->setHomePoints($newHomePoints);
         $sr->setAwayPoints($newAwayPoints);
-
+        $this->objLayer->storeScoreReport($sr);
         echo "\nScore report with id: {$sr->getId()}\n";
         echo "updated it's home points from {$oldHomePoints} to {$newHomePoints} \n";
         echo "and updated it's away points from {$oldAwayPoints} to {$newAwayPoints} \n";
@@ -190,7 +190,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
      * Tests updating admin objs from persistence db
      */
 
-    public function testUpdateSportsVenue(){
+    /*public function testUpdateSportsVenue(){
         echo "\nUpdating a Sports Venue object:\n";
         $oldName = 'Field B';
         $oldAddress = '199 River Road, Athens, GA 30605';
@@ -211,8 +211,8 @@ class UpdateTest extends \PHPUnit_Framework_TestCase {
 
         venue queried, updated, and stored in persistent database successfully
 
-        ';*/
-    }
+        ';
+    } */
 
 
 

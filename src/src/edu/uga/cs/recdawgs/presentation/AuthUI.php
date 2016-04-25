@@ -8,9 +8,10 @@
 
 namespace edu\uga\cs\recdawgs\presentation;
 
-spl_autoload_register(function ($class_name) {
+require_once("autoload.php");
+/*spl_autoload_register(function ($class_name) {
     include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
-});
+});*/
 
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 use edu\uga\cs\recdawgs\object\impl\ObjectLayerImpl as ObjectLayerImpl;
@@ -110,6 +111,9 @@ class AuthUI {
 
         session_start();
         $_SESSION['userId'] = $user->getId();
+        $_SESSION['userName'] = $user->getUserName();
+        $_SESSION['firstName'] = $user->getFirstName();
+        $_SESSION['lastName'] = $user->getLastName();
        /* $_SESSION['logicLayer'] = $this->logicLayer;
         $_SESSION['objectLayer'] = $this->objectLayer;
         $_SESSION['persistenceLayer'] = $this->persistenceLayer;

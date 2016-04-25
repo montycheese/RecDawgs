@@ -64,6 +64,7 @@ if (strpos($url,'login.php') === false) {
                 </li>-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="profile.php">Profile</a></li>
                 <li><a href="logout.php">Logout</a></li>
                 <?php //add logic here to show login or logout based on session state?>
             </ul>

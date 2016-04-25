@@ -7,7 +7,7 @@
  */
 
 namespace edu\uga\cs\recdawgs\presentation;
-
+require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 use edu\uga\cs\recdawgs\RDException;
 
@@ -18,7 +18,7 @@ class TeamUI {
      * @param LogicLayerImpl $logicLayer
      */
     public function __construct(){
-        $this->logicLayer = new LogicLayerImpl\LogicLayerImpl();
+        $this->logicLayer = new LogicLayerImpl();
     }
 
     public function listAll(){
@@ -26,7 +26,7 @@ class TeamUI {
         try{
             $teamIter = $this->logicLayer->findTeam(null);
             if($teamIter) {
-                while ($teamIter->current() != null) {
+                while ($teamIter->valid()) {
                     $team = $teamIter->current();
                     $teamId = $team->getId();
                     $teamName = $team->getName();
@@ -54,7 +54,7 @@ class TeamUI {
             if ($student != null) {
                 $teamIter = $this->logicLayer->findTeamsIsMemberOf($student);
                 if($teamIter) {
-                    while ($teamIter->current() != null) {
+                    while ($teamIter->valid()) {
                         $team = $teamIter->current();
                         $teamId = $team->getId();
                         $teamName = $team->getName();
@@ -66,7 +66,7 @@ class TeamUI {
             else if ($studentId > -1) {
                 $teamIter = $this->logicLayer->findTeamsIsMemberOf(null, $studentId);
                 if($teamIter) {
-                    while ($teamIter->current() != null) {
+                    while ($teamIter->valid()) {
                         $team = $teamIter->current();
                         $teamId = $team->getId();
                         $teamName = $team->getName();

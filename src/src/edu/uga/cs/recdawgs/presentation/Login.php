@@ -7,7 +7,7 @@
  */
 
 namespace edu\uga\cs\recdawgs\presentation;
-
+require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl as Logic;
 
 

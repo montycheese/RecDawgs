@@ -8,6 +8,8 @@
 
 namespace edu\uga\cs\recdawgs\presentation;
 
+require_once("autoload.php");
+
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 
 class UserUI {
@@ -15,10 +17,32 @@ class UserUI {
     private $logicLayer = null;
 
     public function __construct(){
-        $this->logicLayer = new LogicLayerImpl\LogicLayerImpl();
+        $this->logicLayer = new LogicLayerImpl();
     }
 
     public function create(){
+
+    }
+
+    public function listUserInformation($userId, $userType){
+
+        $html = "";
+        if($userType == 0){
+            $studentIter = $this->logicLayer->findStudent(null, $userId);
+            if($studentIter != null){
+                while($studentIter->valid()){
+                    $student = $studentIter->current();
+                    $html .= "";
+                }
+            }
+        }
+        else if($userType == 1){
+            $adminIter = $this->logicLayer->findAdmin(null, $userId);
+            if($adminIter){
+
+            }
+        }
+        return $html;
 
     }
 
