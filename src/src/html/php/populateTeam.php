@@ -2,9 +2,11 @@
 
 //used to populate the teams that a given user is part of, in teams.php
 
+use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
+
+$logicLayer = new LogicLayerImpl\LogicLayerImpl();
 
 try {
-    $logicLayer = $_SESSION['logicLayer'];
 
     
     

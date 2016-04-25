@@ -6,6 +6,10 @@
  * Time: 17:22
  */
 
+use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
+
+$logicLayer = new LogicLayerImpl\LogicLayerImpl();
+
 //check to make sure none of the data is null or empty
 foreach($_POST as $inputData){
     if($inputData == "" or $inputData == null){
@@ -19,7 +23,6 @@ foreach($_POST as $inputData){
 
 
 try {
-    $logicLayer = $_SESSION['logicLayer'];
 
     $matchModel = $_SESSION['objectLayer']->createMatch();
     $matchModel->setId(intval(trim($_POST['matchId'])));

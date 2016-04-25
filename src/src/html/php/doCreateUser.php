@@ -5,6 +5,11 @@
  * Date: 4/23/16
  * Time: 13:56
  */
+
+use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
+
+$logicLayer = new LogicLayerImpl\LogicLayerImpl();
+
 require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 //die(var_dump($_POST));
@@ -30,7 +35,6 @@ try {
     // this code is used to hash the password into DB. when we register a user.
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $logicLayer = isset($_SESSION) ? $_SESSION['logicLayer'] : new LogicLayerImpl();
     //store the user in the DB.
     $persistenceId = $logicLayer->createStudent(
         $firstName,

@@ -6,6 +6,10 @@
  * Time: 16:23
  */
 
+use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
+
+$logicLayer = new LogicLayerImpl\LogicLayerImpl();
+
 //check to make sure none of the data is null or empty
 foreach($_POST as $inputData){
     if($inputData == "" or $inputData == null){
@@ -17,13 +21,12 @@ foreach($_POST as $inputData){
 
 
 try {
-    $logicLayer = $_SESSION['logicLayer'];
     //store the team in the DB.
     //league id will be hidden on the form
     //create a league model to get league obj.
-    $leagueModel = $_SESSION['objectLayer']->createLeague();
+    $leagueModel = $logicLayer->createLeague();
     $leagueModel->setId($_POST['leagueId']);
-    $league = $_SESSION['logicLayer']->findLeague($leagueModel)->current();
+    $league = $logicLayer->findLeague($leagueModel)->current();
 
     $persistenceId = $logicLayer->createTeam(
         trim($_POST['teamName']),
