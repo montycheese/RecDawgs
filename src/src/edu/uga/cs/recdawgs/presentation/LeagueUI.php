@@ -38,7 +38,8 @@ class LeagueUI {
 
 		        while ($league != null) {
 		            $leagueName = $league->getName();
-		            $html .= "<option value = '{$leagueName}'>{$leagueName}</option>";
+                    $leagueID = $league->getID();
+		            $html .= "<option value = '{$leagueID}'>{$leagueName}</option>";
 		            $leagues->next();
                     $league = $leagues->current();
 		        }
