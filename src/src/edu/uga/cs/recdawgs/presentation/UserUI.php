@@ -8,13 +8,14 @@
 
 namespace edu\uga\cs\recdawgs\presentation;
 
+use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 
 class UserUI {
 
     private $logicLayer = null;
 
     public function __construct(){
-        $this->logicLayer = $_SESSION['logicLayer'];
+        $this->logicLayer = new LogicLayerImpl();
     }
 
     public function create(){

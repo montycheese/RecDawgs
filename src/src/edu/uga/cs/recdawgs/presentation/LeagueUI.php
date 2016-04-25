@@ -22,60 +22,25 @@ class LeagueUI {
         $this->logicLayer = (isset($logicLayer)) ? $logicLayer : new LogicLayerImpl();
     }
 
-    public function listIndoor() {
+    public function listAll() {
     	$html = "";
 
         try{
 
-        	$leaguesIndoor = $this->logicLayer->findLeague(null, -1);
-		    $leagueIndoor = $leaguesIndoor->current();
+        	$leagues = $this->logicLayer->findLeague(null, -1);
+		    $league = $leagues->current();
 
-		    if ($leaguesIndoor->size() == 0) {
+		    if ($leagues->size() == 0) {
 		        $html .= "<p>No leagues</p>";
 		    } else {
 		        $html .= "<form method='POST' action='league.php'>";
 		        $html .= "<select class='form-control'>";
 
-		        while ($leagueIndoor != null) {
-		            $leagueName = $leagueIndoor->getName();
+		        while ($league != null) {
+		            $leagueName = $league->getName();
 		            $html .= "<option value = '{$leagueName}'>{$leagueName}</option>";
-		            $leaguesIndoor->next();
-                    $leagueIndoor = $leaguesIndoor->current();
-		        }
-
-		        $html .= "</select>";
-		        $html .= "<p><input type='submit' value = 'Select League'></p>";
-		        $html .= "</form>";
-		    }
-        }
-        catch(RDException $rde){
-            //todo
-            echo $rde->string;
-        }
-
-        return $html;
-    }
-
-    public function listOutdoor() {
-    	$html = "";
-
-        try{
-        	$leagueModel = $_SESSION['logicLayer']->createLeague(
-			    null, null, null, False, null, null, null, null);
-        	$leaguesIndoor = $this->logicLayer->findLeague($leagueModel);
-		    $leagueIndoor = $leaguesIndoor->current();
-
-		    if ($leaguesIndoor->size() == 0) {
-		        $html .= "<p>No outdoor leagues</p>";
-		    } else {
-		        $html .= "<form method='POST' action='league.php'>";
-		        $html .= "<select class='form-control'>";
-
-		        while ($leagueIndoor != null) {
-		            $leagueName = $leagueIndoor->getName();
-		            $html .= "<option value = '{$leagueName}'>{$leagueName}</option>";
-		            $leaguesIndoor->next();
-                    $leagueIndoor = $leaguesIndoor->current();
+		            $leagues->next();
+                    $league = $leagues->current();
 		        }
 
 		        $html .= "</select>";
