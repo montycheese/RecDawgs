@@ -14,7 +14,7 @@ $theTeamID = $_POST['teams'];
     <form method="POST" action="php/updateTeam.php">
         <input name="teamID" id="teamID" type="hidden" value="<?php echo $theTeamID ?>">
         <p>
-            <input type="submit" value = "Create Team"> 
+            <input type="submit" value = "Update Team"> 
         </p>
     </form>
    </p>

@@ -41,3 +41,4 @@ $theLeagueID = $_POST['leagues'];
    </p>
 
 </body>
+</html>

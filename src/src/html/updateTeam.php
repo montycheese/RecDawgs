@@ -1,6 +1,6 @@
 <?php 
 include('includes/header.php');
-$theTeamID = $_POST['teams'];
+$theTeamID = $_POST['teamID'];
 ?>
 
 <body>
