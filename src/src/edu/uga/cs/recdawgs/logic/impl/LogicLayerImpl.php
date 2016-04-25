@@ -73,15 +73,18 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function findTeam($modelTeam=null, $teamId=-1)
     {
-        if($modelTeam!=null){
-            return $this->objectLayer->findTeam($modelTeam);
-        }
-        else if($teamId > -1){
+
+        if($teamId > -1){
             $modelTeam = $this->objectLayer->createTeam();
             $modelTeam->setId($teamId);
             return $this->objectLayer->findTeam($modelTeam);
         }
-        return null;
+        else{
+            //if modelteam is null return all.
+            return $this->objectLayer->findTeam($modelTeam);
+
+        }
+
     }
 
     /**
@@ -93,15 +96,15 @@ class LogicLayerImpl implements LogicLayer{
     public function findLeague($modelLeague=null, $leagueId=-1)
     {
         //return $this->objectLayer->findLeague($modelLeague);
-        if($modelLeague) {
-            return $this->objectLayer->findLeague($modelLeague);
-        }
-        else if($leagueId > -1){
+
+       if($leagueId > -1){
             $modelLeague = $this->objectLayer->createLeague();
             $modelLeague->setId($leagueId);
             return $this->objectLayer->findLeague($modelLeague);
         }
-        return null;
+       //if null then return all leagues.
+        else
+            return $this->objectLayer->findLeague($modelLeague);
 
     }
 
@@ -174,6 +177,21 @@ class LogicLayerImpl implements LogicLayer{
             return (isset($team)) ? $this->objectLayer->restoreStudentMemberOfTeam(null, $team) : null;
         }
         return null;
+    }
+
+    public function findTeamsInLeague($league){
+        //$html = "";
+        return $this->objectLayer->restoreTeamParticipatesInLeague(null, $league);
+        /*if($teamIter != null){
+            while($teamIter->valid()){
+                $team = $teamIter->current();
+                $teamName = $team->getName();
+                $teamId = $team->getId();
+                $html .= "<option value='{$teamId}'>{$teamName}</option>";
+                $teamIter->next();
+            }
+        }
+        return $html;*/
     }
 
     /**
