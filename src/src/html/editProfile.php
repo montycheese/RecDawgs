@@ -18,21 +18,21 @@ include("includes/header.php");
 
     </p>
 
-    <form id="updateUser" action="php/updateUser.php" method="post">
+    <form id="updateUser" action="php/doUpdateUser.php" method="post">
         <table>
             <tr>
                 <td>
                     <div class="form-group">
                         <label for="firstName">First Name</label>
                         <br>
-                        <input name="firstName" id="firstName" type="text" placeholder="Jon" required="true" pattern="[A-z]{1,}" title="first name" style="border-radius:5px;padding:12px;width:200px;height:10px">
+                        <input name="firstName" id="firstName" type="text" placeholder="Jon" pattern="[A-z]{1,}" title="first name" style="border-radius:5px;padding:12px;width:200px;height:10px">
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
                         <br>
-                        <input name="lastName" id="lastName" type="text" placeholder="Snow" required="true" pattern="[A-z]{1,}" title="last name" style="border-radius:5px;padding:12px;width:200px;height:10px">
+                        <input name="lastName" id="lastName" type="text" placeholder="Snow" pattern="[A-z]{1,}" title="last name" style="border-radius:5px;padding:12px;width:200px;height:10px">
                     </div>
                 </td>
             </tr>
@@ -41,14 +41,14 @@ include("includes/header.php");
                     <div class="form-group">
                         <label for="password">Password</label>
                         <br>
-                        <input name="password" id="password" type="password" required="true" pattern="[A-z0-9]{6,}" placeholder="••••••" title="6 character minimum" style="border-radius:5px;padding:12px;width:200px;height:10px">
+                        <input name="password" id="password" type="password" pattern="[A-z0-9]{6,}" placeholder="••••••" title="6 character minimum" style="border-radius:5px;padding:12px;width:200px;height:10px">
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
                         <label for="passwordVerify">Verify Password</label>
                         <br>
-                        <input name="passwordVerify" id="passwordVerify" type="password" required="true" placeholder="••••••" style="border-radius:5px;padding:12px;width:200px;height:10px">
+                        <input name="passwordVerify" id="passwordVerify" type="password" placeholder="••••••" style="border-radius:5px;padding:12px;width:200px;height:10px">
                     </div>
                 </td>
             </tr>
@@ -56,22 +56,22 @@ include("includes/header.php");
         <div class="form-group">
             <label for="email">Email</label>
             <br>
-            <input name="email" id="email" type="email" placeholder="player@example.com" required="true" title="Student email" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <input name="email" id="email" type="email" placeholder="player@example.com" title="Student email" style="border-radius:5px;padding:12px;width:200px;height:10px">
         </div>
         <div class="form-group">
             <label for="studentNumber">Student Number</label>
             <br>
-            <input name="studentNumber" id="studentNumber" type="text" required="true" title="Student Number" placeholder="810XXXXXX" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <input name="studentNumber" id="studentNumber" type="text" title="Student Number" placeholder="810XXXXXX" style="border-radius:5px;padding:12px;width:200px;height:10px">
         </div>
         <div class="form-group">
             <label for="address">Address</label>
             <br>
-            <input name="address" id="address" type="text" required="true" title="Your local Address" placeholder="100 Maple St" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <input name="address" id="address" type="text" title="Your local Address" placeholder="100 Maple St" style="border-radius:5px;padding:12px;width:200px;height:10px">
         </div>
         <div class="form-group">
             <label for="major">Major</label>
             <br>
-            <input name="major" id="major" required="true" placeholder="Computer Science" style="border-radius:5px;padding:12px;width:200px;height:10px">
+            <input name="major" id="major" placeholder="Computer Science" style="border-radius:5px;padding:12px;width:200px;height:10px">
         </div>
         <div class="form-group">
             <input style="form-control" type="submit" name="Submit">
