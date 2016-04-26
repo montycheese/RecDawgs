@@ -6,11 +6,13 @@
  * Time: 16:23
  */
 
+
+require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 
-$logicLayer = new LogicLayerImpl\LogicLayerImpl();
+$logicLayer = new LogicLayerImpl();
 
-if ($_POST['teamname']) == "" or $_POST['teamname']) == null) {
+if ($_POST['teamname'] == "" or $_POST['teamname'] == null) {
     $errorMsg = urlencode("Missing form field");
     header("Location: ../updateTeam.php?status={$errorMsg}");
     exit();

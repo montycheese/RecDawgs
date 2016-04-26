@@ -116,18 +116,16 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function findStudent($modelStudent=null, $studentId=-1)
     {
-        if($modelStudent !=null ) {
-            return $this->objectLayer->findStudent($modelStudent);
-        }
-        else if($studentId > -1){
+
+        if($studentId > -1){
             $modelStudent = $this->objectLayer->createStudent();
             $modelStudent->setId($studentId);
             return $this->objectLayer->findStudent($modelStudent);
-
         }
         else{
-            return null;
+            return $this->objectLayer->findStudent($modelStudent);
         }
+
     }
 
     /**
@@ -136,9 +134,18 @@ class LogicLayerImpl implements LogicLayer{
      * @param Entity\AdministratorImpl $modelAdmin
      * @return Persistence\AdministratorIterator or null
      */
-    public function findAdmin($modelAdmin)
+    public function findAdmin($modelAdmin=null, $adminId=-1)
     {
-        return $this->objectLayer->findAdministrator($modelAdmin);
+        if($adminId > -1){
+            $modelAdmin = $this->objectLayer->createAdministrator();
+            $modelAdmin->setId($adminId);
+            return $this->objectLayer->findAdministrator($modelAdmin);
+        }
+        else{
+            return $this->objectLayer->findAdministrator($modelAdmin);
+        }
+
+
     }
 
     /**
@@ -371,8 +378,7 @@ class LogicLayerImpl implements LogicLayer{
         if($lastName != null) {
             $ourStudent->setLastName($lastName);
         }
-        if($userName != null) {
-            $ourStudent->setUserName($userName);
+        if($userName != null) {            $ourStudent->setUserName($userName);
         }
         if($password != null) {
             $ourStudent->setPassword($password);
