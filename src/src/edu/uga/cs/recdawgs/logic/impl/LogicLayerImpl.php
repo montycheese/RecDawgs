@@ -267,6 +267,10 @@ class LogicLayerImpl implements LogicLayer{
 
         $team = $this->objectLayer->createTeam($teamName, $student, $league);
         $this->objectLayer->storeTeam($team);
+        //add team captain as a member also
+        $this->objectLayer->createStudentMemberOfTeam($student, $team);
+        //add team as member of league
+        $this->objectLayer->createTeamParticipatesInLeague($team, $league);
         return $team->getId();
     }
 

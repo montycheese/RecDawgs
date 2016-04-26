@@ -34,8 +34,9 @@ use edu\uga\cs\recdawgs\presentation as Presentation;
     <button onclick="editProfile()">Edit your information</button>
 
     <br/><br/>
-    <h3>TODO DELETE BUTTON</h3>
-    <form>
+    <h3> Delete your account</h3>
+    <form action="php/deleteUser.php" method="post">
+        <input type="hidden" value="<?php echo $_SESSION['userId'];?>">
     <input type="submit" value="Delete your account">
     </form>
 
