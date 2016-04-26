@@ -6,6 +6,8 @@
  * Time: 16:23
  */
 
+
+require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 
 $logicLayer = new LogicLayerImpl\LogicLayerImpl();
