@@ -14,21 +14,25 @@ $theTeamID = $_POST['teamID'];
 
 
         <div class="form-group">
-            <label for="teamName">Team Name</label>
+            <label for="teamname">Team Name</label>
             <br>
-            <input name="name" id="teamName" type="text" pattern="[A-z]{1,}">
+            <input name="teamname" id="teamname" type="text" pattern="[A-z]{1,}">
         </div>
 
         <div class="form-group">
-            <label for="teamCap">Team Captain</label>
+            <label for="userid">Team Captain</label>
             <br>
-            <option value="-1">---SELECT TEAM TO VIEW---</option>
+            <select name="userid" id="userid">
+                <option value="-1">---SELECT USER TO VIEW---</option>
+            </selection>
         </div>
 
         <div class="form-group">
-            <label for="league">League</label>
+            <label for="leagueid">League</label>
             <br>
-            <option value="-1">---SELECT TEAM TO VIEW---</option>
+            <select name="leagueid" id="leagueid">
+                <option value="-1">---SELECT LEAGUE TO VIEW---</option>
+            </selection>
         </div>
 
         <div class="form-group">
