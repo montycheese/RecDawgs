@@ -17,20 +17,20 @@ $league = null;
 
 try {
     // updated information
-    if (trim($_POST['teamname']) == "" or $_POST['teamname'] == null) {
+    if (trim($_POST['teamName']) == "" or $_POST['teamName'] == null) {
         $newTeamName = null;
     } else {
-        $newTeamName = trim($_POST['teamname']);
+        $newTeamName = trim($_POST['teamName']);
     }
-    if (intval($_POST['userid']) != -1) {
-        $student = $logicLayer->findStudent(null, intval($_POST['userid']))->current();
+    if (intval($_SESSION['userId']) != -1) {
+        $student = $logicLayer->findStudent(null, intval($_SESSION['userId']))->current();
     }
-    if (intval($_POST['leagueid']) != -1) {
-        $league = $logicLayer->findLeague(null, intval($_POST['leagueid']))->current();
+    if (intval($_POST['leagueId']) != -1) {
+        $league = $logicLayer->findLeague(null, intval($_POST['leagueId']))->current();
     }
 
     // find team
-    $team = $logicLayer->findTeam(null, $_POST['teamID'])->current();
+    $team = $logicLayer->findTeam(null, $_POST['teamId'])->current();
 
     // udpate team
     $logicLayer->updateTeam($team->getName(), 

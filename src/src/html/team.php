@@ -11,6 +11,7 @@ if(!isset($_POST) || !isset($_POST['teamId'])){
 $teamId = $_POST['teamId'];
 $teamUI = new Presentation\TeamUI();
 $teamObj = $teamUI->getTeam($teamId);
+$leagueId = $teamObj->getParticipatesInLeague()->getId();
 ?>
 
 <body>
@@ -29,7 +30,8 @@ if($teamObj->getCaptain()->getId() == $_SESSION['userId']) {
     <label for='teamName'>Team Name</label>
     <input name='teamName' placeholder='New Team name'>
         <input name='teamId' id='teamId' type='hidden' value='<{$teamId}'>
-        <p>
+        <input name='leagueId' id='leagueId' type='hidden' value='{$leagueId}'
+    <p>
             <input type='submit' value = 'Update Team'>
         </p>
     </form>";
