@@ -108,6 +108,15 @@ class LogicLayerImpl implements LogicLayer{
 
     }
 
+    public function findMatch($modelMatch=null, $matchId=-1){
+        if($matchId > -1){
+            $modelMatch = $this->objectLayer->createMatch();
+            $modelMatch->setId($matchId);
+            return $this->objectLayer->findMatch($modelMatch);
+        }
+        else return $this->objectLayer->findMatch($modelMatch);
+    }
+
     /**
      * @see LogicLayer::findTeam 's doc
      *

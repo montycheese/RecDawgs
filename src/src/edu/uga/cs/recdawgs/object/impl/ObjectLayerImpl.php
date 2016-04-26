@@ -220,6 +220,8 @@ class ObjectLayerImpl implements ObjectLayer{
             $aTeam->setName($name);
             $aTeam->setCaptain($student);
             $aTeam->setParticipatesInLeague($league);
+            //add team captain as a member of the team also.
+            $this->createStudentMemberOfTeam($student, $aTeam);
         }
 
         return $aTeam;

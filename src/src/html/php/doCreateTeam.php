@@ -46,6 +46,7 @@ catch(\edu\uga\cs\recdawgs\RDException $rde){
 }
 catch(Exception $e){
     $errorMsg = urlencode("Unexpected error");
+    echo $e->getTraceAsString();
     header("Location: ../teams.php?status={$errorMsg}");
 }
 exit();

@@ -3,13 +3,18 @@
 //show a simple form with 2 fields, one for home score and one for away score
 //****later- also add logic to prevent non captains of the matches from inputting score.
 ////form should send user to doEnterMatchScore.php
+if(!isset($_POST) || !isset($_POST['matchId'])){
+    $errorMsg = urlencode("invalid match");
+    header("Location: match.php?status={$errorMsg}");
+}
+$matchId = $_POST['matchId'];
 ?>
 
 <body>
 <div class="container">
     <h3>Enter Match Score</h3>
     <br>
-    
+    <?php echo "TODO show match info."; ?>
     <p>
         <form id="enterMatchScore" action="php/doEnterMatchScore.php" method="post">
 
@@ -26,7 +31,8 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" name="Submit">
+            <input type="hidden" name="matchId" value="<?php echo $matchId;?>">
+            <input type="submit" name="Submit" value="submit score">
         </div>
 
         </form>
