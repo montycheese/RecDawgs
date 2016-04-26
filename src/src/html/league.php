@@ -46,7 +46,7 @@ $leagueObj = $leagueUI->getLeague($leagueId);
         <div class="form-group">
             <label for="teamName">Team Name</label>
             <br>
-            <input name="name" id="teamName" type="text" pattern="[A-z]{1,}">
+            <input name="name" id="teamName" type="text">
         </div>
 
         <div class="form-group">
