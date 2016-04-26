@@ -45,6 +45,11 @@ if($teamObj->getCaptain()->getId() == $_SESSION['userId']) {
 }
 ?>
 
+<br/><br/>
+<form action="php/deleteTeam.php" method="post">
+    <input type="hidden" value="<?php echo $_SESSION['userId'];?>">
+    <input type="submit" value="Delete Team">
+</form>
 </body>
 
 <?php include('includes/footer.php'); ?>

@@ -24,4 +24,10 @@ $sportsVenueUI = new Presentation\SportsVenueUI();
 echo $sportsVenueUI->listSportsVenueInfo($sportsVenueModel);
 ?>
 
+<br/><br/>
+<form action="php/deleteSportsVenue.php" method="post">
+    <input type="hidden" value="<?php echo $_SESSION['userId'];?>">
+    <input type="submit" value="Delete the Sports Venue">
+</form>
+
 </body>
