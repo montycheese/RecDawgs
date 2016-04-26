@@ -9,7 +9,7 @@ $theTeamID = $_POST['teamID'];
     <br>
 
     <p>
-    <form id="createTeam" action="doCreateTeam.php" method="post">
+    <form id="createTeam" action="php/doCreateTeam.php" method="post">
         <input name="teamID" id="teamID" type="hidden" value="<?php echo $theTeamID ?>">
 
 
@@ -24,7 +24,7 @@ $theTeamID = $_POST['teamID'];
             <br>
             <select name="userid" id="userid">
                 <option value="-1">---SELECT USER TO VIEW---</option>
-            </selection>
+            </select>
         </div>
 
         <div class="form-group">
@@ -32,7 +32,7 @@ $theTeamID = $_POST['teamID'];
             <br>
             <select name="leagueid" id="leagueid">
                 <option value="-1">---SELECT LEAGUE TO VIEW---</option>
-            </selection>
+            </select>
         </div>
 
         <div class="form-group">
