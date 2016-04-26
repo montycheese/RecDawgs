@@ -10,14 +10,14 @@
 require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 
-$logicLayer = new LogicLayerImpl\LogicLayerImpl();
+$logicLayer = new LogicLayerImpl();
 $newTeamName = null;
 $student = null;
 $league = null;
 
 try {
     // updated information
-    if (trim($_POST['teamname'])) == "" or $_POST['teamname']) == null) {
+    if (trim($_POST['teamname']) == "" or $_POST['teamname'] == null) {
         $newTeamName = null;
     } else {
         $newTeamName = trim($_POST['teamname']);
