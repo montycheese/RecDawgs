@@ -39,16 +39,16 @@ try {
         $league, 
         null);
 
-    $successMsg = urlencode("Team successfully updated!");
-    header("Location: ../updateTeam.php?status={$successMsg}");
+    $successMsg = urlencode("Team name successfully updated to {$newTeamName}!");
+    header("Location: ../teams.php?status={$successMsg}");
     //echo $persistenceId;
 }
 catch(\edu\uga\cs\recdawgs\RDException $rde){
     $error_msg = urlencode($rde->string);
-    header("Location: ../updateTeam.php?status={$error_msg}");
+    header("Location: ../team.php?status={$error_msg}");
 }
 catch(Exception $e){
     $errorMsg = urlencode("Unexpected error");
-    header("Location: ../updateTeam.php?status={$errorMsg}");
+    header("Location: ../team.php?status={$errorMsg}");
 }
 exit();

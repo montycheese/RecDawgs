@@ -170,6 +170,7 @@ class TeamManager {
      * @throws RDException
      */
     public function restore($modelTeam){
+        //die(var_dump($modelTeam));
         //echo 'teammanager restore' . var_dump($modelTeam);
         $q = 'SELECT * from team10.team WHERE 1=1 ';
         if($modelTeam != NULL) {
@@ -196,7 +197,7 @@ class TeamManager {
             return new TeamIterator($resultSet, $this->objLayer);
         }
         else{
-            throw new RDException('Error restoring team model' . print_r($stmt->errorInfo()));
+            throw new RDException('Error restoring team model' . print_r($stmt->errorCode()));
         }
     }
 

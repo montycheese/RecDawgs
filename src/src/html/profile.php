@@ -33,6 +33,12 @@ use edu\uga\cs\recdawgs\presentation as Presentation;
 
     <button onclick="editProfile()">Edit your information</button>
 
+    <br/><br/>
+    <h3>TODO DELETE BUTTON</h3>
+    <form>
+    <input type="submit" value="Delete your account">
+    </form>
+
 </div>
 </body>
 <script>
