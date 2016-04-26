@@ -166,7 +166,7 @@ interface LogicLayer {
 
     //update
     //TODO add params to methods
-    public function updateUser($firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null,$studentId=null, $major=null, $address=null);
+    public function updateUser($userId=-1,$firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null,$studentId=null, $major=null, $address=null);
     public function updateTeam($teamName, $newName=null, $teamCaptain=null, $league=null, $winnerOfLeague=null);
     public function updateLeague($leagueName, $newName=null, $leagueRules=null, $matchRules=null, $isIndoor=null, $minTeams=null, $maxTeams=null, $minMembers=null, $maxMembers=null, $winnerOfLeague=null);
     public function updateSportsVenue($venueName, $newName=null, $isIndoor=null, $address=null);

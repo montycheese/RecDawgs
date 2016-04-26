@@ -5,7 +5,7 @@
  * Date: 4/23/16
  * Time: 17:22
  */
-
+session_start();
 require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 

@@ -248,7 +248,8 @@ class LogicLayerImpl implements LogicLayer{
     public function createTeam($teamName, $student, $league)
     {
         if($teamName==null || $student == null || $league == null)
-            throw new RDException("Parameters can not be null.");
+
+            throw new RDException("Parameters" . ($teamName) ? "" : "teamName" . ($student) ? "" : "student" . ($league) ? "" : "league". "can not be null.");
         //check if league is full
         $teamIter = $this->objectLayer->restoreTeamParticipatesInLeague(null, $league);
         if($teamIter->size() >= $league->getMaxTeams()){
@@ -368,8 +369,9 @@ class LogicLayerImpl implements LogicLayer{
 
     }
 
-    public function updateUser($userID, $firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null,$studentId=null, $major=null, $address=null)
+    public function updateUser($userID=-1, $firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null,$studentId=null, $major=null, $address=null)
     {
+        if($userID==-1) throw new RDException("Invalid USER ID");
         //we have to assume that they are logged in
         $ourStudent = $this->objectLayer->findStudent(null, $userID)->current();
 
