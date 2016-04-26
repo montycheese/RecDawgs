@@ -9,27 +9,30 @@
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 
 $logicLayer = new LogicLayerImpl\LogicLayerImpl();
-
-if ($_POST['teamname']) == "" or $_POST['teamname']) == null) {
-    $errorMsg = urlencode("Missing form field");
-    header("Location: ../updateTeam.php?status={$errorMsg}");
-    exit();
-}
-
-if (intval($_POST['userid']) == -1 or intval($_POST['leagueid']) == -1) {
-    $errorMsg = urlencode("Missing form field");
-    header("Location: ../updateTeam.php?status={$errorMsg}");
-    exit();
-}
+$newTeamName = null;
+$student = null;
+$league = null;
 
 try {
+    // updated information
+    if (trim($_POST['teamname'])) == "" or $_POST['teamname']) == null) {
+        $newTeamName = null;
+    } else {
+        $newTeamName = trim($_POST['teamname']);
+    }
+    if (intval($_POST['userid']) != -1) {
+        $student = $logicLayer->findStudent(null, intval($_POST['userid']))->current();
+    }
+    if (intval($_POST['leagueid']) != -1) {
+        $league = $logicLayer->findLeague(null, intval($_POST['leagueid']))->current();
+    }
 
+    // find team
     $team = $logicLayer->findTeam(null, $_POST['teamID'])->current();
-    $student = $logicLayer->findStudent(null, intval($_POST['userid']))->current();
-    $league = $logicLayer->findLeague(null, intval($_POST['leagueid']))->current();
 
+    // udpate team
     $logicLayer->updateTeam($team->getName(), 
-        $_POST['teamname'], 
+        $newTeamName, 
         $student, 
         $league, 
         null);
