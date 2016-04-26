@@ -23,16 +23,16 @@ if (intval($_POST['userid']) == -1 or intval($_POST['leagueid']) == -1) {
 }
 
 try {
-    //store the team in the DB.
-    //league id will be hidden on the form
-    //create a league model to get league obj.
+
     $team = $logicLayer->findTeam(null, $_POST['teamID'])->current();
     $student = $logicLayer->findStudent(null, intval($_POST['userid']))->current();
     $league = $logicLayer->findLeague(null, intval($_POST['leagueid']))->current();
 
-    $team->setName($_POST['teamname']);
-    $team->setCaptain($student);
-    $team->setParticipatesInLeague($league);
+    $logicLayer->updateTeam($team->getName(), 
+        $_POST['teamname'], 
+        $student, 
+        $league, 
+        null);
 
     $successMsg = urlencode("Team successfully updated!");
     header("Location: ../updateTeam.php?status={$successMsg}");
