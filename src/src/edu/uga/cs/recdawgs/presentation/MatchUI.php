@@ -65,4 +65,38 @@ class MatchUI {
         }
         return $html;
     }
+
+    public function listUpcomingMatches($matchModel) {
+        $matchIter = $this->logicLayer->findMatch($matchModel);
+        $html = "";
+        if($matchIter->size() <= 0) {
+            return "<h3>There are no matches scheduled.</h3>";
+        }
+        try {
+            $html .= "<h3>Upcoming matches: </h3> <br/> <br/>";
+            $html .= "<form method='POST' action='match.php'>";
+            $html .= "<select class='form-control' name='matchId'>";
+            while ($matchIter->valid()) {
+
+                $match = $matchIter->current();
+                $homeTeam = $match->getHomeTeam();
+                $awayTeam = $match->getAwayTeam();
+                // $homePoints = $match->getHomePoints();
+                //$awayPoints = $match->getAwayPoints();
+                //$isCompleted = $match->getIsCompleted();
+                //$sportsVenue = $match->getSportsVenue();
+                //$round = $match->getRound();
+                $matchId = $match->getId();
+
+                $html .= "<option value = '{$matchId}'>{$homeTeam} vs. {$awayTeam}</option>";
+                $matchIter->next();
+            }
+            $html .= "</select>";
+            $html .= "<p><input type='submit' value = 'Select League'></p>";
+            $html .= "</form>";
+        } catch (RDException $rde) {
+            echo $rde->getTraceAsString();
+        }
+        return $html;
+    }
 }

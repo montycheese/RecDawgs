@@ -4,6 +4,7 @@ spl_autoload_register(function ($class_name) {
     include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
 });
 use edu\uga\cs\recdawgs\presentation as Presentation;
+use edu\uga\cs\recdawgs\entity\impl as Entity;
 if(!isset($_POST) || !isset($_POST['teamId'])){
     $errorMsg  = urlencode("Team not found.");
     header("Location: teams.php?status={$errorMsg}");
@@ -12,6 +13,9 @@ $teamId = $_POST['teamId'];
 $teamUI = new Presentation\TeamUI();
 $teamObj = $teamUI->getTeam($teamId);
 $leagueId = $teamObj->getParticipatesInLeague()->getId();
+
+$matchUI = new Presentation\MatchUI();
+$matchObj = new Entity\MatchImpl($homePoints=null, $awayPoints=null, $date=null, $isCompleted=null, $homeTeam=$teamObj, $awayTeam=null, $sportsVenue=null, $round=null);
 ?>
 
 <body>
@@ -45,5 +49,19 @@ if($teamObj->getCaptain()->getId() == $_SESSION['userId']) {
     </form>";
 }
 ?>
+
+    <br/><br/>
+    <form action="php/deleteTeam.php" method="post">
+        <input type="hidden" value="<?php echo $_SESSION['userId'];?>">
+        <input type="submit" value="Leave Team">
+    </form>
+
+    <br/><br/>
+
+    <?php
+        echo $matchUI->listUpcomingMatches($matchObj);
+    ?>
+</body>
+
 
 <?php include('includes/footer.php'); ?>
