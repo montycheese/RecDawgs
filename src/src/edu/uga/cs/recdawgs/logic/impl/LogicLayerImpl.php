@@ -499,7 +499,7 @@ class LogicLayerImpl implements LogicLayer{
     {
         $sportsVenueModel = new Entity\SportsVenueImpl();
         $sportsVenueModel->setID($venueID);
-        $sportsVenueIter = $this->objectLayer->findSportsVenue($sportsVenueModel)->current();
+        $sportsVenueIter = $this->objectLayer->findSportsVenue($sportsVenueModel);
 
         if($sportsVenueIter->size() <= 0) {
             throw new RDException("Sports Venue not found");

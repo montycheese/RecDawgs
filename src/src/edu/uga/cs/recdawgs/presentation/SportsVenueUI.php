@@ -18,7 +18,7 @@ class SportsVenueUI {
     public function listSportsVenueInfo($sportsVenueModel) {
         $html = "";
         try {
-            $sportsVenueIter = $this->logicLayer->findSportsVenue($sportsVenueModel);
+            $sportsVenueIter = $this->logicLayer->findSportsVenue($sportsVenueModel, -1);
             $sportsVenue = $sportsVenueIter->current();
             $sportsVenueName = $sportsVenue->getName();
             $sportsVenueIsIndoor = $sportsVenue->getIndoor();
