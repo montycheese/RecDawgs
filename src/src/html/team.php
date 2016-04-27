@@ -18,26 +18,39 @@ $leagueId = $teamObj->getParticipatesInLeague()->getId();
 <?php
 
 echo $teamUI->listTeamInformation(null, $teamId);
+echo "<p>TODO ADD UPCOMING MATCHES</p>";
 ?>
 
 <?php
 //only allow updating team if the user is team captain
 if($teamObj->getCaptain()->getId() == $_SESSION['userId']) {
     echo "<h3>Update Team Information </h3>
-
-
     <form method='POST' action='php/doUpdateTeam.php'>
     <label for='teamName'>Team Name</label>
     <input name='teamName' placeholder='New Team name'>
-        <input name='teamId' id='teamId' type='hidden' value='<{$teamId}'>
+        <input name='teamId' id='teamId' type='hidden' value='{$teamId}'>
         <input name='leagueId' id='leagueId' type='hidden' value='{$leagueId}'
     <p>
             <input type='submit' value = 'Update Team'>
         </p>
     </form>";
+
+    echo  "<br/><h3>Delete Team (Unreversable)</h3><br/>
+<form method='POST' action='php/doDeleteTeam.php'>
+        <input name='teamId' id='teamId' type='hidden' value='{$teamId}'>
+        <input name='leagueId' id='leagueId' type='hidden' value='{$leagueId}'
+        <p>
+            <input type='submit' value = 'Delete Team'>
+        </p>
+    </form>";
 }
 ?>
 
+<br/><br/>
+<form action="php/deleteTeam.php" method="post">
+    <input type="hidden" value="<?php echo $_SESSION['userId'];?>">
+    <input type="submit" value="Delete Team">
+</form>
 </body>
 
 <?php include('includes/footer.php'); ?>

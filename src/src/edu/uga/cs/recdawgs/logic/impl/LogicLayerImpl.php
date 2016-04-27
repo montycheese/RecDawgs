@@ -108,6 +108,15 @@ class LogicLayerImpl implements LogicLayer{
 
     }
 
+    public function findMatch($modelMatch=null, $matchId=-1){
+        if($matchId > -1){
+            $modelMatch = $this->objectLayer->createMatch();
+            $modelMatch->setId($matchId);
+            return $this->objectLayer->findMatch($modelMatch);
+        }
+        else return $this->objectLayer->findMatch($modelMatch);
+    }
+
     /**
      * @see LogicLayer::findTeam 's doc
      *
@@ -248,7 +257,8 @@ class LogicLayerImpl implements LogicLayer{
     public function createTeam($teamName, $student, $league)
     {
         if($teamName==null || $student == null || $league == null)
-            throw new RDException("Parameters can not be null.");
+
+            throw new RDException("Parameters" . ($teamName) ? "" : "teamName" . ($student) ? "" : "student" . ($league) ? "" : "league". "can not be null.");
         //check if league is full
         $teamIter = $this->objectLayer->restoreTeamParticipatesInLeague(null, $league);
         if($teamIter->size() >= $league->getMaxTeams()){
@@ -257,6 +267,10 @@ class LogicLayerImpl implements LogicLayer{
 
         $team = $this->objectLayer->createTeam($teamName, $student, $league);
         $this->objectLayer->storeTeam($team);
+        //add team captain as a member also
+        $this->objectLayer->createStudentMemberOfTeam($student, $team);
+        //add team as member of league
+        $this->objectLayer->createTeamParticipatesInLeague($team, $league);
         return $team->getId();
     }
 
@@ -368,8 +382,9 @@ class LogicLayerImpl implements LogicLayer{
 
     }
 
-    public function updateUser($userID, $firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null,$studentId=null, $major=null, $address=null)
+    public function updateUser($userID=-1, $firstName=null, $lastName=null, $userName=null, $password=null, $emailAddress=null,$studentId=null, $major=null, $address=null)
     {
+        if($userID==-1) throw new RDException("Invalid USER ID");
         //we have to assume that they are logged in
         $ourStudent = $this->objectLayer->findStudent(null, $userID)->current();
 
@@ -540,6 +555,8 @@ class LogicLayerImpl implements LogicLayer{
         }
         return $password;
     }
+
+
     /**
      * Called to join a player to a team
      *
@@ -559,21 +576,19 @@ class LogicLayerImpl implements LogicLayer{
     public function joinTeam($teamObj = null, $teamName = null, $studentObj = null, $studentId = -1)
     {
 
-        if($teamName != null && $studentId > -1){
-            //create iter to find student with given id
-            $modelStudent = new Entity\StudentImpl();
-            $modelStudent->setId($studentId);
-            $studentIter = $this->objectLayer->findStudent($modelStudent);
-            $studentObj = $studentIter->current();
-
+        if($teamName != null) {
             //create iter to find team with given team name
             $modelTeam = new Entity\TeamImpl();
             $modelTeam->setName($teamName);
             $teamIter = $this->objectLayer->findTeam($modelTeam);
             $teamObj = $teamIter->current();
         }
-        else{
-            throw new RDException("Parameters are not correct");
+        if ($studentId > -1){
+            //create iter to find student with given id
+            $modelStudent = new Entity\StudentImpl();
+            $modelStudent->setId($studentId);
+            $studentIter = $this->objectLayer->findStudent($modelStudent);
+            $studentObj = $studentIter->current();
         }
 
         //check for maximum number of players in the team

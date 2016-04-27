@@ -32,7 +32,7 @@ try {
     $major = trim($_POST['major']);
 
     // this code is used to hash the password into DB. when we register a user.
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    $password_hash = $password; //TODO REIMPLEMENT HASH password_hash($password, PASSWORD_DEFAULT);
 
     //store the user in the DB.
     $persistenceId = $logicLayer->createStudent(

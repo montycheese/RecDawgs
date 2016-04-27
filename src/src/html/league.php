@@ -23,7 +23,7 @@ $leagueObj = $leagueUI->getLeague($leagueId);
     <form method="POST" action="php/doJoinTeam.php">
         
         <div class="form-group">
-            <select name="teams" id="teams">
+            <select name="teamId" id="teams">
                 <option value="-1">---SELECT TEAM TO VIEW---</option>
                 <?php
                 echo $leagueUI->listAllTeams($leagueObj);
@@ -40,13 +40,13 @@ $leagueObj = $leagueUI->getLeague($leagueId);
     <h1>Create a Team under this League</h1>
 
     <form id="createTeam" action="php/doCreateTeam.php" method="post">
-        <input name="league" id="league" type="hidden" value="<?php echo $leagueId ?>">
+        <input name="leagueId" id="leagueId" type="hidden" value="<?php echo $leagueId ?>">
         <input name="teamCaptainId" id="teamCaptainId" type="hidden" value="<?php echo $_SESSION['userId'] ?>">
 
         <div class="form-group">
             <label for="teamName">Team Name</label>
             <br>
-            <input name="name" id="teamName" type="text">
+            <input name="teamName" id="teamName" type="text">
         </div>
 
         <div class="form-group">
