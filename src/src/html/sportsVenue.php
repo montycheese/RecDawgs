@@ -45,4 +45,5 @@ if($_SESSION['userType']== 1) {
 ?>
 </div>
 </body>
-</html>
+
+<?php include('includes/footer.php'); ?>
