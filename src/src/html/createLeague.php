@@ -55,8 +55,8 @@ include('includes/header.php');
             <label for="venueType">Indoor or Outdoor?</label>
             <br>
             <select name="isIndoor" id="isIndoor"> 
-                <option value="true">Indoor</option>
-                <option value="false">Outdoor</option>
+                <option value="1">Indoor</option>
+                <option value="0">Outdoor</option>
             </select>
         </div>
 
