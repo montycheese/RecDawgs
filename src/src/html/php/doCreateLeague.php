@@ -27,7 +27,7 @@ try {
         trim($_POST['name']),
         trim($_POST['leagueRules']),
         trim($_POST['matchRules']),
-        trim($_POST['isIndoor']),
+        intval(trim($_POST['isIndoor'])),
         intval(trim($_POST['minTeams'])),
         intval(trim($_POST['maxTeams'])),
         intval(trim($_POST['minMembers'])),

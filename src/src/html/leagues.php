@@ -16,6 +16,10 @@ use edu\uga\cs\recdawgs\presentation as Presentation;
     $leagueUI = new Presentation\LeagueUI();
     echo $leagueUI->listAll();
     ?>
+
+    <br/>
+    <h2>Create a new league</h2>
+    <?php if($_SESSION['userType'] == 1){echo $leagueUI->listCreateButton();}?>
    
 </div>
 </body>

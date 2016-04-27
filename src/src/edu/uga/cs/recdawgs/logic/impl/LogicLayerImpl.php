@@ -297,7 +297,8 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function createLeague($name, $leagueRules, $matchRules, $isIndoor, $minTeams, $maxTeams, $minMembers, $maxMembers)
     {
-        if($name==null ||  $leagueRules==null ||  $matchRules==null ||  $isIndoor==null ||  $minTeams==null ||  $maxTeams==null ||  $minMembers==null ||  $maxMembers==null)
+        //die(var_dump(func_get_args()));
+        if($name==null ||  $leagueRules==null ||  $matchRules==null ||  $isIndoor===null ||  $minTeams===null ||  $maxTeams===null ||  $minMembers===null ||  $maxMembers===null)
             throw new RDException("Parameters can not be null.");
 
         $league = $this->objectLayer->createLeague(
@@ -324,7 +325,7 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function createSportsVenue($name, $isIndoor, $address)
     {
-        if($name==null || $isIndoor==null || $address==null){
+        if($name==null || $isIndoor===null || $address==null){
             throw new RDException("Parameters can not be null");
         }
 

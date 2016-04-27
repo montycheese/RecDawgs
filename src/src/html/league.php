@@ -21,20 +21,24 @@ $leagueObj = $leagueUI->getLeague($leagueId);
     <h2>League Info</h2>
     <?php echo $leagueUI->listInfo(null, $leagueId);?>
 
-    <h3>Select a team in this league to join</h3>
-    
-    <form method="POST" action="php/doJoinTeam.php">
-        
+   <?php
+   if($_SESSION['userType'] == 0){
+       echo "<h3>Select a team in this league to join</h3><form method='POST' action='php/doJoinTeam.php'>";
+   }
+   else if ($_SESSION['userType'] == 1){
+       echo "<h3>View teams in this league</h3><form method='POST' action='team.php'>";
+   }
+    ?>
         <div class="form-group">
             <select name="teamId" id="teams">
-                <option value="-1">---SELECT TEAM TO VIEW---</option>
+                <option value="-1">---SELECT TEAM---</option>
                 <?php
                 echo $leagueUI->listAllTeams($leagueObj);
                 ?>
             </select>
         </div>
         <div class="form-group">
-            <input type="submit" value = "Join Team"> 
+            <input type="submit" value = "Submit">
         </div>
     </form>
     
@@ -58,6 +62,12 @@ $leagueObj = $leagueUI->getLeague($leagueId);
 
     </form>
    </p>
+<br?
+    <?php
+    if($_SESSION['userType'] == 1) {
+        echo $leagueUI->listDeleteButton(null, $leagueId);
+    }
+    ?>
 </div>
 </body>
 

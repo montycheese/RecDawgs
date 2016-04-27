@@ -171,4 +171,21 @@ class LeagueUI {
         }
         return $html;
     }
+
+    public function listDeleteButton($league=null, $leagueId=-1){
+        $html ="<br/><h1>Delete this league</h1>";
+        if($league){
+            $leagueId = $league->getId();
+            $html .= "<form><input type='hidden' name='leagueId' value='{$leagueId}'><input type='submit' name='Delete League'></form>";
+        }
+        else if($leagueId > -1){
+            $html .= "<form><input type='hidden' name='leagueId' value='{$leagueId}'><input type='submit' name='Delete League' value='Delete'></form>";
+        }
+        return $html;
+    }
+
+    public function listCreateButton(){
+        $html = "<a href='createLeague.php'><button>Create a new League</button></a>";
+        return $html;
+    }
 }

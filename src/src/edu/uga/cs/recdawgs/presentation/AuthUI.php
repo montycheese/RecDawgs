@@ -85,7 +85,11 @@ class AuthUI {
             //get student
             $admin = $adminIter->current();
             //compare entered password and hashed one in db
-            if(password_verify($password, $admin->getPassword())){
+           // if(password_verify($password, $admin->getPassword())){
+             //   return $this->createSession($admin, false);
+            //}
+            //TODO FIX to hash
+            if($password == $admin->getPassword()){
                 return $this->createSession($admin, false);
             }
             else{

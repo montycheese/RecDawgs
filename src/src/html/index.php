@@ -15,18 +15,18 @@
         </form>
         
     </p>
-    
-      <p>
-        <form method="POST" action="teams.php"> 
-             
-            
-            
-            
-            <input type="image" src = "img/teamButton.png" value="showTeams" alt = "Submit"> 
+    <?php
+      if ($_SESSION['userType'] == 0)
+      {
+          echo "<p>
+        <form method='POST' action='teams.php'>
+            <input type='image' src = 'img/teamButton.png' value='showTeams' alt = 'Submit'> 
         </form>
         
-    </p>
-    
+    </p>";
+
+      }
+    ?>
     
 </div>
 </body>
