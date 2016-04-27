@@ -8,7 +8,7 @@ $userId = $_POST['userId'];
 
 try {
     // find user
-    $user = $logicLayer->findStudent(null, $userId);
+    $user = $logicLayer->findStudent(null, $userId)->current();
 
     // delete user
     $logicLayer->deleteUser($user);
