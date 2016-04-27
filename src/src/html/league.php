@@ -23,7 +23,7 @@ $leagueObj = $leagueUI->getLeague($leagueId);
     <form method="POST" action="php/doJoinTeam.php">
         
         <div class="form-group">
-            <select name="teams" id="teams">
+            <select name="teamId" id="teams">
                 <option value="-1">---SELECT TEAM TO VIEW---</option>
                 <?php
                 echo $leagueUI->listAllTeams($leagueObj);

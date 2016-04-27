@@ -555,6 +555,8 @@ class LogicLayerImpl implements LogicLayer{
         }
         return $password;
     }
+
+
     /**
      * Called to join a player to a team
      *
@@ -574,21 +576,19 @@ class LogicLayerImpl implements LogicLayer{
     public function joinTeam($teamObj = null, $teamName = null, $studentObj = null, $studentId = -1)
     {
 
-        if($teamName != null && $studentId > -1){
-            //create iter to find student with given id
-            $modelStudent = new Entity\StudentImpl();
-            $modelStudent->setId($studentId);
-            $studentIter = $this->objectLayer->findStudent($modelStudent);
-            $studentObj = $studentIter->current();
-
+        if($teamName != null) {
             //create iter to find team with given team name
             $modelTeam = new Entity\TeamImpl();
             $modelTeam->setName($teamName);
             $teamIter = $this->objectLayer->findTeam($modelTeam);
             $teamObj = $teamIter->current();
         }
-        else{
-            throw new RDException("Parameters are not correct");
+        if ($studentId > -1){
+            //create iter to find student with given id
+            $modelStudent = new Entity\StudentImpl();
+            $modelStudent->setId($studentId);
+            $studentIter = $this->objectLayer->findStudent($modelStudent);
+            $studentObj = $studentIter->current();
         }
 
         //check for maximum number of players in the team

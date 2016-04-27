@@ -21,6 +21,7 @@
         </div>
     </form>
 
+    <p><a href="register.php">Register</a></p>
     <p><a href="#">Forget Your Password?</a></p>
     
     

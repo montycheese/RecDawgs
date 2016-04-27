@@ -27,3 +27,4 @@ echo $matchUI->listMatchInfo();
 ?>
 
 </body>
+</html>
