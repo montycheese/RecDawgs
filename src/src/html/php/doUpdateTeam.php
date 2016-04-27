@@ -40,7 +40,7 @@ try {
         null);
 
     $successMsg = urlencode("Team name successfully updated to {$newTeamName}!");
-    header("Location: ../teams.php?status={$successMsg}");
+    header("Location: ../team.php?status={$successMsg}");
     //echo $persistenceId;
 }
 catch(\edu\uga\cs\recdawgs\RDException $rde){
