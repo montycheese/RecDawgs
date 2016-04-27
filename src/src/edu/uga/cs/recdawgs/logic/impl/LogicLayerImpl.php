@@ -82,7 +82,6 @@ class LogicLayerImpl implements LogicLayer{
         else{
             //if modelteam is null return all.
             return $this->objectLayer->findTeam($modelTeam);
-
         }
 
     }
@@ -163,9 +162,17 @@ class LogicLayerImpl implements LogicLayer{
      * @param Entity\SportsVenueImpl $modelSportsVenue
      * @return Persistence\SportsVenueIterator or null
      */
-    public function findSportVenue($modelSportsVenue)
+    public function findSportVenue($modelSportsVenue=null, $sportsVenueID= -1)
     {
-        return $this->objectLayer->findSportsVenue($modelSportsVenue);
+        // if id is given, find one
+        if($sportsVenueID > -1){
+            $modelVenue = $this->objectLayer->createSportsVenue();
+            $modelVenue->setId($sportsVenueID);
+            return $this->objectLayer->findSportsVenue($modelVenue);
+        } else{
+            // else, find all
+            return $this->objectLayer->findSportsVenue($modelSportsVenue);
+        }
     }
 
     public function findTeamsIsMemberOf($student=null, $studentId=-1){
@@ -394,7 +401,8 @@ class LogicLayerImpl implements LogicLayer{
         if($lastName != null) {
             $ourStudent->setLastName($lastName);
         }
-        if($userName != null) {            $ourStudent->setUserName($userName);
+        if($userName != null) {            
+            $ourStudent->setUserName($userName);
         }
         if($password != null) {
             $ourStudent->setPassword($password);
@@ -487,11 +495,11 @@ class LogicLayerImpl implements LogicLayer{
         }
     }
 
-    public function updateSportsVenue($venueName, $newName=null, $isIndoor=null, $address=null)
+    public function updateSportsVenue($venueID, $newName=null, $isIndoor=null, $address=null)
     {
         $sportsVenueModel = new Entity\SportsVenueImpl();
-        $sportsVenueModel->setName($venueName);
-        $sportsVenueIter = $this->objectLayer->findSportsVenue($sportsVenueModel);
+        $sportsVenueModel->setID($venueID);
+        $sportsVenueIter = $this->objectLayer->findSportsVenue($sportsVenueModel)->current();
 
         if($sportsVenueIter->size() <= 0) {
             throw new RDException("Sports Venue not found");

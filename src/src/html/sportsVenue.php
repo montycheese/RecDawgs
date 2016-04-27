@@ -16,6 +16,7 @@ if(!isset($_POST) || !isset($_POST['sportsVenueId'])){
 ?>
 
 <body>
+<div class="container">
 <?php
 $sportsVenueId = $_POST['sportsVenueId'];
 $sportsVenueModel = new Entity\SportsVenueImpl();
@@ -26,7 +27,14 @@ echo $sportsVenueUI->listSportsVenueInfo($sportsVenueModel);
 
 <br/><br/>
 <?php
-//if admin allow deletion of sports venues
+//if admin allow update and deletion of sports venues
+if($_SESSION['userType']== 1) {
+   echo "<form action = 'updateSportsVenue.php' method = 'post' >
+    <input type = 'hidden' name = 'sportsVenueId' value = '{$sportsVenueId}'>
+        < input type = 'submit' value = 'Update the Sports Venue' >
+</form >";
+}
+
 if($_SESSION['userType']== 1) {
    echo "<form action = 'php/doDeleteSportsVenue.php' method = 'post' >
     <input type = 'hidden' name = 'userId' value = '{$_SESSION['userId']}'>
@@ -35,5 +43,6 @@ if($_SESSION['userType']== 1) {
 </form >";
 }
 ?>
+</div>
 </body>
 </html>

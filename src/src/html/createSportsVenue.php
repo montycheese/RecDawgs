@@ -11,22 +11,23 @@
         <div class="form-group">
             <label for="venueName">Venue Name</label>
             <br>
-            <input name="venueName" id="venueName" type="text" placeholder="Diagon Alley" pattern="[A-z]{1,}" required>
+            <input name="venueName" id="venueName" type="text" placeholder="Diagon Alley" required>
         </div>
 
         <div class="form-group">
             <label for="venueType">Indoor or Outdoor?</label>
             <br>
             <select name="isIndoor" id="isIndoor"> 
-                <option value="true">Indoor</option>
-                <option value="false">Outdoor</option>
+                <option value="-1">---SELECT TEAM TO VIEW---</option>
+                <option value="1">Indoor</option>
+                <option value="0">Outdoor</option>
             </select>
         </div>
         
         <div class="form-group">
             <label for="address">Address</label>
             <br>
-            <input name="address" id="address" type="text"  pattern="[A-z]{1,}" title="address" required>
+            <input name="address" id="address" type="text"  title="address" required>
         </div>
 
         <p>
