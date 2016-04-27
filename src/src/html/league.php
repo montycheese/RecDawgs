@@ -16,9 +16,12 @@ $leagueUI = new Presentation\LeagueUI();
 $leagueObj = $leagueUI->getLeague($leagueId);
 ?>
 
-<body>
+<body><div class="container">
     <h1><?php echo $leagueObj->getName();?></h1><br/>
-    <p>Select a team in this league to join</p>
+    <h2>League Info</h2>
+    <?php echo $leagueUI->listInfo(null, $leagueId);?>
+
+    <h3>Select a team in this league to join</h3>
     
     <form method="POST" action="php/doJoinTeam.php">
         
@@ -55,7 +58,7 @@ $leagueObj = $leagueUI->getLeague($leagueId);
 
     </form>
    </p>
-
+</div>
 </body>
 
 <?php include('includes/footer.php'); ?>

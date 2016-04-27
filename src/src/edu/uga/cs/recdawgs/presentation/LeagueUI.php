@@ -103,7 +103,7 @@ class LeagueUI {
                 }
             }
             else if ($leagueId > -1) {
-                $league = $this->logicLayer->findLeague(null, $leagueId);
+                $league = $this->logicLayer->findLeague(null, $leagueId)->current();
                 $teamIter = $this->logicLayer->findTeamsInLeague($league);
                 if ($teamIter != null) {
                     while ($teamIter->valid()) {
@@ -118,6 +118,56 @@ class LeagueUI {
         }
         catch (RDException $rde){
             echo $rde->getTraceAsString();
+        }
+        return $html;
+    }
+
+    /**
+     * @param \edu\uga\cs\recdawgs\entity\impl\LeagueImpl $league
+     * @param int $leagueId
+     */
+    public function listInfo($league=null, $leagueId=-1){
+        $html = "";
+        if($league){
+            $leagueRules = $league->getLeagueRules();
+            $matchRules = $league->getMatchRules();
+            $minTeams =  $league->getMinTeams();
+            $maxTeams = $league->getMaxTeams();
+            $minPlayers = $league->getMinMembers();
+            $maxPlayers = $league->getMaxMembers();
+            $location = $league->getIsIndoor() ? "Indoor" : "Outdoor";
+            $winner = ($league->getWinnerOfLeague()!=null) ? $league->getWinnerOfLeague()->getName() : "None";
+            $html .= "<ul>";
+            $html .= "<li>League rules: {$leagueRules}</li>";
+            $html .= "<li>Match rules {$matchRules}</li>";
+            $html .= "<li>Min Teams: {$minTeams}</li>";
+            $html .= "<li>Max Teams: {$maxTeams}</li>";
+            $html .= "<li>Min Players per team: {$minPlayers}</li>";
+            $html .= "<li>Max Players per team: {$maxPlayers}</li>";
+            $html .= "<li>{$location}</li>";
+            $html .= "<li>Winner of league: {$winner}</li>";
+            $html .= "</ul>";
+        }
+        else{
+            $league = $this->logicLayer->findLeague(null, $leagueId)->current();
+            $leagueRules = $league->getLeagueRules();
+            $matchRules = $league->getMatchRules();
+            $minTeams =  $league->getMinTeams();
+            $maxTeams = $league->getMaxTeams();
+            $minPlayers = $league->getMinMembers();
+            $maxPlayers = $league->getMaxMembers();
+            $location = $league->getIsIndoor() ? "Indoor" : "Outdoor";
+            $winner = ($league->getWinnerOfLeague()!=null) ? $league->getWinnerOfLeague()->getName() : "None";
+            $html .= "<ul>";
+            $html .= "<li>League rules: {$leagueRules}</li>";
+            $html .= "<li>Match rules {$matchRules}</li>";
+            $html .= "<li>Min Teams: {$minTeams}</li>";
+            $html .= "<li>Max Teams: {$maxTeams}</li>";
+            $html .= "<li>Min Players per team: {$minPlayers}</li>";
+            $html .= "<li>Max Players per team: {$maxPlayers}</li>";
+            $html .= "<li>{$location}</li>";
+            $html .= "<li>Winner of league: {$winner}</li>";
+            $html .= "</ul>";
         }
         return $html;
     }
