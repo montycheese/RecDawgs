@@ -824,11 +824,72 @@ class LogicLayerImpl implements LogicLayer{
      * the Leagues satisfying their conditions are activated and their season schedules are
      * created, organized into Rounds of Matches; a list of inactive Leagues (not satisfying their
      * conditions) is reported
-     * @return void
+     * @return array
      */
     public function closeEnrollment()
     {
-        // TODO: Implement closeEnrollment() method.
+        //we assume only even amount of teams are allowed.
+        $unsatisfiedLeagues = array();
+        $leagueIter = $this->objectLayer->findLeague(null);
+        //iterate through each league
+        while($leagueIter->valid()){
+            $league = $leagueIter->current();
+            $sportsVenueIter = $this->objectLayer->restoreLeagueSportsVenue($league, null);
+            //get total number of teams in the league to see if it meets the minimum
+            $teamIter = $this->objectLayer->restoreTeamParticipatesInLeague(null, $league);
+            $numTeams = $teamIter->size();
+            //requirements are met
+            if($numTeams >= $league->getMinTeams){
+                //figure out how many rounds are needed to safisfy round robin tournament
+                $totalRounds = $numTeams - 1;
+                //keep one team fixed out of the queue.
+                $fixedTeam = $teamIter->current();
+                $teamIter->next();
+                $queue = array();
+                //add other teams into the queue.
+                while($teamIter->valid()){
+                    //$queue->push($teamIter->current());
+                    array_push($queue, $teamIter->current());
+                    $teamIter->next();
+                }
+                //generate rounds
+                for($i=0; $i < $totalRounds; $i++){
+                    $round = $this->objectLayer->createRound($i+1, $league);
+                    //for each round create the matches in that round
+                    $front=0; $end=$numTeams-1; $match=null;
+                    for($j=$front; $j<($end+1)/2; $j++){
+                        $match = $this->objectLayer->createMatch();
+                        //arbitrarily assign teams as home and away
+                        if($j==$front){
+                            $match->setHomeTeam($fixedTeam);
+                        }
+                        else{
+                            $match->setHomeTeam($queue[$j]);
+                        }
+
+                        $match->setAwayTeam($queue[$end-$j]);
+
+                        $match->setRound($round);
+                        $match->setIsCompleted(false);
+                        //arbitrarily set random sports venue from that league
+                        $match->setSportsVenue($sportsVenueIter->array[
+                            rand(0, $sportsVenueIter->size()-1)
+                        ]);
+                        //store match
+                        $this->objectLayer->storeMatch($match);
+                    }
+                    $this->objectLayer->storeRound($round);
+                    //pop element and place it at the back of queue.
+                    array_unshift($queue, array_pop($queue));
+                }
+
+            }
+            else{
+                array_push($unsatisfiedLeagues, $league);
+            }
+            $leagueIter->next();
+        }
+        return $unsatisfiedLeagues;
     }
 
     /**

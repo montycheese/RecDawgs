@@ -197,7 +197,12 @@ class LeagueUI {
     }
 
     public function listCreateButton(){
-        $html = "<a href='createLeague.php'><button>Create a new League</button></a>";
+        $html = "<h2>Create a new league</h2><br/><a href='createLeague.php'><button>Create a new League</button></a>";
+        return $html;
+    }
+
+    public function listCloseEnrollmentButton(){
+        $html = " <h3>Close Enrollment</h3><br/><a href='closeEnrollment.php'><button>Close</button></a>";
         return $html;
     }
 }

@@ -30,9 +30,11 @@ use edu\uga\cs\recdawgs\presentation as Presentation;
     
 
     <br/>
-    <h2>Create a new league</h2>
+
     <?php if($_SESSION['userType'] == 1){echo $leagueUI->listCreateButton();}?>
-   
+   <br/>
+
+    <?php echo ($_SESSION['userType'] == 1) ? $leagueUI->listCloseEnrollmentButton() : "";?>
 </div>
 </body>
 
