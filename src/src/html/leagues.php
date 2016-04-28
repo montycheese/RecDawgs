@@ -11,11 +11,23 @@ use edu\uga\cs\recdawgs\presentation as Presentation;
 <div class="container">
 <h1>All Leagues</h1>
 
-    <?php
-    //echo var_dump($_SESSION);
-    $leagueUI = new Presentation\LeagueUI();
-    echo $leagueUI->listAll();
-    ?>
+    <form action="league.php" method="post">
+        <div class="form-group">
+            <select name="leagueId" id="leagueId">
+                <option value="-1">---SELECT LEAGUE TO VIEW---</option>
+                    <?php
+                        //echo var_dump($_SESSION);
+                     $leagueUI = new Presentation\LeagueUI();
+                     echo $leagueUI->listAll();
+                    ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="View team">
+        </div>
+    </form>
+    
+    
 
     <br/>
     <h2>Create a new league</h2>

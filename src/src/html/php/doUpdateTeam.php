@@ -32,7 +32,7 @@ try {
     // find team
     $team = $logicLayer->findTeam(null, $_POST['teamId'])->current();
 
-    // udpate team
+    // update team
     $logicLayer->updateTeam($team->getName(), 
         $newTeamName, 
         $student, 

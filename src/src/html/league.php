@@ -62,12 +62,23 @@ $leagueObj = $leagueUI->getLeague($leagueId);
 
     </form>
    </p>
-<br?
-    <?php
-    if($_SESSION['userType'] == 1) {
-        echo $leagueUI->listDeleteButton(null, $leagueId);
-    }
-    ?>
+<br>
+
+    <form id="updateLeague" action="php/doUpdateLeague.php" method="post">
+        <?php
+        if($_SESSION['userType'] == 1) {
+            echo $leagueUI->listUpdateButton(null, $leagueId);
+        }
+        ?>
+    </form>
+    
+    <form id="deleteLeague" action="php/doDeleteLeague.php" method="post">
+        <?php
+            if($_SESSION['userType'] == 1) {
+                echo $leagueUI->listDeleteButton(null, $leagueId);
+            }
+        ?>
+    </form>
 </div>
 </body>
 

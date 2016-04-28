@@ -176,10 +176,22 @@ class LeagueUI {
         $html ="<br/><h1>Delete this league</h1>";
         if($league){
             $leagueId = $league->getId();
-            $html .= "<form><input type='hidden' name='leagueId' value='{$leagueId}'><input type='submit' name='Delete League'></form>";
+            $html .= "<form action='php/doDeleteLeague.php' method='post'><input type='hidden' name='leagueId' value='{$leagueId}'><input type='submit' name='Delete League'></form>";
         }
         else if($leagueId > -1){
             $html .= "<form><input type='hidden' name='leagueId' value='{$leagueId}'><input type='submit' name='Delete League' value='Delete'></form>";
+        }
+        return $html;
+    }
+
+    public function listUpdateButton($league=null, $leagueId = -1){
+        $html ="<br/><h1>Delete this league</h1>";
+        if($league){
+            $leagueId = $league->getId();
+            $html .= "<form action='php/doUpdateLeague' method='post'><input type='hidden' name='leagueId' value='{$leagueId}'><input type='submit' name='Update League'></form>";
+        }
+        else if($leagueId > -1){
+            $html .= "<form><input type='hidden' name='leagueId' value='{$leagueId}'><input type='submit' name='Update League' value='Update'></form>";
         }
         return $html;
     }
