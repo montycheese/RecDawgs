@@ -31,15 +31,15 @@ echo $sportsVenueUI->listSportsVenueInfo($sportsVenueModel);
 if($_SESSION['userType']== 1) {
    echo "<form action = 'updateSportsVenue.php' method = 'post' >
     <input type = 'hidden' name = 'sportsVenueId' value = '{$sportsVenueId}'>
-        < input type = 'submit' value = 'Update the Sports Venue' >
+        <input type ='submit' value ='Update the Sports Venue'>
 </form >";
 }
 
 if($_SESSION['userType']== 1) {
-   echo "<form action = 'php/doDeleteSportsVenue.php' method = 'post' >
+   echo "<form action = 'php/doDeleteSportsVenue.php' method = 'post'>
     <input type = 'hidden' name = 'userId' value = '{$_SESSION['userId']}'>
     <input type = 'hidden' name = 'sportsVenueId' value = '{$sportsVenueId}'
-        < input type = 'submit' value = 'Delete the Sports Venue' >
+        <input type ='submit' value ='Delete the Sports Venue'>
 </form >";
 }
 ?>
