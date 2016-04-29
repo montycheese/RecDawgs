@@ -31,9 +31,10 @@ class MatchUI {
         $html = "";
         try {
             if ($match) {
-                $leagueName = $match->getHomeTeam()->getLeague()->getName();
+                $leagueName = $match->getHomeTeam()->getParticipatesInLeague()->getName();
                 $roundNumber = strval($match->getRound()->getNumber());
-                $date = $match->getDate();
+                $date = $match->getDate() ? $match->getDate() : "Date not set yet";
+
                 $homeTeamName = $match->getHomeTeam()->getName();
                 $awayTeamName = $match->getAwayTeam()->getName();
                 $venueName = $match->getSportsVenue()->getName();
@@ -46,7 +47,8 @@ class MatchUI {
 
             } else if ($matchId > -1) {
                 $match = $this->logicLayer->findMatch(null, $matchId)->current();
-                $leagueName = $match->getHomeTeam()->getLeague()->getName();
+                //die(var_dump($match));
+                $leagueName = $match->getHomeTeam()->getParticipatesInLeague()->getName();
                 $roundNumber = strval($match->getRound()->getNumber());
                 $date = $match->getDate();
                 $homeTeamName = $match->getHomeTeam()->getName();

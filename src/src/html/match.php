@@ -5,6 +5,7 @@
  * Date: 4/26/16
  * Time: 10:16
  */
+//session_start();
 include("includes/header.php");
 //todo show the round# of the match, the league, the teams, and the scores(if the game has played), the date, etc.
 
@@ -23,7 +24,7 @@ if(!isset($_POST) || !isset($_POST['matchId'])){
 <body>
 <?php
 $matchUI = new Presentation\MatchUI();
-echo $matchUI->listMatchInfo();
+echo $matchUI->listMatchInfo(null, $_POST['matchId']);
 ?>
 
 </body>

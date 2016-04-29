@@ -29,7 +29,7 @@ class MatchIterator extends PersistenceIterator{
                 $homeTeam = $objLayer->createTeam();
                 $homeTeam->setId( $resultSet[$i]['home_team_id']);
                 $homeTeam = $objLayer->findTeam($homeTeam)->current();
-                $league = $objLayer->restoreTeamParticipatesInLeague($homeTeam);
+                $league = $objLayer->restoreTeamParticipatesInLeague($homeTeam)->current();
 
                 $homeTeam->setParticipatesInLeague($league);
 
@@ -37,7 +37,7 @@ class MatchIterator extends PersistenceIterator{
                 $awayTeam = $objLayer->createTeam();
                 $awayTeam->setId( $resultSet[$i]['away_team_id']);
                 $awayTeam = $objLayer->findTeam($awayTeam)->current();
-                $league2= $objLayer->restoreTeamParticipatesInLeague($awayTeam);
+                $league2= $objLayer->restoreTeamParticipatesInLeague($awayTeam)->current();
                 $awayTeam->setParticipatesInLeague($league2);
 
                 //create match obj to get sports venue from
@@ -56,6 +56,8 @@ class MatchIterator extends PersistenceIterator{
                 //get round obj
                 $round = $this->objLayer->createRound();
                 $round->setId($resultSet[$i]['round_id']);
+                //die(var_dump($round));
+                //die(var_dump($resultSet));
                 $round = $objLayer->findRound($round)->current();
 
                 $match->setHomePoints($resultSet[$i]['home_points']);
