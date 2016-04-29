@@ -7,7 +7,7 @@
  */
 
 include('includes/header.php');
-$theLeagueID = $_POST['leagueId'];
+$leagueId = $_POST['leagueId'];
 ?>
 
 <body>
@@ -16,7 +16,7 @@ $theLeagueID = $_POST['leagueId'];
         <br>
 
         <form id="updateLeague" action="php/doUpdateLeague.php" method="post">
-            <input type = 'hidden' name = 'leagueId' value = '{$leagueId}'>
+            <input type = 'hidden' name = 'leagueId' value = '<?php echo "{$leagueId}" ;?>'>
             <br>
 
             <div class="form-group">
@@ -75,7 +75,7 @@ $theLeagueID = $_POST['leagueId'];
                 <br>
                 <input name="winner" id="winner" type="text">
             </div>
-
+<input type="submit" value="submit">
         </form>
     </div>
 </body>

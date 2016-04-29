@@ -160,7 +160,7 @@ class LeagueUI {
             $winner = ($league->getWinnerOfLeague()!=null) ? $league->getWinnerOfLeague()->getName() : "None";
             $html .= "<ul>";
             $html .= "<li>League rules: {$leagueRules}</li>";
-            $html .= "<li>Match rules {$matchRules}</li>";
+            $html .= "<li>Match rules: {$matchRules}</li>";
             $html .= "<li>Min Teams: {$minTeams}</li>";
             $html .= "<li>Max Teams: {$maxTeams}</li>";
             $html .= "<li>Min Players per team: {$minPlayers}</li>";

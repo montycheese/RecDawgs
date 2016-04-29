@@ -6,9 +6,12 @@
  * Time: 16:23
  */
 
+require_once("autoload.php");
 use edu\uga\cs\recdawgs\logic\impl\LogicLayerImpl as LogicLayerImpl;
 
-$logicLayer = new LogicLayerImpl\LogicLayerImpl();
+session_start();
+
+$logicLayer = new LogicLayerImpl();
 
 $firstName = null;
 $lastName = null;
@@ -27,12 +30,9 @@ try {
     if (trim($_POST['lastName'])) {
         $lastName = trim($_POST['lastName']);
     }
-    if (trim($_POST['userName'])) {
-        $userName = trim($_POST['userName']);
-    }
     if (trim($_POST['password'])) {
         $password = trim($_POST['password']);
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        //$password_hash = password_hash($password, PASSWORD_DEFAULT);
     }
     if (trim($_POST['email'])) {
         $emailAddress = trim($_POST['email']);
@@ -52,24 +52,24 @@ try {
         $_SESSION['userId'],
         $firstName,
         $lastName,
-        $userName,
-        $password_hash,
+        null,
+        $password,
         $emailAddress,
         $studentId,
-        $address,
-        $major
+        $major,
+        $address
     );
 
     $successMsg = urlencode("User successfully updated!");
-    header("Location: ../doUpdateUser.php?status={$successMsg}");
+    header("Location: ../profile.php?status={$successMsg}");
     //echo $persistenceId;
 }
 catch(\edu\uga\cs\recdawgs\RDException $rde){
     $error_msg = urlencode($rde->string);
-    header("Location: ../doUpdateUser.php?status={$error_msg}");
+    header("Location: ../editProfile.php?status={$error_msg}");
 }
 catch(Exception $e){
     $errorMsg = urlencode("Unexpected error");
-    header("Location: ../doUpdateUser.php?status={$errorMsg}");
+    header("Location: ../editProfile.php?status={$errorMsg}");
 }
 exit();

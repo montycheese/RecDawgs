@@ -403,8 +403,23 @@ class LogicLayerImpl implements LogicLayer{
     {
         if($userID==-1) throw new RDException("Invalid USER ID");
         //we have to assume that they are logged in
-        $ourStudent = $this->objectLayer->findStudent(null, $userID)->current();
+        $modelUser=null;
+        if($_SESSION['userType'] == 1){
+            $modelUser = $this->objectLayer->createAdministrator();
+            $modelUser->setId($userID);
 
+            $ourStudent = $this->objectLayer->findAdministrator($modelUser)->current();
+        }
+        else if($_SESSION['userType'] == 0){
+            $modelUser = $this->objectLayer->createStudent();
+            $modelUser->setId($userID);
+
+            $ourStudent = $this->objectLayer->findStudent($modelUser)->current();
+        }
+       // $modelUser->setId($userID);
+
+        //$ourStudent = $this->objectLayer->findStudent($modelUser)->current();
+        //die(var_dump($ourStudent));
         if($firstName!=null){
             $ourStudent->setFirstName($firstName);
         }
@@ -429,7 +444,9 @@ class LogicLayerImpl implements LogicLayer{
         if($address != null) {
             $ourStudent->setAddress($address);
         }
-        $this->objectLayer->storeStudent($ourStudent);
+        if($_SESSION['userType'] == 1){$this->objectLayer->storeAdministrator($ourStudent);}
+
+        else if($_SESSION['userType'] == 0){$this->objectLayer->storeStudent($ourStudent);}
 
     }
 

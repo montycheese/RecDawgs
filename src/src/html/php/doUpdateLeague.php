@@ -72,7 +72,7 @@ try {
     }
 
     $logicLayer->updateLeague($league->getName(),
-        $newLeagueName,
+        $newName,
         $newLeagueRules,
         $newMatchRules,
         $newIsIndoor,
@@ -83,14 +83,14 @@ try {
         $newWinner);
     
     $successMsg = urlencode("League successfully updated!");
-    header("Location: ../league.php?status={$successMsg}");
+    header("Location: ../leagues.php?status={$successMsg}");
     
 } catch(\edu\uga\cs\recdawgs\RDException $rde){
     $error_msg = urlencode($rde->string);
-    header("Location: ../league.php?status={$error_msg}");
+    header("Location: ../leagues.php?status={$error_msg}");
 }
 catch(Exception $e){
     $errorMsg = urlencode("Unexpected error");
-    header("Location: ../league.php?status={$errorMsg}");
+    header("Location: ../leagues.php?status={$errorMsg}");
 }
 exit();

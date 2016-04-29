@@ -35,6 +35,7 @@ include("includes/header.php");
                         <input name="lastName" id="lastName" type="text" placeholder="Snow" pattern="[A-z]{1,}" title="last name" style="border-radius:5px;padding:12px;width:200px;height:10px">
                     </div>
                 </td>
+
             </tr>
             <tr>
                 <td>

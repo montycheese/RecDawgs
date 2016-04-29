@@ -64,7 +64,7 @@ $leagueObj = $leagueUI->getLeague($leagueId);
    </p>
 <br>
 
-    <form id="updateLeague" action="php/doUpdateLeague.php" method="post">
+    <form id="updateLeague" action="updateLeague.php" method="post">
         <?php
         if($_SESSION['userType'] == 1) {
             echo $leagueUI->listUpdateButton(null, $leagueId);
