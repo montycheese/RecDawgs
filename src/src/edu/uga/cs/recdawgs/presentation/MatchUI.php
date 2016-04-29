@@ -66,33 +66,31 @@ class MatchUI {
         return $html;
     }
 
-    public function listUpcomingMatches($matchModel) {
-        $matchIter = $this->logicLayer->findMatch($matchModel);
+    public function listUpcomingMatches($team) {
+
         $html = "";
-        if($matchIter->size() <= 0) {
+        $matches = $this->logicLayer->findTeamsMatchesInLeague($team, null);
+        if(count($matches) <= 0) {
             return "<h3>There are no matches scheduled.</h3>";
         }
         try {
+            //ie(var_dump($matches));
             $html .= "<h3>Upcoming matches: </h3> <br/> <br/>";
             $html .= "<form method='POST' action='match.php'>";
             $html .= "<select class='form-control' name='matchId'>";
-            while ($matchIter->valid()) {
+            for($i=0; $i<count($matches); $i++){
+            //while ($matchIter->valid()) {
 
-                $match = $matchIter->current();
-                $homeTeam = $match->getHomeTeam();
-                $awayTeam = $match->getAwayTeam();
-                // $homePoints = $match->getHomePoints();
-                //$awayPoints = $match->getAwayPoints();
-                //$isCompleted = $match->getIsCompleted();
-                //$sportsVenue = $match->getSportsVenue();
-                //$round = $match->getRound();
+                $match = $matches[$i];
+                $homeTeam = $match->getHomeTeam()->getName();
+                $awayTeam = $match->getAwayTeam()->getName();
+                $roundNum = $match->getRound()->getNumber();
                 $matchId = $match->getId();
 
-                $html .= "<option value = '{$matchId}'>{$homeTeam} vs. {$awayTeam}</option>";
-                $matchIter->next();
+                $html .= "<option value = '{$matchId}'>Round {$roundNum}: {$homeTeam} vs. {$awayTeam}</option>";
             }
             $html .= "</select>";
-            $html .= "<p><input type='submit' value = 'Select League'></p>";
+            $html .= "<p><input type='submit' value = 'View Match'></p>";
             $html .= "</form>";
         } catch (RDException $rde) {
             echo $rde->getTraceAsString();

@@ -113,8 +113,13 @@ class MatchManager {
                 $sportsVenue = $match->getSportsVenue()->getId();
                 $stmt->bindParam(7, $sportsVenue, \PDO::PARAM_INT);
             }
-            $round = $match->getRound()->getId();
-            $stmt->bindParam(8, $round, \PDO::PARAM_INT);
+            if($match->getRound() != NULL){
+                $round = $match->getRound();
+                $roundId = $round->getId();
+                $stmt->bindParam(8, $roundId, \PDO::PARAM_INT);
+            }
+
+
             if($stmt->execute()){
                 $match->setId($this->dbConnection->lastInsertId());
                 echo 'Match created successfully';

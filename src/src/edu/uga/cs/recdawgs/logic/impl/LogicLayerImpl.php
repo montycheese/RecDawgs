@@ -315,6 +315,15 @@ class LogicLayerImpl implements LogicLayer{
 
         return $league->getId();
     }
+    public function createLeagueSportsVenue($leagueId, $sportsVenueId){
+        $modelLeague = $this->objectLayer->createLeague();
+        $modelLeague->setId($leagueId);
+        $modelSportsVenue = $this->objectLayer->createSportsVenue();
+        $modelSportsVenue->setId($sportsVenueId);
+        $league = $this->objectLayer->findLeague($modelLeague)->current();
+        $sportsVenue = $this->objectLayer->findSportsVenue($modelSportsVenue)->current();
+        $this->objectLayer->createLeagueSportsVenue($league, $sportsVenue);
+    }
 
     /**
      * @param String $name
@@ -860,6 +869,19 @@ class LogicLayerImpl implements LogicLayer{
         }
     }
 
+    public function findLeagueSportsVenue($league=null, $sportsVenue=null){
+        if($league){
+            //return venue iter
+            return $this->objectLayer->restoreLeagueSportsVenue($league, null);
+
+        }
+        else if ($sportsVenue){
+            return $this->objectLayer->restoreLeagueSportsVenue(null, $sportsVenue);
+
+        }
+        throw new RDException("Params can not be null");
+    }
+
     /**
      * the Leagues satisfying their conditions are activated and their season schedules are
      * created, organized into Rounds of Matches; a list of inactive Leagues (not satisfying their
@@ -879,7 +901,7 @@ class LogicLayerImpl implements LogicLayer{
             $teamIter = $this->objectLayer->restoreTeamParticipatesInLeague(null, $league);
             $numTeams = $teamIter->size();
             //requirements are met, also must have even # of teams
-            if($numTeams >= $league->getMinTeams || $numTeams % 2 != 0){
+            if($numTeams >= $league->getMinTeams() || $numTeams % 2 != 0){
                 //figure out how many rounds are needed to safisfy round robin tournament
                 $totalRounds = $numTeams - 1;
                 //keep one team fixed out of the queue.
@@ -895,8 +917,9 @@ class LogicLayerImpl implements LogicLayer{
                 //generate rounds
                 for($i=0; $i < $totalRounds; $i++){
                     $round = $this->objectLayer->createRound($i+1, $league);
+                    $this->objectLayer->storeRound($round);
                     //for each round create the matches in that round
-                    $front=0; $end=$numTeams-1; $match=null;
+                    $front=0; $end=count($queue)-1; $match=null;
                     for($j=$front; $j<($end+1)/2; $j++){
                         $match = $this->objectLayer->createMatch();
                         //arbitrarily assign teams as home and away
@@ -918,7 +941,7 @@ class LogicLayerImpl implements LogicLayer{
                         //store match
                         $this->objectLayer->storeMatch($match);
                     }
-                    $this->objectLayer->storeRound($round);
+
                     //pop element and place it at the back of queue.
                     array_unshift($queue, array_pop($queue));
                 }
@@ -946,6 +969,19 @@ class LogicLayerImpl implements LogicLayer{
             throw new RDException($string="Team is not in this league.");
         }
         $this->objectLayer->createTeamWinnerOfLeague($team, $league);
+    }
+
+    /**
+     * @param $team
+     * @param $league
+     * @return array
+     */
+    public function findTeamsMatchesInLeague($team, $league){
+        $awayMatches = $this->objectLayer->restoreTeamAwayTeamMatch($team,null);
+        $homeMatches = $this->objectLayer->restoreTeamHomeTeamMatch($team,null);
+        //die(var_dump($awayMatches));
+        return array_merge($awayMatches->array, $homeMatches->array);
+
     }
 
 

@@ -157,7 +157,7 @@ class SportsVenueManager {
      * @throws RDException
      */
     public function restoreLeaguesUsedIn($sportsVenue){
-        $q = 'SELECT league.league_id, league.name, league, league_rules,
+        $q = 'SELECT league.league_id, league.name, league.league_rules,
                league.match_rules, league.is_indoor, league.min_teams, league.max_teams, league.min_members, league.max_members
               FROM league
               INNER JOIN league_venue

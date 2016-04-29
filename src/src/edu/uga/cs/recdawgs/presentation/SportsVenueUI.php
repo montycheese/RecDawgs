@@ -45,7 +45,63 @@ class SportsVenueUI {
         return $html;
     }
     
-    
+    public function listLeaguesUsedIn($sportsVenueModel=null, $sportsVenueId=-1){
+        $html = "";
+        if($sportsVenueId > -1){
+            try{
+                $sportsVenue = $this->logicLayer->findSportVenue(null, $sportsVenueId)->current();
+                $leagueIter = $this->logicLayer->findLeagueSportsVenue(null, $sportsVenue);
+                if ($leagueIter->size() == 0) {
+                    $html .= "<p>No leagues</p>";
+                }
+                else {
+                    $html .= "<form method='POST' action='league.php'>";
+                    $html .= "<select class='form-control' name='leagueId'>";
+                    while ($leagueIter->valid()) {
+                        $league = $leagueIter->current();
+                        $leagueId = $league->getId();
+                        $leagueName = $league->getName();
+                        $html .= "<option value = '{$leagueId}'>{$leagueName}</option>";
+                        $leagueIter->next();
+                    }
+                    $html .= "</select>";
+                    $html .= "<p><input type='submit' value = 'View League'></p>";
+                    $html .= "</form>";
+                }
+            }
+            catch(RDException $rde){
+                echo $rde->string;
+            }
+        }
+        else if($sportsVenueModel){
+            try{
+                $sportsVenue = $this->logicLayer->findSportVenue($sportsVenueModel, -1)->current();
+                $leagueIter = $this->logicLayer->findLeagueSportsVenue(null, $sportsVenue);
+                if ($leagueIter->size() == 0) {
+                    $html .= "<p>No leagues</p>";
+                }
+                else {
+                    $html .= "<form method='POST' action='league.php'>";
+                    $html .= "<select class='form-control' name='leagueId'>";
+                    while ($leagueIter->valid()) {
+                        $league = $leagueIter->current();
+                        $leagueId = $league->getId();
+                        $leagueName = $league->getName();
+                        $html .= "<option value = '{$leagueId}'>{$leagueName}</option>";
+                        $leagueIter->next();
+                    }
+                    $html .= "</select>";
+                    $html .= "<p><input type='submit' value = 'View League'></p>";
+                    $html .= "</form>";
+                }
+            }
+            catch(RDException $rde){
+                //todo
+                echo $rde->string;
+            }
+        }
+        return $html;
+    }
     
     public function listSportsVenueInfo($sportsVenueModel) {
         $html = "";
@@ -105,6 +161,37 @@ class SportsVenueUI {
 
     public function listCreateButton(){
         $html = "<h2>Create a new sportsVenue</h2><br/><a href='createsportsVenue.php'><button>Create a new Sports Venue</button></a>";
+        return $html;
+    }
+
+    public function listAddToLeagueButton($sportsVenueId){
+        $html = "<h3>Assign Sports Venue to League</h3><br/>";
+        if($sportsVenueId > -1){
+            try{
+                //$sportsVenue = $this->logicLayer->findSportVenue(null, $sportsVenueId)->current();
+                $leagueIter = $this->logicLayer->findLeague(null, -1);
+                if ($leagueIter->size() == 0) {
+                    $html .= "<p>No leagues</p>";
+                }
+                else {
+                    $html .= "<form method='POST' action='php/doAssignLeagueSportsVenue.php'>";
+                    $html .= "<select class='form-control' name='leagueId'>";
+                    while ($leagueIter->valid()) {
+                        $league = $leagueIter->current();
+                        $leagueId = $league->getId();
+                        $leagueName = $league->getName();
+                        $html .= "<option value = '{$leagueId}'>{$leagueName}</option>";
+                        $leagueIter->next();
+                    }
+                    $html .= "</select>";
+                    $html .= "<p><input type='hidden' value ='{$sportsVenueId}' name='sportsVenueId'><input type='submit' value = 'Assign'></p>";
+                    $html .= "</form>";
+                }
+            }
+            catch(RDException $rde){
+                echo $rde->string;
+            }
+        }
         return $html;
     }
   

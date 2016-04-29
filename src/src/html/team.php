@@ -4,7 +4,7 @@ spl_autoload_register(function ($class_name) {
     include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
 });
 use edu\uga\cs\recdawgs\presentation as Presentation;
-use edu\uga\cs\recdawgs\entity\impl as Entity;
+
 if(!isset($_POST) || !isset($_POST['teamId'])){
     $errorMsg  = urlencode("Team not found.");
     header("Location: teams.php?status={$errorMsg}");
@@ -15,14 +15,13 @@ $teamObj = $teamUI->getTeam($teamId);
 $leagueId = $teamObj->getParticipatesInLeague()->getId();
 
 $matchUI = new Presentation\MatchUI();
-$matchObj = new Entity\MatchImpl($homePoints=null, $awayPoints=null, $date=null, $isCompleted=null, $homeTeam=$teamObj, $awayTeam=null, $sportsVenue=null, $round=null);
+
 ?>
 
 <body>
 <?php
 
 echo $teamUI->listTeamInformation(null, $teamId);
-echo "<p>TODO ADD UPCOMING MATCHES</p>";
 ?>
 
 <?php
@@ -50,7 +49,7 @@ if($teamObj->getCaptain()->getId() == $_SESSION['userId']) {
 ?>
 
     <?php
-        echo $matchUI->listUpcomingMatches($matchObj);
+        echo $matchUI->listUpcomingMatches($teamObj);
     ?>
 </body>
 
