@@ -23,11 +23,15 @@ $sportsVenueUI = new Presentation\SportsVenueUI();
         echo $sportsVenueUI->listAll();
         ?>
 
-
-
         <br/>
 
-        <?php if($_SESSION['userType'] == 1){echo $sportsVenueUI->listCreateButton();}?>
+        <?php 
+
+        if($_SESSION['userType'] == 1){
+            echo $sportsVenueUI->listCreateButton();
+        }
+
+        ?>
         <br/>
 
         <?php //echo ($_SESSION['userType'] == 1) ? $leagueUI->listCloseEnrollmentButton() : "";?>

@@ -125,12 +125,26 @@ class SportsVenueUI {
         $html ="<br/><h1>Delete this SportsVenue</h1>";
         if($sportsVenue){
             $sportsVenueId = $sportsVenue->getId();
-            $html .= "<form action='php/doDeleteSportsVenue.php' method='post'><input type='hidden' name='sportsVenueId' value='{$sportsVenueId}'><input type='submit' name='Delete sportsVenue'></form>";
+            $html .= "<form action='php/doDeleteSportsVenue.php' method='post'>
+                <input type='hidden' name='sportsVenueId' value='{$sportsVenueId}'>
+                <input type='submit' name='Delete sportsVenue'>
+                </form>";
+
+            return $html;
         }
-        else if($sportsVenueId > -1){
-            $html .= "<form><input type='hidden' name='sportsVenueId' value='{$sportsVenueId}'><input type='submit' name='Delete SportsVenue' value='Delete'></form>";
+        
+        if($sportsVenueId > -1){
+            $html .= "<formaction='php/doDeleteSportsVenue.php' >
+                <input type='hidden' name='sportsVenueId' value='{$sportsVenueId}'>
+                <input type='submit' name='Delete SportsVenue'>
+                </form>";
+
+            return $html;
         }
+
+        $html = "";
         return $html;
+
     }
 
     public function listUpdateButton($sportsVenue=null, $sportsVenueId = -1){
