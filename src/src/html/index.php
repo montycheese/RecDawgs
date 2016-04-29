@@ -26,6 +26,17 @@
     </p>";
 
       }
+    if ($_SESSION['userType'] == 1)
+    {
+        echo "<p>
+        <form method='POST' action='sportsVenues.php'>
+            <input type='image' src = 'img/viewVenuesButton.png' value='showVenues' alt = 'Submit'>
+        </form>
+
+    </p>";
+
+    }
+
     ?>
     
 </div>

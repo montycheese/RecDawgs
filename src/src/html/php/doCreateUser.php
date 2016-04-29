@@ -42,8 +42,8 @@ try {
         $password_hash,
         $emailAddress,
         $studentId,
-        $address,
-        $major
+        $major,
+        $address
     );
 
 

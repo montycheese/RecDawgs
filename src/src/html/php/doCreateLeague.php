@@ -22,7 +22,7 @@ foreach($_POST as $inputData){
 
 
 try {
-
+    
     $persistenceId = $logicLayer->createLeague(
         trim($_POST['name']),
         trim($_POST['leagueRules']),

@@ -2,6 +2,7 @@
 
 include("includes/header.php");
 
+//session_start();
 spl_autoload_register(function ($class_name) {
     include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
 });
@@ -11,7 +12,7 @@ use edu\uga\cs\recdawgs\entity\impl as Entity;
 
 if(!isset($_POST) || !isset($_POST['sportsVenueId'])){
     $errorMsg  = urlencode("Sports Venue not found.");
-    //header("Location: .php?status={$errorMsg}");
+    header("Location: sportsVenues.php?status={$errorMsg}");
 }
 ?>
 
