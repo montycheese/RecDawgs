@@ -19,10 +19,12 @@ try {
 }
 catch(\edu\uga\cs\recdawgs\RDException $rde){
     $error_msg = urlencode($rde->string);
+    die($error_msg);
     header("Location: ../team.php?status={$error_msg}");
 }
 catch(Exception $e){
     $errorMsg = urlencode("Unexpected error");
+    die($errorMsg);
     header("Location: ../team.php?status={$errorMsg}");
 }
 exit();
