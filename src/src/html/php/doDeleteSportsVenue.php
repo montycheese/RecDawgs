@@ -20,7 +20,7 @@ try {
     $logicLayer->deleteSportsVenue($sportsVenue);
 
     $successMsg = urlencode("Sports Venue successfully deleted!");
-    header("Location: ../sportsVenue.php");
+    header("Location: ../sportsVenues.php");
 
 }catch(\edu\uga\cs\recdawgs\RDException $rde){
     $error_msg = urlencode($rde->string);

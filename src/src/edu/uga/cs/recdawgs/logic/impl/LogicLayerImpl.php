@@ -638,6 +638,47 @@ class LogicLayerImpl implements LogicLayer{
     }
 
     /**
+     * Deletes a team given that there are no matches scheduled there.
+     *
+     * @param Entity\Team $team
+     * @throws RDException If team is a winner of is associated with matches.
+     * @return void
+     */
+    public function deleteTeam($team)
+    {
+        // see if there are any associated matches first
+        $homeMatches = $this->objectLayer->restoreTeamHomeTeamMatch($team, null);
+        $awayMatches = $this->objectLayer->restoreTeamAwayTeamMatch($team, null);
+        if ($homeMatches->size() > 0 or $awayMatches > 0) {
+            throw new RDException('Delete failure: There are matches associated with this team.');
+        }
+
+        // see if the team is a winner
+        $winners = $this->objectLayer->restoreTeamWinnerOfLeague($team, null);
+        if ($winners->size() > 0) {
+            throw new RDException('Delete failure: This team is a winner of a league. We need to keep a record.');
+        }
+
+        // delete league assoication
+        $league = $this->objectLayer->restoreTeamParticipatesInLeague($team, null)->current();
+        $this->objectLayer->deleteTeamParticipatesInLeague($team, $league);
+
+        // delete capatain association
+        $capatain = $this->objectLayer->restoreStudentCaptainOfTeam(null, $team)->current();
+        $this->objectLayer->deleteStudentCaptainOfTeam($capatain, $team);
+
+        // delete student association --- a lot of students
+        $students = $this->objectLayer->restoreStudentMemberOfTeam(null, $team);
+        while ($students->current()) {
+            $student = $students->current();
+            $this->objectLayer->deleteStudentMemberOfTeam($student, $team);
+            $students->next();
+        }
+
+        $this->objectLayer->deleteTeam($team);
+    }
+
+    /**
      * Deletes a user and all their links (i.e. team memberships)
      * if a user is a team captain, it removes them as team captain and an admin has to
      * select a new captain for a team. If the team has only one user, then the team
@@ -673,12 +714,11 @@ class LogicLayerImpl implements LogicLayer{
         if ($this->checkCaptain($user, $team)) {
             $members = $this->objectLayer->restoreStudentMemberOfTeam(null, $team);
 
-            // TO DO: matches unclear
             if ($members->size() > 1) {
                 $this->objectLayer->deleteStudentCaptainOfTeam($user, $team);
                 $this->objectLayer->deleteStudent($user);
             } else {
-                $this->objectLayer->deleteStudentCaptainOfTeam($user, $team);
+                $this->deleteTeam($team);
                 $this->objectLayer->deleteStudent($user);
             }
             
@@ -735,7 +775,7 @@ class LogicLayerImpl implements LogicLayer{
     }
 
     /**
-     * Delete a league and all its teams
+     * Delete a league if it has no teams under it
      *
      * @param Entity\LeagueImpl $league
      * @return void
