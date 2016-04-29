@@ -21,10 +21,18 @@ if(!isset($_POST) || !isset($_POST['matchId'])){
 ?>
 
 <body>
-<?php
-$matchUI = new Presentation\MatchUI();
-echo $matchUI->listMatchInfo();
-?>
+<form action="php/doEnterMatchScore.php" method="post">
+    <?php
+    $matchUI = new Presentation\MatchUI();
+    echo $matchUI->listMatchInfo();
+    ?>
+
+    <input type="submit" name="Enter Match Score" id="enterMatchScore">
+    <?php if($_SESSION['userType'] == 1){
+        $matchUI = new Presentation\MatchUI();
+        echo $matchUI->listResolveMatchScoreButton();
+    }?>
+</form>
 
 </body>
 </html>

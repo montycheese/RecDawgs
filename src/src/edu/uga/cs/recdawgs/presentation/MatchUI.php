@@ -97,4 +97,9 @@ class MatchUI {
         }
         return $html;
     }
+
+    public function listResolveMatchScoreButton() {
+        $html = "<form action='php/doResolveMatchScore' method='post'><input type=\"submit\" name=\"Enter Match Score\" id=\"enterMatchScore\"></form>";
+        return $html;
+    }
 }
