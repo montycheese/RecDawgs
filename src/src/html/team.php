@@ -40,23 +40,14 @@ if($teamObj->getCaptain()->getId() == $_SESSION['userId']) {
     </form>";
 
     echo  "<br/><h3>Delete Team (Unreversable)</h3><br/>
-<form method='POST' action='php/doDeleteTeam.php'>
+        <form method='POST' action='php/doDeleteTeam.php'>
         <input name='teamId' id='teamId' type='hidden' value='{$teamId}'>
-        <input name='leagueId' id='leagueId' type='hidden' value='{$leagueId}'
         <p>
             <input type='submit' value = 'Delete Team'>
         </p>
     </form>";
 }
 ?>
-
-    <br/><br/>
-    <form action="php/deleteTeam.php" method="post">
-        <input type="hidden" value="<?php echo $_SESSION['userId'];?>">
-        <input type="submit" value="Leave Team">
-    </form>
-
-    <br/><br/>
 
     <?php
         echo $matchUI->listUpcomingMatches($matchObj);

@@ -10,11 +10,11 @@ try {
     // find league
     $league = $logicLayer->findLeague(null, $leagueId)->current();
 
-    // delete user
+    // delete league
     $logicLayer->deleteLeague($league);
 
     $successMsg = urlencode("League successfully deleted!");
-    header("Location: ../league.php");
+    header("Location: ../leagues.php");
     //echo $persistenceId;
 }
 catch(\edu\uga\cs\recdawgs\RDException $rde){
