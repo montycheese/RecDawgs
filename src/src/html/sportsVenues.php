@@ -29,8 +29,6 @@ $sportsVenueUI = new Presentation\SportsVenueUI();
 
         if($_SESSION['userType'] == 1){
             echo $sportsVenueUI->listCreateButton();
-            echo '<br>';
-            echo $sportsVenueUI->listDeleteButton();
         }
 
         ?>
