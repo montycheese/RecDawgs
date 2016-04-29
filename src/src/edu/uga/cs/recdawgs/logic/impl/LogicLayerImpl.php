@@ -653,19 +653,23 @@ class LogicLayerImpl implements LogicLayer{
             throw new RDException('Delete failure: There are matches associated with this team.');
         }
 
-        // see if the team is a winner
-        $winners = $this->objectLayer->restoreTeamWinnerOfLeague($team, null);
-        if ($winners->size() > 0) {
-            throw new RDException('Delete failure: This team is a winner of a league. We need to keep a record.');
-        }
+        // // see if the team is a winner
+        // $winners = $this->objectLayer->restoreTeamWinnerOfLeague($team, null);
+        // if ($winners->size() > 0) {
+        //     throw new RDException('Delete failure: This team is a winner of a league. We need to keep a record.');
+        // }
 
         // delete league assoication
         $league = $this->objectLayer->restoreTeamParticipatesInLeague($team, null)->current();
-        $this->objectLayer->deleteTeamParticipatesInLeague($team, $league);
+        if ($league) {
+            $this->objectLayer->deleteTeamParticipatesInLeague($team, $league);
+        }
 
         // delete capatain association
         $capatain = $this->objectLayer->restoreStudentCaptainOfTeam(null, $team)->current();
-        $this->objectLayer->deleteStudentCaptainOfTeam($capatain, $team);
+        if ($capatain) {
+            $this->objectLayer->deleteStudentCaptainOfTeam($capatain, $team);
+        }
 
         // delete student association --- a lot of students
         $students = $this->objectLayer->restoreStudentMemberOfTeam(null, $team);
