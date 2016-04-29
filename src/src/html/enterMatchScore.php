@@ -1,4 +1,5 @@
 <?php include('includes/header.php');
+use edu\uga\cs\recdawgs\presentation as Presentation;
 //todo -
 //show a simple form with 2 fields, one for home score and one for away score
 //****later- also add logic to prevent non captains of the matches from inputting score.
@@ -14,7 +15,10 @@ $matchId = $_POST['matchId'];
 <div class="container">
     <h3>Enter Match Score</h3>
     <br>
-    <?php echo "TODO show match info."; ?>
+    <?php
+    $matchUI = new Presentation\MatchUI();
+    echo $matchUI->listMatchInfo(null, $matchId);
+    ?>
     <p>
         <form id="enterMatchScore" action="php/doEnterMatchScore.php" method="post">
 
