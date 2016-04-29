@@ -185,7 +185,7 @@ class LeagueUI {
     }
 
     public function listUpdateButton($league=null, $leagueId = -1){
-        $html ="<br/><h1>Delete this league</h1>";
+        $html ="<br/><h1>Update this league</h1>";
         if($league){
             $leagueId = $league->getId();
             $html .= "<form action='php/doUpdateLeague' method='post'><input type='hidden' name='leagueId' value='{$leagueId}'><input type='submit' name='Update League'></form>";

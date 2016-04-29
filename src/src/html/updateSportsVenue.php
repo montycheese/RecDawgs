@@ -10,7 +10,7 @@ $sportsVenueId = $_POST['sportsVenueId'];
 
     <p>
     <form id="updateSportsVenue" action="php/doUpdateSportsVenue.php" method="post">
-        <input type = 'hidden' name = 'sportsVenueId' value = '{$sportsVenueId}'>
+        <input type = 'hidden' name = 'sportsVenueId' value = '<?php echo strval($sportsVenueId);?>'>
 
         <div class="form-group">
             <label for="venueName">Venue Name</label>
