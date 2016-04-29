@@ -30,18 +30,11 @@ echo $sportsVenueUI->listSportsVenueInfo($sportsVenueModel);
 <?php
 //if admin allow update and deletion of sports venues
 if($_SESSION['userType']== 1) {
-   echo "<form action = 'updateSportsVenue.php' method = 'post' >
-    <input type = 'hidden' name = 'sportsVenueId' value = '{$sportsVenueId}'>
-        <input type ='submit' value ='Update the Sports Venue'>
-</form >";
+   echo $sportsVenueUI->listUpdateButton(null, $sportsVenueId);
 }
 
 if($_SESSION['userType']== 1) {
-   echo "<form action = 'php/doDeleteSportsVenue.php' method = 'post'>
-    <input type = 'hidden' name = 'userId' value = '{$_SESSION['userId']}'>
-    <input type = 'hidden' name = 'sportsVenueId' value = '{$sportsVenueId}'
-        <input type ='submit' value ='Delete the Sports Venue'>
-</form >";
+   echo $sportsVenueUI->listDeleteButton(null, $sportsVenueId);
 }
 ?>
 </div>
