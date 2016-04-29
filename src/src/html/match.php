@@ -30,6 +30,7 @@ if(!isset($_POST) || !isset($_POST['matchId'])){
     ?>
     <h2>Enter match score</h2> <br/>
     <form action="enterMatchScore.php" method="post">
+        <input type = 'hidden' name = 'matchId' value = '<?php echo "{$_POST['matchId']}" ;?>'>
     <input type="submit" name="Enter Match Score" id="enterMatchScore">
     </form>
     <br/>
