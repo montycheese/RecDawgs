@@ -53,6 +53,11 @@ class MatchIterator extends PersistenceIterator{
                     $awayTeam
                 );*/
                 //$match = $objLayer->createMatch();
+                //get round obj
+                $round = $this->objLayer->createRound();
+                $round->setId($resultSet[$i]['round_id']);
+                $round = $objLayer->findRound($round)->current();
+
                 $match->setHomePoints($resultSet[$i]['home_points']);
                 $match->setAwayPoints($resultSet[$i]['away_points']);
                 $match->setDate($resultSet[$i]['date']);
@@ -60,6 +65,7 @@ class MatchIterator extends PersistenceIterator{
                 $match->setHomeTeam($homeTeam);
                 $match->setAwayTeam($awayTeam);
                 $match->setSportsVenue($sportsVenue);
+                $match->setRound($round);
                 //$match->setId($resultSet[$i]['match_id']);
 
                 array_push($this->array, $match);

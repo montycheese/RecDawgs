@@ -442,7 +442,7 @@ class PersistenceLayerImpl implements PersistenceLayer{
      * @return the Team which is the home team in the Match
      * @throws RDException in case an error occurred during the restore operation
      */
-    public function restoreTeamHomeTeamMatch($match = null, $team = null)
+    public function restoreTeamHomeTeamMatch($team = null, $match= null)
     {
         //$team is set, return the match iterator
         if($team != null){

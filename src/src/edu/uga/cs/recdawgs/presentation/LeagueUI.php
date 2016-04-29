@@ -202,7 +202,7 @@ class LeagueUI {
     }
 
     public function listCloseEnrollmentButton(){
-        $html = " <h3>Close Enrollment</h3><br/><a href='closeEnrollment.php'><button>Close</button></a>";
+        $html = " <h3>Close Enrollment</h3><br/><a href='php/doCloseEnrollment.php'><button>Close</button></a>";
         return $html;
     }
 }
