@@ -949,7 +949,7 @@ class LogicLayerImpl implements LogicLayer{
                     $this->objectLayer->storeRound($round);
                     //for each round create the matches in that round
                     $front=0; $end=count($queue)-1; $match=null;
-                    for($j=$front; $j<intval(($end+1)/2); $j++){
+                    for($j=$front; $j<intval(($end+2)/2); $j++){
                         $match = $this->objectLayer->createMatch();
                         //arbitrarily assign teams as home and away
                         if($j==$front){

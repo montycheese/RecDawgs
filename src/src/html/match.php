@@ -22,25 +22,30 @@ if(!isset($_POST) || !isset($_POST['matchId'])){
 ?>
 
 <body>
-<<<<<<< HEAD
-<form action="php/doEnterMatchScore.php" method="post">
+
+
     <?php
     $matchUI = new Presentation\MatchUI();
     echo $matchUI->listMatchInfo();
     ?>
-
+    <h2>Enter match score</h2> <br/>
+    <form action="enterMatchScore.php" method="post">
     <input type="submit" name="Enter Match Score" id="enterMatchScore">
+    </form>
+    <br/>
+
     <?php if($_SESSION['userType'] == 1){
         $matchUI = new Presentation\MatchUI();
+        echo "<h3>Resolve match score</h3>";
         echo $matchUI->listResolveMatchScoreButton();
     }?>
-</form>
-=======
+
+
 <?php
 $matchUI = new Presentation\MatchUI();
 echo $matchUI->listMatchInfo(null, $_POST['matchId']);
 ?>
->>>>>>> origin/master
+
 
 </body>
 </html>
