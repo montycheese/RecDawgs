@@ -15,7 +15,10 @@ $matchId = $_POST['matchId'];
 try {
     // find match
     $match = $logicLayer->findMatch(null, $matchId);
-    
+    $logicLayer->resolveMatchScore($_POST['homeTeamScore'], $_POST['awayTeamScore'], $match);
+
+    $successMsg = urlencode("Match score successfully resolved!");
+    header("Location: ../resolveMatchScore.php");
     
 } catch(\edu\uga\cs\recdawgs\RDException $rde){
     $error_msg = urlencode($rde->string);
