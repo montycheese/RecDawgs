@@ -81,7 +81,7 @@ class ScoreReportManager {
             //bind parameters to prepared statement
             $homePoints = $report->getHomePoints();
             $awayPoints = $report->getAwayPoints();
-            $DATE = $report->getDate();
+            $DATE = date ("Y-m-d H:i:s", $report->getDate());
             //bind parameters to prepared statement
             $stmt->bindParam(1, $homePoints, \PDO::PARAM_INT);
             $stmt->bindParam(2, $awayPoints, \PDO::PARAM_INT);

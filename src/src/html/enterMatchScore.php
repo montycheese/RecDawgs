@@ -1,4 +1,11 @@
 <?php include('includes/header.php');
+
+
+
+
+spl_autoload_register(function ($class_name) {
+    include '/Users/montanawong/Sites/RecDawgs/src/src/' . str_replace('\\', '/', $class_name) .'.php';
+});
 use edu\uga\cs\recdawgs\presentation as Presentation;
 //todo -
 //show a simple form with 2 fields, one for home score and one for away score
