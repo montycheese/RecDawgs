@@ -51,6 +51,7 @@ class MatchUI {
                 $leagueName = $match->getHomeTeam()->getParticipatesInLeague()->getName();
                 $roundNumber = strval($match->getRound()->getNumber());
                 $date = $match->getDate();
+                if($date == null) $date = "Not set";
                 $homeTeamName = $match->getHomeTeam()->getName();
                 $awayTeamName = $match->getAwayTeam()->getName();
                 $venueName = $match->getSportsVenue()->getName();
@@ -60,6 +61,10 @@ class MatchUI {
                 $html .= "<h2>Home team: {$homeTeamName} <br/> Away team: {$awayTeamName} <br/> Venue: {$venueName}</h2><br/>";
                 //TODO ADD IF statement to show score only if game is done
                 $html .= "<h3>Home team score: {$homeTeamScore} <br/>Away team Score: {$awayTeamScore}</h3><br/>";
+                if($match->getDate() == null){
+                    $html .= "<br/><form method='POST' action='php/doScheduleMatch.php'><label for='date'>Schedule match date</label><input id='date' type='date' name='date'><input type='hidden' name='matchId' value='$matchId'><input type='submit' value='Schedule!'></form>";
+                }
+
             }
         }
         catch(\Exception $e){

@@ -929,12 +929,18 @@ class LogicLayerImpl implements LogicLayer{
         //iterate through each league
         while($leagueIter->valid()){
             $league = $leagueIter->current();
+            if($this->objectLayer->restoreLeagueRound($league)->size() > 0){
+                //array_push($unsatisfiedLeagues, $league);
+                $leagueIter->next();
+                continue;
+            }
             $sportsVenueIter = $this->objectLayer->restoreLeagueSportsVenue($league, null);
             //get total number of teams in the league to see if it meets the minimum
             $teamIter = $this->objectLayer->restoreTeamParticipatesInLeague(null, $league);
             $numTeams = $teamIter->size();
-            //requirements are met, also must have even # of teams
-            if($numTeams >= $league->getMinTeams() || $numTeams % 2 != 0){
+
+            //requirements are met, also must have even # of teams, break if league is already closed.
+            if($numTeams >= $league->getMinTeams() || $numTeams % 2 != 0 ){
                 //figure out how many rounds are needed to safisfy round robin tournament
                 $totalRounds = $numTeams - 1;
                 //keep one team fixed out of the queue.

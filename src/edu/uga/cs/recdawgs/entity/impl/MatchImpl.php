@@ -88,12 +88,14 @@ class MatchImpl extends Persistent implements Match {
 
         $datetime_new = new \DateTime($date);
         $datetime_cur = new \DateTime(date('Y-m-d H:i:s', time()));
+        //die(var_dump($datetime_new));
 
        if ($datetime_new->diff($datetime_cur)->format('%R') == '+'){
             $this->date = $date;
         }
         else {
-            throw new RDException('Date is in the past.');
+            //throw new RDException('Date is in the past.');
+            $this->date = $date;
         }
     }
     /** Return the indication if this match has been completed.
