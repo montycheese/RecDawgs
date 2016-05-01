@@ -31,14 +31,6 @@ use edu\uga\cs\recdawgs\presentation as Presentation;
         ?>
     </p>
 
-    <h3>Rest Password</h3>
-    <form action="php/doResetPassword.php" method="post">
-        <input type="hidden" name="userId" value="<?php echo $_SESSION['userId'];?>">
-    <input type="submit" value="Reset your password">
-    </form>
-
-
-
     <button onclick="editProfile()">Edit your information</button>
     <br/><br/>
     <h3> Delete your account</h3>
