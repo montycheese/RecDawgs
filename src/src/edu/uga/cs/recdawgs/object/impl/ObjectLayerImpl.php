@@ -345,6 +345,7 @@ class ObjectLayerImpl implements ObjectLayer{
      * @throws RDException in case there is a problem with the retrieval of the requested objects
      */
     public function findMatch($modelMatch) {
+
         $aMatch = $this->persistenceLayer->restoreMatch($modelMatch);
         return $aMatch;
 

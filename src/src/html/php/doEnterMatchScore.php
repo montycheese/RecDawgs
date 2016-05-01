@@ -15,7 +15,7 @@ $logicLayer = new LogicLayerImpl();
 foreach($_POST as $inputData){
     if($inputData == "" or $inputData == null){
         $errorMsg = urlencode("Missing form field");
-       header("Location: ../enterMatchScore.php?status={$errorMsg}");
+       header("Location: ../index.php?status={$errorMsg}");
         exit();
     }
 }
@@ -33,15 +33,15 @@ try {
         intval(trim($_POST['awayTeamScore'])));
 
     $successMsg = urlencode("Scores input successfully!");
-    header("Location: ../match.php?status={$successMsg}");
+    header("Location: ../index.php?status={$successMsg}");
     echo $persistenceId;
 }
 catch(\edu\uga\cs\recdawgs\RDException $rde){
     $errorMsg = urlencode($rde->string);
-    header("Location: ../match.php?status={$errorMsg}");
+    header("Location: ../index.php?status={$errorMsg}");
 }
 catch(Exception $e){
     $errorMsg = urlencode("Unexpected error");
-    header("Location: ../match.php?status={$errorMsg}");
+    header("Location: ../index.php?status={$errorMsg}");
 }
 exit();

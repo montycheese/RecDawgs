@@ -27,7 +27,7 @@ class MatchUI {
      * @param int $matchId
      * @return string
      */
-    public function listMatchInfo($match=null, $matchId=-1){
+    public function listMatchInfo($match=null, $matchId=-1, $homeScore = -1, $awayScore=-1){
         $html = "";
         try {
             if ($match) {
@@ -38,8 +38,8 @@ class MatchUI {
                 $homeTeamName = $match->getHomeTeam()->getName();
                 $awayTeamName = $match->getAwayTeam()->getName();
                 $venueName = $match->getSportsVenue()->getName();
-                $homeTeamScore=  strval($match->getHomePoints());
-                $awayTeamScore = strval($match->getAwayPoints());
+                $homeTeamScore=  ($homeScore > -1 && strval($match->getHomePoints()) == "") ? $homeScore : strval($match->getHomePoints());
+                $awayTeamScore = ($awayScore > -1 && strval($match->getHomePoints())=="") ? $awayScore : strval($match->getAwayPoints());
                 $html .= "<h1>League: {$leagueName} Round: {$roundNumber} Date: {$date}</h1><br/>";
                 $html .= "<h2>Home team: {$homeTeamName} Away team: {$awayTeamName} Venue: {$venueName}</h2><br/>";
                 //TODO ADD IF statement to show score only if game is done
@@ -54,12 +54,12 @@ class MatchUI {
                 $homeTeamName = $match->getHomeTeam()->getName();
                 $awayTeamName = $match->getAwayTeam()->getName();
                 $venueName = $match->getSportsVenue()->getName();
-                $homeTeamScore=  strval($match->getHomePoints());
-                $awayTeamScore = strval($match->getAwayPoints());
-                $html .= "<h1>League: {$leagueName} Round: {$roundNumber} Date: {$date}</h1><br/>";
-                $html .= "<h2>Home team: {$homeTeamName} Away team: {$awayTeamName} Venue: {$venueName}</h2><br/>";
+                $homeTeamScore=  ($homeScore > -1 && strval($match->getHomePoints())=="") ? $homeScore : strval($match->getHomePoints());
+                $awayTeamScore = ($awayScore > -1 && strval($match->getHomePoints())=="") ? $awayScore : strval($match->getAwayPoints());
+                $html .= "<h1>League: {$leagueName}<br/> Round: {$roundNumber}<br/> Date: {$date}</h1><br/>";
+                $html .= "<h2>Home team: {$homeTeamName} <br/> Away team: {$awayTeamName} <br/> Venue: {$venueName}</h2><br/>";
                 //TODO ADD IF statement to show score only if game is done
-                $html .= "<h3>Home team score: {$homeTeamScore} Away team Score: {$awayTeamScore}</h3>";
+                $html .= "<h3>Home team score: {$homeTeamScore} <br/>Away team Score: {$awayTeamScore}</h3><br/>";
             }
         }
         catch(\Exception $e){
@@ -100,8 +100,8 @@ class MatchUI {
         return $html;
     }
 
-    public function listResolveMatchScoreButton() {
-        $html = "<form action='php/doResolveMatchScore' method='post'> <input type = 'hidden' name = 'matchId' value = '<?php echo \"{$_POST['matchId']}\" ;?>'><input type=\"submit\" name=\"Enter Match Score\" id=\"enterMatchScore\"></form>";
+    public function listResolveMatchScoreButton($matchId) {
+        $html = "<form action='php/doResolveMatchScore' method='post'>Home Team Score: <input type='text' name='homeTeamScore'><br>Away Team Score: <input type='text' name='awayTeamScore'> <input type = 'hidden' name = 'matchId' value = '{$matchId}'><input type=\"submit\" name=\"Enter Fixed Match Score\" id=\"enterMatchScore\"></form>";
         return $html;
     }
 }

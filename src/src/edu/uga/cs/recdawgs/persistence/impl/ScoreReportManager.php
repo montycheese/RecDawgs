@@ -39,7 +39,7 @@ class ScoreReportManager {
             $q = "UPDATE score_report
                 set home_points = ?,
               away_points = ?,
-              score_report.date = ?,
+              score_report.date = CURRENT_TIMESTAMP ,
               match_id = ?,
               student_id = ?
               WHERE sports_venue_id = ?;";
@@ -52,17 +52,17 @@ class ScoreReportManager {
             //bind parameters to prepared statement
             $stmt->bindParam(1, $homePoints, \PDO::PARAM_INT);
             $stmt->bindParam(2, $awayPoints, \PDO::PARAM_INT);
-            $stmt->bindParam(3, $DATE);
+           // $stmt->bindParam(3, $DATE);
             if($report->getMatch() != NULL) {
                 $matchId = $report->getMatch()->getId();
-                $stmt->bindParam(4, $matchId, \PDO::PARAM_INT);
+                $stmt->bindParam(3, $matchId, \PDO::PARAM_INT);
             }
             if($report->getStudent() != NULL) {
                 $studentId = $report->getStudent()->getId();
-                $stmt->bindParam(5, $studentId, \PDO::PARAM_INT);
+                $stmt->bindParam(4, $studentId, \PDO::PARAM_INT);
             }
             $reportId = $report->getId();
-            $stmt->bindParam(6, $reportId, \PDO::PARAM_INT);
+            $stmt->bindParam(5, $reportId, \PDO::PARAM_INT);
 
             if($stmt->execute()){
                 echo 'report created successfully';
@@ -75,7 +75,7 @@ class ScoreReportManager {
             //insert
             //create Query
             $q = "INSERT INTO score_report (home_points, away_points, score_report.date, match_id, student_id)
-                  VALUES(?, ?, ?, ?, ?);";
+                  VALUES(?, ?, CURRENT_TIMESTAMP, ?, ?);";
             //create prepared statement from query
             $stmt = $this->dbConnection->prepare($q);
             //bind parameters to prepared statement
@@ -85,14 +85,14 @@ class ScoreReportManager {
             //bind parameters to prepared statement
             $stmt->bindParam(1, $homePoints, \PDO::PARAM_INT);
             $stmt->bindParam(2, $awayPoints, \PDO::PARAM_INT);
-            $stmt->bindParam(3, $DATE);
+            //$stmt->bindParam(3, $DATE);
             if($report->getMatch() != NULL) {
                 $matchId = $report->getMatch()->getId();
-                $stmt->bindParam(4, $matchId, \PDO::PARAM_INT);
+                $stmt->bindParam(3, $matchId, \PDO::PARAM_INT);
             }
             if($report->getStudent() != NULL) {
                 $studentId = $report->getStudent()->getId();
-                $stmt->bindParam(5, $studentId, \PDO::PARAM_INT);
+                $stmt->bindParam(4, $studentId, \PDO::PARAM_INT);
             }
             if($stmt->execute()){
                 $report->setId($this->dbConnection->lastInsertId());
@@ -123,13 +123,17 @@ class ScoreReportManager {
             if ($modelReport->getAwayPoints() != NULL) {
                 $q .= ' AND away_points = ' . $modelReport->getAwayPoints();
             }
-            if ($modelReport->getDate() != NULL) {
-                $q .= ' AND score_report.date = ' . $modelReport->getDate();
+            //if ($modelReport->getDate() != NULL) {
+            //    $q .= ' AND score_report.date = ' . $modelReport->getDate();
+            //}
+            if($modelReport->getMatch() != NULL){
+                $q .= ' AND match_id = ' . $modelReport->getMatch()->getId();
             }
             if ($modelReport->getId() != -1){
 
                 $q .= ' AND score_report_id = ' . $modelReport->getId();
             }
+
         }
         $stmt = $this->dbConnection->prepare($q . ';');
         if ($stmt->execute()){

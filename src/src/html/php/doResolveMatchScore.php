@@ -14,18 +14,19 @@ $matchId = $_POST['matchId'];
 
 try {
     // find match
-    $match = $logicLayer->findMatch(null, $matchId);
+    $match = $logicLayer->findMatch(null, $matchId)->current();
+    $match->setIsCompleted(true);
     $logicLayer->resolveMatchScore($_POST['homeTeamScore'], $_POST['awayTeamScore'], $match);
 
     $successMsg = urlencode("Match score successfully resolved!");
-    header("Location: ../resolveMatchScore.php");
+    header("Location: ../index.php");
     
 } catch(\edu\uga\cs\recdawgs\RDException $rde){
     $error_msg = urlencode($rde->string);
-    header("Location: ../resolveMatchScore.php?status={$error_msg}");
+    header("Location: ../index.php?status={$error_msg}");
 }
 catch(Exception $e){
     $errorMsg = urlencode("Unexpected error");
-    header("Location: ../resolveMatchScore.php?status={$errorMsg}");
+    header("Location: ../index.php?status={$errorMsg}");
 }
 exit();

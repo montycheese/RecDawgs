@@ -19,6 +19,9 @@ if(!isset($_POST) || !isset($_POST['matchId'])){
     $errorMsg  = urlencode("match not found.");
     header("Location: team.php?status={$errorMsg}");
 }
+
+$scoreReportUI = new Presentation\ScoreReportUI();
+$numScoreReports = $scoreReportUI->getNumScoreReports($_POST['matchId']);
 ?>
 
 <body>
@@ -26,26 +29,36 @@ if(!isset($_POST) || !isset($_POST['matchId'])){
 
     <?php
     $matchUI = new Presentation\MatchUI();
-    echo $matchUI->listMatchInfo();
-    ?>
-    <h2>Enter match score</h2> <br/>
-    <form action="enterMatchScore.php" method="post">
-        <input type = 'hidden' name = 'matchId' value = '<?php echo "{$_POST['matchId']}" ;?>'>
-    <input type="submit" name="Enter Match Score" id="enterMatchScore">
+    $homePoints = -1; $awayPoints = -1;
+    if($numScoreReports >=2){
+        $scores = $scoreReportUI->getScores($_POST['matchId']);
+        $homePoints = intval($scores[0]['homeScore']);
+        $awayPoints = intval($scores[0]['awayScore']);
+        //die(var_dump($scores));
+    }
+    echo $matchUI->listMatchInfo(null, $_POST['matchId'], $homePoints, $awayPoints);
+    echo $scoreReportUI->showMatchReports($_POST['matchId']);
+    if($_SESSION['userType'] == 0 && $numScoreReports <= 1){
+        echo "<h2>Enter match score</h2> <br/>
+    <form action='enterMatchScore.php' method='post'>
+        <input type = 'hidden' name = 'matchId' value = '{$_POST['matchId']}'>
+    <input type='submit' name='Click here to input match score' id='enterMatchScore'>
     </form>
-    <br/>
+    <br/>";
+    }
+    ?>
 
-    <?php if($_SESSION['userType'] == 1){
-        $matchUI = new Presentation\MatchUI();
-        echo "<h3>Resolve match score</h3>";
-        echo $matchUI->listResolveMatchScoreButton();
+
+
+    <?php if($_SESSION['userType'] == 1 && $numScoreReports >= 2 ){
+      //  $scores = $scoreReportUI->getScores($_POST['matchId']);
+        //if($scores[0]['homeScore'] != $scores[1]['homeScore'] && $scores[0]['awayScore'] != $scores[1]['awayScore']) {
+            $matchUI = new Presentation\MatchUI();
+            echo "<h3>Resolve match score</h3>";
+            echo $matchUI->listResolveMatchScoreButton($_POST['matchId']);
+      //  }
     }?>
 
-
-<?php
-$matchUI = new Presentation\MatchUI();
-echo $matchUI->listMatchInfo(null, $_POST['matchId']);
-?>
 
 
 </body>

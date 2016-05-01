@@ -17,7 +17,7 @@ use edu\uga\cs\recdawgs\RDException;
 
 class LogicLayerImpl implements LogicLayer{
 
-    private $objectLayer = null;
+    public $objectLayer = null;
 
     function __construct($objectLayer=null, $dbConnection=null)
     {
@@ -852,7 +852,11 @@ class LogicLayerImpl implements LogicLayer{
      */
     public function resolveMatchScore($fixedHomeScore, $fixedAwayScore, $match)
     {
-        $homeTeam = $match->getHomeTeam();
+        $match->setHomePoints($fixedHomeScore);
+        $match->setAwayPoints($fixedAwayScore);
+        $this->objectLayer->storeMatch($match);
+
+        /*$homeTeam = $match->getHomeTeam();
         $awayTeam = $match->getAwayTeam();
         //create empty score report
         $modelScoreReport = $this->objectLayer->createScoreReport();
@@ -866,7 +870,7 @@ class LogicLayerImpl implements LogicLayer{
             $scoreReport = $scoreReportIter->current();
             //TODO figure out how to set the currect values of the score reports
             $scoreReportIter->next();
-        }
+        }*/
     }
 
     /**

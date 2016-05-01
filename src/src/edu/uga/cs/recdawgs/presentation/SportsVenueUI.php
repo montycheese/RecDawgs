@@ -148,7 +148,7 @@ class SportsVenueUI {
     }
 
     public function listUpdateButton($sportsVenue=null, $sportsVenueId = -1){
-        $html ="<br/><h1>Delete this sportsVenue</h1>";
+        $html ="<br/><h1>Update this Sports Venue</h1>";
         if($sportsVenue){
             $sportsVenueId = $sportsVenue->getId();
             $html .= "<form action='php/doUpdateSportsVenue' method='post'><input type='hidden' name='sportsVenueId' value='{$sportsVenueId}'><input type='submit' name='Update sportsVenue'></form>";

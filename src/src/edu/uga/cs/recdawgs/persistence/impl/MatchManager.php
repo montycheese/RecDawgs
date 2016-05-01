@@ -35,10 +35,10 @@ class MatchManager {
     public function save($match){
         if($match->isPersistent()){
             //update
-            $q = "UPDATE " . DB_NAME . ".match" .
+            $q = "UPDATE " . DB_NAME . ".match " .
                 "set home_points = ?,
               away_points = ?,
-              match.date = ?,
+              match.date = CURRENT_TIMESTAMP,
               is_completed = ?,
               home_team_id = ?,
               away_team_id = ?,
@@ -56,31 +56,32 @@ class MatchManager {
             //bind parameters to prepared statement
             $stmt->bindParam(1, $homePoints, \PDO::PARAM_INT);
             $stmt->bindParam(2, $awayPoints, \PDO::PARAM_INT);
-            $stmt->bindParam(3, $date);
+            //$stmt->bindParam(3, $date);
             $completed = ($match->getIsCompleted() ? 1 : 0);
-            $stmt->bindParam(4, $completed, \PDO::PARAM_INT);
+            $stmt->bindParam(3, $completed, \PDO::PARAM_INT);
             if($match->getHomeTeam() != NULL ) {
                 $homeTeam = $match->getHomeTeam()->getId();
-                $stmt->bindParam(5, $homeTeam, \PDO::PARAM_INT);
+                $stmt->bindParam(4, $homeTeam, \PDO::PARAM_INT);
             }
             if($match->getAwayTeam() != NULL) {
                 $awayTeam = $match->getAwayTeam()->getId();
-                $stmt->bindParam(6, $awayTeam, \PDO::PARAM_INT);
+                $stmt->bindParam(5, $awayTeam, \PDO::PARAM_INT);
             }
             if($match->getSportsVenue() != NULL) {
                 $sportsVenue = $match->getSportsVenue()->getId();
-                $stmt->bindParam(7, $sportsVenue, \PDO::PARAM_INT);
+                $stmt->bindParam(6, $sportsVenue, \PDO::PARAM_INT);
             }
             $round = $match->getRound()->getId();
             $matchID = $match->getId();
-            $stmt->bindParam(8, $round, \PDO::PARAM_INT);
-            $stmt->bindParam(9, $matchID, \PDO::PARAM_INT);
+            $stmt->bindParam(7, $round, \PDO::PARAM_INT);
+            $stmt->bindParam(8, $matchID, \PDO::PARAM_INT);
 
             if($stmt->execute()){
-                echo 'Match created successfully';
+                echo 'Match updated successfully';
             }
             else{
-                throw new RDException('Error creating match');
+                die($q);
+                throw new RDException('Error updating match' . print_r($stmt->errorInfo()));
             }
         }
         else{
