@@ -25,7 +25,8 @@ include('includes/header.php');
         <div class="form-group">
             <label for="matchRules">Match Rules</label>
             <br>
-            <input name="matchRules" id="matchRules" type="text"   required>
+            <!--<input name="matchRules" id="matchRules" type="text"   required>-->
+            <textarea name="matchRules" id="leagueRules" cols="50" rows="5" wrap="soft"></textarea>
         </div>
 
         <div class="form-group">

@@ -87,7 +87,7 @@ class MatchManager {
         else{
             //insert
             //create Query
-            $q = "INSERT INTO " . DB_NAME . ".match (home_points, away_points, date, is_completed,
+            $q = "INSERT INTO " . DB_NAME . ".match (home_points, away_points, match.date, is_completed,
               home_team_id, away_team_id, sports_venue_id, round_id)
               VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
             //create prepared statement from query

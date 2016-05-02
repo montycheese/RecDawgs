@@ -64,13 +64,13 @@ $leagueObj = $leagueUI->getLeague($leagueId);
    </p>
 <br>
 
-    <form id="updateLeague" action="updateLeague.php" method="post">
+
         <?php
         if($_SESSION['userType'] == 1) {
             echo $leagueUI->listUpdateButton(null, $leagueId);
         }
         ?>
-    </form>
+   
     
     <form id="deleteLeague" action="php/doDeleteLeague.php" method="post">
         <?php
