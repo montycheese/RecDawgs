@@ -18,7 +18,8 @@ include('includes/header.php');
         <div class="form-group">
             <label for="leagueRules">League Rules</label>
             <br>
-            <input name="leagueRules" id="leagueRules" type="text"   required>
+            <!--<input name="leagueRules" id="leagueRules" type="textarea"   required>-->
+            <textarea name="leagueRules" id="leagueRules" cols="50" rows="5" wrap="soft"></textarea>
         </div>
 
         <div class="form-group">
@@ -30,7 +31,7 @@ include('includes/header.php');
         <div class="form-group">
             <label for="minTeams">Minimum Number of Teams</label>
             <br>
-            <input name="matchRules" id="matchRules" type="text" required>
+            <input name="minTeams" id="minTeams" type="text" required>
         </div>
 
         <div class="form-group">
